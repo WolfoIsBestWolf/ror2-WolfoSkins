@@ -2,6 +2,8 @@
 using R2API;
 using R2API.Utils;
 using RoR2;
+using System.Text;
+using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
@@ -16,39 +18,64 @@ using UnityEngine.AddressableAssets;
 namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "1.2.0")]
-    [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "1.5.0")]
+    //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
 
     public class WolfoSkins : BaseUnityPlugin
     {
-        public static event System.Action<Run> unlockSkins;
-        //public static string unlockCondition = ", complete wave 50 in Simulacrum or defeat a Twisted Scavenger or escape the Planetarium.";
-        public static string unlockCondition = ", complete wave 50 in Simulacrum, A Moment, Whole or the Planetarium.";
 
         public void Awake()
         {
             WConfig.InitConfig();
 
-            SkinsCommando.CommandoSkin(); //Marine + Provi Trial
-            SkinsHuntress.HuntressSkin(); // BlackPink Bunny + Bee
-            SkinsBandit.BanditSkin(); //RoRR Red + Purple
-            SkinsMULT.ToolbotSkin(); //Damage Chest + Healing
-            SkinsEngineer.EngiSkin(); //RoRR Red
-            SkinsArtificer.ArtificerSkin();
+            Unlocks.Hooks();
+
+            //
+            SkinsCommando.CommandoSkin();
+            SkinsHuntress.HuntressSkin();
+            SkinsBandit.Start();
+            SkinsMULT.ToolbotSkin();
+            SkinsEngineer.EngiSkin();
+            SkinsArtificer.Start();
             SkinsMerc.MercSkin();
-            SkinsREX.TreebotSkin(); //Lepton Daisy
+            SkinsREX.TreebotSkin();
             SkinsLoader.LoaderSkin();
-            SkinsAcrid.AcridSkin(); //RoRR White/Blue
-            SkinsCaptain.CaptainSkin(); //Pink Captain Artwork
+            SkinsAcrid.Start();
+            SkinsCaptain.CaptainSkin();
             SkinsRailGunner.RailGunnerSkins();
-            SkinsVoidFiend.VoidSkins();
-            //Modded
-            SkinsCHEF.CallDuringAwake();
+            SkinsVoidFiend.Start();
+
+            SkinsCommando.PrismAchievement();
+            SkinsHuntress.PrismAchievement();
+            SkinsBandit.PrismAchievement();
+            SkinsMULT.PrismAchievement();
+            SkinsEngineer.PrismAchievement();
+            //SkinsArtificer.PrismAchievement();
+            SkinsMerc.PrismAchievement();
+            SkinsREX.PrismAchievement();
+            SkinsLoader.PrismAchievement();
+            //SkinsAcrid.PrismAchievement();
+            SkinsCaptain.PrismAchievement();
+            //SkinsRailGunner.PrismAchievement();
+            //SkinsVoidFiend.PrismAchievement();
+
+            //Modded     
             SkinsHand.CallDuringAwake();
             SkinsEnforcer.CallDuringAwake();
+            SkinsSniper.CallDuringAwake();
+            SkinsMiner.CallDuringAwake();
+            SkinsCHEF.CallDuringAwake();
+            SkinsPilot.CallDuringAwake();
+            SkinsRocket.CallDuringAwake();         
+            SkinsChirr.CallDuringAwake();
             SkinsExecutioner.CallDuringAwake();
+            SkinsRavager.CallDuringAwake();
+
+            SkinsFutureModSupport.CallDuringAwake();
 
             BodyCatalog.availability.CallWhenAvailable(ModSupport);
+             
+            GameModeCatalog.availability.CallWhenAvailable(SortSkinsLate);
 
             On.RoR2.SkinDef.Apply += (orig, self, model) =>
             {
@@ -64,48 +91,231 @@ namespace WolfoSkinsMod
                 }
             };
 
-            On.RoR2.InfiniteTowerWaveController.PlayAllEnemiesDefeatedSound += (orig, self) =>
-            {
-                orig(self);
-                if (self.waveIndex >= 50)
-                {
-                    System.Action<Run> action = WolfoSkins.unlockSkins;
-                    if (action == null)
-                    {
-                        return;
-                    }
-                    action(Run.instance);
-                }
-            };
-            On.EntityStates.Missions.LunarScavengerEncounter.FadeOut.OnEnter += (orig, self) =>
-            {
-                orig(self);
-                System.Action<Run> action = WolfoSkins.unlockSkins;
-                if (action == null)
-                {
-                    return;
-                }
-                action(Run.instance);
-            };
-            On.EntityStates.GameOver.VoidEndingStart.OnEnter += (orig, self) =>
-            {
-                orig(self);
-                Debug.Log("EntityStates.GameOver.VoidEndingStart.OnEnter");
-                System.Action<Run> action = WolfoSkins.unlockSkins;
-                if (action == null)
-                {
-                    return;
-                }
-                action(Run.instance);
-            };
+
+            On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
             VoidlingNerfs();
+
+            //On.RoR2.RoR2Content.CreateEclipseUnlockablesForSurvivor += CreateAdditionalUnlocks;
+            //Run.onClientGameOverGlobal += Run_onClientGameOverGlobal;
+        }
+
+        private void GrantAutoGennedUnlockables(Run run, RunReport runReport)
+        {
+            if (runReport.gameEnding.isWin)
+            {
+                if (run.GetComponent<WeeklyRun>() || run.GetComponent<EclipseRun>() || Run.instance.selectedDifficulty >= DifficultyIndex.Eclipse1)
+                {
+                    List<PlayerCharacterMasterController> instances = PlayerCharacterMasterController._instances;
+                    for (int i = 0; i < instances.Count; i++)
+                    {
+                        NetworkUser networkUser = instances[i].networkUser;
+                        if (networkUser)
+                        {
+                            LocalUser localUser = networkUser.localUser;
+                            if (localUser != null)
+                            {
+                                SurvivorDef survivorPreference = networkUser.GetSurvivorPreference();
+                                if (survivorPreference)
+                                {
+                                    //UnlockableDef unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + survivorPreference.cachedName + ".Wolfo.Simu");
+                                    //UnlockableDef unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + survivorPreference.cachedName + ".Wolfo.Disso");
+                                    UnlockableDef unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + survivorPreference.cachedName + ".Wolfo.Prism");
+                                    if (unlockable)
+                                    {
+                                        localUser.userProfile.GrantUnlockable(unlockable);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (RunArtifactManager.instance && RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.MixEnemy))
+                {
+                    List<PlayerCharacterMasterController> instances = PlayerCharacterMasterController._instances;
+                    for (int i = 0; i < instances.Count; i++)
+                    {
+                        NetworkUser networkUser = instances[i].networkUser;
+                        if (networkUser)
+                        {
+                            LocalUser localUser = networkUser.localUser;
+                            if (localUser != null)
+                            {
+                                SurvivorDef survivorPreference = networkUser.GetSurvivorPreference();
+                                if (survivorPreference)
+                                {
+                                    UnlockableDef unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + survivorPreference.cachedName + ".Wolfo.Disso");
+                                    if (unlockable)
+                                    {
+                                        localUser.userProfile.GrantUnlockable(unlockable);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private UnlockableDef[] CreateAdditionalUnlocks(On.RoR2.RoR2Content.orig_CreateEclipseUnlockablesForSurvivor orig, SurvivorDef survivorDef, int minEclipseLevel, int maxEclipseLevel)
+        {
+            UnlockableDef[] array = orig(survivorDef, minEclipseLevel, maxEclipseLevel);
+
+            UnlockableDef def1 = ScriptableObject.CreateInstance<UnlockableDef>();
+            def1.cachedName = "Skins."+survivorDef.cachedName+".Wolfo.Simu";
+            def1.hidden = true;
+            UnlockableDef def2 = ScriptableObject.CreateInstance<UnlockableDef>();
+            def2.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.Disso";
+            def2.hidden = true;
+            UnlockableDef def3 = ScriptableObject.CreateInstance<UnlockableDef>();
+            def3.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.Prism";
+            def3.hidden = true;
+
+            array = array.Add(def1,def2,def3);
+
+            return array;
+        }
+
+        internal static void SortSkinsLate()
+        {
+            List<string> blacklistedSorting = new List<string>()
+            {
+                "Enforcer",
+                "HANDOverclocked",
+                "Miner"
+            };
+
+
+            for (int i = 0; i < SurvivorCatalog.survivorDefs.Length; i++)
+            {
+                if (blacklistedSorting.Contains(SurvivorCatalog.survivorDefs[i].cachedName))
+                {
+                    continue; //?
+                }
+
+                //Debug.LogWarning(SurvivorCatalog.survivorDefs[i]);
+                GameObject Body = SurvivorCatalog.survivorDefs[i].bodyPrefab;
+                BodyIndex Index = Body.GetComponent<CharacterBody>().bodyIndex;
+                ModelSkinController modelSkinController = Body.GetComponentInChildren<ModelSkinController>();
+
+                if (modelSkinController.skins.Length > 4)
+                {                   
+                    List<SkinDef> oldList = new List<SkinDef>();
+                    List<SkinDef> wolfList = new List<SkinDef>();
+                    for (int ii = 0; ii < modelSkinController.skins.Length; ii++)
+                    {
+                        Debug.LogWarning(modelSkinController.skins[ii]);
+                        if (modelSkinController.skins[ii].name.Contains("Wolfo"))
+                        {
+                            wolfList.Add(modelSkinController.skins[ii]);
+                        }
+                        else
+                        {
+                            oldList.Add(modelSkinController.skins[ii]);
+                        }
+                    }
+                    if (wolfList.Count > 0)
+                    {
+                        oldList.AddRange(wolfList);
+                        SkinDef[] skinsNew = oldList.ToArray();
+                        modelSkinController.skins = skinsNew;
+                        BodyCatalog.skins[(int)Index] = skinsNew;
+                        SkinCatalog.skinsByBody[(int)Index] = skinsNew;
+                    }           
+                }
+            }
+            System.GC.Collect(); //?
+        }
+
+
+        internal static void ModSupport()
+        {
+            //SortSkinsLate();
+            GameObject ModdedBody = BodyCatalog.FindBodyPrefab("CHEF");
+            if (ModdedBody != null)
+            {
+                SkinsCHEF.ModdedSkin(ModdedBody);
+            }
+            //HAND
+            ModdedBody = BodyCatalog.FindBodyPrefab("HANDOverclockedBody");
+            if (ModdedBody != null)
+            {
+                SkinsHand.ModdedSkin(ModdedBody);
+            }
+            //EnforcerBody
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.EnforcerGang.Enforcer"))
+            {
+                ModdedBody = BodyCatalog.FindBodyPrefab("EnforcerBody");
+                if (ModdedBody != null)
+                {
+                    SkinsEnforcer.ModdedSkin(ModdedBody);
+                }
+            }
+            //Executioner2Body
+            ModdedBody = BodyCatalog.FindBodyPrefab("Executioner2Body");
+            if (ModdedBody != null)
+            {
+                SkinsExecutioner.ModdedSkin(ModdedBody);
+            }
+            //SniperClassicBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("SniperClassicBody");
+            if (ModdedBody != null)
+            {
+                SkinsSniper.ModdedSkin(ModdedBody);
+            }
+            //RobRavagerBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("RobRavagerBody");
+            if (ModdedBody != null)
+            {
+                SkinsRavager.ModdedSkin(ModdedBody);
+            }
+            //RocketSurvivorBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("RocketSurvivorBody");
+            if (ModdedBody != null)
+            {
+                SkinsRocket.ModdedSkin(ModdedBody);
+            }
+            //MoffeinPilotBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("MoffeinPilotBody");
+            if (ModdedBody != null)
+            {
+                SkinsPilot.ModdedSkin(ModdedBody);
+            }
+            //MinerBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("MinerBody");
+            if (ModdedBody != null)
+            {
+                SkinsMiner.ModdedSkin(ModdedBody);
+            }
+            //ChirrBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("ChirrBody");
+            if (ModdedBody != null)
+            {
+                SkinsChirr.ModdedSkin(ModdedBody);
+            }
+        }
+
+
+
+
+        private void ReplaceTemporaryOverlayMaterial(On.RoR2.TemporaryOverlay.orig_AddToCharacerModel orig, TemporaryOverlay self, CharacterModel characterModel)
+        {
+            OverlayMaterialReplacer overlayMaterialReplacer = characterModel.GetComponent<OverlayMaterialReplacer>();
+            if (overlayMaterialReplacer)
+            {
+                //Debug.Log(self.originalMaterial);
+                if (self.originalMaterial == overlayMaterialReplacer.targetMaterial)
+                {
+                    self.originalMaterial = overlayMaterialReplacer.replacementMaterial;
+                }
+            }
+            orig(self,characterModel);
         }
 
         public static void VoidlingNerfs()
-        {
-            
+        {          
             On.RoR2.ScriptedCombatEncounter.BeginEncounter += VoidlingLevelLimit;
-            
 
             CharacterBody Voidling = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/VoidRaidCrab/MiniVoidRaidCrabBodyPhase1.prefab").WaitForCompletion().GetComponent<CharacterBody>();
             Voidling.baseDamage *= WConfig.VoidlingDamageMultiplier.Value;
@@ -159,53 +369,6 @@ namespace WolfoSkinsMod
             }
         }
 
-        internal static void ModSupport()
-        {
-            GameObject ModdedBody = BodyCatalog.FindBodyPrefab("CHEF");
-            if (ModdedBody != null)
-            {
-                SkinsCHEF.ModdedSkin(ModdedBody);
-            }
-            else
-            {
-                LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_CHEF_DESCRIPTION", "You do not have the CHEF mod installed.");
-            }
-            //HAND
-            ModdedBody = BodyCatalog.FindBodyPrefab("HANDOverclockedBody");
-            if (ModdedBody != null)
-            {
-                SkinsHand.ModdedSkin(ModdedBody);
-            }
-            else
-            {
-                LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_HAND_DESCRIPTION", "You do not have the Han-D mod installed.");
-            }
-            //EnforcerBody
-            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.EnforcerGang.Enforcer"))
-            {
-                ModdedBody = BodyCatalog.FindBodyPrefab("EnforcerBody");
-                if (ModdedBody != null)
-                {
-                    SkinsEnforcer.ModdedSkin(ModdedBody);
-                }
-            }
-            else
-            {
-                LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_ENFORCER_DESCRIPTION", "You do not have the Enforcer mod installed.");
-            }
-            //Executioner2Body
-            ModdedBody = BodyCatalog.FindBodyPrefab("Executioner2Body");
-            if (ModdedBody != null)
-            {
-                SkinsExecutioner.ModdedSkin(ModdedBody);
-            }
-            else
-            {
-                LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_EXECUTIONER_DESCRIPTION", "You do not have Starstorm 2 installed.");
-            }
-        }
-
-
     }
 
     public class SkinDefWolfo : SkinDef
@@ -220,6 +383,10 @@ namespace WolfoSkinsMod
         {
             CharacterModel model = modelObject.GetComponent<CharacterModel>();
             SkinDefWolfoTracker skinDefWolfoTracker = modelObject.AddComponent<SkinDefWolfoTracker>();
+
+            OverlayMaterialReplacer overlayMaterialReplacer = modelObject.AddComponent<OverlayMaterialReplacer>();
+            overlayMaterialReplacer.targetMaterial = changeMaterial.targetMaterial;
+            overlayMaterialReplacer.replacementMaterial = changeMaterial.replacementMaterial;
 
             skinDefWolfoTracker.model = model;
             skinDefWolfoTracker.changedLights = new SkinDefWolfoTracker.ChangedLightColors[lightColorsChanges.Length];
@@ -297,6 +464,15 @@ namespace WolfoSkinsMod
 
         public LightColorChanges[] lightColorsChanges = System.Array.Empty<LightColorChanges>();
         public ItemDisplayRule[] addGameObjects = System.Array.Empty<ItemDisplayRule>();
+        public MaterialChanger changeMaterial;
+
+
+        [System.Serializable]
+        public struct MaterialChanger
+        {
+            public Material targetMaterial;
+            public Material replacementMaterial;
+        }
 
         [System.Serializable]
         public struct LightColorChanges
@@ -312,7 +488,7 @@ namespace WolfoSkinsMod
         public GameObject[] addedObjects;
         public ChangedLightColors[] changedLights;
         public CharacterModel model;
-
+        
         [System.Serializable]
         public struct ChangedLightColors
         {
@@ -351,57 +527,9 @@ namespace WolfoSkinsMod
         }
     }
 
-    public class SimuOrVoidEnding : RoR2.Achievements.BaseAchievement
+    public class OverlayMaterialReplacer : MonoBehaviour
     {
-        public override void OnBodyRequirementMet()
-        {
-            base.OnBodyRequirementMet();
-            WolfoSkins.unlockSkins += this.Unlock;
-            Run.onClientGameOverGlobal += this.OnClientGameOverGlobal;
-        }
-
-        public override void OnBodyRequirementBroken()
-        {
-            WolfoSkins.unlockSkins -= this.Unlock;
-            Run.onClientGameOverGlobal -= this.OnClientGameOverGlobal;
-            base.OnBodyRequirementBroken();
-        }
-
-        private void OnClientGameOverGlobal(Run run, RunReport runReport)
-        {
-            if (!runReport.gameEnding)
-            {
-                return;
-            }
-            if (runReport.gameEnding.cachedName.StartsWith("InfiniteT"))
-            {
-                base.Grant();
-            }
-            else if (runReport.gameEnding.isWin)
-            {
-                if (runReport.gameEnding == RoR2Content.GameEndings.MainEnding)
-                {
-                    return;
-                }
-                else if (runReport.gameEnding == RoR2Content.GameEndings.ObliterationEnding)
-                {
-                    return;
-                }
-                else
-                {
-                    //Leaves Void and Limbo ending and probably Bulwarks Haunt.
-                    base.Grant();
-                }  
-            }
-        }
-
-        private void Unlock(Run run)
-        {
-            base.Grant();
-        }
-
-
-
+        public Material targetMaterial;
+        public Material replacementMaterial;
     }
-
 }

@@ -7,6 +7,12 @@ namespace WolfoSkinsMod
 {
     public class SkinsMerc
     {
+        internal static void Start()
+        {
+
+        }
+
+
         internal static void MercSkin()
         {
             SkinDef skinMercDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Merc/skinMercDefault.asset").WaitForCompletion();
@@ -74,10 +80,10 @@ namespace WolfoSkinsMod
             matMercRED.SetColor("_EmColor", new Color(1, 0, 0));
 
             matMercSword.mainTexture = texMercSwordDiffuse;
-            matMercSword.SetColor("_EmColor", new Color(0, 0.5f, 1));
+            matMercSword.SetColor("_EmColor", new Color(0f, 0.3f, 1));
 
             matMercSwordRED.mainTexture = texMercSwordDiffuseRed;
-            matMercSwordRED.SetColor("_EmColor", new Color(1, 0, 0));
+            matMercSwordRED.SetColor("_EmColor", new Color(1f, -1f, -1f));
             matMercSwordRED.SetTexture("_FlowHeightRamp", texRampFallbootsRed);
             matMercSwordRED.SetTexture("_FresnelRamp", texRampHuntressRed);
 
@@ -103,7 +109,7 @@ namespace WolfoSkinsMod
             LanguageAPI.Add("SIMU_SKIN_MERC", "Guard");
             LanguageAPI.Add("SIMU_SKIN_MERC2", "Guard Oni");
             LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_MERC_NAME", "Mercenary: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_MERC_DESCRIPTION", "As Mercenary"+ WolfoSkins.unlockCondition);
+            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_MERC_DESCRIPTION", "As Mercenary"+ Unlocks.unlockCondition);
 
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_MERC_NAME";
@@ -127,7 +133,7 @@ namespace WolfoSkinsMod
             //newSkinDef.lightColorsChanges = null;
 
             SkinDefWolfo newSkinDefRED = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDefRED.name = "skinMercWolfo2";
+            newSkinDefRED.name = "skinMercWolfo_Red";
             newSkinDefRED.nameToken = "SIMU_SKIN_MERC2";
             newSkinDefRED.icon = SkinIconS2;
             newSkinDefRED.baseSkins = skinMercAlt.baseSkins;
@@ -161,7 +167,29 @@ namespace WolfoSkinsMod
 
 
         [RegisterAchievement("SIMU_SKIN_MERC", "Skins.Merc.Wolfo", "CompleteUnknownEnding", null)]
-        public class ClearSimulacrumMercBody : SimuOrVoidEnding
+        public class ClearSimulacrumMercBody : AchievementSimuVoidTwisted
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("MercBody");
+            }
+        }
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_MERCENARY_NAME", "Mercenary" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_MERCENARY_DESCRIPTION", "As Mercenary" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_MERCENARY_NAME";
+            unlockableDef.cachedName = "Skins.Mercenary.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+        }
+
+        [RegisterAchievement("PRISM_SKIN_MERCENARY", "Skins.Mercenary.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoMercenary2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

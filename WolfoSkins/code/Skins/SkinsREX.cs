@@ -7,6 +7,12 @@ namespace WolfoSkinsMod
 {
     public class SkinsREX
     {
+        internal static void Start()
+        {
+
+        }
+
+
         internal static void TreebotSkin()
         {
             //Blue Tree Bot
@@ -58,7 +64,7 @@ namespace WolfoSkinsMod
             //Unlockable
             LanguageAPI.Add("SIMU_SKIN_TREEBOT", "Lepton Lily");
             LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_TREEBOT_NAME", "REX: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_TREEBOT_DESCRIPTION", "As REX"+ WolfoSkins.unlockCondition);
+            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_TREEBOT_DESCRIPTION", "As REX"+ Unlocks.unlockCondition);
 
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_TREEBOT_NAME";
@@ -150,7 +156,29 @@ namespace WolfoSkinsMod
         }
 
         [RegisterAchievement("SIMU_SKIN_TREEBOT", "Skins.Treebot.Wolfo", "RescueTreebot", null)]
-        public class ClearSimulacrumTreebotBody : SimuOrVoidEnding
+        public class ClearSimulacrumTreebotBody : AchievementSimuVoidTwisted
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("TreebotBody");
+            }
+        }
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_TREEBOT_NAME", "REX" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_TREEBOT_DESCRIPTION", "As REX" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_TREEBOT_NAME";
+            unlockableDef.cachedName = "Skins.Treebot.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+        }
+
+        [RegisterAchievement("PRISM_SKIN_TREEBOT", "Skins.Treebot.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoTreebot2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

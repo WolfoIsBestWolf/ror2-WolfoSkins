@@ -19,5 +19,13 @@ namespace WolfoSkinsMod
         public static Rect rec106 = new Rect(0, 0, 106, 106);
         public static Rect rec64 = new Rect(0, 0, 64, 64);
         public static Vector2 half = new Vector2(0.5f, 0.5f);
+
+        public static Sprite MakeIcon(byte[] texture)
+        {
+            Texture2D texture2 = new Texture2D(128, 128, TextureFormat.DXT5, false);
+            texture2.LoadImage(texture, true);
+            texture2.filterMode = FilterMode.Bilinear;
+            return Sprite.Create(texture2, WRect.rec128, WRect.half);
+        }
     }
 }

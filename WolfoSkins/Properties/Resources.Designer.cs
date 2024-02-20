@@ -63,16 +63,6 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] ExeAxe4 {
-            get {
-                object obj = ResourceManager.GetObject("ExeAxe4", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         public static byte[] exeem {
             get {
                 object obj = ResourceManager.GetObject("exeem", resourceCulture);
@@ -86,6 +76,16 @@ namespace WolfoSkinsMod.Properties {
         public static byte[] ExegunEmTex {
             get {
                 object obj = ResourceManager.GetObject("ExegunEmTex", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ExegunEmTexGOLD {
+            get {
+                object obj = ResourceManager.GetObject("ExegunEmTexGOLD", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -113,6 +113,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] ExeKitEmGOLD {
+            get {
+                object obj = ResourceManager.GetObject("ExeKitEmGOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] ExeKitTex {
             get {
                 object obj = ResourceManager.GetObject("ExeKitTex", resourceCulture);
@@ -123,9 +133,49 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] ExeMasterygunTexGOLD {
+            get {
+                object obj = ResourceManager.GetObject("ExeMasterygunTexGOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ExeMasteryKitTexGOLD {
+            get {
+                object obj = ResourceManager.GetObject("ExeMasteryKitTexGOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] exeRamp {
             get {
                 object obj = ResourceManager.GetObject("exeRamp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ExeSkinEMGOLD {
+            get {
+                object obj = ResourceManager.GetObject("ExeSkinEMGOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] ExeSkinTexGOLD {
+            get {
+                object obj = ResourceManager.GetObject("ExeSkinTexGOLD", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -153,6 +203,26 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] HanD_DiffuseGREEN {
+            get {
+                object obj = ResourceManager.GetObject("HanD_DiffuseGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] HanD_DiffuseORANGE {
+            get {
+                object obj = ResourceManager.GetObject("HanD_DiffuseORANGE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] HanD_Emission {
             get {
                 object obj = ResourceManager.GetObject("HanD_Emission", resourceCulture);
@@ -163,9 +233,189 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] HanD_EmissionGREEN {
+            get {
+                object obj = ResourceManager.GetObject("HanD_EmissionGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] HanDWeapon_Diffuse {
             get {
                 object obj = ResourceManager.GetObject("HanDWeapon_Diffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] HanDWeapon_DiffuseGREEN {
+            get {
+                object obj = ResourceManager.GetObject("HanDWeapon_DiffuseGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] HanDWeapon_DiffuseORANGE {
+            get {
+                object obj = ResourceManager.GetObject("HanDWeapon_DiffuseORANGE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Pilot_diffuse {
+            get {
+                object obj = ResourceManager.GetObject("Pilot_diffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Pilot_diffuseRED {
+            get {
+                object obj = ResourceManager.GetObject("Pilot_diffuseRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Pilot_diffuseWHITE {
+            get {
+                object obj = ResourceManager.GetObject("Pilot_diffuseWHITE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlot2_diffuse {
+            get {
+                object obj = ResourceManager.GetObject("PIlot2_diffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlot2_diffuseRED {
+            get {
+                object obj = ResourceManager.GetObject("PIlot2_diffuseRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlot2_diffuseWHITE {
+            get {
+                object obj = ResourceManager.GetObject("PIlot2_diffuseWHITE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PilotParachute_diffuse {
+            get {
+                object obj = ResourceManager.GetObject("PilotParachute_diffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PilotParachute_diffuseRED {
+            get {
+                object obj = ResourceManager.GetObject("PilotParachute_diffuseRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PilotParachute_diffuseWHITE {
+            get {
+                object obj = ResourceManager.GetObject("PilotParachute_diffuseWHITE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlotWeapon_diffuse {
+            get {
+                object obj = ResourceManager.GetObject("PIlotWeapon_diffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlotWeapon_diffuseRED {
+            get {
+                object obj = ResourceManager.GetObject("PIlotWeapon_diffuseRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlotWeapon_diffuseWHITE {
+            get {
+                object obj = ResourceManager.GetObject("PIlotWeapon_diffuseWHITE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlotWeapon_emission {
+            get {
+                object obj = ResourceManager.GetObject("PIlotWeapon_emission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlotWeapon_emissionRED {
+            get {
+                object obj = ResourceManager.GetObject("PIlotWeapon_emissionRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] PIlotWeapon_emissionWHITE {
+            get {
+                object obj = ResourceManager.GetObject("PIlotWeapon_emissionWHITE", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -213,6 +463,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] placeHolder {
+            get {
+                object obj = ResourceManager.GetObject("placeHolder", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] RailGunnerCamperMetalBackpack {
             get {
                 object obj = ResourceManager.GetObject("RailGunnerCamperMetalBackpack", resourceCulture);
@@ -243,6 +503,76 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] RailGunnerMetalBackpackSNIPER {
+            get {
+                object obj = ResourceManager.GetObject("RailGunnerMetalBackpackSNIPER", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RailGunnerMetalBodySNIPER {
+            get {
+                object obj = ResourceManager.GetObject("RailGunnerMetalBodySNIPER", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RailGunnerMetalGunSNIPER {
+            get {
+                object obj = ResourceManager.GetObject("RailGunnerMetalGunSNIPER", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RAVAGERtexBody {
+            get {
+                object obj = ResourceManager.GetObject("RAVAGERtexBody", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RAVAGERtexBodyEmission {
+            get {
+                object obj = ResourceManager.GetObject("RAVAGERtexBodyEmission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RAVAGERtexSword {
+            get {
+                object obj = ResourceManager.GetObject("RAVAGERtexSword", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RAVAGERtexSwordEmission {
+            get {
+                object obj = ResourceManager.GetObject("RAVAGERtexSwordEmission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] RoRRHANDTex {
             get {
                 object obj = ResourceManager.GetObject("RoRRHANDTex", resourceCulture);
@@ -263,9 +593,89 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] skinChefIcon {
+        public static byte[] RoRRHANDTexEmissionGREEN {
             get {
-                object obj = ResourceManager.GetObject("skinChefIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("RoRRHANDTexEmissionGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RoRRHANDTexGREEN {
+            get {
+                object obj = ResourceManager.GetObject("RoRRHANDTexGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] RoRRHANDTexORANGE {
+            get {
+                object obj = ResourceManager.GetObject("RoRRHANDTexORANGE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] SilverRampGOLD {
+            get {
+                object obj = ResourceManager.GetObject("SilverRampGOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinChefIconBLACK {
+            get {
+                object obj = ResourceManager.GetObject("skinChefIconBLACK", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinChefIconBLUE {
+            get {
+                object obj = ResourceManager.GetObject("skinChefIconBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinChefIconCYAN {
+            get {
+                object obj = ResourceManager.GetObject("skinChefIconCYAN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinChefIconGreen {
+            get {
+                object obj = ResourceManager.GetObject("skinChefIconGreen", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinChefIconProvi {
+            get {
+                object obj = ResourceManager.GetObject("skinChefIconProvi", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -293,6 +703,26 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] skinEnforcerIconGREEN {
+            get {
+                object obj = ResourceManager.GetObject("skinEnforcerIconGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinEnforcerIconSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("skinEnforcerIconSAFETY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] skinExecutionerIcon {
             get {
                 object obj = ResourceManager.GetObject("skinExecutionerIcon", resourceCulture);
@@ -303,9 +733,39 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] skinExecutionerIconGOLD {
+            get {
+                object obj = ResourceManager.GetObject("skinExecutionerIconGOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] skinIconCaptainRED {
             get {
                 object obj = ResourceManager.GetObject("skinIconCaptainRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconChirr {
+            get {
+                object obj = ResourceManager.GetObject("skinIconChirr", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconChirrORANGE {
+            get {
+                object obj = ResourceManager.GetObject("skinIconChirrORANGE", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -336,6 +796,16 @@ namespace WolfoSkinsMod.Properties {
         public static byte[] skinIconCroco {
             get {
                 object obj = ResourceManager.GetObject("skinIconCroco", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconCrocoBLACK {
+            get {
+                object obj = ResourceManager.GetObject("skinIconCrocoBLACK", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -413,6 +883,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] skinIconLoaderRED {
+            get {
+                object obj = ResourceManager.GetObject("skinIconLoaderRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] skinIconMage {
             get {
                 object obj = ResourceManager.GetObject("skinIconMage", resourceCulture);
@@ -426,6 +906,16 @@ namespace WolfoSkinsMod.Properties {
         public static byte[] skinIconMageOrange {
             get {
                 object obj = ResourceManager.GetObject("skinIconMageOrange", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconMagePURPLE {
+            get {
+                object obj = ResourceManager.GetObject("skinIconMagePURPLE", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -453,6 +943,66 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] skinIconMiner {
+            get {
+                object obj = ResourceManager.GetObject("skinIconMiner", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconMinerDiamond {
+            get {
+                object obj = ResourceManager.GetObject("skinIconMinerDiamond", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconMinerGold {
+            get {
+                object obj = ResourceManager.GetObject("skinIconMinerGold", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconPilot {
+            get {
+                object obj = ResourceManager.GetObject("skinIconPilot", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconPilotRED {
+            get {
+                object obj = ResourceManager.GetObject("skinIconPilotRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconPilotWHITE {
+            get {
+                object obj = ResourceManager.GetObject("skinIconPilotWHITE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] skinIconRailgunner {
             get {
                 object obj = ResourceManager.GetObject("skinIconRailgunner", resourceCulture);
@@ -466,6 +1016,16 @@ namespace WolfoSkinsMod.Properties {
         public static byte[] skinIconRailgunnerCAMPER {
             get {
                 object obj = ResourceManager.GetObject("skinIconRailgunnerCAMPER", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinIconRailgunnerSNIPER {
+            get {
+                object obj = ResourceManager.GetObject("skinIconRailgunnerSNIPER", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -513,9 +1073,59 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] skinIconVoidSurvivorINV {
+            get {
+                object obj = ResourceManager.GetObject("skinIconVoidSurvivorINV", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinRavagerIcon {
+            get {
+                object obj = ResourceManager.GetObject("skinRavagerIcon", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinSniperIcon {
+            get {
+                object obj = ResourceManager.GetObject("skinSniperIcon", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] skinSniperIconGRAY {
+            get {
+                object obj = ResourceManager.GetObject("skinSniperIconGRAY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texBanditRedCoatDiffuse {
             get {
                 object obj = ResourceManager.GetObject("texBanditRedCoatDiffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texBanditRedCoatDiffuseGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texBanditRedCoatDiffuseGREEN", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -543,6 +1153,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texBanditRedDiffuseGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texBanditRedDiffuseGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texBanditRedDiffusePURPLE {
             get {
                 object obj = ResourceManager.GetObject("texBanditRedDiffusePURPLE", resourceCulture);
@@ -556,6 +1176,16 @@ namespace WolfoSkinsMod.Properties {
         public static byte[] texBanditRedEmission {
             get {
                 object obj = ResourceManager.GetObject("texBanditRedEmission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texBanditRedEmissionGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texBanditRedEmissionGREEN", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -583,6 +1213,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texBanditRedSkinIconGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texBanditRedSkinIconGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texBanditRedSkinIconPURPLE {
             get {
                 object obj = ResourceManager.GetObject("texBanditRedSkinIconPURPLE", resourceCulture);
@@ -603,9 +1243,39 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texBanditShotgunDiffuseGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texBanditShotgunDiffuseGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texBanditShotgunDiffusePURPLE {
             get {
                 object obj = ResourceManager.GetObject("texBanditShotgunDiffusePURPLE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexBlackBox {
+            get {
+                object obj = ResourceManager.GetObject("TexBlackBox", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexBlackBoxBLUE {
+            get {
+                object obj = ResourceManager.GetObject("TexBlackBoxBLUE", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -623,9 +1293,39 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texCaptainJacketDiffuseAltBLUE {
+            get {
+                object obj = ResourceManager.GetObject("texCaptainJacketDiffuseAltBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texCaptainJacketDiffuseRED {
             get {
                 object obj = ResourceManager.GetObject("texCaptainJacketDiffuseRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texCaptainPaletteAltBLUE {
+            get {
+                object obj = ResourceManager.GetObject("texCaptainPaletteAltBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texCaptainPaletteAltBLUE2 {
+            get {
+                object obj = ResourceManager.GetObject("texCaptainPaletteAltBLUE2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -653,9 +1353,49 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] texChefDefault {
+        public static byte[] texChefDefaultBLACK {
             get {
-                object obj = ResourceManager.GetObject("texChefDefault", resourceCulture);
+                object obj = ResourceManager.GetObject("texChefDefaultBLACK", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texChefDefaultBLUE {
+            get {
+                object obj = ResourceManager.GetObject("texChefDefaultBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texChefDefaultCYAN {
+            get {
+                object obj = ResourceManager.GetObject("texChefDefaultCYAN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texChefDefaultPROVI {
+            get {
+                object obj = ResourceManager.GetObject("texChefDefaultPROVI", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texChefGreen {
+            get {
+                object obj = ResourceManager.GetObject("texChefGreen", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -673,9 +1413,49 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texChirrDiffuse {
+            get {
+                object obj = ResourceManager.GetObject("texChirrDiffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texChirrDiffuseORANGE {
+            get {
+                object obj = ResourceManager.GetObject("texChirrDiffuseORANGE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texClassicGunHMG {
             get {
                 object obj = ResourceManager.GetObject("texClassicGunHMG", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texClassicGunHMGGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texClassicGunHMGGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texClassicGunHMGSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("texClassicGunHMGSAFETY", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -693,6 +1473,26 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texClassicGunSuperGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texClassicGunSuperGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texClassicGunSuperSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("texClassicGunSuperSAFETY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texCommandoPaletteDiffuse {
             get {
                 object obj = ResourceManager.GetObject("texCommandoPaletteDiffuse", resourceCulture);
@@ -703,9 +1503,49 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texCommandoPaletteDiffuseGUN {
+            get {
+                object obj = ResourceManager.GetObject("texCommandoPaletteDiffuseGUN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texCrocoDiffuse {
             get {
                 object obj = ResourceManager.GetObject("texCrocoDiffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texCrocoDiffuse1 {
+            get {
+                object obj = ResourceManager.GetObject("texCrocoDiffuse1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texCrocoDiffuse2 {
+            get {
+                object obj = ResourceManager.GetObject("texCrocoDiffuse2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texCrocoDiffuseBLACK {
+            get {
+                object obj = ResourceManager.GetObject("texCrocoDiffuseBLACK", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -733,6 +1573,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texCrocoEmissionBLACK {
+            get {
+                object obj = ResourceManager.GetObject("texCrocoEmissionBLACK", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texCrocoEmissionLEMURIAN {
             get {
                 object obj = ResourceManager.GetObject("texCrocoEmissionLEMURIAN", resourceCulture);
@@ -753,9 +1603,39 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texCrocoPoisonMaskBLACK {
+            get {
+                object obj = ResourceManager.GetObject("texCrocoPoisonMaskBLACK", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texCrocoSpinesDiffuse {
             get {
                 object obj = ResourceManager.GetObject("texCrocoSpinesDiffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texCrocoSpinesDiffuseBLACK {
+            get {
+                object obj = ResourceManager.GetObject("texCrocoSpinesDiffuseBLACK", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texCrocoSpinesDiffuseBLACK_EM {
+            get {
+                object obj = ResourceManager.GetObject("texCrocoSpinesDiffuseBLACK_EM", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -783,6 +1663,36 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texDroneBodyEmissionGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texDroneBodyEmissionGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texDroneBodyGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texDroneBodyGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texDroneBodyORANGE {
+            get {
+                object obj = ResourceManager.GetObject("texDroneBodyORANGE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texEnforcer {
             get {
                 object obj = ResourceManager.GetObject("texEnforcer", resourceCulture);
@@ -796,6 +1706,36 @@ namespace WolfoSkinsMod.Properties {
         public static byte[] texEnforcer_Emission {
             get {
                 object obj = ResourceManager.GetObject("texEnforcer_Emission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcer_EmissionGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcer_EmissionGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcer_EmissionSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcer_EmissionSAFETY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcerGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcerGREEN", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -823,9 +1763,79 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texEnforcerGun_EmissionGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcerGun_EmissionGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcerGun_EmissionSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcerGun_EmissionSAFETY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcerGunGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcerGunGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcerGunSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcerGunSAFETY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcerSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcerSAFETY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texEnforcerShield {
             get {
                 object obj = ResourceManager.GetObject("texEnforcerShield", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcerShieldGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcerShieldGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texEnforcerShieldSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("texEnforcerShieldSAFETY", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -903,6 +1913,26 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texExeAxeRampBlackGOLD {
+            get {
+                object obj = ResourceManager.GetObject("texExeAxeRampBlackGOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexGrenadeBLUE {
+            get {
+                object obj = ResourceManager.GetObject("TexGrenadeBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texHANDSkinIconDefault {
             get {
                 object obj = ResourceManager.GetObject("texHANDSkinIconDefault", resourceCulture);
@@ -913,9 +1943,49 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texHANDSkinIconDefaultGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texHANDSkinIconDefaultGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texHANDSkinIconDefaultORANGE {
+            get {
+                object obj = ResourceManager.GetObject("texHANDSkinIconDefaultORANGE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texHANDSkinIconRorr {
             get {
                 object obj = ResourceManager.GetObject("texHANDSkinIconRorr", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texHANDSkinIconRorrGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texHANDSkinIconRorrGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texHANDSkinIconRorrORANGE {
+            get {
+                object obj = ResourceManager.GetObject("texHANDSkinIconRorrORANGE", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1013,9 +2083,29 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texLoaderPilotDiffuseAltRED {
+            get {
+                object obj = ResourceManager.GetObject("texLoaderPilotDiffuseAltRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texMageDiffuseAlt {
             get {
                 object obj = ResourceManager.GetObject("texMageDiffuseAlt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texMageDiffuseAltPURPLE {
+            get {
+                object obj = ResourceManager.GetObject("texMageDiffuseAltPURPLE", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1093,6 +2183,66 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texMinerDiamond {
+            get {
+                object obj = ResourceManager.GetObject("texMinerDiamond", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texMinerDiamondEmission {
+            get {
+                object obj = ResourceManager.GetObject("texMinerDiamondEmission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texMinerGold {
+            get {
+                object obj = ResourceManager.GetObject("texMinerGold", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texMinerGoldEmission {
+            get {
+                object obj = ResourceManager.GetObject("texMinerGoldEmission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texMinerMolten {
+            get {
+                object obj = ResourceManager.GetObject("texMinerMolten", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texMinerMoltenEmission {
+            get {
+                object obj = ResourceManager.GetObject("texMinerMoltenEmission", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texRabbitEarsDiffuse {
             get {
                 object obj = ResourceManager.GetObject("texRabbitEarsDiffuse", resourceCulture);
@@ -1123,6 +2273,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texRailgunEmissionSNIPER {
+            get {
+                object obj = ResourceManager.GetObject("texRailgunEmissionSNIPER", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texRailGunnerDiffuse {
             get {
                 object obj = ResourceManager.GetObject("texRailGunnerDiffuse", resourceCulture);
@@ -1143,9 +2303,29 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texRailGunnerDiffuseSNIPER {
+            get {
+                object obj = ResourceManager.GetObject("texRailGunnerDiffuseSNIPER", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texRampCrocoDiseaseDark {
             get {
                 object obj = ResourceManager.GetObject("texRampCrocoDiseaseDark", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texRampCrocoDiseaseDarkBLACK {
+            get {
+                object obj = ResourceManager.GetObject("texRampCrocoDiseaseDarkBLACK", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1263,6 +2443,26 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texRampLightningGOLD {
+            get {
+                object obj = ResourceManager.GetObject("texRampLightningGOLD", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texRampLightningRED {
+            get {
+                object obj = ResourceManager.GetObject("texRampLightningRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texRampMageFire {
             get {
                 object obj = ResourceManager.GetObject("texRampMageFire", resourceCulture);
@@ -1293,6 +2493,116 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texRampNullifierOffsetINV {
+            get {
+                object obj = ResourceManager.GetObject("texRampNullifierOffsetINV", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexRocket {
+            get {
+                object obj = ResourceManager.GetObject("TexRocket", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexRocketBackpack {
+            get {
+                object obj = ResourceManager.GetObject("TexRocketBackpack", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexRocketBackpackBLUE {
+            get {
+                object obj = ResourceManager.GetObject("TexRocketBackpackBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexRocketBLUE {
+            get {
+                object obj = ResourceManager.GetObject("TexRocketBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexRocketEmissive {
+            get {
+                object obj = ResourceManager.GetObject("TexRocketEmissive", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexRocketEmissiveBLUE {
+            get {
+                object obj = ResourceManager.GetObject("TexRocketEmissiveBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexRocketProjectile {
+            get {
+                object obj = ResourceManager.GetObject("TexRocketProjectile", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexRocketProjectileBLUE {
+            get {
+                object obj = ResourceManager.GetObject("TexRocketProjectileBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texRocketSkinDefault {
+            get {
+                object obj = ResourceManager.GetObject("texRocketSkinDefault", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texRocketSkinDefaultBLUE {
+            get {
+                object obj = ResourceManager.GetObject("texRocketSkinDefaultBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texSexforcerShieldGlass {
             get {
                 object obj = ResourceManager.GetObject("texSexforcerShieldGlass", resourceCulture);
@@ -1303,9 +2613,89 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texSexforcerShieldGlassGREEN {
+            get {
+                object obj = ResourceManager.GetObject("texSexforcerShieldGlassGREEN", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texSexforcerShieldGlassSAFETY {
+            get {
+                object obj = ResourceManager.GetObject("texSexforcerShieldGlassSAFETY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texShieldBugDiffuse {
             get {
                 object obj = ResourceManager.GetObject("texShieldBugDiffuse", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexShovel {
+            get {
+                object obj = ResourceManager.GetObject("TexShovel", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] TexShovelBLUE {
+            get {
+                object obj = ResourceManager.GetObject("TexShovelBLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texSkinSwatches_25BLUE {
+            get {
+                object obj = ResourceManager.GetObject("texSkinSwatches_25BLUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texSniperDefault {
+            get {
+                object obj = ResourceManager.GetObject("texSniperDefault", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texSniperDefault_EmissionGRAY {
+            get {
+                object obj = ResourceManager.GetObject("texSniperDefault_EmissionGRAY", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texSniperDefaultGRAY {
+            get {
+                object obj = ResourceManager.GetObject("texSniperDefaultGRAY", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1433,6 +2823,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texTrimSheetConstructionLoaderAltNewRED {
+            get {
+                object obj = ResourceManager.GetObject("texTrimSheetConstructionLoaderAltNewRED", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texTrimSheetMilitaryLightMetal {
             get {
                 object obj = ResourceManager.GetObject("texTrimSheetMilitaryLightMetal", resourceCulture);
@@ -1473,6 +2873,16 @@ namespace WolfoSkinsMod.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] texVoidSurvivorFleshDiffuseINV {
+            get {
+                object obj = ResourceManager.GetObject("texVoidSurvivorFleshDiffuseINV", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] texVoidSurvivorFleshEmission {
             get {
                 object obj = ResourceManager.GetObject("texVoidSurvivorFleshEmission", resourceCulture);
@@ -1486,6 +2896,16 @@ namespace WolfoSkinsMod.Properties {
         public static byte[] texVoidSurvivorFleshEmissionIMP {
             get {
                 object obj = ResourceManager.GetObject("texVoidSurvivorFleshEmissionIMP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] texVoidSurvivorFleshEmissionINV {
+            get {
+                object obj = ResourceManager.GetObject("texVoidSurvivorFleshEmissionINV", resourceCulture);
                 return ((byte[])(obj));
             }
         }

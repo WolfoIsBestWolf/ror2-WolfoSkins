@@ -7,6 +7,12 @@ namespace WolfoSkinsMod
 {
     public class SkinsEngineer
     {
+        internal static void Start()
+        {
+
+        }
+
+
         internal static void EngiSkin()
         {
             //RoRR Red/Yellow Engineer
@@ -176,7 +182,7 @@ namespace WolfoSkinsMod
             //Unlockable
             LanguageAPI.Add("SIMU_SKIN_ENGINEER", "Helium");
             LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_ENGINEER_NAME", "Engineer: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_ENGINEER_DESCRIPTION", "As Engineer"+ WolfoSkins.unlockCondition);
+            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_ENGINEER_DESCRIPTION", "As Engineer"+ Unlocks.unlockCondition);
 
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_ENGINEER_NAME";
@@ -423,7 +429,29 @@ namespace WolfoSkinsMod
         }
 
         [RegisterAchievement("SIMU_SKIN_ENGINEER", "Skins.Engineer.Wolfo", "Complete30StagesCareer", null)]
-        public class ClearSimulacrumTreebotBody : SimuOrVoidEnding
+        public class ClearSimulacrumTreebotBody : AchievementSimuVoidTwisted
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("EngiBody");
+            }
+        }
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_ENGINEER_NAME", "Engineer" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_ENGINEER_DESCRIPTION", "As Engineer" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_ENGINEER_NAME";
+            unlockableDef.cachedName = "Skins.Engineer.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+        }
+
+        [RegisterAchievement("PRISM_SKIN_ENGINEER", "Skins.Engineer.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoEngineer2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

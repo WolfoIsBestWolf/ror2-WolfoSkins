@@ -7,6 +7,12 @@ namespace WolfoSkinsMod
 {
     public class SkinsMULT
     {
+        internal static void Start()
+        {
+
+        }
+
+
         internal static void ToolbotSkin()
         {
             SkinDef skinToolbotDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Toolbot/skinToolbotDefault.asset").WaitForCompletion();
@@ -61,7 +67,7 @@ namespace WolfoSkinsMod
             LanguageAPI.Add("SIMU_SKIN_TOOLBOT2", "Healing");
             LanguageAPI.Add("SIMU_SKIN_TOOLBOT3", "Utility");
             LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_TOOLBOT_NAME", "MUL-T: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_TOOLBOT_DESCRIPTION", "As MUL-T"+ WolfoSkins.unlockCondition);
+            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_TOOLBOT_DESCRIPTION", "As MUL-T"+ Unlocks.unlockCondition);
 
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_TOOLBOT_NAME";
@@ -102,7 +108,29 @@ namespace WolfoSkinsMod
 
 
         [RegisterAchievement("SIMU_SKIN_TOOLBOT", "Skins.Toolbot.Wolfo", "RepeatFirstTeleporter", null)]
-        public class ClearSimulacrumToolbotBody : SimuOrVoidEnding
+        public class ClearSimulacrumToolbotBody : AchievementSimuVoidTwisted
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("ToolbotBody");
+            }
+        }
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_TOOLBOT_NAME", "MUL-T" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_TOOLBOT_DESCRIPTION", "As MUL-T" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_TOOLBOT_NAME";
+            unlockableDef.cachedName = "Skins.Toolbot.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+        }
+
+        [RegisterAchievement("PRISM_SKIN_TOOLBOT", "Skins.Toolbot.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoToolbot2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

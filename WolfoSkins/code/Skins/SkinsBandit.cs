@@ -2,12 +2,38 @@ using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using System.Collections.Generic;
 
 namespace WolfoSkinsMod
 {
     public class SkinsBandit
     {
-        internal static void BanditSkin()
+        internal static void Start()
+        {
+            LanguageAPI.Add("SIMU_SKIN_BANDIT", "Autumn");
+            LanguageAPI.Add("SIMU_SKIN_BANDIT2", "Royal Fashion");
+            LanguageAPI.Add("SIMU_SKIN_BANDIT_GREEN", "Fruity");
+
+            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_BANDIT_NAME", "Bandit: Alternated");
+            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_BANDIT_DESCRIPTION", "As Bandit" + Unlocks.unlockCondition);
+
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_BANDIT_NAME";
+            unlockableDef.cachedName = "Skins.Bandit.Wolfo";
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.texBanditRedSkinIcon);
+            //
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
+            BanditSkin(unlockableDef);           
+            BanditSkinGreen(unlockableDef);
+            BanditSkinPurple(unlockableDef);
+        }
+
+        internal static void BanditSkin(UnlockableDef unlockableDef)
         {
             //RoRR Red Bandit
             SkinDef BanditDefaultSkin = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/Bandit2Body").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[0];
@@ -60,7 +86,7 @@ namespace WolfoSkinsMod
             matBandit2Revolver.mainTexture = texBanditShotgunDiffuse;
 
             matBanditRed1.SetTexture("_EmTex", texBanditRedEmission);
-            matBanditRed1.SetColor("_EmColor", new Color(1f, 0.8f, 1f)); //0 0.3491 0.327 1
+            matBanditRed1.SetColor("_EmColor", new Color(1.1f, 0.88f, 1.1f)); //0 0.3491 0.327 1
             //matBandit2Shotgun.SetColor("_EmColor", new Color(0.4f, 0.12f, 0.19f)); //100 30 50
             matBandit2Shotgun.SetColor("_EmColor", new Color(0.5f, 0.15f, 0.25f)); //100 30 50
             //matBandit2Coat.color = new Color(0.85f, 0.85f, 0.82f);
@@ -82,20 +108,7 @@ namespace WolfoSkinsMod
             BanditRedMesh[3] = BanditAltSkin.meshReplacements[2];
             //
             //
-            //Unlockable
-            LanguageAPI.Add("SIMU_SKIN_BANDIT", "Autumn");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_BANDIT_NAME", "Bandit: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_BANDIT_DESCRIPTION", "As Bandit"+ WolfoSkins.unlockCondition);
 
-            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_BANDIT_NAME";
-            unlockableDef.cachedName = "Skins.Bandit.Wolfo";
-            unlockableDef.achievementIcon = texBanditRedSkinIconS;
-            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
             //
             R2API.SkinDefInfo BanditRedSkinInfos = new R2API.SkinDefInfo
             {
@@ -109,11 +122,10 @@ namespace WolfoSkinsMod
                 RootObject = BanditDefaultSkin.rootObject,
                 UnlockableDef = unlockableDef,
             };
-            R2API.Skins.AddSkinToCharacter(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/Bandit2Body"), BanditRedSkinInfos);
-            BanditSkin2(unlockableDef);
+            R2API.Skins.AddSkinToCharacter(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/Bandit2Body"), BanditRedSkinInfos);      
         }
 
-        internal static void BanditSkin2(UnlockableDef unlockableDef)
+        internal static void BanditSkinPurple(UnlockableDef unlockableDef)
         {
             //RoRR Red Bandit
             SkinDef BanditDefaultSkin = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/Bandit2Body").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[0];
@@ -189,7 +201,7 @@ namespace WolfoSkinsMod
             //
             //
             //Unlockable
-            LanguageAPI.Add("SIMU_SKIN_BANDIT2", "Royal Fashion");
+    
 
             R2API.SkinDefInfo BanditRedSkinInfos = new R2API.SkinDefInfo
             {
@@ -207,9 +219,122 @@ namespace WolfoSkinsMod
            
         }
 
+        internal static void BanditSkinGreen(UnlockableDef unlockableDef)
+        {
+            //RoRR Red Bandit
+            SkinDef BanditDefaultSkin = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/Bandit2Body").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[0];
+            SkinDef BanditAltSkin = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/Bandit2Body").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[1];
+
+            CharacterModel.RendererInfo[] BanditRedRenderInfos = new CharacterModel.RendererInfo[8];
+            System.Array.Copy(BanditDefaultSkin.rendererInfos, BanditRedRenderInfos, 8);
+
+            Material matBanditRed1 = Object.Instantiate(BanditDefaultSkin.rendererInfos[0].defaultMaterial);
+            //Material matBanditRed2      = Object.Instantiate(BanditDefaultSkin.rendererInfos[1].defaultMaterial);
+            //Material matBanditRed3      = Object.Instantiate(BanditDefaultSkin.rendererInfos[2].defaultMaterial);
+            Material matBandit2Coat = Object.Instantiate(BanditDefaultSkin.rendererInfos[3].defaultMaterial);
+            Material matBandit2CoatHat = Object.Instantiate(BanditDefaultSkin.rendererInfos[3].defaultMaterial);
+            Material matBandit2Shotgun = Object.Instantiate(BanditDefaultSkin.rendererInfos[4].defaultMaterial);
+            Material matBandit2Knife = Object.Instantiate(BanditDefaultSkin.rendererInfos[5].defaultMaterial);
+            //Material matBandit2Coat2    = Object.Instantiate(BanditDefaultSkin.rendererInfos[6].defaultMaterial);
+            Material matBandit2Revolver = Object.Instantiate(BanditDefaultSkin.rendererInfos[7].defaultMaterial);
+
+            Texture2D texBanditRedSkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
+            texBanditRedSkinIcon.LoadImage(Properties.Resources.texBanditRedSkinIconGREEN, true);
+            texBanditRedSkinIcon.filterMode = FilterMode.Bilinear;
+            Sprite texBanditRedSkinIconS = Sprite.Create(texBanditRedSkinIcon, WRect.rec128, WRect.half);
+
+            Texture2D texBanditRedDiffuse = new Texture2D(1024, 1024, TextureFormat.DXT5, false);
+            texBanditRedDiffuse.LoadImage(Properties.Resources.texBanditRedDiffuseGREEN, true);
+            texBanditRedDiffuse.filterMode = FilterMode.Bilinear;
+            texBanditRedDiffuse.wrapMode = TextureWrapMode.Clamp;
+
+            Texture2D texBanditRedCoatDiffuse = new Texture2D(1024, 1024, TextureFormat.DXT5, false);
+            texBanditRedCoatDiffuse.LoadImage(Properties.Resources.texBanditRedCoatDiffuseGREEN, true);
+            texBanditRedCoatDiffuse.filterMode = FilterMode.Bilinear;
+            texBanditRedCoatDiffuse.wrapMode = TextureWrapMode.Clamp;
+
+            Texture2D texBanditRedEmission = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
+            texBanditRedEmission.LoadImage(Properties.Resources.texBanditRedEmissionGREEN, true);
+            texBanditRedEmission.filterMode = FilterMode.Bilinear;
+            texBanditRedEmission.wrapMode = TextureWrapMode.Clamp;
+
+            Texture2D texBanditShotgunDiffuse = new Texture2D(256, 256, TextureFormat.DXT1, false);
+            texBanditShotgunDiffuse.LoadImage(Properties.Resources.texBanditShotgunDiffuseGREEN, true);
+            texBanditShotgunDiffuse.filterMode = FilterMode.Bilinear;
+            texBanditShotgunDiffuse.wrapMode = TextureWrapMode.Clamp;
+
+            //
+            matBanditRed1.mainTexture = texBanditRedDiffuse;
+            matBandit2Coat.mainTexture = texBanditRedCoatDiffuse;
+            matBandit2CoatHat.mainTexture = texBanditRedCoatDiffuse;
+            matBandit2Shotgun.mainTexture = texBanditShotgunDiffuse;
+            matBandit2Knife.mainTexture = texBanditShotgunDiffuse;
+            matBandit2Revolver.mainTexture = texBanditShotgunDiffuse;
+
+            matBanditRed1.SetTexture("_EmTex", texBanditRedEmission);
+            matBanditRed1.SetColor("_EmColor", new Color(1f, 1.2f, 0.7f)); //0 0.3491 0.327 1
+            //matBandit2Shotgun.SetColor("_EmColor", new Color(0.4f, 0.12f, 0.19f)); //100 30 50
+            matBandit2Shotgun.SetColor("_EmColor", new Color(0.4f, 0.5f, 0.15f)); //100 30 50
+            //matBandit2Coat.color = new Color(0.95f, 0.95f, 0.87f);
+
+            BanditRedRenderInfos[0].defaultMaterial = matBanditRed1;     //matBandit2         //Bandit2AccessoriesMesh //texBandit2Diffuse
+            BanditRedRenderInfos[1].defaultMaterial = matBanditRed1;     //matBandit2         //Bandit2ArmsMesh
+            BanditRedRenderInfos[2].defaultMaterial = matBanditRed1;     //matBandit2         //Bandit2BodyMesh
+            BanditRedRenderInfos[3].defaultMaterial = matBandit2Coat;     //matBandit2Coat     //Bandit2CoatMesh        //texBandit2CoatDiffuse
+            BanditRedRenderInfos[4].defaultMaterial = matBandit2Shotgun;     //matBandit2Shotgun  //BanditShotgunMesh      //texBanditShotgunDiffuse
+            BanditRedRenderInfos[5].defaultMaterial = matBandit2Knife;     //matBandit2Knife    //BladeMesh              //texBanditShotgunDiffuse
+            BanditRedRenderInfos[6].defaultMaterial = matBandit2CoatHat;     //matBandit2Coat     //Bandit2HatMesh
+            BanditRedRenderInfos[7].defaultMaterial = matBandit2Revolver;     //matBandit2Revolver //BanditPistolMesh       //texBanditShotgunDiffuse
+
+            //
+            RoR2.SkinDef.MeshReplacement[] BanditRedMesh = new SkinDef.MeshReplacement[5];
+            BanditDefaultSkin.meshReplacements.CopyTo(BanditRedMesh, 0);
+
+            BanditRedMesh[3] = BanditAltSkin.meshReplacements[2];
+            //
+            //
+            R2API.SkinDefInfo BanditRedSkinInfos = new R2API.SkinDefInfo
+            {
+                Name = "skinBandit2Wolfo_Green",
+                NameToken = "SIMU_SKIN_BANDIT_GREEN",
+                Icon = texBanditRedSkinIconS,
+                BaseSkins = BanditAltSkin.baseSkins,
+                MeshReplacements = BanditRedMesh,
+                ProjectileGhostReplacements = BanditDefaultSkin.projectileGhostReplacements,
+                RendererInfos = BanditRedRenderInfos,
+                RootObject = BanditDefaultSkin.rootObject,
+                UnlockableDef = unlockableDef,
+            };
+            R2API.Skins.AddSkinToCharacter(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/Bandit2Body"), BanditRedSkinInfos);
+
+        }
 
         [RegisterAchievement("SIMU_SKIN_BANDIT", "Skins.Bandit.Wolfo", null, null)]
-        public class ClearSimulacrumBandit2Body : SimuOrVoidEnding
+        public class ClearSimulacrumBandit2Body : AchievementSimuVoidTwisted
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("Bandit2Body");
+            }
+        }
+
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_BANDIT_NAME", "Bandit" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_BANDIT_DESCRIPTION", "As Bandit" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_BANDIT_NAME";
+            unlockableDef.cachedName = "Skins.Bandit.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+            //
+        }
+
+        [RegisterAchievement("PRISM_SKIN_BANDIT", "Skins.Bandit.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoBandit2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

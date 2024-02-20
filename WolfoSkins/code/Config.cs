@@ -8,6 +8,7 @@ namespace WolfoSkinsMod
         public static ConfigFile ConfigFileUNSORTED = new ConfigFile(Paths.ConfigPath + "\\Wolfo.Wolfo_Skins.cfg", true);
 
         public static ConfigEntry<bool> cfgUnlockAll;
+        public static ConfigEntry<bool> cfgSort;
 
         public static ConfigEntry<float> VoidlingHPMultiplier;
         public static ConfigEntry<float> VoidlingDamageMultiplier;
@@ -23,6 +24,12 @@ namespace WolfoSkinsMod
                 "Unlock all skins",
                 false,
                 "Makes skins not require unlocks."
+            );
+            cfgSort = ConfigFileUNSORTED.Bind(
+                "Main",
+                "Sort skins later",
+                true,
+                "Sort skins at the end of the skin list. This is mostly here in case it causes issues."
             );
             VoidlingHPMultiplier = ConfigFileUNSORTED.Bind(
                 "Optional Voidling Nerfs",

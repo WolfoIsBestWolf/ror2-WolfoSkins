@@ -7,6 +7,12 @@ namespace WolfoSkinsMod
 {
     public class SkinsCommando
     {
+        internal static void Start()
+        {
+
+        }
+
+
         public static GameObject CommandoDashJetsBlue = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Commando/CommandoDashJets.prefab").WaitForCompletion(), "CommandoDashJetsBlue", false);
 
         internal static void CommandoSkin()
@@ -26,7 +32,7 @@ namespace WolfoSkinsMod
 
             LanguageAPI.Add("SIMU_SKIN_COMMANDO", "Providence Trial");
             LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_COMMANDO_NAME", "Commando: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_COMMANDO_DESCRIPTION", "As Commando"+ WolfoSkins.unlockCondition);
+            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_COMMANDO_DESCRIPTION", "As Commando"+ Unlocks.unlockCondition);
 
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_COMMANDO_NAME";
@@ -52,13 +58,27 @@ namespace WolfoSkinsMod
             texCommandoPaletteDiffuse.filterMode = FilterMode.Bilinear;
             texCommandoPaletteDiffuse.wrapMode = TextureWrapMode.Clamp;
 
+            Texture2D texCommandoPaletteDiffuseGUN = new Texture2D(64, 8, TextureFormat.DXT5, false);
+            texCommandoPaletteDiffuseGUN.LoadImage(Properties.Resources.texCommandoPaletteDiffuseGUN, true);
+            texCommandoPaletteDiffuseGUN.filterMode = FilterMode.Bilinear;
+            texCommandoPaletteDiffuseGUN.wrapMode = TextureWrapMode.Clamp;
+
+
             Material matCommandoDualiesAlt = Object.Instantiate(skinCommandoAlt.rendererInfos[2].defaultMaterial);
+            Material matCommandoDualiesAltGUN = Object.Instantiate(skinCommandoAlt.rendererInfos[2].defaultMaterial);
 
             matCommandoDualiesAlt.mainTexture = texCommandoPaletteDiffuse;
             //matCommandoDualiesAlt.SetColor("_EmColor", new Color(0.15f, 0.775f, 0.96f)); //0.8491 0.5267 0.1402 1
             matCommandoDualiesAlt.color = new Color(1.1f, 1f, 0.8f);
             matCommandoDualiesAlt.SetColor("_EmColor", new Color(0.2f, 0.9f, 0.9f)); //0.8491 0.5267 0.1402 1
 
+            matCommandoDualiesAltGUN.mainTexture = texCommandoPaletteDiffuseGUN;
+            matCommandoDualiesAltGUN.color = new Color(1.2f, 1.4f, 1.4f);
+            matCommandoDualiesAltGUN.SetColor("_EmColor", new Color(1f,2f,3f));
+            //matCommandoDualiesAltGUN.SetTexture("_EmTex", null);
+
+            NewRenderInfos[0].defaultMaterial = matCommandoDualiesAltGUN;
+            NewRenderInfos[1].defaultMaterial = matCommandoDualiesAltGUN;
             NewRenderInfos[2].defaultMaterial = matCommandoDualiesAlt;
             //
             //SkinIcon
@@ -76,6 +96,23 @@ namespace WolfoSkinsMod
             newSkinDef.rendererInfos = NewRenderInfos;
             newSkinDef.rootObject = skinCommandoAlt.rootObject;
             newSkinDef.unlockableDef = unlockableDef;
+
+
+            GameObject CommandoGrenadeProjectile = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Commando/CommandoGrenadeProjectile.prefab").WaitForCompletion();
+            GameObject CommandoGrenadeGhost = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Commando/CommandoGrenadeGhost.prefab").WaitForCompletion(), "CommandoGrenadeGhostPROVI", false);
+
+            CommandoGrenadeGhost.transform.GetChild(0).GetComponent<MeshRenderer>().material = matCommandoDualiesAlt;
+            CommandoGrenadeGhost.transform.GetChild(4).GetComponent<Light>().color = new Color(0.34f, 0.67f, 1f);//0.8679 0.6413 0.2334 1
+
+            newSkinDef.projectileGhostReplacements = new SkinDef.ProjectileGhostReplacement[]
+            {
+                new SkinDef.ProjectileGhostReplacement
+                {
+                    projectilePrefab = CommandoGrenadeProjectile,
+                    projectileGhostReplacementPrefab = CommandoGrenadeGhost,
+                }
+            };
+
 
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), newSkinDef);
 
@@ -127,7 +164,29 @@ namespace WolfoSkinsMod
         }
 
         [RegisterAchievement("SIMU_SKIN_COMMANDO", "Skins.Commando.Wolfo", null, null)]
-        public class CommandoClearSimulacrum : SimuOrVoidEnding
+        public class CommandoClearSimulacrum : AchievementSimuVoidTwisted
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("CommandoBody");
+            }
+        }
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_COMMANDO_NAME", "Commando" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_COMMANDO_DESCRIPTION", "As Commando" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_COMMANDO_NAME";
+            unlockableDef.cachedName = "Skins.Commando.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+        }
+
+        [RegisterAchievement("PRISM_SKIN_COMMANDO", "Skins.Commando.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoCommando2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

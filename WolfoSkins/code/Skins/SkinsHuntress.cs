@@ -7,6 +7,12 @@ namespace WolfoSkinsMod
 {
     public class SkinsHuntress
     {
+        internal static void Start()
+        {
+
+        }
+
+
         internal static void HuntressSkin()
         {
             SkinDef skinHuntressDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Huntress/skinHuntressDefault.asset").WaitForCompletion();
@@ -128,7 +134,7 @@ namespace WolfoSkinsMod
             //Unlockable
             LanguageAPI.Add("SIMU_SKIN_HUNTRESS", "Amor");
             LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_HUNTRESS_NAME", "Huntress: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_HUNTRESS_DESCRIPTION", "As Huntress"+ WolfoSkins.unlockCondition);
+            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_HUNTRESS_DESCRIPTION", "As Huntress"+ Unlocks.unlockCondition);
 
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_HUNTRESS_NAME";
@@ -429,7 +435,29 @@ namespace WolfoSkinsMod
 
 
         [RegisterAchievement("SIMU_SKIN_HUNTRESS", "Skins.Huntress.Wolfo", null, null)]
-        public class ClearSimulacrumHuntressBody : SimuOrVoidEnding
+        public class ClearSimulacrumHuntressBody : AchievementSimuVoidTwisted
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("HuntressBody");
+            }
+        }
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_HUNTRESS_NAME", "Huntress" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_HUNTRESS_DESCRIPTION", "As Huntress" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_HUNTRESS_NAME";
+            unlockableDef.cachedName = "Skins.Huntress.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+        }
+
+        [RegisterAchievement("PRISM_SKIN_HUNTRESS", "Skins.Huntress.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoHuntress2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
