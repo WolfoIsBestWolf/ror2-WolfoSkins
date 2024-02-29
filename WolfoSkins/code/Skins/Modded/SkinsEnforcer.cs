@@ -453,5 +453,28 @@ namespace WolfoSkinsMod
                 return BodyCatalog.FindBodyIndex("EnforcerBody");
             }
         }
+
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_ENFORCER_NAME", "Enforcer" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_ENFORCER_DESCRIPTION", "As Enforcer" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_PRISM_SKIN_ENFORCER_NAME";
+            unlockableDef.cachedName = "Skins.Enforcer.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+        }
+
+        [RegisterAchievement("PRISM_SKIN_ENFORCER", "Skins.Enforcer.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoEnforcer2Body : AchievementPrismaticDisso
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("EnforcerBody");
+            }
+        }
     }
 }

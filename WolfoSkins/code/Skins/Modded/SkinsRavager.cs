@@ -72,9 +72,9 @@ namespace WolfoSkinsMod
             matSword.mainTexture = texSword;
             matSword.SetTexture("_EmTex", texSwordEmission);
 
-            matImpBoss.color = new Color(0f, 0f, 0f);
-            //matImpBoss.shaderKeywords = new string[0];
-            //matImpBoss.SetColor("_EmColor", new Color(-0.2f, -0.2f, -0.2f));
+            matImpBoss.color = new Color(1f, 0.8f, 0.7f); //0.5 0.5 0.4 1
+            matImpBoss.DisableKeyword("FORCE_SPEC");
+            matImpBoss.SetColor("_EmColor", Color.red);
 
             NewRenderInfos[0].defaultMaterial = matBody;
             NewRenderInfos[1].defaultMaterial = matSword;

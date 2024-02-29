@@ -18,6 +18,7 @@ using UnityEngine.AddressableAssets;
 namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
+    [BepInDependency("com.TheTimeSweeper.TeslaTrooper", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "1.5.0")]
     //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
 
@@ -29,7 +30,6 @@ namespace WolfoSkinsMod
             WConfig.InitConfig();
 
             Unlocks.Hooks();
-
             //
             SkinsCommando.CommandoSkin();
             SkinsHuntress.HuntressSkin();
@@ -45,20 +45,6 @@ namespace WolfoSkinsMod
             SkinsRailGunner.RailGunnerSkins();
             SkinsVoidFiend.Start();
 
-            SkinsCommando.PrismAchievement();
-            SkinsHuntress.PrismAchievement();
-            SkinsBandit.PrismAchievement();
-            SkinsMULT.PrismAchievement();
-            SkinsEngineer.PrismAchievement();
-            //SkinsArtificer.PrismAchievement();
-            SkinsMerc.PrismAchievement();
-            SkinsREX.PrismAchievement();
-            SkinsLoader.PrismAchievement();
-            //SkinsAcrid.PrismAchievement();
-            SkinsCaptain.PrismAchievement();
-            //SkinsRailGunner.PrismAchievement();
-            //SkinsVoidFiend.PrismAchievement();
-
             //Modded     
             SkinsHand.CallDuringAwake();
             SkinsEnforcer.CallDuringAwake();
@@ -71,8 +57,30 @@ namespace WolfoSkinsMod
             SkinsExecutioner.CallDuringAwake();
             SkinsRavager.CallDuringAwake();
 
-            SkinsFutureModSupport.CallDuringAwake();
+            SkinsArsonist.CallDuringAwake();
+            TeslaDesolatorUnlocks.CallDuringAwake();
+            SkinsPaladin.CallDuringAwake();
 
+            SkinsFutureModSupport.CallDuringAwake();
+            //
+            //Prism stuff
+            SkinsCommando.PrismAchievement();
+            SkinsHuntress.PrismAchievement();
+            SkinsBandit.PrismAchievement();
+            SkinsMULT.PrismAchievement();
+            SkinsEngineer.PrismAchievement();
+            //SkinsArtificer.PrismAchievement();
+            SkinsMerc.PrismAchievement();
+            SkinsREX.PrismAchievement();
+            SkinsLoader.PrismAchievement();
+            //SkinsAcrid.PrismAchievement();
+            SkinsCaptain.PrismAchievement();
+            SkinsRailGunner.PrismAchievement();
+            //SkinsVoidFiend.PrismAchievement();
+
+            SkinsEnforcer.PrismAchievement();
+            SkinsHand.PrismAchievement();
+            //
             BodyCatalog.availability.CallWhenAvailable(ModSupport);
              
             GameModeCatalog.availability.CallWhenAvailable(SortSkinsLate);
@@ -85,6 +93,10 @@ namespace WolfoSkinsMod
                 {
                     model.GetComponent<SkinDefWolfoTracker>().UndoWolfoSkin();
                 }
+                if (model.GetComponent<SkinsCHEF.FixChefDisplay>())
+                {
+                    model.GetComponent<SkinsCHEF.FixChefDisplay>().Fix(self);
+                }
                 if (self is SkinDefWolfo)
                 {
                     (self as SkinDefWolfo).ApplyExtras(model);
@@ -95,95 +107,16 @@ namespace WolfoSkinsMod
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
             VoidlingNerfs();
 
-            //On.RoR2.RoR2Content.CreateEclipseUnlockablesForSurvivor += CreateAdditionalUnlocks;
-            //Run.onClientGameOverGlobal += Run_onClientGameOverGlobal;
         }
-
-        private void GrantAutoGennedUnlockables(Run run, RunReport runReport)
-        {
-            if (runReport.gameEnding.isWin)
-            {
-                if (run.GetComponent<WeeklyRun>() || run.GetComponent<EclipseRun>() || Run.instance.selectedDifficulty >= DifficultyIndex.Eclipse1)
-                {
-                    List<PlayerCharacterMasterController> instances = PlayerCharacterMasterController._instances;
-                    for (int i = 0; i < instances.Count; i++)
-                    {
-                        NetworkUser networkUser = instances[i].networkUser;
-                        if (networkUser)
-                        {
-                            LocalUser localUser = networkUser.localUser;
-                            if (localUser != null)
-                            {
-                                SurvivorDef survivorPreference = networkUser.GetSurvivorPreference();
-                                if (survivorPreference)
-                                {
-                                    //UnlockableDef unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + survivorPreference.cachedName + ".Wolfo.Simu");
-                                    //UnlockableDef unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + survivorPreference.cachedName + ".Wolfo.Disso");
-                                    UnlockableDef unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + survivorPreference.cachedName + ".Wolfo.Prism");
-                                    if (unlockable)
-                                    {
-                                        localUser.userProfile.GrantUnlockable(unlockable);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (RunArtifactManager.instance && RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.MixEnemy))
-                {
-                    List<PlayerCharacterMasterController> instances = PlayerCharacterMasterController._instances;
-                    for (int i = 0; i < instances.Count; i++)
-                    {
-                        NetworkUser networkUser = instances[i].networkUser;
-                        if (networkUser)
-                        {
-                            LocalUser localUser = networkUser.localUser;
-                            if (localUser != null)
-                            {
-                                SurvivorDef survivorPreference = networkUser.GetSurvivorPreference();
-                                if (survivorPreference)
-                                {
-                                    UnlockableDef unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + survivorPreference.cachedName + ".Wolfo.Disso");
-                                    if (unlockable)
-                                    {
-                                        localUser.userProfile.GrantUnlockable(unlockable);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
-
-        private UnlockableDef[] CreateAdditionalUnlocks(On.RoR2.RoR2Content.orig_CreateEclipseUnlockablesForSurvivor orig, SurvivorDef survivorDef, int minEclipseLevel, int maxEclipseLevel)
-        {
-            UnlockableDef[] array = orig(survivorDef, minEclipseLevel, maxEclipseLevel);
-
-            UnlockableDef def1 = ScriptableObject.CreateInstance<UnlockableDef>();
-            def1.cachedName = "Skins."+survivorDef.cachedName+".Wolfo.Simu";
-            def1.hidden = true;
-            UnlockableDef def2 = ScriptableObject.CreateInstance<UnlockableDef>();
-            def2.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.Disso";
-            def2.hidden = true;
-            UnlockableDef def3 = ScriptableObject.CreateInstance<UnlockableDef>();
-            def3.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.Prism";
-            def3.hidden = true;
-
-            array = array.Add(def1,def2,def3);
-
-            return array;
-        }
-
         internal static void SortSkinsLate()
         {
             List<string> blacklistedSorting = new List<string>()
             {
                 "Enforcer",
                 "HANDOverclocked",
-                "Miner"
+                "Miner",
+                "CHEF",
+                "RobPaladin"
             };
 
 
@@ -205,7 +138,7 @@ namespace WolfoSkinsMod
                     List<SkinDef> wolfList = new List<SkinDef>();
                     for (int ii = 0; ii < modelSkinController.skins.Length; ii++)
                     {
-                        Debug.LogWarning(modelSkinController.skins[ii]);
+                        //Debug.LogWarning(modelSkinController.skins[ii]);
                         if (modelSkinController.skins[ii].name.Contains("Wolfo"))
                         {
                             wolfList.Add(modelSkinController.skins[ii]);
@@ -227,7 +160,6 @@ namespace WolfoSkinsMod
             }
             System.GC.Collect(); //?
         }
-
 
         internal static void ModSupport()
         {
@@ -294,10 +226,36 @@ namespace WolfoSkinsMod
             {
                 SkinsChirr.ModdedSkin(ModdedBody);
             }
+            //
+            //ArsonistBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("ArsonistBody");
+            if (ModdedBody != null)
+            {
+                SkinsArsonist.ModdedSkin(ModdedBody);
+            }
+            //Tesla Trooper and the likes
+            ModdedBody = BodyCatalog.FindBodyPrefab("TeslaTrooperBody");
+            if (ModdedBody != null)
+            {
+                TeslaDesolatorColors.AddToTeslaTrooper(ModdedBody);
+            }
+            ModdedBody = BodyCatalog.FindBodyPrefab("TeslaTowerBody");
+            if (ModdedBody != null)
+            {
+                TeslaDesolatorColors.AddToTeslaTower(ModdedBody);
+            }
+            ModdedBody = BodyCatalog.FindBodyPrefab("DesolatorBody");
+            if (ModdedBody != null)
+            {
+                TeslaDesolatorColors.AddToDesolator(ModdedBody);
+            }
+            //RobPaladinBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("RobPaladinBody");
+            if (ModdedBody != null)
+            {
+                SkinsPaladin.ModdedSkin(ModdedBody);
+            }
         }
-
-
-
 
         private void ReplaceTemporaryOverlayMaterial(On.RoR2.TemporaryOverlay.orig_AddToCharacerModel orig, TemporaryOverlay self, CharacterModel characterModel)
         {
@@ -395,22 +353,35 @@ namespace WolfoSkinsMod
                 Transform transform = modelObject.transform.Find(lightColorsChanges[i].lightPath);
                 if (transform)
                 {
-                    Light light = transform.GetComponent<Light>();
-                    skinDefWolfoTracker.changedLights[i] = new SkinDefWolfoTracker.ChangedLightColors
+                    Light light = transform.GetComponent<Light>();               
+                    if (light)
                     {
-                        light = light,
-                        originalColor = light.color
-                    };
-                    light.color = lightColorsChanges[i].color;
-
-                    for (int j = 0; model.baseLightInfos.Length > j; j++)
-                    {
-                        if (model.baseLightInfos[j].light == light)
+                        skinDefWolfoTracker.changedLights[i] = new SkinDefWolfoTracker.ChangedLightColors
                         {
-                            model.baseLightInfos[j].defaultColor = lightColorsChanges[i].color;
+                            light = light,
+                            originalColor = light.color
+                        };
+                        light.color = lightColorsChanges[i].color;
+                        for (int j = 0; model.baseLightInfos.Length > j; j++)
+                        {
+                            if (model.baseLightInfos[j].light == light)
+                            {
+                                model.baseLightInfos[j].defaultColor = lightColorsChanges[i].color;
+                            }
                         }
                     }
-
+                    TrailRenderer trail = transform.GetComponent<TrailRenderer>();
+                    if (trail)
+                    {
+                        skinDefWolfoTracker.changedLights[i] = new SkinDefWolfoTracker.ChangedLightColors
+                        {
+                            trail = trail,
+                            originalColor = trail.startColor,
+                            trailEndColor = trail.endColor
+                        };
+                        trail.startColor = lightColorsChanges[i].color;
+                        trail.endColor = lightColorsChanges[i].color2;
+                    }
                 }
             }
             skinDefWolfoTracker.addedObjects = new GameObject[addGameObjects.Length];
@@ -478,8 +449,8 @@ namespace WolfoSkinsMod
         public struct LightColorChanges
         {
             public string lightPath;
-
             public Color color;
+            public Color color2;
         }
     }
 
@@ -493,8 +464,9 @@ namespace WolfoSkinsMod
         public struct ChangedLightColors
         {
             public Light light;
-
+            public TrailRenderer trail;
             public Color originalColor;
+            public Color trailEndColor;
         }
 
         public void UndoWolfoSkin()
@@ -513,6 +485,11 @@ namespace WolfoSkinsMod
                                 model.baseLightInfos[j].defaultColor = changedLights[i].originalColor;
                             }
                         }
+                    }
+                    if (changedLights[i].trail)
+                    {
+                        changedLights[i].trail.startColor = changedLights[i].originalColor;
+                        changedLights[i].trail.endColor = changedLights[i].trailEndColor;
                     }
                 }
             }

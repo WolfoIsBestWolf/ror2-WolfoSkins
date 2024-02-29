@@ -37,6 +37,7 @@ namespace WolfoSkinsMod
             unlockableDefPRISM = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDefPRISM.nameToken = "ACHIEVEMENT_PRISM_SKIN_MINER_NAME";
             unlockableDefPRISM.cachedName = "Skins.Miner.Wolfo.Prism";
+            unlockableDefPRISM.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDefPRISM);
             unlockableDefPRISM.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconMinerDiamond);
 
@@ -149,7 +150,6 @@ namespace WolfoSkinsMod
             Material MatMinerBody = Object.Instantiate(skinMinerDefault.rendererInfos[0].defaultMaterial);
 
             Texture2D texMinerMolten = new Texture2D(4, 3, TextureFormat.RGB24, false);
-            Debug.Log(texMinerMolten.format);
             texMinerMolten.LoadImage(Properties.Resources.texMinerDiamond, true);
             texMinerMolten.filterMode = FilterMode.Point;
             texMinerMolten.wrapMode = TextureWrapMode.Repeat;
@@ -204,7 +204,6 @@ namespace WolfoSkinsMod
             Material MatMinerBody = Object.Instantiate(skinMinerDefault.rendererInfos[0].defaultMaterial);
 
             Texture2D texMinerMolten = new Texture2D(4, 3, TextureFormat.RGB24, false);
-            Debug.Log(texMinerMolten.format);
             texMinerMolten.LoadImage(Properties.Resources.texMinerGold, true);
             texMinerMolten.filterMode = FilterMode.Point;
             texMinerMolten.wrapMode = TextureWrapMode.Repeat;

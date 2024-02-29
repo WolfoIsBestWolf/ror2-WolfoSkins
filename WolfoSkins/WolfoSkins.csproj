@@ -21,6 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="TeslaTrooperMod">
+      <HintPath>..\..\..\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\profiles\dlc1.5modPackInDev\BepInEx\plugins\TheTimesweeper-Tesla_Trooper\TeslaTrooperMod.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

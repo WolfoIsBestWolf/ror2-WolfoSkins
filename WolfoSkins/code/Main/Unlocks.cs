@@ -15,11 +15,13 @@ namespace WolfoSkinsMod
         public static event System.Action<Run> unlockSkins;
 
         public static string unlockName = ": Alternated";
+        public static string unlockNameGrand = ": Grand Alternation";
         public static string unlockNameSimu = " : Simulated";
         public static string unlockNamePrism = ": Colorized"; //Prismatized
         public static string unlockNameDissonance = ": Dissonant";
         public static string wip = " Placeholder";
         public static string unlockCondition = ", complete wave 50 in Simulacrum, A Moment, Whole or the Planetarium.";
+        public static string unlockConditionGrand = ", some hard shit idk.";
         //public static string unlockConditionPrism = ", beat the game on a Prismatic Trial or Eclipse run.\n<color=#8888>(Use LittleGameplayTweaks for Prismatic Trials)</color>";
         public static string unlockConditionPrism = ", beat the game with Artifact of Dissonance enabled or during a Prismatic Trial.";
         //public static string unlockConditionPrism = ", finish a Prismatic Trial or Eclipse run." + ltgNotice;
@@ -68,7 +70,7 @@ namespace WolfoSkinsMod
 
         public static bool HideUnimplementedUnlocks(On.RoR2.UI.LogBook.LogBookController.orig_CanSelectAchievementEntry orig, AchievementDef achievementDef, System.Collections.Generic.Dictionary<RoR2.ExpansionManagement.ExpansionDef, bool> expansionAvailability)
         {
-            if (achievementDef.identifier.StartsWith("SIMU"))
+            if (achievementDef.identifier.StartsWith("SIMU") || achievementDef.identifier.StartsWith("PRIS"))
             {
                 UnlockableDef def = UnlockableCatalog.GetUnlockableDef(achievementDef.unlockableRewardIdentifier);
                 //Debug.LogWarning(achievementDef.identifier + " " + def);

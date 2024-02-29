@@ -70,6 +70,11 @@ Chirr : (Orange/Yellow)
 Rocket : Red
 Rocket : Blue
 Ravager : Red/Black
+Arsonist : Orange/Red
+Arsonist : Blue
+Arsonist : Blue Grand Mastery
+Tesla Trooper Colors : Strong Blue, Neon Blue, Neon Cyan, Neon Pink, Neon Red
+Desolator Colors : Strong Green, Neon Green, Safety Yellow, Neon Yellow, Neon Orange
 ```
 
 <details>
@@ -89,8 +94,22 @@ This mod is intended to be used along side:\
 [LittleGameplayTweaks](https://thunderstore.io/package/Wolfo/LittleGameplayTweaks/) for Prismatic runs.
 ## Changelog
 ```
+v1.6.0
+Added Arsonist : Orange
+Added Arsonist : Blue
+Added Arsonist : Blue GM
+Added Tesla Trooper Colors : White, Strong Blue, Neon Blue, Neon Cyan, Hot Pink, Neon Red
+Added Desolator Colors : Gray, Strong Green, Neon Green, Safety Yellow, Neon Yellow, Neon Orange
+Added Paladin : Gold/Green
+
+Hid placeholder prism achievements.
+Gave CHEF colored cleavers.
+Fixed CHEF alt primary arm color not changing with skins.
+Made Ravager skin look less weird.
+
 v1.5.0
-Added Han-D : Green/Yellow x2
+Added Han-D : Green/Yellow
+Added Han-D : Green/Yellow GM
 Added Acrid : Black/Green
 Added CHEF : Blue
 Added CHEF : Red/Cyan
@@ -114,14 +133,15 @@ Added another achievement type (Beat run with Dissonance or beat Prismatic run)
 Skins are now sorted later than Grand Mastery and other skin mods.
 
 v1.4.0
-Added Han-D : Orange/Black x2
+Added Han-D : Orange/Black
+Added Han-D : Orange/Black GM
 Added Executioner : Mastery Yellow
 Added CHEF : Green
 Added CHEF : Cyan/Pink/White
 Added Bandit : Yellow Hat/Lime
 Added Loader : Red
 Added Bandit : Blue/Yellow
-Added Sniper : Brown
+Added Sniper : Orange
 
 Achievements for modded characters are now hidden if the mod is not installed.
 
@@ -136,7 +156,7 @@ Added Railgunner : Green/Brown
 Added Executioner : Black/Red
 Engi Skins : Added more Light patterns and better Blue Harpoons
 
-Loaded (Green) now uses default skin mech.
+Loader (Green) now uses default skin mech.
 Fixed Enforcer Skin not unlocking
 
 v1.2.0
@@ -144,12 +164,43 @@ Made it it's own mod instead of being part of SimulacrumAdditions.
 Skins can now be unlocked by beating Twisted Scavengers too.
 
 Updated various skins
-Added 5 more Skins
--Huntress : Bee
--Acrid : Lemurian
--REX : Red/Purple/Black
--Engineer : Blue/Pink
--Enforcer : Red/Blue/Yellow
+Added 6 more Skins
+-Added Huntress : Bee
+-Added Acrid : Lemurian
+-Added REX : Red/Yellow/Black
+-Added Engineer : Blue/Pink
+-Added Enforcer : Red/Blue/Yellow
+-Added Commando : Provi
 
 Added config for no unlock requirement
 Added config to nerf Voidlings stats (not changed by default) or limit his level to 99 for level cap raising mods (on by default)
+
+v1.1.0 - (Simulacrum Additions update)
+
+-Captain Red/Black
+-Mul-T : Damage
+-Mul-T : Healing
+-Artificer : Orange/Black
+-Artificer : Rainbow
+-Huntress : Black/Pink
+-Acrid : White/Blue
+-CHEF : Red
+-CHEF : Black
+-Han-D : Gold
+-Han-D : Gold GM
+-Loader : (Green)
+-Mercenary : (Blue/Gray)
+-Mercenary : (Red/Gray)
+-Void Fiend : (Black/Red
+-Void Fiend : (White/Blue)
+-Railgunner : (White/Black/Blue)
+
+
+v1.0.5 (LittleGameplayTweaks)
+-Bandit (Red Hat/Light Brown)
+
+v1.0.0 (LittleGameplayTweaks)
+-Commando : (Unused SotV skin)
+-REX : Blue
+-Captain : Pink
+

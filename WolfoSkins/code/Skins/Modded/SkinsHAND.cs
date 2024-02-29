@@ -487,5 +487,28 @@ namespace WolfoSkinsMod
                 return BodyCatalog.FindBodyIndex("HANDOverclockedBody");
             }
         }
+
+
+        internal static void PrismAchievement()
+        {
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_HAND_NAME", "HAN-D" + Unlocks.unlockNamePrism);
+            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_HAND_DESCRIPTION", "As HAN-D" + Unlocks.unlockConditionPrism);
+            //
+            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
+            unlockableDef.nameToken = "ACHIEVEMENT_PRISM_SKIN_HAND_NAME";
+            unlockableDef.cachedName = "Skins.Hand.Wolfo.Prism";
+            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
+            unlockableDef.hidden = true;
+            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
+        }
+
+        [RegisterAchievement("PRISM_SKIN_HAND", "Skins.Hand.Wolfo.Prism", null, null)]
+        public class AchievementPrismaticDissoHand2Body : AchievementPrismaticDisso
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("HANDOverclockedBody");
+            }
+        }
     }
 }
