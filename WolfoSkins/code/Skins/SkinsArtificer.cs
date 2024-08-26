@@ -151,9 +151,17 @@ namespace WolfoSkinsMod
             texMageDiffuseORANGE.filterMode = FilterMode.Bilinear;
             texMageDiffuseORANGE.wrapMode = TextureWrapMode.Clamp;
 
+            /*Texture2D texMageDiffuseORANGECoat = new Texture2D(512, 512, TextureFormat.DXT5, false);
+            texMageDiffuseORANGECoat.LoadImage(Properties.Resources.texMageDiffuseORANGECoat, true);
+            texMageDiffuseORANGECoat.filterMode = FilterMode.Bilinear;
+            texMageDiffuseORANGECoat.wrapMode = TextureWrapMode.Clamp;*/
+
+
             Material matMageORANGE = Object.Instantiate(skinMageAlt.rendererInfos[3].defaultMaterial);
+            Material matMageORANGECOAT = Object.Instantiate(skinMageAlt.rendererInfos[3].defaultMaterial);
 
             matMageORANGE.mainTexture = texMageDiffuseORANGE;
+            matMageORANGECOAT.mainTexture = texMageDiffuseORANGE;
 
             NewRenderInfosORANGE[2].defaultMaterial = matMageORANGE;
             NewRenderInfosORANGE[3].defaultMaterial = matMageORANGE;

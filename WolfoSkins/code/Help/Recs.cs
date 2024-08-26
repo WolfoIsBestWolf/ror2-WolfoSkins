@@ -38,6 +38,14 @@ namespace WolfoSkinsMod
             return Sprite.Create(texture2, WRect.rec128, WRect.half);
         }
 
+        public static Sprite MakeIcon256(byte[] texture)
+        {
+            Texture2D texture2 = new Texture2D(256, 256, TextureFormat.DXT5, false);
+            texture2.LoadImage(texture, true);
+            texture2.filterMode = FilterMode.Bilinear;
+            return Sprite.Create(texture2, WRect.rec256, WRect.half);
+        }
+
         public static Sprite MakeIcon32(byte[] texture)
         {
             Texture2D texture2 = new Texture2D(32, 32, TextureFormat.ARGB32, false);

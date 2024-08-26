@@ -13,6 +13,7 @@ namespace WolfoSkinsMod
     public class Unlocks
     {
         public static event System.Action<Run> unlockSkins;
+        public static event System.Action<Run> unlockSkinsEliteMithrix;
 
         public static string unlockName = ": Alternated";
         public static string unlockNameGrand = ": Grand Alternation";
@@ -21,7 +22,8 @@ namespace WolfoSkinsMod
         public static string unlockNameDissonance = ": Dissonant";
         public static string wip = " Placeholder";
         public static string unlockCondition = ", complete wave 50 in Simulacrum, A Moment, Whole or the Planetarium.";
-        public static string unlockConditionGrand = ", some hard shit idk.";
+        public static string unlockConditiontwo = ", complete stage 15, wave 50 in Simulacrum, A Moment, Whole or the Planetarium.";
+        public static string unlockConditionGrand = ", defeat an elite or umbral Mithrix or with Artifact of Dissonance enabled.";
         //public static string unlockConditionPrism = ", beat the game on a Prismatic Trial or Eclipse run.\n<color=#8888>(Use LittleGameplayTweaks for Prismatic Trials)</color>";
         public static string unlockConditionPrism = ", beat the game with Artifact of Dissonance enabled or during a Prismatic Trial.";
         //public static string unlockConditionPrism = ", finish a Prismatic Trial or Eclipse run." + ltgNotice;
@@ -66,6 +68,16 @@ namespace WolfoSkinsMod
                 action(Run.instance);
             };
             On.RoR2.UI.LogBook.LogBookController.CanSelectAchievementEntry += HideUnimplementedUnlocks;
+
+            On.RoR2.RoR2Content.CreateEclipseUnlockablesForSurvivor += AutogenerateUnlockableDefs;
+            
+        }
+
+        private static UnlockableDef[] AutogenerateUnlockableDefs(On.RoR2.RoR2Content.orig_CreateEclipseUnlockablesForSurvivor orig, SurvivorDef survivorDef, int minEclipseLevel, int maxEclipseLevel)
+        {
+
+
+            return orig(survivorDef, minEclipseLevel, maxEclipseLevel);
         }
 
         public static bool HideUnimplementedUnlocks(On.RoR2.UI.LogBook.LogBookController.orig_CanSelectAchievementEntry orig, AchievementDef achievementDef, System.Collections.Generic.Dictionary<RoR2.ExpansionManagement.ExpansionDef, bool> expansionAvailability)
@@ -166,35 +178,5 @@ namespace WolfoSkinsMod
             }
         }
     }
-    /*
-    public class AchievementDissonance : RoR2.Achievements.BaseAchievement
-    {
-        public override void OnBodyRequirementMet()
-        {
-            base.OnBodyRequirementMet();
-            Run.onClientGameOverGlobal += this.OnClientGameOverGlobal;
-        }
-
-        public override void OnBodyRequirementBroken()
-        {
-            Run.onClientGameOverGlobal -= this.OnClientGameOverGlobal;
-            base.OnBodyRequirementBroken();
-        }
-
-        private void OnClientGameOverGlobal(Run run, RunReport runReport)
-        {
-            if (!runReport.gameEnding)
-            {
-                return;
-            }
-            if (runReport.gameEnding.isWin)
-            {
-                if (RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.MixEnemy))
-                {
-                    base.Grant();
-                }
-            }
-        }
-    }
-    */
+   
 }

@@ -21,13 +21,52 @@ namespace WolfoSkinsMod
             unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_ARSONIST_NAME";
             unlockableDef.cachedName = "Skins.Arsonist.Wolfo";
-            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinArsonistIcon);
+            unlockableDef.achievementIcon = WRect.MakeIcon256(Properties.Resources.skinArsonistIcon);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
             if (WConfig.cfgUnlockAll.Value)
             {
                 unlockableDef = null;
             }
+        }
+
+        private static SkinDef skinBlue;
+        private static SkinDef skinBlueGM;
+
+        internal static void AddProjectiles()
+        {
+            //artificerFireBolt //Main Attack
+
+            int catalogIndex = ProjectileCatalog.FindProjectileIndex("strongFlare");
+            Debug.Log(catalogIndex);
+
+            GameObject FlareProjectile = ProjectileCatalog.GetProjectilePrefab(catalogIndex);
+            GameObject FlareGhost = PrefabAPI.InstantiateClone(FlareProjectile.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab, "ChirrDartGhostPink", false);
+            Material newMaterial = Object.Instantiate(FlareGhost.transform.GetChild(1).GetComponent<MeshRenderer>().material);
+            newMaterial.color = new Color(0f, 0.9f, 0.6f); //0.9528 0.2735 0.0405 1
+            FlareGhost.transform.GetChild(1).GetComponent<MeshRenderer>().material = newMaterial;
+            FlareGhost.transform.GetChild(2).GetChild(1).GetComponent<ParticleSystem>().startColor = new Color(0.2f, 0.7f, 0.5f, 0.8f); //0.9245 0.2588 0.1526 0.702
+
+            skinBlue.projectileGhostReplacements = new SkinDef.ProjectileGhostReplacement[]
+                {
+                    new SkinDef.ProjectileGhostReplacement
+                    {
+                        projectilePrefab = FlareProjectile,
+                        projectileGhostReplacementPrefab = FlareGhost,
+
+                    }
+                };
+            skinBlueGM.projectileGhostReplacements = new SkinDef.ProjectileGhostReplacement[]
+                {
+                    new SkinDef.ProjectileGhostReplacement
+                    {
+                        projectilePrefab = FlareProjectile,
+                        projectileGhostReplacementPrefab = FlareGhost,
+
+                    }
+                };
+
+
         }
 
         internal static void ModdedSkin(GameObject ArsonistBody)
@@ -292,7 +331,7 @@ namespace WolfoSkinsMod
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
-                return BodyCatalog.FindBodyIndex("ArsonistClassicBody");
+                return BodyCatalog.FindBodyIndex("ArsonistBody");
             }
         }
 

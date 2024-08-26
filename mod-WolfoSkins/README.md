@@ -64,27 +64,31 @@ Pilot : (RoRR White)
 Pilot : (RoRR Red)
 Pilot : (RoRR Blue/Yellow)
 Executioner : (Red/Black)
+Executioner : (Blue/Green)
 Executioner : (Mastery Yellow)
 Chirr : (Pink/White)
 Chirr : (Orange/Yellow)
+Nemesis Enforcer : (Yellow/Black)
 Rocket : Red
 Rocket : Blue
 Ravager : Red/Black
 Arsonist : Orange/Red
 Arsonist : Blue
 Arsonist : Blue Grand Mastery
-Tesla Trooper Colors : Strong Blue, Neon Blue, Neon Cyan, Neon Pink, Neon Red
-Desolator Colors : Strong Green, Neon Green, Safety Yellow, Neon Yellow, Neon Orange
+Tesla Trooper Colors : White, Strong Blue, Neon Blue, Neon Cyan, Hot Pink, Neon Red
+Desolator Colors : Gray, Strong Green, Neon Green, Safety Yellow, Neon Yellow, Neon Orange
 ```
 
 <details>
   <summary>All skins ingame</summary>
 
-![](https://cdn.discordapp.com/attachments/1115182271276781698/1209473091772747776/allSkinsV6.png?ex=65e70c98&is=65d49798&hm=9f70f14b4d432d0b01a339f4dd6dce7f66991770751e8f125953699f73540d94&)
-![](https://cdn.discordapp.com/attachments/1115182271276781698/1209473090426372216/allSkinsModsV6.png?ex=65e70c97&is=65d49797&hm=f95261ec464edf848aad8dcd7ef0b71f7133839877257f825fab1950474dbb3f&)
+![](https://github.com/WolfoIsBestWolf/ror2-WolfoSkins/blob/main/modPageImages/allSkins.png?raw=true)
+![](https://github.com/WolfoIsBestWolf/ror2-WolfoSkins/blob/main/modPageImages/allSkinsModded.png?raw=true)
 </details>
 
 #
+There's a config to auto-unlock all of them if you don't want to bother.
+
 Mod also features config to nerf Voidlings stats but not changed by default.\
 Tho by default limits Voidlings level to 99, for people who use [Level Cap Raiser](https://thunderstore.io/package/Moffein/Raise_Monster_Level_Cap/)
 
@@ -94,6 +98,15 @@ This mod is intended to be used along side:\
 [LittleGameplayTweaks](https://thunderstore.io/package/Wolfo/LittleGameplayTweaks/) for Prismatic runs.
 ## Changelog
 ```
+
+v1.6.2
+Fixed a bug where attacks with visual overlays such as Mercs could break modded code.
+Added Executioner : Blue/Green
+Added Nemesis Enfrocer : Big Yellow
+
+v1.6.1
+Fixed Arsonist, Tesla, Desolator skins not unlocking.
+
 v1.6.0
 Added Arsonist : Orange
 Added Arsonist : Blue
@@ -164,19 +177,22 @@ Made it it's own mod instead of being part of SimulacrumAdditions.
 Skins can now be unlocked by beating Twisted Scavengers too.
 
 Updated various skins
-Added 6 more Skins
+Added 5 more Skins
 -Added Huntress : Bee
 -Added Acrid : Lemurian
 -Added REX : Red/Yellow/Black
 -Added Engineer : Blue/Pink
 -Added Enforcer : Red/Blue/Yellow
--Added Commando : Provi
+
 
 Added config for no unlock requirement
 Added config to nerf Voidlings stats (not changed by default) or limit his level to 99 for level cap raising mods (on by default)
 
-v1.1.0 - (Simulacrum Additions update)
+v1.1.1 - (Simulacrum Additions)
+-Added Commando : Provi
+-Added Commando : Black Hat/Purple
 
+v1.1.0 - (Simulacrum Additions update)
 -Captain Red/Black
 -Mul-T : Damage
 -Mul-T : Healing
@@ -194,7 +210,6 @@ v1.1.0 - (Simulacrum Additions update)
 -Void Fiend : (Black/Red
 -Void Fiend : (White/Blue)
 -Railgunner : (White/Black/Blue)
-
 
 v1.0.5 (LittleGameplayTweaks)
 -Bandit (Red Hat/Light Brown)

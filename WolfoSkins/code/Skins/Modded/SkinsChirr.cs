@@ -37,7 +37,7 @@ namespace WolfoSkinsMod
             SkinsPink(ChirrBody);
             SkinsORANGE(ChirrBody);
 
-            GameModeCatalog.availability.CallWhenAvailable(AddVFXLate);
+            GameModeCatalog.availability.CallWhenAvailable(AddProjectiles);
             //On.RoR2.ProjectileGhostReplacementManager.Init += ProjectileGhostReplacementManager_Init;
         }
 
@@ -45,7 +45,7 @@ namespace WolfoSkinsMod
         private static SkinDef skinDefOrange;
 
 
-        internal static void AddVFXLate()
+        internal static void AddProjectiles()
         {
             int catalogIndex = ProjectileCatalog.FindProjectileIndex("ChirrLeafProjectile");
             Debug.Log(catalogIndex);
@@ -82,7 +82,7 @@ namespace WolfoSkinsMod
 
                     }
                 };
-
+            /*
             ProjectileGhostReplacementManager.SkinGhostPair skinGhostPair1 = new ProjectileGhostReplacementManager.SkinGhostPair
             {
                 projectileGhost = LeafGhost,
@@ -100,6 +100,7 @@ namespace WolfoSkinsMod
             }
             HG.ArrayUtils.ArrayAppend<ProjectileGhostReplacementManager.SkinGhostPair>(ref ProjectileGhostReplacementManager.projectileToSkinGhostPairs[catalogIndex], skinGhostPair1);
             HG.ArrayUtils.ArrayAppend<ProjectileGhostReplacementManager.SkinGhostPair>(ref ProjectileGhostReplacementManager.projectileToSkinGhostPairs[catalogIndex], skinGhostPair2);
+            */
         }
 
 

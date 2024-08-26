@@ -17,7 +17,7 @@ namespace WolfoSkinsMod
             unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_HandBody_NAME";
             unlockableDef.cachedName = "Skins.Hand.Wolfo";
-            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.texHANDSkinIconRorr);
+            unlockableDef.achievementIcon = WRect.MakeIcon256(Properties.Resources.texHANDSkinIconRorr);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
             if (WConfig.cfgUnlockAll.Value)

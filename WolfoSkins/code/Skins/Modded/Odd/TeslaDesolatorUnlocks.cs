@@ -43,7 +43,7 @@ namespace WolfoSkinsMod
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
-                return BodyCatalog.FindBodyIndex("TeslaTrooperClassicBody");
+                return BodyCatalog.FindBodyIndex("TeslaTrooperBody");
             }
         }
 
@@ -52,7 +52,7 @@ namespace WolfoSkinsMod
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
-                return BodyCatalog.FindBodyIndex("DesolatorClassicBody");
+                return BodyCatalog.FindBodyIndex("DesolatorBody");
             }
         }
 

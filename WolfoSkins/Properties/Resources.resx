@@ -145,8 +145,14 @@
   <data name="exeem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\exeem.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="exeemBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\exeemBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ExegunEmTex" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\ExegunEmTex.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ExegunEmTexBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\ExegunEmTexBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ExegunEmTexGOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\Gold\ExegunEmTexGOLD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -154,14 +160,23 @@
   <data name="ExegunTex" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\ExegunTex.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ExegunTexBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\ExegunTexBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ExeKitEm" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\ExeKitEm.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ExeKitEmBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\ExeKitEmBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ExeKitEmGOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\Gold\ExeKitEmGOLD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ExeKitTex" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\ExeKitTex.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ExeKitTexBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\ExeKitTexBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ExeMasterygunTexGOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\Gold\ExeMasterygunTexGOLD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -172,6 +187,9 @@
   <data name="exeRamp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\exeRamp.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="exeRampBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\exeRampBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ExeSkinEMGOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\Gold\ExeSkinEMGOLD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -180,6 +198,9 @@
   </data>
   <data name="ExeTex" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\ExeTex.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ExeTexBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\ExeTexBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="HanDWeapon_Diffuse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\hand\HanDWeapon_Diffuse.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -361,6 +382,9 @@
   <data name="skinExecutionerIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\skinExecutionerIcon.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="skinExecutionerIconBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\skinExecutionerIconBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="skinExecutionerIconGOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\Gold\skinExecutionerIconGOLD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -435,6 +459,9 @@
   </data>
   <data name="skinIconMinerGold" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\miner\skinIconMinerGold.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="skinIconNemEnforcer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\nem_enforcer\skinIconNemEnforcer.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="skinIconPaladin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\paladin\skinIconPaladin.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -799,8 +826,14 @@
   <data name="texExeAxeRamp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\texExeAxeRamp.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="texExeAxeRampBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\texExeAxeRampBlack.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="texExeAxeRampBlackGOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\Gold\texExeAxeRampBlackGOLD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="texExeAxeRampBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\texExeAxeRampBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TexGrenadeBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\rocket\BLUE\TexGrenadeBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -898,6 +931,9 @@
   <data name="texMinerMoltenEmission" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\miner\texMinerMoltenEmission.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="texNemforcer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\nem_enforcer\texNemforcer.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="texPaladin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\paladin\texPaladin.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -984,6 +1020,9 @@
   </data>
   <data name="texRampHuntressYELLOW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\huntress\yellow\texRampHuntressYELLOW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="texRampLightningBLUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>skins\executioner\blue\texRampLightningBLUE.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="texRampLightningGOLD" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>skins\executioner\texRampLightningGOLD.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

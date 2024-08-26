@@ -60,7 +60,11 @@ namespace WolfoSkinsMod
             SkinsArsonist.CallDuringAwake();
             TeslaDesolatorUnlocks.CallDuringAwake();
             SkinsPaladin.CallDuringAwake();
-
+            //
+            SkinsNemCommando.CallDuringAwake();
+            SkinsNemMercenary.CallDuringAwake();
+            SkinsNemEnforcer.CallDuringAwake();
+            //
             SkinsFutureModSupport.CallDuringAwake();
             //
             //Prism stuff
@@ -255,17 +259,28 @@ namespace WolfoSkinsMod
             {
                 SkinsPaladin.ModdedSkin(ModdedBody);
             }
+
+            //Nemesis-es
+            //Nem-Enforcer
+            ModdedBody = BodyCatalog.FindBodyPrefab("NemesisEnforcerBody");
+            if (ModdedBody != null)
+            {
+                SkinsNemEnforcer.ModdedSkin(ModdedBody);
+            }
         }
 
         private void ReplaceTemporaryOverlayMaterial(On.RoR2.TemporaryOverlay.orig_AddToCharacerModel orig, TemporaryOverlay self, CharacterModel characterModel)
         {
-            OverlayMaterialReplacer overlayMaterialReplacer = characterModel.GetComponent<OverlayMaterialReplacer>();
-            if (overlayMaterialReplacer)
+            if(characterModel)
             {
-                //Debug.Log(self.originalMaterial);
-                if (self.originalMaterial == overlayMaterialReplacer.targetMaterial)
+                OverlayMaterialReplacer overlayMaterialReplacer = characterModel.GetComponent<OverlayMaterialReplacer>();
+                if (overlayMaterialReplacer)
                 {
-                    self.originalMaterial = overlayMaterialReplacer.replacementMaterial;
+                    //Debug.Log(self.originalMaterial);
+                    if (self.originalMaterial == overlayMaterialReplacer.targetMaterial)
+                    {
+                        self.originalMaterial = overlayMaterialReplacer.replacementMaterial;
+                    }
                 }
             }
             orig(self,characterModel);

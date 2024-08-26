@@ -39,7 +39,7 @@ namespace WolfoSkinsMod
         }
 
         internal static void SkinRED(GameObject RocketBody)
-        {       
+        {
             BodyIndex RocketIndex = RocketBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = RocketBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
             SkinDef skinRocket = modelSkinController.skins[0];
@@ -238,6 +238,6 @@ namespace WolfoSkinsMod
                 return BodyCatalog.FindBodyIndex("RocketSurvivorBody");
             }
         }
-        
+
     }
 }
