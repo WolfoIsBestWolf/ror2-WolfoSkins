@@ -166,7 +166,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_MERC", "Skins.Merc.Wolfo", "CompleteUnknownEnding", null)]
+        [RegisterAchievement("SIMU_SKIN_MERC", "Skins.Merc.Wolfo", "CompleteUnknownEnding", 5, null)]
         public class ClearSimulacrumMercBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -188,13 +188,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_MERCENARY", "Skins.Mercenary.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_MERCENARY", "Skins.Mercenary.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoMercenary2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("MercBody");
             }
-        }
+        }*/
     }
 }

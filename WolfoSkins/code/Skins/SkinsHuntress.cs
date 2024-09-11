@@ -434,7 +434,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_HUNTRESS", "Skins.Huntress.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_HUNTRESS", "Skins.Huntress.Wolfo", null, 5, null)]
         public class ClearSimulacrumHuntressBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -456,13 +456,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_HUNTRESS", "Skins.Huntress.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_HUNTRESS", "Skins.Huntress.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoHuntress2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("HuntressBody");
             }
-        }
+        }*/
     }
 }

@@ -9,7 +9,7 @@ namespace WolfoSkinsMod
     public class SkinsMiner
     {
         private static UnlockableDef unlockableDef;
-        private static UnlockableDef unlockableDefPRISM;
+        //private static UnlockableDef unlockableDefPRISM;
 
         internal static void CallDuringAwake()
         {
@@ -34,23 +34,24 @@ namespace WolfoSkinsMod
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
             //
-            unlockableDefPRISM = ScriptableObject.CreateInstance<UnlockableDef>();
+            /*unlockableDefPRISM = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDefPRISM.nameToken = "ACHIEVEMENT_PRISM_SKIN_MINER_NAME";
             unlockableDefPRISM.cachedName = "Skins.Miner.Wolfo.Prism";
             unlockableDefPRISM.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDefPRISM);
-            unlockableDefPRISM.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconMinerDiamond);
+            unlockableDefPRISM.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconMinerDiamond);*/
 
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+            
         }
 
         internal static void ModdedSkin(GameObject MinerBody)
         {
             Debug.Log("Miner Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
 
             //Find Diamond skin and add it
             //Sort Blacksmith skin earlier
@@ -179,7 +180,7 @@ namespace WolfoSkinsMod
                 Icon = SkinIconS,
                 BaseSkins = skinMinerDefault.baseSkins,
                 RootObject = skinMinerDefault.rootObject,
-                UnlockableDef = unlockableDefPRISM,
+                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinMinerDefault.meshReplacements,
                 GameObjectActivations = skinMinerDefault.gameObjectActivations,
@@ -248,7 +249,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_MINER", "Skins.Miner.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_MINER", "Skins.Miner.Wolfo", null, 5, null)]
         public class ClearSimulacrumMiner : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -257,13 +258,13 @@ namespace WolfoSkinsMod
             }
         }
 
-        [RegisterAchievement("PRISM_SKIN_MINER", "Skins.Miner.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_MINER", "Skins.Miner.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoMinerBody : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("MinerBody");
             }
-        }
+        }*/
     }
 }

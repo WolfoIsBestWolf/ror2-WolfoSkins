@@ -24,22 +24,25 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+
         }
 
         internal static void ModdedSkin(GameObject BodyObject)
         {
             Debug.Log("Nemesis Commando Skins");
+
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
+
             //unlockableDef.hidden = false;
             BodyIndex CharacterIndex = BodyObject.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = BodyObject.GetComponentInChildren<ModelSkinController>();
             SkinDef skinDefault = modelSkinController.skins[0];
         }
 
-        [RegisterAchievement("SIMU_SKIN_NEM_COMMANDO", "Skins.NemesisCommando.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_NEM_COMMANDO", "Skins.NemesisCommando.Wolfo", null, 5, null)]
         public class ClearSimulacrumNemesisCommando : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

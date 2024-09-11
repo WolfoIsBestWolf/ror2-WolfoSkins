@@ -25,10 +25,6 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinExecutionerIcon);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
         }
 
         internal static void ModdedSkin(GameObject ExecutionerBody)
@@ -38,6 +34,10 @@ namespace WolfoSkinsMod
 
             Debug.Log("Executioner Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             BodyIndex ExecutionerIndex = ExecutionerBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = ExecutionerBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
             SkinDef skinExecutioner = modelSkinController.skins[0];
@@ -823,7 +823,7 @@ namespace WolfoSkinsMod
 
 
 
-        [RegisterAchievement("SIMU_SKIN_EXECUTIONER", "Skins.Executioner.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_EXECUTIONER", "Skins.Executioner.Wolfo", null, 5, null)]
         public class ClearSimulacrumExecutioner : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

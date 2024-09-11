@@ -249,7 +249,7 @@ namespace WolfoSkinsMod
             R2API.Skins.AddSkinToCharacter(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), SkinInfo2);
         }
 
-        [RegisterAchievement("SIMU_SKIN_Captain", "Skins.Captain.Wolfo", "CompleteMainEnding", null)]
+        [RegisterAchievement("SIMU_SKIN_Captain", "Skins.Captain.Wolfo", "CompleteMainEnding", 5, null)]
         public class Bandit2ClearGameMonsoonAchievement : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -271,13 +271,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_CAPTAIN", "Skins.Captain.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_CAPTAIN", "Skins.Captain.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoCaptain2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("CaptainBody");
             }
-        }
+        }*/
     }
 }

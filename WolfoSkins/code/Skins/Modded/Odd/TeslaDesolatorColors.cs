@@ -16,6 +16,11 @@ namespace WolfoSkinsMod
             //
             Debug.Log("Tesla Trooper Colors");
             TeslaDesolatorUnlocks.unlockableDefTesla.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                TeslaDesolatorUnlocks.unlockableDefTesla = null;
+                TeslaDesolatorUnlocks.unlockableDefDesolator = null;
+            }
             GenericSkill[] skills = TeslaTrooperBody.GetComponents<GenericSkill>();
             SkillFamily TeslaRecolors = skills[skills.Length - 1].skillFamily;
 

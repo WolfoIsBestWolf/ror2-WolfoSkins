@@ -26,20 +26,20 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconCroco);
             //
-            UnlockableDef unlockableDefDISSO = ScriptableObject.CreateInstance<UnlockableDef>();
+            /*UnlockableDef unlockableDefDISSO = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDefDISSO.nameToken = "ACHIEVEMENT_PRISM_SKIN_CROCO_NAME";
             unlockableDefDISSO.cachedName = "Skins.Croco.Wolfo.Prism";
             R2API.ContentAddition.AddUnlockableDef(unlockableDefDISSO);
-            unlockableDefDISSO.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconCrocoLEMURIAN);
+            unlockableDefDISSO.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconCrocoLEMURIAN);*/
             //
             if (WConfig.cfgUnlockAll.Value)
             {
                 unlockableDef = null;
-                unlockableDefDISSO = null;
+                //unlockableDefDISSO = null;
             }
             AcridSkin(unlockableDef);
             AcridSkinBlack(unlockableDef);
-            AcridSkinLemurian(unlockableDefDISSO);
+            AcridSkinLemurian(unlockableDef);
         }
 
         internal static void AcridSkin(UnlockableDef unlockableDef)
@@ -118,7 +118,7 @@ namespace WolfoSkinsMod
             newSkinDef.rendererInfos = NewRenderInfos;
             newSkinDef.rootObject = skinCrocoDefault.rootObject;
             newSkinDef.unlockableDef = unlockableDef;
-            unlockableDef.achievementIcon = SkinIconS;
+            //unlockableDef.achievementIcon = SkinIconS;
 
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CrocoBody"), newSkinDef);
 
@@ -285,7 +285,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_CROCO", "Skins.Croco.Wolfo", "BeatArena", null)]
+        [RegisterAchievement("SIMU_SKIN_CROCO", "Skins.Croco.Wolfo", "BeatArena", 5, null)]
         public class CrocoBodyAltEndings : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -294,13 +294,13 @@ namespace WolfoSkinsMod
             }
         }
 
-        [RegisterAchievement("PRISM_SKIN_CROCO", "Skins.Croco.Wolfo.Prism", "BeatArena", null)]
+        /*[RegisterAchievement("PRISM_SKIN_CROCO", "Skins.Croco.Wolfo.Prism", "BeatArena", 5, null)]
         public class CrocoBodyDissonance : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("CrocoBody");
             }
-        }
+        }*/
     }
 }

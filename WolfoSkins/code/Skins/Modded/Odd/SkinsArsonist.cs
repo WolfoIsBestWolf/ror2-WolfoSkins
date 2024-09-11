@@ -24,10 +24,7 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon256(Properties.Resources.skinArsonistIcon);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+            
         }
 
         private static SkinDef skinBlue;
@@ -73,6 +70,10 @@ namespace WolfoSkinsMod
         {
             Debug.Log("Arsonist Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             BodyIndex ArsonistIndex = ArsonistBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = ArsonistBody.GetComponentInChildren<ModelSkinController>();
             SkinDef skinArsonist = modelSkinController.skins[0];
@@ -326,7 +327,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_ARSONIST", "Skins.Arsonist.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_ARSONIST", "Skins.Arsonist.Wolfo", null, 5, null)]
         public class ClearSimulacrumArsonistClassic : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

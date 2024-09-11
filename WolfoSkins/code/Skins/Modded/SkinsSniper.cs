@@ -20,16 +20,17 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinSniperIcon);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+           
         }
 
         internal static void ModdedSkin(GameObject SniperBody)
         {
             Debug.Log("Sniper Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             BodyIndex SniperIndex = SniperBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = SniperBody.transform.GetChild(0).GetChild(2).GetComponent<ModelSkinController>();
             SkinDef skinSniper = modelSkinController.skins[0];
@@ -159,7 +160,7 @@ namespace WolfoSkinsMod
             BodyCatalog.skins[(int)SniperIndex] = BodyCatalog.skins[(int)SniperIndex].Add(SniperSkinDefNew);
         }
 
-        [RegisterAchievement("SIMU_SKIN_SNIPER", "Skins.Sniper.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_SNIPER", "Skins.Sniper.Wolfo", null, 5, null)]
         public class ClearSimulacrumSniperClassic : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

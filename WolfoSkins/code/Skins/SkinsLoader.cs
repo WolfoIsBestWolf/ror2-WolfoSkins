@@ -213,7 +213,7 @@ namespace WolfoSkinsMod
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/LoaderBody"), SkinInfo);
         }
 
-        [RegisterAchievement("SIMU_SKIN_LOADER", "Skins.Loader.Wolfo", "DefeatSuperRoboBallBoss", null)]
+        [RegisterAchievement("SIMU_SKIN_LOADER", "Skins.Loader.Wolfo", "DefeatSuperRoboBallBoss", 5, null)]
         public class ClearSimulacrumTreebotBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -235,13 +235,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_LOADER", "Skins.Loader.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_LOADER", "Skins.Loader.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoLoader2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("LoaderBody");
             }
-        }
+        }*/
     }
 }

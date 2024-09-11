@@ -21,16 +21,17 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinRavagerIcon);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+           
         }
 
         internal static void ModdedSkin(GameObject RavagerBody)
         {
             Debug.Log("Ravager Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             BodyIndex RavagerIndex = RavagerBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = RavagerBody.transform.GetChild(0).GetChild(2).GetComponent<ModelSkinController>();
             SkinDef skinRavager = modelSkinController.skins[0];
@@ -107,7 +108,7 @@ namespace WolfoSkinsMod
             BodyCatalog.skins[(int)RavagerIndex] = BodyCatalog.skins[(int)RavagerIndex].Add(RavagerSkinDefNew);
         }
 
-        [RegisterAchievement("SIMU_SKIN_RAVAGER", "Skins.Ravager.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_RAVAGER", "Skins.Ravager.Wolfo", null, 5, null)]
         public class ClearSimulacrumRobRavager : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

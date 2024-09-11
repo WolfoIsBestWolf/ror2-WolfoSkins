@@ -31,14 +31,10 @@ namespace WolfoSkinsMod
             unlockableDefDesolator.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconDesolator);
             unlockableDefDesolator.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDefDesolator);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDefTesla = null;
-                unlockableDefDesolator = null;
-            }
+
         }
 
-        [RegisterAchievement("SIMU_SKIN_TESLATROOPER", "Skins.TeslaTrooper.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_TESLATROOPER", "Skins.TeslaTrooper.Wolfo", null, 5, null)]
         public class ClearSimulacrumTeslaTrooperClassic : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -47,7 +43,7 @@ namespace WolfoSkinsMod
             }
         }
 
-        [RegisterAchievement("SIMU_SKIN_DESOLATOR", "Skins.Desolator.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_DESOLATOR", "Skins.Desolator.Wolfo", null, 5, null)]
         public class ClearSimulacrumDesolatorClassic : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

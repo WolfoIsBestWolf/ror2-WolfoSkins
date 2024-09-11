@@ -102,8 +102,8 @@ namespace WolfoSkinsMod
             BanditRedRenderInfos[7].defaultMaterial = matBandit2Revolver;     //matBandit2Revolver //BanditPistolMesh       //texBanditShotgunDiffuse
 
             //
-            RoR2.SkinDef.MeshReplacement[] BanditRedMesh = new SkinDef.MeshReplacement[5];
-            BanditDefaultSkin.meshReplacements.CopyTo(BanditRedMesh, 0);
+            RoR2.SkinDef.MeshReplacement[] BanditRedMesh = new SkinDef.MeshReplacement[BanditDefaultSkin.meshReplacements.Length];
+            BanditDefaultSkin.meshReplacements.CopyTo(BanditRedMesh,0);
 
             BanditRedMesh[3] = BanditAltSkin.meshReplacements[2];
             //
@@ -194,8 +194,8 @@ namespace WolfoSkinsMod
             BanditRedRenderInfos[7].defaultMaterial = matBandit2Revolver;     //matBandit2Revolver //BanditPistolMesh       //texBanditShotgunDiffuse
 
             //
-            RoR2.SkinDef.MeshReplacement[] BanditRedMesh = new SkinDef.MeshReplacement[5];
-            BanditDefaultSkin.meshReplacements.CopyTo(BanditRedMesh, 0);
+            RoR2.SkinDef.MeshReplacement[] BanditRedMesh = new SkinDef.MeshReplacement[BanditDefaultSkin.meshReplacements.Length];
+            BanditDefaultSkin.meshReplacements.CopyTo(BanditRedMesh,0);
 
             BanditRedMesh[3] = BanditAltSkin.meshReplacements[2];
             //
@@ -287,8 +287,9 @@ namespace WolfoSkinsMod
             BanditRedRenderInfos[7].defaultMaterial = matBandit2Revolver;     //matBandit2Revolver //BanditPistolMesh       //texBanditShotgunDiffuse
 
             //
-            RoR2.SkinDef.MeshReplacement[] BanditRedMesh = new SkinDef.MeshReplacement[5];
-            BanditDefaultSkin.meshReplacements.CopyTo(BanditRedMesh, 0);
+            RoR2.SkinDef.MeshReplacement[] BanditRedMesh = new SkinDef.MeshReplacement[BanditDefaultSkin.meshReplacements.Length];
+            BanditDefaultSkin.meshReplacements.CopyTo(BanditRedMesh,0);
+
 
             BanditRedMesh[3] = BanditAltSkin.meshReplacements[2];
             //
@@ -309,7 +310,7 @@ namespace WolfoSkinsMod
 
         }
 
-        [RegisterAchievement("SIMU_SKIN_BANDIT", "Skins.Bandit.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_BANDIT", "Skins.Bandit.Wolfo", null, 5, null)]
         public class ClearSimulacrumBandit2Body : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -333,13 +334,13 @@ namespace WolfoSkinsMod
             //
         }
 
-        [RegisterAchievement("PRISM_SKIN_BANDIT", "Skins.Bandit.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_BANDIT", "Skins.Bandit.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoBandit2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("Bandit2Body");
             }
-        }
+        }*/
     }
 }

@@ -19,7 +19,7 @@ namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
     [BepInDependency("com.TheTimeSweeper.TeslaTrooper", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "1.5.0")]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "1.9.9")]
     //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
 
     public class WolfoSkins : BaseUnityPlugin
@@ -45,12 +45,18 @@ namespace WolfoSkinsMod
             SkinsRailGunner.RailGunnerSkins();
             SkinsVoidFiend.Start();
 
+            //DLC2
+            SkinsSeeker.Start();
+            SkinsChef.Start();
+            SkinsFalseSon.Start();
+
+
             //Modded     
             SkinsHand.CallDuringAwake();
             SkinsEnforcer.CallDuringAwake();
             SkinsSniper.CallDuringAwake();
             SkinsMiner.CallDuringAwake();
-            SkinsCHEF.CallDuringAwake();
+            SkinsCHEFMod.CallDuringAwake();
             SkinsPilot.CallDuringAwake();
             SkinsRocket.CallDuringAwake();         
             SkinsChirr.CallDuringAwake();
@@ -68,7 +74,8 @@ namespace WolfoSkinsMod
             SkinsFutureModSupport.CallDuringAwake();
             //
             //Prism stuff
-            SkinsCommando.PrismAchievement();
+            /*SkinsCommando.Prism
+             * Achievement();
             SkinsHuntress.PrismAchievement();
             SkinsBandit.PrismAchievement();
             SkinsMULT.PrismAchievement();
@@ -83,7 +90,7 @@ namespace WolfoSkinsMod
             //SkinsVoidFiend.PrismAchievement();
 
             SkinsEnforcer.PrismAchievement();
-            SkinsHand.PrismAchievement();
+            SkinsHand.PrismAchievement();*/
             //
             BodyCatalog.availability.CallWhenAvailable(ModSupport);
              
@@ -97,9 +104,9 @@ namespace WolfoSkinsMod
                 {
                     model.GetComponent<SkinDefWolfoTracker>().UndoWolfoSkin();
                 }
-                if (model.GetComponent<SkinsCHEF.FixChefDisplay>())
+                if (model.GetComponent<SkinsCHEFMod.FixChefDisplay>())
                 {
-                    model.GetComponent<SkinsCHEF.FixChefDisplay>().Fix(self);
+                    model.GetComponent<SkinsCHEFMod.FixChefDisplay>().Fix(self);
                 }
                 if (self is SkinDefWolfo)
                 {
@@ -112,6 +119,7 @@ namespace WolfoSkinsMod
             VoidlingNerfs();
 
         }
+
         internal static void SortSkinsLate()
         {
             List<string> blacklistedSorting = new List<string>()
@@ -119,7 +127,7 @@ namespace WolfoSkinsMod
                 "Enforcer",
                 "HANDOverclocked",
                 "Miner",
-                "CHEF",
+                "GnomeChefBody",
                 "RobPaladin"
             };
 
@@ -168,10 +176,10 @@ namespace WolfoSkinsMod
         internal static void ModSupport()
         {
             //SortSkinsLate();
-            GameObject ModdedBody = BodyCatalog.FindBodyPrefab("CHEF");
+            GameObject ModdedBody = BodyCatalog.FindBodyPrefab("GnomeChefBody");
             if (ModdedBody != null)
             {
-                SkinsCHEF.ModdedSkin(ModdedBody);
+                SkinsCHEFMod.ModdedSkin(ModdedBody);
             }
             //HAND
             ModdedBody = BodyCatalog.FindBodyPrefab("HANDOverclockedBody");

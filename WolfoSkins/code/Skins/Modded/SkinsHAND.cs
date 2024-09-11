@@ -20,10 +20,6 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon256(Properties.Resources.texHANDSkinIconRorr);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
             //
         }
 
@@ -60,6 +56,10 @@ namespace WolfoSkinsMod
         {
             Debug.Log("HandBody Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             BodyIndex HandBodyIndex = HandBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = HandBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
             SkinDef skinHandDefault = modelSkinController.skins[0];
@@ -479,7 +479,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_HAND", "Skins.Hand.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_HAND", "Skins.Hand.Wolfo", null, 5, null)]
         public class ClearSimulacrumHANDOverclockedBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -502,13 +502,15 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_HAND", "Skins.Hand.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_HAND", "Skins.Hand.Wolfo.Prism
+         * 
+         * ", null, 5, null)]
         public class AchievementPrismaticDissoHand2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("HANDOverclockedBody");
             }
-        }
+        }*/
     }
 }

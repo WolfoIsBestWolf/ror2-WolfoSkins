@@ -75,8 +75,6 @@ namespace WolfoSkinsMod
 
         private static UnlockableDef[] AutogenerateUnlockableDefs(On.RoR2.RoR2Content.orig_CreateEclipseUnlockablesForSurvivor orig, SurvivorDef survivorDef, int minEclipseLevel, int maxEclipseLevel)
         {
-
-
             return orig(survivorDef, minEclipseLevel, maxEclipseLevel);
         }
 
@@ -140,7 +138,7 @@ namespace WolfoSkinsMod
             base.Grant();
         }
     }
-
+    /*
     public class AchievementPrismaticDisso : RoR2.Achievements.BaseAchievement
     {
         public override void OnBodyRequirementMet()
@@ -171,12 +169,11 @@ namespace WolfoSkinsMod
                 {
                     base.Grant();
                 }
-                /*else if (Run.instance.selectedDifficulty >= DifficultyIndex.Eclipse1)
-{
-    base.Grant();
-}*/
+                
             }
         }
     }
-   
+
+
+    */
 }

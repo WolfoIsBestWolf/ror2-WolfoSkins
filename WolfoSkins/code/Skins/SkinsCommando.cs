@@ -163,7 +163,7 @@ namespace WolfoSkinsMod
             }
         }
 
-        [RegisterAchievement("SIMU_SKIN_COMMANDO", "Skins.Commando.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_COMMANDO", "Skins.Commando.Wolfo", null, 5, null)]
         public class CommandoClearSimulacrum : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -185,13 +185,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_COMMANDO", "Skins.Commando.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_COMMANDO", "Skins.Commando.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoCommando2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("CommandoBody");
             }
-        }
+        }*/
     }
 }

@@ -24,16 +24,18 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinEnforcerIcon);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+            
         }
 
         internal static void ModdedSkin(GameObject EnforcerBody)
         {
             Debug.Log("Enforcer Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
+
 
             SkinYELLOW(EnforcerBody);
             //SkinWAR(EnforcerBody);
@@ -445,7 +447,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_ENFORCER", "Skins.Enforcer.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_ENFORCER", "Skins.Enforcer.Wolfo", null, 5, null)]
         public class ClearSimulacrumENFORCER : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -468,13 +470,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_ENFORCER", "Skins.Enforcer.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_ENFORCER", "Skins.Enforcer.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoEnforcer2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("EnforcerBody");
             }
-        }
+        }*/
     }
 }

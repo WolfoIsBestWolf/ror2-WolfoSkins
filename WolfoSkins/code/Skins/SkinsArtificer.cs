@@ -26,20 +26,20 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconMageOrange);
             //
-            UnlockableDef unlockableDefPRISM = ScriptableObject.CreateInstance<UnlockableDef>();
+            /*UnlockableDef unlockableDefPRISM = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDefPRISM.nameToken = "ACHIEVEMENT_PRISM_SKIN_MAGE_NAME";
             unlockableDefPRISM.cachedName = "Skins.Mage.Wolfo.Prism";
             R2API.ContentAddition.AddUnlockableDef(unlockableDefPRISM);
-            unlockableDefPRISM.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconMage);
+            unlockableDefPRISM.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconMage);*/
             //
             if (WConfig.cfgUnlockAll.Value)
             {
                 unlockableDef = null;
-                unlockableDefPRISM = null;
+                //unlockableDefPRISM = null;
             }
             ArtificerSkinORANGE(unlockableDef);
             ArtificerSkinPURPLE(unlockableDef);
-            ArtificerSkinRAINBOW(unlockableDefPRISM);
+            ArtificerSkinRAINBOW(unlockableDef);
         }
 
         internal static void ArtificerSkinRAINBOW(UnlockableDef unlockableDef)
@@ -189,7 +189,7 @@ namespace WolfoSkinsMod
                 RootObject = skinMageAlt.rootObject,
                 UnlockableDef = unlockableDef,
             };
-            unlockableDef.achievementIcon = SkinIconS2;
+            //unlockableDef.achievementIcon = SkinIconS2;
 
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/MageBody"), SkinInfo2);
         }
@@ -240,7 +240,7 @@ namespace WolfoSkinsMod
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/MageBody"), SkinInfo);
          }
 
-        [RegisterAchievement("SIMU_SKIN_MAGE", "Skins.Mage.Wolfo", "FreeMage", null)]
+        [RegisterAchievement("SIMU_SKIN_MAGE", "Skins.Mage.Wolfo", "FreeMage", 5, null)]
         public class ClearSimulacrumMageBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -249,13 +249,16 @@ namespace WolfoSkinsMod
             }
         }
 
-        [RegisterAchievement("PRISM_SKIN_MAGE", "Skins.Mage.Wolfo.Prism", "FreeMage", null)]
+        /*[RegisterAchievement("PRISM_SKIN_MAGE", "Skins.Mage.Wolfo.Prism
+         * 
+         * 
+         * ", "FreeMage", 5, null)]
         public class AchievementPrismaticEclipseMageBody : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("MageBody");
             }
-        }
+        }*/
     }
 }

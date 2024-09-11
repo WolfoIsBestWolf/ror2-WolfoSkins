@@ -428,7 +428,7 @@ namespace WolfoSkinsMod
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody"), TurretSkinDefNew2);
         }
 
-        [RegisterAchievement("SIMU_SKIN_ENGINEER", "Skins.Engineer.Wolfo", "Complete30StagesCareer", null)]
+        [RegisterAchievement("SIMU_SKIN_ENGINEER", "Skins.Engineer.Wolfo", "Complete30StagesCareer", 5, null)]
         public class ClearSimulacrumTreebotBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -450,13 +450,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_ENGINEER", "Skins.Engineer.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_ENGINEER", "Skins.Engineer.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoEngineer2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("EngiBody");
             }
-        }
+        }*/
     }
 }

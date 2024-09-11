@@ -23,16 +23,17 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconPilot);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+           
         }
 
         internal static void ModdedSkin(GameObject PilotBody)
         {
             Debug.Log("Pilot Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             SkinWHITE(PilotBody);
             SkinRED(PilotBody);
             SkinBLUE(PilotBody);
@@ -375,7 +376,7 @@ namespace WolfoSkinsMod
             BodyCatalog.skins[(int)CharacterIndex] = BodyCatalog.skins[(int)CharacterIndex].Add(SkinDefNew);
         }
         
-        [RegisterAchievement("SIMU_SKIN_PILOT", "Skins.Pilot.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_PILOT", "Skins.Pilot.Wolfo", null, 5, null)]
         public class ClearSimulacrumPilot : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

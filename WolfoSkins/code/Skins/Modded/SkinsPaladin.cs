@@ -22,10 +22,7 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconPaladin);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+           
         }
 
         internal static void ModdedSkin(GameObject PaladinBody)
@@ -33,30 +30,26 @@ namespace WolfoSkinsMod
             Debug.Log("Paladin Skins");
             //ModdedSkinBlack(PaladinBody);
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             BodyIndex CharacterIndex = PaladinBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = PaladinBody.GetComponentInChildren<ModelSkinController>();
             SkinDef skinPaladinDefault = modelSkinController.skins[0];
             SkinDef skinPaladinGreen = modelSkinController.skins[3];
 
             //0 matPaladinSword
-            //1 matPaladinGMOld
+            //1 matPaladin
             //2 matPaladinNkuhana
             //3 matPaladinNkuhana
             //4 matPaladinGMSword
-            //5 matPaladinGMSword
-            //6 matPaladinGMSword
-            //7 matPaladinGMSword
-            //8 matPaladinGMSword
-            //9 matPaladinGMSword
-            //10 matPaladinGMSword
-            //11 matPaladinGMSword
-            //12 matPaladinGMSword
-            //13 matPaladin
+            //5 matPaladin
 
             CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinPaladinDefault.rendererInfos.Length];
             System.Array.Copy(skinPaladinDefault.rendererInfos, NewRenderInfos, skinPaladinDefault.rendererInfos.Length);
 
-            Material matPaladin = Object.Instantiate(skinPaladinDefault.rendererInfos[13].defaultMaterial);
+            Material matPaladin = Object.Instantiate(skinPaladinDefault.rendererInfos[1].defaultMaterial);
             Material matPaladinSword = Object.Instantiate(skinPaladinDefault.rendererInfos[0].defaultMaterial);
             Material matPaladinGMOld = Object.Instantiate(skinPaladinDefault.rendererInfos[1].defaultMaterial);
 
@@ -90,7 +83,7 @@ namespace WolfoSkinsMod
 
             NewRenderInfos[0].defaultMaterial = matPaladinSword;
             NewRenderInfos[1].defaultMaterial = matPaladinGMOld;
-            NewRenderInfos[13].defaultMaterial = matPaladin;
+            NewRenderInfos[5].defaultMaterial = matPaladin;
 
             //mdlPaladin/Armature/spine/spine.001/spine.002/spine.003/spine.004/neck/head/EyeTrail/Trail
 
@@ -247,7 +240,7 @@ namespace WolfoSkinsMod
             BodyCatalog.skins[(int)CharacterIndex] = skinsNew;
         }
 
-        [RegisterAchievement("SIMU_SKIN_PALADIN", "Skins.Paladin.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_PALADIN", "Skins.Paladin.Wolfo", null, 5, null)]
         public class ClearSimulacrumRobPaladinBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

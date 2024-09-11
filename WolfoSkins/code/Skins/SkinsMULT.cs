@@ -107,7 +107,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_TOOLBOT", "Skins.Toolbot.Wolfo", "RepeatFirstTeleporter", null)]
+        [RegisterAchievement("SIMU_SKIN_TOOLBOT", "Skins.Toolbot.Wolfo", "RepeatFirstTeleporter", 5, null)]
         public class ClearSimulacrumToolbotBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -129,13 +129,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_TOOLBOT", "Skins.Toolbot.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_TOOLBOT", "Skins.Toolbot.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoToolbot2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("ToolbotBody");
             }
-        }
+        }*/
     }
 }

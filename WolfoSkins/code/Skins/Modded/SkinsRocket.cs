@@ -23,17 +23,17 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.texRocketSkinDefault);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+            
         }
 
         internal static void ModdedSkin(GameObject RocketBody)
         {
             Debug.Log("Rocket Skins");
             unlockableDef.hidden = false;
-
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             SkinRED(RocketBody);
             SkinBLUE(RocketBody);
         }
@@ -230,7 +230,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_ROCKET", "Skins.Rocket.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_ROCKET", "Skins.Rocket.Wolfo", null, 5, null)]
         public class ClearSimulacrumRocket : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

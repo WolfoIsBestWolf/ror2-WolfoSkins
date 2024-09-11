@@ -24,16 +24,17 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconChirr);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+            
         }
 
         internal static void ModdedSkin(GameObject ChirrBody)
         {
             Debug.Log("Chirr Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             SkinsPink(ChirrBody);
             SkinsORANGE(ChirrBody);
 
@@ -196,7 +197,7 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_CHIRR", "Skins.Chirr.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_CHIRR", "Skins.Chirr.Wolfo", null, 5, null)]
         public class ClearSimulacrumChirr : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()

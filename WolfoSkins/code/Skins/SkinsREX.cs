@@ -155,7 +155,7 @@ namespace WolfoSkinsMod
             R2API.Skins.AddSkinToCharacter(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/TreebotBody"), BlueFlowerRexInfo);
         }
 
-        [RegisterAchievement("SIMU_SKIN_TREEBOT", "Skins.Treebot.Wolfo", "RescueTreebot", null)]
+        [RegisterAchievement("SIMU_SKIN_TREEBOT", "Skins.Treebot.Wolfo", "RescueTreebot", 5, null)]
         public class ClearSimulacrumTreebotBody : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -177,13 +177,13 @@ namespace WolfoSkinsMod
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
         }
 
-        [RegisterAchievement("PRISM_SKIN_TREEBOT", "Skins.Treebot.Wolfo.Prism", null, null)]
+        /*[RegisterAchievement("PRISM_SKIN_TREEBOT", "Skins.Treebot.Wolfo.Prism", null, 5, null)]
         public class AchievementPrismaticDissoTreebot2Body : AchievementPrismaticDisso
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("TreebotBody");
             }
-        }
+        }*/
     }
 }

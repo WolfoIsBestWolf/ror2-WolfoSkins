@@ -24,16 +24,17 @@ namespace WolfoSkinsMod
             unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconNemEnforcer);
             unlockableDef.hidden = true;
             R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
+
         }
 
         internal static void ModdedSkin(GameObject BodyObject)
         {
             Debug.Log("Nemesis Enforcer Skins");
             unlockableDef.hidden = false;
+            if (WConfig.cfgUnlockAll.Value)
+            {
+                unlockableDef = null;
+            }
             BodyIndex CharacterIndex = BodyObject.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = BodyObject.GetComponentInChildren<ModelSkinController>();
             SkinDef skinDefault = modelSkinController.skins[0];
@@ -80,7 +81,7 @@ namespace WolfoSkinsMod
             BodyCatalog.skins[(int)CharacterIndex] = BodyCatalog.skins[(int)CharacterIndex].Add(NewSkinDef);
         }
 
-        [RegisterAchievement("SIMU_SKIN_NEM_ENFORCER", "Skins.NemesisEnforcer.Wolfo", null, null)]
+        [RegisterAchievement("SIMU_SKIN_NEM_ENFORCER", "Skins.NemesisEnforcer.Wolfo", null, 5, null)]
         public class ClearSimulacrumNemesisEnforcer : AchievementSimuVoidTwisted
         {
             public override BodyIndex LookUpRequiredBodyIndex()
