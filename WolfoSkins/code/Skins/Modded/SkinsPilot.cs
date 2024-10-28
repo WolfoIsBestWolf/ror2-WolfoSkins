@@ -7,33 +7,9 @@ namespace WolfoSkinsMod
 {
     public class SkinsPilot
     {
-        private static UnlockableDef unlockableDef;
-
-        internal static void CallDuringAwake()
-        {
-            LanguageAPI.Add("SIMU_SKIN_PILOT_WHITE", "Winter");
-            LanguageAPI.Add("SIMU_SKIN_PILOT_RED", "Militant");
-            LanguageAPI.Add("SIMU_SKIN_PILOT_BLUE", "Courier ");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_PILOT_NAME", "Pilot"+Unlocks.unlockName);
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_PILOT_DESCRIPTION", "As Pilot" + Unlocks.unlockCondition);
-
-            unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_PILOT_NAME";
-            unlockableDef.cachedName = "Skins.Pilot.Wolfo";
-            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconPilot);
-            unlockableDef.hidden = true;
-            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-           
-        }
-
         internal static void ModdedSkin(GameObject PilotBody)
         {
             Debug.Log("Pilot Skins");
-            unlockableDef.hidden = false;
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
             SkinWHITE(PilotBody);
             SkinRED(PilotBody);
             SkinBLUE(PilotBody);
@@ -66,34 +42,22 @@ namespace WolfoSkinsMod
             Material matPilotDefault2 = Object.Instantiate(skinPilotDefault.rendererInfos[4].defaultMaterial);
             Material Parachute = Object.Instantiate(skinPilotDefault.rendererInfos[10].defaultMaterial);
 
-            Texture2D PIlotWeapon_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PIlotWeapon_diffuse.LoadImage(Properties.Resources.PIlotWeapon_diffuseWHITE, true);
-            PIlotWeapon_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PIlotWeapon_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/PIlotWeapon_diffuseWHITE.png");
             PIlotWeapon_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D PIlotWeapon_emission = new Texture2D(2048, 2048, TextureFormat.DXT1, false);
-            PIlotWeapon_emission.LoadImage(Properties.Resources.PIlotWeapon_emissionWHITE, true);
-            PIlotWeapon_emission.filterMode = FilterMode.Bilinear;
+            Texture2D PIlotWeapon_emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/PIlotWeapon_emissionWHITE.png");
             PIlotWeapon_emission.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D Pilot_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            Pilot_diffuse.LoadImage(Properties.Resources.Pilot_diffuseWHITE, true);
-            Pilot_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D Pilot_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/Pilot_diffuseWHITE.png");
             Pilot_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D PIlot2_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PIlot2_diffuse.LoadImage(Properties.Resources.PIlot2_diffuseWHITE, true);
-            PIlot2_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PIlot2_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/PIlot2_diffuseWHITE.png");
             PIlot2_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            /*Texture2D PIlot2_emission = new Texture2D(2048, 2048, TextureFormat.DXT1, false);
-            PIlot2_emission.LoadImage(Properties.Resources.PIlot2_emission, true);
-            PIlot2_emission.filterMode = FilterMode.Bilinear;
+            /*Texture2D PIlot2_emission;
             PIlot2_emission.wrapMode = TextureWrapMode.Clamp;*/
 
-            Texture2D PilotParachute_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PilotParachute_diffuse.LoadImage(Properties.Resources.PilotParachute_diffuseWHITE, true);
-            PilotParachute_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PilotParachute_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/PilotParachute_diffuseWHITE.png");
             PilotParachute_diffuse.wrapMode = TextureWrapMode.Repeat;
 
 
@@ -126,20 +90,14 @@ namespace WolfoSkinsMod
             NewRenderInfos[9].defaultMaterial = matPilotDefault2;
             NewRenderInfos[10].defaultMaterial = Parachute;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconPilotWHITE, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinPilotWolfo_White",
+                Name = "skinPilotWolfo_White_Any",
                 NameToken = "SIMU_SKIN_PILOT_WHITE",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/skinIconPilotWHITE.png")),
                 BaseSkins = new SkinDef[] { skinPilotDefault },
                 RootObject = skinPilotDefault.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinPilotDefault.meshReplacements,
                 GameObjectActivations = skinPilotDefault.gameObjectActivations,
@@ -178,35 +136,24 @@ namespace WolfoSkinsMod
             Material matPilotDefault2 = Object.Instantiate(skinPilotDefault.rendererInfos[4].defaultMaterial);
             Material Parachute = Object.Instantiate(skinPilotDefault.rendererInfos[10].defaultMaterial);
 
-            Texture2D PIlotWeapon_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PIlotWeapon_diffuse.LoadImage(Properties.Resources.PIlotWeapon_diffuseRED, true);
-            PIlotWeapon_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PIlotWeapon_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Red/PIlotWeapon_diffuseRED.png");
             PIlotWeapon_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D PIlotWeapon_emission = new Texture2D(2048, 2048, TextureFormat.DXT1, false);
-            PIlotWeapon_emission.LoadImage(Properties.Resources.PIlotWeapon_emissionRED, true);
-            PIlotWeapon_emission.filterMode = FilterMode.Bilinear;
+            Texture2D PIlotWeapon_emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Red/PIlotWeapon_emissionRED.png");
             PIlotWeapon_emission.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D Pilot_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            Pilot_diffuse.LoadImage(Properties.Resources.Pilot_diffuseRED, true);
-            Pilot_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D Pilot_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Red/Pilot_diffuseRED.png");
             Pilot_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D PIlot2_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PIlot2_diffuse.LoadImage(Properties.Resources.PIlot2_diffuseRED, true);
-            PIlot2_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PIlot2_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Red/PIlot2_diffuseRED.png");
             PIlot2_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            /*Texture2D PIlot2_emission = new Texture2D(2048, 2048, TextureFormat.DXT1, false);
-            PIlot2_emission.LoadImage(Properties.Resources.PIlot2_emission, true);
-            PIlot2_emission.filterMode = FilterMode.Bilinear;
+            /*Texture2D PIlot2_emission;
             PIlot2_emission.wrapMode = TextureWrapMode.Clamp;*/
 
-            Texture2D PilotParachute_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PilotParachute_diffuse.LoadImage(Properties.Resources.PilotParachute_diffuseRED, true);
-            PilotParachute_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PilotParachute_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Red/PilotParachute_diffuseRED.png");
             PilotParachute_diffuse.wrapMode = TextureWrapMode.Repeat;
+
 
 
             matPilotDefaultWeapon.mainTexture = PIlotWeapon_diffuse;
@@ -238,20 +185,14 @@ namespace WolfoSkinsMod
             NewRenderInfos[9].defaultMaterial = matPilotDefault2;
             NewRenderInfos[10].defaultMaterial = Parachute;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconPilotRED, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinPilotWolfo_Red",
+                Name = "skinPilotWolfo_Red_Any",
                 NameToken = "SIMU_SKIN_PILOT_RED",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Red/skinIconPilotRED.png")),
                 BaseSkins = new SkinDef[] { skinPilotDefault },
                 RootObject = skinPilotDefault.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinPilotDefault.meshReplacements,
                 GameObjectActivations = skinPilotDefault.gameObjectActivations,
@@ -291,35 +232,24 @@ namespace WolfoSkinsMod
             Material matPilotDefault2 = Object.Instantiate(skinPilotDefault.rendererInfos[4].defaultMaterial);
             Material Parachute = Object.Instantiate(skinPilotDefault.rendererInfos[10].defaultMaterial);
 
-            Texture2D PIlotWeapon_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PIlotWeapon_diffuse.LoadImage(Properties.Resources.PIlotWeapon_diffuse, true);
-            PIlotWeapon_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PIlotWeapon_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/PIlotWeapon_diffuse.png");
             PIlotWeapon_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D PIlotWeapon_emission = new Texture2D(2048, 2048, TextureFormat.DXT1, false);
-            PIlotWeapon_emission.LoadImage(Properties.Resources.PIlotWeapon_emission, true);
-            PIlotWeapon_emission.filterMode = FilterMode.Bilinear;
+            Texture2D PIlotWeapon_emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/PIlotWeapon_emission.png");
             PIlotWeapon_emission.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D Pilot_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            Pilot_diffuse.LoadImage(Properties.Resources.Pilot_diffuse, true);
-            Pilot_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D Pilot_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/Pilot_diffuse.png");
             Pilot_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D PIlot2_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PIlot2_diffuse.LoadImage(Properties.Resources.PIlot2_diffuse, true);
-            PIlot2_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PIlot2_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/PIlot2_diffuse.png");
             PIlot2_diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            /*Texture2D PIlot2_emission = new Texture2D(2048, 2048, TextureFormat.DXT1, false);
-            PIlot2_emission.LoadImage(Properties.Resources.PIlot2_emission, true);
-            PIlot2_emission.filterMode = FilterMode.Bilinear;
+            /*Texture2D PIlot2_emission;
             PIlot2_emission.wrapMode = TextureWrapMode.Clamp;*/
 
-            Texture2D PilotParachute_diffuse = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            PilotParachute_diffuse.LoadImage(Properties.Resources.PilotParachute_diffuse, true);
-            PilotParachute_diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D PilotParachute_diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/PilotParachute_diffuse.png");
             PilotParachute_diffuse.wrapMode = TextureWrapMode.Repeat;
+
 
 
             matPilotDefaultWeapon.mainTexture = PIlotWeapon_diffuse;
@@ -351,20 +281,14 @@ namespace WolfoSkinsMod
             NewRenderInfos[9].defaultMaterial = matPilotDefault2;
             NewRenderInfos[10].defaultMaterial = Parachute;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconPilot, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinPilotWolfo_Blue",
+                Name = "skinPilotWolfo_Blue_Any",
                 NameToken = "SIMU_SKIN_PILOT_BLUE",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/skinIconPilot.png")),
                 BaseSkins = new SkinDef[] { skinPilotDefault },
                 RootObject = skinPilotDefault.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinPilotDefault.meshReplacements,
                 GameObjectActivations = skinPilotDefault.gameObjectActivations,
@@ -376,8 +300,8 @@ namespace WolfoSkinsMod
             BodyCatalog.skins[(int)CharacterIndex] = BodyCatalog.skins[(int)CharacterIndex].Add(SkinDefNew);
         }
         
-        [RegisterAchievement("SIMU_SKIN_PILOT", "Skins.Pilot.Wolfo", null, 5, null)]
-        public class ClearSimulacrumPilot : AchievementSimuVoidTwisted
+        [RegisterAchievement("CLEAR_ANY_MOFFEINPILOT", "Skins.MoffeinPilot.Wolfo.First", null, 5, null)]
+        public class ClearSimulacrumPilot : Achievement_AltBoss_Simu
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

@@ -1,11 +1,12 @@
 {
     "name": "WolfoAlternateSkins",
-    "version_number": "1.9.11",
-    "website_url": "",
-    "description": "Adds 30+ skin recolors for vanilla characters and 30+ skin recolors for modded characters. A lot of them based on RoR:Returns palettes. Unlocked by beating alt endings or Simulacrum wave 50. Subsidiary of Simulacrum Additions.",
+    "version_number": "2.0.0",
+    "website_url": "https://github.com/WolfoIsBestWolf/ror2-WolfoSkins",
+    "description": "Adds 40+ skin recolors for vanilla characters and 30+ skin recolors for modded characters. A lot of them based on RoR:Returns palettes. Unlocked by beating alt endings or Simulacrum wave 50.",
     "dependencies": [
         "bbepis-BepInExPack-5.4.9",
 		"RiskofThunder-HookGenPatcher-1.2.1",
+		"Rune580-Risk_Of_Options-2.8.2",
 		"tristanmcpherson-R2API-5.0.5"
     ]
 }

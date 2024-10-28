@@ -7,30 +7,6 @@ namespace WolfoSkinsMod
 {
     public class SkinsCHEFMod
     {
-        public static UnlockableDef unlockableDef;
-
-        internal static void CallDuringAwake()
-        {
-            LanguageAPI.Add("SIMU_SKIN_CHEFMOD_BLACK", "Rotisseur");
-            LanguageAPI.Add("SIMU_SKIN_CHEFMOD_RED", "Boucher");
-            LanguageAPI.Add("SIMU_SKIN_CHEFMOD_GREEN", "Entremetier");
-            LanguageAPI.Add("SIMU_SKIN_CHEFMOD_BLUE", "Poissonier");
-            LanguageAPI.Add("SIMU_SKIN_CHEFMOD_CYAN", "Saucier");
-            LanguageAPI.Add("SIMU_SKIN_CHEFMOD_PROVI", "Sous Chef");
-
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_CHEFMOD_NAME", "CHEF (Modded): Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_CHEFMOD_DESCRIPTION", "As CHEF (Modded)" + Unlocks.unlockCondition);
-
-            unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_CHEFMOD_NAME";
-            unlockableDef.cachedName = "Skins.ChefMod.Wolfo";
-            unlockableDef.hidden = true;
-            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinChefIconRed);
-            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-
-            GameModeCatalog.availability.CallWhenAvailable(ChefDisplayFix);
-        }
-
         public static void ChefDisplayFix()
         {
             SurvivorDef CHEF = SurvivorCatalog.FindSurvivorDef("GnomeChef");
@@ -58,6 +34,13 @@ namespace WolfoSkinsMod
             GameObject KnifeShot = ProjectileCatalog.GetProjectilePrefab(catalogIndexKnife);
             GameObject KnifeShotBoost = ProjectileCatalog.GetProjectilePrefab(catalogIndexKnife2);
 
+            if (!CleaverShot || !KnifeShot || !KnifeShotBoost)
+            {
+                Debug.LogWarning("CHEF MOD Knives couldn't be made");
+                return;
+            }
+
+
             Material ArmDefault = KnifeShot.GetComponent<LineRenderer>().material;
             Material ArmRed = Object.Instantiate(ArmDefault);
             Material ArmGreen = Object.Instantiate(ArmDefault);
@@ -66,12 +49,12 @@ namespace WolfoSkinsMod
             Material ArmCyan = Object.Instantiate(ArmDefault);
             Material ArmProvi = Object.Instantiate(ArmDefault);
 
-            ArmRed.mainTexture = WRect.MakeTexture(128, 64, TextureFormat.DXT1, FilterMode.Bilinear, TextureWrapMode.Repeat, Properties.Resources.texArmRED);
-            ArmGreen.mainTexture = WRect.MakeTexture(128, 64, TextureFormat.DXT1, FilterMode.Bilinear, TextureWrapMode.Repeat, Properties.Resources.texArmGREEN);
-            ArmBlue.mainTexture = WRect.MakeTexture(128, 64, TextureFormat.DXT1, FilterMode.Bilinear, TextureWrapMode.Repeat, Properties.Resources.texArmBLUE);
-            ArmBlack.mainTexture = WRect.MakeTexture(128, 64, TextureFormat.DXT1, FilterMode.Bilinear, TextureWrapMode.Repeat, Properties.Resources.texArmBLACK);
-            ArmCyan.mainTexture = WRect.MakeTexture(128, 64, TextureFormat.DXT1, FilterMode.Bilinear, TextureWrapMode.Repeat, Properties.Resources.texArmCYAN);
-            ArmProvi.mainTexture = WRect.MakeTexture(128, 64, TextureFormat.DXT1, FilterMode.Bilinear, TextureWrapMode.Repeat, Properties.Resources.texArmPROVI);
+            ArmRed.mainTexture = WRect.MakeTexture(TextureWrapMode.Repeat, Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texArmRED.png"));
+            ArmGreen.mainTexture = WRect.MakeTexture(TextureWrapMode.Repeat, Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texArmGREEN.png"));
+            ArmBlue.mainTexture = WRect.MakeTexture(TextureWrapMode.Repeat, Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texArmBLUE.png"));
+            ArmBlack.mainTexture = WRect.MakeTexture(TextureWrapMode.Repeat, Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texArmBLACK.png"));
+            ArmCyan.mainTexture = WRect.MakeTexture(TextureWrapMode.Repeat, Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texArmCYAN.png"));
+            ArmProvi.mainTexture = WRect.MakeTexture(TextureWrapMode.Repeat, Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texArmPROVI.png"));
 
             //Does not support other mods properly at all
             Material[] arms = new Material[]
@@ -129,12 +112,6 @@ namespace WolfoSkinsMod
             On.RoR2.ProjectileCatalog.Init += ProjectileCatalog_Init;
 
             Debug.Log("CHEF Skins");
-            unlockableDef.hidden = false;
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
-
 
             BodyIndex ChefIndex = ChefBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = ChefBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
@@ -166,37 +143,25 @@ namespace WolfoSkinsMod
             Material matChefCYAN = Object.Instantiate(skinChef.rendererInfos[0].defaultMaterial);
             Material matChefPROVI = Object.Instantiate(skinChef.rendererInfos[0].defaultMaterial);
 
-            Texture2D texChefDefault = new Texture2D(256, 128, TextureFormat.DXT5, false);
-            texChefDefault.LoadImage(Properties.Resources.texChefDefaultBLACK, true);
-            texChefDefault.filterMode = FilterMode.Bilinear;
-            texChefDefault.wrapMode = TextureWrapMode.Clamp;
+            Texture2D texChefDefault_Black = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefDefaultBLACK.png");
+            texChefDefault_Black.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texChefRed = new Texture2D(256, 128, TextureFormat.DXT5, false);
-            texChefRed.LoadImage(Properties.Resources.texChefRed, true);
-            texChefRed.filterMode = FilterMode.Bilinear;
+            Texture2D texChefRed = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefRed.png");
             texChefRed.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texChefGREEN = new Texture2D(256, 128, TextureFormat.DXT5, false);
-            texChefGREEN.LoadImage(Properties.Resources.texChefGreen, true);
-            texChefGREEN.filterMode = FilterMode.Bilinear;
+            Texture2D texChefGREEN = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefGreen.png");
             texChefGREEN.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texChefBLUE = new Texture2D(256, 128, TextureFormat.DXT5, false);
-            texChefBLUE.LoadImage(Properties.Resources.texChefDefaultBLUE, true);
-            texChefBLUE.filterMode = FilterMode.Bilinear;
+            Texture2D texChefBLUE = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefDefaultBLUE.png");
             texChefBLUE.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texChefCYAN = new Texture2D(256, 128, TextureFormat.DXT5, false);
-            texChefCYAN.LoadImage(Properties.Resources.texChefDefaultCYAN, true);
-            texChefCYAN.filterMode = FilterMode.Bilinear;
+            Texture2D texChefCYAN = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefDefaultCYAN.png");
             texChefCYAN.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texChefPROVI = new Texture2D(256, 128, TextureFormat.DXT5, false);
-            texChefPROVI.LoadImage(Properties.Resources.texChefDefaultPROVI, true);
-            texChefPROVI.filterMode = FilterMode.Bilinear;
+            Texture2D texChefPROVI = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefDefaultPROVI.png");
             texChefPROVI.wrapMode = TextureWrapMode.Clamp;
 
-            matChefBLACK.mainTexture = texChefDefault;
+            matChefBLACK.mainTexture = texChefDefault_Black;
             matChefRED.mainTexture = texChefRed;
             matChefGREEN.mainTexture = texChefGREEN;
             matChefBLUE.mainTexture = texChefBLUE;
@@ -219,34 +184,22 @@ namespace WolfoSkinsMod
             Material matChefKnifeCYAN = Object.Instantiate(skinChef.rendererInfos[1].defaultMaterial);
             Material matChefKnifePROVI = Object.Instantiate(skinChef.rendererInfos[1].defaultMaterial);
 
-            Texture2D texChefKnifeBlack = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            texChefKnifeBlack.LoadImage(Properties.Resources.texChefKnifeBlack, true);
-            texChefKnifeBlack.filterMode = FilterMode.Bilinear;
+            Texture2D texChefKnifeBlack = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefKnifeBlack.png");
             texChefKnifeBlack.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texChefKnifeRed = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            texChefKnifeRed.LoadImage(Properties.Resources.texChefKnifeRED, true);
-            texChefKnifeRed.filterMode = FilterMode.Bilinear;
+            Texture2D texChefKnifeRed = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefKnifeRED.png");
             texChefKnifeRed.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texChefKnifeGreen = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            texChefKnifeGreen.LoadImage(Properties.Resources.texChefKnifeGreen, true);
-            texChefKnifeGreen.filterMode = FilterMode.Bilinear;
+            Texture2D texChefKnifeGreen = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefKnifeGreen.png");
             texChefKnifeGreen.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texChefKnifeBlue = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            texChefKnifeBlue.LoadImage(Properties.Resources.texChefKnifeBlue, true);
-            texChefKnifeBlue.filterMode = FilterMode.Bilinear;
+            Texture2D texChefKnifeBlue = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefKnifeBlue.png");
             texChefKnifeBlue.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texChefKnifeCyan = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            texChefKnifeCyan.LoadImage(Properties.Resources.texChefKnifeCyan, true);
-            texChefKnifeCyan.filterMode = FilterMode.Bilinear;
+            Texture2D texChefKnifeCyan = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefKnifeCyan.png");
             texChefKnifeCyan.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texChefKnifeProvi = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            texChefKnifeProvi.LoadImage(Properties.Resources.texChefKnifeProvi, true);
-            texChefKnifeProvi.filterMode = FilterMode.Bilinear;
+            Texture2D texChefKnifeProvi = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/texChefKnifeProvi.png");
             texChefKnifeProvi.wrapMode = TextureWrapMode.Repeat;
 
             matChefKnifeBLACK.mainTexture = texChefKnifeBlack;
@@ -264,97 +217,61 @@ namespace WolfoSkinsMod
             NewRenderInfosPROVI[1].defaultMaterial = matChefKnifePROVI;
 
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinChefIconBLACK, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
-            //
-            Texture2D skinChefIconRed = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            skinChefIconRed.LoadImage(Properties.Resources.skinChefIconRed, true);
-            skinChefIconRed.filterMode = FilterMode.Bilinear;
-            Sprite skinChefIconRedS = Sprite.Create(skinChefIconRed, WRect.rec128, WRect.half);
-            //
-            Texture2D skinChefIconGREEN = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            skinChefIconGREEN.LoadImage(Properties.Resources.skinChefIconGreen, true);
-            skinChefIconGREEN.filterMode = FilterMode.Bilinear;
-            Sprite skinChefIconGREENS = Sprite.Create(skinChefIconGREEN, WRect.rec128, WRect.half);
-
-            Texture2D skinChefIconBLUE = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            skinChefIconBLUE.LoadImage(Properties.Resources.skinChefIconBLUE, true);
-            skinChefIconBLUE.filterMode = FilterMode.Bilinear;
-            Sprite skinChefIconBLUES = Sprite.Create(skinChefIconBLUE, WRect.rec128, WRect.half);
-
-            Texture2D skinChefIconCYAN = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            skinChefIconCYAN.LoadImage(Properties.Resources.skinChefIconCYAN, true);
-            skinChefIconCYAN.filterMode = FilterMode.Bilinear;
-            Sprite skinChefIconCYANS = Sprite.Create(skinChefIconCYAN, WRect.rec128, WRect.half);
-            
-            Texture2D skinChefIconPROVI = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            skinChefIconPROVI.LoadImage(Properties.Resources.skinChefIconProvi, true);
-            skinChefIconPROVI.filterMode = FilterMode.Bilinear;
-            Sprite skinChefIconPROVIS = Sprite.Create(skinChefIconPROVI, WRect.rec128, WRect.half);
             //
             //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinCHEFWolfo_Black",
-                NameToken = "SIMU_SKIN_CHEF_BLACK",
-                Icon = SkinIconS,
+                Name = "skinCHEF_MOD_Wolfo_Black_Any",
+                NameToken = "SIMU_SKIN_CHEFMOD_BLACK",
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconBLACK.png")),
                 BaseSkins = new SkinDef[] { skinChef },
                 RendererInfos = NewRenderInfosBLACK,
                 RootObject = skinChef.rootObject,
-                UnlockableDef = unlockableDef,
             };
-            R2API.SkinDefInfo SkinInfoRED = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfoRED = new SkinDefInfo
             {
-                Name = "skinCHEFWolfo_Red",
-                NameToken = "SIMU_SKIN_CHEF_RED",
-                Icon = skinChefIconRedS,
+                Name = "skinCHEF_MOD_Wolfo_Red_Any",
+                NameToken = "SIMU_SKIN_CHEFMOD_RED",
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconRed.png")),
                 BaseSkins = new SkinDef[] { skinChef },
                 RendererInfos = NewRenderInfosRED,
                 RootObject = skinChef.rootObject,
-                UnlockableDef = unlockableDef,
             };
-            R2API.SkinDefInfo SkinInfoGREEN = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfoGREEN = new SkinDefInfo
             {
-                Name = "skinCHEFWolfo_Green",
-                NameToken = "SIMU_SKIN_CHEF_GREEN",
-                Icon = skinChefIconGREENS,
+                Name = "skinCHEF_MOD_Wolfo_Green_Any",
+                NameToken = "SIMU_SKIN_CHEFMOD_GREEN",
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconGreen.png")),
                 BaseSkins = new SkinDef[] { skinChef },
                 RendererInfos = NewRenderInfosGREEN,
                 RootObject = skinChef.rootObject,
-                UnlockableDef = unlockableDef,
             };
-            R2API.SkinDefInfo SkinInfoBLUE = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfoBLUE = new SkinDefInfo
             {
-                Name = "skinCHEFWolfo_BLUE",
-                NameToken = "SIMU_SKIN_CHEF_BLUE",
-                Icon = skinChefIconBLUES,
+                Name = "skinCHEF_MOD_Wolfo_BLUE",
+                NameToken = "SIMU_SKIN_CHEFMOD_BLUE",
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconBLUE.png")),
                 BaseSkins = new SkinDef[] { skinChef },
                 RendererInfos = NewRenderInfosBLUE,
                 RootObject = skinChef.rootObject,
-                UnlockableDef = unlockableDef,
             };
-            R2API.SkinDefInfo SkinInfoCYAN = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfoCYAN = new SkinDefInfo
             {
-                Name = "skinCHEFWolfo_CYAN",
-                NameToken = "SIMU_SKIN_CHEF_CYAN",
-                Icon = skinChefIconCYANS,
+                Name = "skinCHEF_MOD_Wolfo_CYAN_Any",
+                NameToken = "SIMU_SKIN_CHEFMOD_CYAN",
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconCYAN.png")),
                 BaseSkins = new SkinDef[] { skinChef },
                 RendererInfos = NewRenderInfosCYAN,
                 RootObject = skinChef.rootObject,
-                UnlockableDef = unlockableDef,
             };
-            R2API.SkinDefInfo SkinInfoPROVI = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfoPROVI = new SkinDefInfo
             {
-                Name = "skinCHEFWolfo_PROVI",
-                NameToken = "SIMU_SKIN_CHEF_PROVI",
-                Icon = skinChefIconPROVIS,
+                Name = "skinCHEF_MOD_Wolfo_PROVI_Any",
+                NameToken = "SIMU_SKIN_CHEFMOD_PROVI",
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconProvi.png")),
                 BaseSkins = new SkinDef[] { skinChef },
                 RendererInfos = NewRenderInfosPROVI,
                 RootObject = skinChef.rootObject,
-                UnlockableDef = unlockableDef,
             };
             SkinDef ChefSkinDefBLACK = Skins.CreateNewSkinDef(SkinInfo);
             SkinDef ChefSkinDefRED = Skins.CreateNewSkinDef(SkinInfoRED);
@@ -400,8 +317,8 @@ namespace WolfoSkinsMod
             }
         }
 
-        [RegisterAchievement("SIMU_SKIN_CHEFMOD", "Skins.ChefMod.Wolfo", null, 5, null)]
-        public class ClearSimulacrumCHEFMOD : AchievementSimuVoidTwisted
+        [RegisterAchievement("CLEAR_ANY_GNOMECHEF", "Skins.GnomeChef.Wolfo.First", null, 5, null)]
+        public class ClearSimulacrumCHEFMOD : Achievement_AltBoss_Simu
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

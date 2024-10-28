@@ -18,31 +18,32 @@ using UnityEngine.AddressableAssets;
 namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
-    [BepInDependency("com.TheTimeSweeper.TeslaTrooper", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "1.9.9")]
-    //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
+    [BepInDependency("com.TheTimeSweeper.RedAlert", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.0.0")]
+    [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
 
     public class WolfoSkins : BaseUnityPlugin
     {
 
         public void Awake()
         {
+            Assets.Init(Info);
             WConfig.InitConfig();
-
             Unlocks.Hooks();
+
             //
-            SkinsCommando.CommandoSkin();
-            SkinsHuntress.HuntressSkin();
-            SkinsBandit.Start();
-            SkinsMULT.ToolbotSkin();
-            SkinsEngineer.EngiSkin();
-            SkinsArtificer.Start();
-            SkinsMerc.MercSkin();
-            SkinsREX.TreebotSkin();
-            SkinsLoader.LoaderSkin();
-            SkinsAcrid.Start();
-            SkinsCaptain.CaptainSkin();
-            SkinsRailGunner.RailGunnerSkins();
+            SkinsCommando.Start();
+            SkinsHuntress.Start();
+            SkinsBandit2.Start();
+            SkinsToolbot_MULT.Start();
+            SkinsEngineer.Start();
+            SkinsMage_Artificer.Start();
+            SkinsMerc.Start();
+            SkinsTreebot_REX.Start();
+            SkinsLoader.Start();
+            SkinsCroco_Acrid.Start();
+            SkinsCaptain.Start();
+            SkinsRailGunner.Start();
             SkinsVoidFiend.Start();
 
             //DLC2
@@ -50,74 +51,34 @@ namespace WolfoSkinsMod
             SkinsChef.Start();
             SkinsFalseSon.Start();
 
-
-            //Modded     
-            SkinsHand.CallDuringAwake();
-            SkinsEnforcer.CallDuringAwake();
-            SkinsSniper.CallDuringAwake();
-            SkinsMiner.CallDuringAwake();
-            SkinsCHEFMod.CallDuringAwake();
-            SkinsPilot.CallDuringAwake();
-            SkinsRocket.CallDuringAwake();         
-            SkinsChirr.CallDuringAwake();
-            SkinsExecutioner.CallDuringAwake();
-            SkinsRavager.CallDuringAwake();
-
-            SkinsArsonist.CallDuringAwake();
-            TeslaDesolatorUnlocks.CallDuringAwake();
-            SkinsPaladin.CallDuringAwake();
-            //
-            SkinsNemCommando.CallDuringAwake();
-            SkinsNemMercenary.CallDuringAwake();
-            SkinsNemEnforcer.CallDuringAwake();
-            //
-            SkinsFutureModSupport.CallDuringAwake();
-            //
-            //Prism stuff
-            /*SkinsCommando.Prism
-             * Achievement();
-            SkinsHuntress.PrismAchievement();
-            SkinsBandit.PrismAchievement();
-            SkinsMULT.PrismAchievement();
-            SkinsEngineer.PrismAchievement();
-            //SkinsArtificer.PrismAchievement();
-            SkinsMerc.PrismAchievement();
-            SkinsREX.PrismAchievement();
-            SkinsLoader.PrismAchievement();
-            //SkinsAcrid.PrismAchievement();
-            SkinsCaptain.PrismAchievement();
-            SkinsRailGunner.PrismAchievement();
-            //SkinsVoidFiend.PrismAchievement();
-
-            SkinsEnforcer.PrismAchievement();
-            SkinsHand.PrismAchievement();*/
-            //
+ 
             BodyCatalog.availability.CallWhenAvailable(ModSupport);
              
             GameModeCatalog.availability.CallWhenAvailable(SortSkinsLate);
 
-            On.RoR2.SkinDef.Apply += (orig, self, model) =>
-            {
-                orig(self, model);
-                //Debug.Log("SkinApply " + self);
-                if (model.GetComponent<SkinDefWolfoTracker>())
-                {
-                    model.GetComponent<SkinDefWolfoTracker>().UndoWolfoSkin();
-                }
-                if (model.GetComponent<SkinsCHEFMod.FixChefDisplay>())
-                {
-                    model.GetComponent<SkinsCHEFMod.FixChefDisplay>().Fix(self);
-                }
-                if (self is SkinDefWolfo)
-                {
-                    (self as SkinDefWolfo).ApplyExtras(model);
-                }
-            };
-
+            On.RoR2.SkinDef.Apply += SkinDef_Apply;
 
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
-            VoidlingNerfs();
+           
+            GameObject AssassinBody = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/AssassinBody");
+            if (AssassinBody)
+            {
+                AssassinBody.GetComponent<CharacterBody>().baseNameToken = "ASSASSIN";
+            }
+        }
 
+        private void SkinDef_Apply(On.RoR2.SkinDef.orig_Apply orig, SkinDef self, GameObject model)
+        {
+            orig(self, model);
+            //Debug.Log("SkinApply " + self);
+            if (model.GetComponent<SkinDefWolfoTracker>())
+            {
+                model.GetComponent<SkinDefWolfoTracker>().UndoWolfoSkin();
+            }
+            if (self is SkinDefWolfo)
+            {
+                (self as SkinDefWolfo).ApplyExtras(model);
+            }
         }
 
         internal static void SortSkinsLate()
@@ -294,62 +255,7 @@ namespace WolfoSkinsMod
             orig(self,characterModel);
         }
 
-        public static void VoidlingNerfs()
-        {          
-            On.RoR2.ScriptedCombatEncounter.BeginEncounter += VoidlingLevelLimit;
-
-            CharacterBody Voidling = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/VoidRaidCrab/MiniVoidRaidCrabBodyPhase1.prefab").WaitForCompletion().GetComponent<CharacterBody>();
-            Voidling.baseDamage *= WConfig.VoidlingDamageMultiplier.Value;
-            Voidling.levelDamage *= WConfig.VoidlingDamageMultiplier.Value;
-            Voidling.baseMaxHealth *= WConfig.VoidlingHPMultiplier.Value;
-            Voidling.levelMaxHealth *= WConfig.VoidlingHPMultiplier.Value;
-            Voidling = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/VoidRaidCrab/MiniVoidRaidCrabBodyPhase2.prefab").WaitForCompletion().GetComponent<CharacterBody>();
-            Voidling.baseDamage *= WConfig.VoidlingDamageMultiplier.Value;
-            Voidling.levelDamage *= WConfig.VoidlingDamageMultiplier.Value;
-            Voidling.baseMaxHealth *=  WConfig.VoidlingHPMultiplier.Value;
-            Voidling.levelMaxHealth *=  WConfig.VoidlingHPMultiplier.Value;
-            Voidling = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/VoidRaidCrab/MiniVoidRaidCrabBodyPhase3.prefab").WaitForCompletion().GetComponent<CharacterBody>();
-            Voidling.baseDamage *= WConfig.VoidlingDamageMultiplier.Value;
-            Voidling.levelDamage *= WConfig.VoidlingDamageMultiplier.Value;
-            Voidling.baseMaxHealth *= WConfig.VoidlingHPMultiplier.Value;
-            Voidling.levelMaxHealth *= WConfig.VoidlingHPMultiplier.Value;
-        }
-
-        private static void VoidlingLevelLimit(On.RoR2.ScriptedCombatEncounter.orig_BeginEncounter orig, ScriptedCombatEncounter self)
-        {
-            orig(self);
-
-            if (self.name.StartsWith("VoidRaid"))
-            {
-                if (Run.instance.ambientLevelFloor > 99)
-                {
-                    if (WConfig.VoidlingLimitLevel99.Value)
-                    {  
-                        for (int i = 0; i < self.combatSquad.membersList.Count; i++)
-                        {
-                            self.combatSquad.membersList[i].inventory.RemoveItem(RoR2Content.Items.UseAmbientLevel);
-                            self.combatSquad.membersList[i].inventory.GiveItem(RoR2Content.Items.LevelBonus, 98);
-                        }
-                    }
-                }
-                /*
-                if (Run.instance.livingPlayerCount > 1)
-                {
-                    float hpBonus = 1f;
-                    hpBonus += Run.instance.difficultyCoefficient / 2.5f;
-                    int hpBonusMultiplier = Mathf.Max(1, Run.instance.livingPlayerCount);
-                    hpBonus *= Mathf.Pow((float)hpBonusMultiplier, 0.5f);
-                    self.combatSquad.membersList[i].inventory.GiveItem(RoR2Content.Items.BoostHp, Mathf.RoundToInt((hpBonus - 1f) * 10f));
-
-
-
-                    float dmgBonus = 1f;
-                    dmgBonus += Run.instance.difficultyCoefficient / 30f;
-                    self.combatSquad.membersList[i].inventory.GiveItem(RoR2Content.Items.BoostDamage, Mathf.RoundToInt((dmgBonus - 1f) * 10f));
-                }*/
-            }
-        }
-
+        
     }
 
     public class SkinDefWolfo : SkinDef
@@ -363,11 +269,19 @@ namespace WolfoSkinsMod
         public void ApplyExtras(GameObject modelObject)
         {
             CharacterModel model = modelObject.GetComponent<CharacterModel>();
-            SkinDefWolfoTracker skinDefWolfoTracker = modelObject.AddComponent<SkinDefWolfoTracker>();
 
-            OverlayMaterialReplacer overlayMaterialReplacer = modelObject.AddComponent<OverlayMaterialReplacer>();
-            overlayMaterialReplacer.targetMaterial = changeMaterial.targetMaterial;
-            overlayMaterialReplacer.replacementMaterial = changeMaterial.replacementMaterial;
+            SkinDefWolfoTracker skinDefWolfoTracker;
+            if (!modelObject.TryGetComponent<SkinDefWolfoTracker>(out skinDefWolfoTracker))
+            {
+                skinDefWolfoTracker = modelObject.AddComponent<SkinDefWolfoTracker>();
+            }
+
+            if (changeMaterial.targetMaterial)
+            {
+                OverlayMaterialReplacer overlayMaterialReplacer = modelObject.AddComponent<OverlayMaterialReplacer>();
+                overlayMaterialReplacer.targetMaterial = changeMaterial.targetMaterial;
+                overlayMaterialReplacer.replacementMaterial = changeMaterial.replacementMaterial;
+            }
 
             skinDefWolfoTracker.model = model;
             skinDefWolfoTracker.changedLights = new SkinDefWolfoTracker.ChangedLightColors[lightColorsChanges.Length];
@@ -405,6 +319,14 @@ namespace WolfoSkinsMod
                         trail.startColor = lightColorsChanges[i].color;
                         trail.endColor = lightColorsChanges[i].color2;
                     }
+                    if (!light && !trail)
+                    {
+                        Debug.LogWarning(lightColorsChanges[i].lightPath + " : Not Light or Trail attached");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning(lightColorsChanges[i].lightPath + " : Not Found");
                 }
             }
             skinDefWolfoTracker.addedObjects = new GameObject[addGameObjects.Length];

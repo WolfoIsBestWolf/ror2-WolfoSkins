@@ -1,0 +1,203 @@
+{
+	"strings":
+	{      
+		 
+		"ACHIEVEMENT_CLEAR_ANY_NAME": "{0} : Alternated",
+		"ACHIEVEMENT_CLEAR_ANY_DESCRIPTION": "As {0}, complete wave 50 in Simulacrum, A Moment, Whole or the Planetarium.",
+		
+		"ACHIEVEMENT_CLEAR_BOTH_NAME": "{0} : Altercation",
+		"ACHIEVEMENT_CLEAR_BOTH_DESCRIPTION": "As {0}, complete both wave 50 in Simulacrum and either A Moment, Whole or the Planetarium.",
+		
+
+		"ACHIEVEMENT_CLEAR_ALTBOSS_DESCRIPTION": "As {0}, complete A Moment, Whole or The Planetarium.",
+		
+		"CLEAR_BOTHFAILED": "Completed both Alt Boss and Simulacrum but failed to unlock. Run auto unlocker in config to make sure everything is up to date.",
+		
+		
+		"ACHIEVEMENT_CLEAR_SIMU_NAME": "{0} : Simulated",
+		"ACHIEVEMENT_CLEAR_SIMU_DESCRIPTION": "As {0}, complete wave 50 in Simulacrum",
+		
+		"ACHIEVEMENT_CLEAR_ECLIPSE_NAME": "{0} : Eclipsed",
+		"ACHIEVEMENT_CLEAR_ECLIPSE_DESCRIPTION": "As {0}, beat the game on Eclipse 8.",		
+		
+		"ACHIEVEMENT_CLEAR_LUNARSCAV_NAME": "{0} : Twisted",
+		"ACHIEVEMENT_CLEAR_LUNARSCAV_DESCRIPTION": "As {0}, defeat a Twisted Scavenger.",
+
+		"ACHIEVEMENT_CLEAR_VOIDLING_NAME": "{0} : Nullified",
+		"ACHIEVEMENT_CLEAR_VOIDLING_DESCRIPTION": "As {0}, defeat Voidling.",
+
+
+		"SIMU_SKIN_COMMANDO_SOTV":"Marine",
+		"SIMU_SKIN_COMMANDO":"Providence Trial",
+		"SIMU_SKIN_COMMANDO_COLOSSUS":"Oceanus",
+
+
+		"SIMU_SKIN_HUNTRESS":"Amor",
+		"SIMU_SKIN_HUNTRESS2":"Bee",
+		"SIMU_SKIN_HUNTRESS_COLOSSUS":"Dieback",
+		
+		
+		"SIMU_SKIN_BANDIT":"Autumn",
+		"SIMU_SKIN_BANDIT2":"Snare",
+		"SIMU_SKIN_BANDIT_GREEN":"Fruity",
+		"SIMU_SKIN_BANDIT_COLOSSUS":"Inmate",
+
+
+		"SIMU_SKIN_TOOLBOT":"Damage",
+		"SIMU_SKIN_TOOLBOT2":"Healing",
+		"SIMU_SKIN_TOOLBOT3":"Utility",
+		"SIMU_SKIN_TOOLBOT4":"Utility",
+
+
+		"SIMU_SKIN_ENGINEER":"Helium",
+		"SIMU_SKIN_ENGINEER_BLUE":"LED Tech",		
+		"SIMU_SKIN_ENGINEER_COLOSSUS":"NE System",		
+
+
+		"SIMU_SKIN_MAGE_ORANGE":"Fire Fighting",
+		"SIMU_SKIN_MAGE_COLOSSUS":"Prime Sky",
+		"SIMU_SKIN_MAGE_COLOSSUS_BLUE":"Ionizing",
+		"SIMU_SKIN_MAGE":"Pastel Rainbow",
+		"SIMU_SKIN_MAGE_PURPLE":"Sky",
+		
+		
+		"SIMU_SKIN_MERC":"Guard",
+		"SIMU_SKIN_MERC2":"Guard Devil",
+		"SIMU_SKIN_MERC_GREEN":"Sentinel",
+
+		
+		"SIMU_SKIN_TREEBOT":"Lepton Lily",
+		"SIMU_SKIN_TREEBOT_ALT":"Midnight Lily",
+		"SIMU_SKIN_TREEBOT_COLOSSUS":"Verdant",
+
+
+		"SIMU_SKIN_LOADER":"Eco Friendly",
+		"SIMU_SKIN_LOADER_RED":"Saftey Red",
+		"SIMU_SKIN_LOADER_ALT":"Casual",
+		"SIMU_SKIN_LOADER_COLOSSUS":"Wasp",
+
+
+		"SIMU_SKIN_CROCO":"Lunar",
+		"SIMU_SKIN_CROCO_BLACK":"Glowstick",
+		"SIMU_SKIN_CROCO_COLOSSUS":"Toxicofera",
+		"CROCO_SKIN_ALT2_NAME2":"Iguania Neo",
+	
+
+		"SIMU_SKIN_CAPTAIN":"Honeymoon",
+		"SIMU_SKIN_CAPTAIN_BLUE":"Flight Attendant",
+		"SIMU_SKIN_CAPTAIN_RED":"Occasion",
+		"SIMU_SKIN_CAPTAIN_COLOSSUS":"Major General",
+
+
+		"SIMU_SKIN_RAILGUNNER":"Cold",
+		"SIMU_SKIN_RAILGUNNER2":"Forest",
+		"SIMU_SKIN_RAILGUNNER_COLOSSUS":"Markswoman",
+
+
+		"SIMU_SKIN_VOIDSURVIVOR":"Friend",
+		"SIMU_SKIN_VOIDSURVIVOR2":"Foe",
+		"SIMU_SKIN_VOIDSURVIVOR_INV":"Citrus",
+
+
+		"SIMU_SKIN_CHEF_RED":"Boucher",
+		"SIMU_SKIN_CHEFMOD_RED":"Boucher",		
+		"SIMU_SKIN_CHEF_GREEN":"Entremetier",
+		"SIMU_SKIN_CHEFMOD_GREEN":"Entremetier",
+		"SIMU_SKIN_CHEF_BLUE":"Saucier",
+		"SIMU_SKIN_CHEFMOD_CYAN":"Saucier",
+		
+		"SIMU_SKIN_CHEFMOD_BLACK":"Rotisseur",
+		"SIMU_SKIN_CHEFMOD_BLUE":"Poissonnier",		
+		"SIMU_SKIN_CHEFMOD_PROVI":"Sous Chef",
+
+		"SIMU_SKIN_FALSESON_GOLD":"Aurum",
+		"SIMU_SKIN_FALSESON_PROVI":"Bulwark",
+
+
+
+		"SIMU_SKIN_SEEKER":"house m d",
+
+
+
+	
+
+
+
+		"SIMU_SKIN_RAVAGER":"Foolish",
+
+		"SIMU_SKIN_PALADIN":"Coast",
+		"SIMU_SKIN_PALADIN_BLACK":"Granite",
+
+
+		"SIMU_SKIN_PILOT_WHITE":"Winter",
+		"SIMU_SKIN_PILOT_RED":"Militant",
+		"SIMU_SKIN_PILOT_BLUE":"Courier",
+
+
+		
+
+
+
+		"SIMU_SKIN_ENFORCER_RED":"Red Operator",
+		"SIMU_SKIN_ENFORCER_RED_ALT":"R3D3R",
+		"SIMU_SKIN_ENFORCER_YELLOW":"Saftey",
+		
+
+		"SIMU_SKIN_SNIPER":"Dune",
+		"SIMU_SKIN_SNIPER_GRAY":"Lone",
+
+
+		"SIMU_SKIN_ROCKET_RED":"Reliable Excavation Demolition",
+		"SIMU_SKIN_ROCKET_RED_MASTER":"Demolition",
+		"SIMU_SKIN_ROCKET_BLUE":"Builders League United",
+
+
+		"SIMU_SKIN_HAND":"Golden",
+		"SIMU_SKIN_HAND2":"Golden RE-TRN",
+		"SIMU_SKIN_HAND_GREEN":"Oxidized",
+		"SIMU_SKIN_HAND2_GREEN":"Oxidized RE-TRN",
+		"SIMU_SKIN_HAND_ORANGE":"Rusted",
+		"SIMU_SKIN_HAND2_ORANGE":"Rusted RE-TRN",
+
+
+		"SIMU_SKIN_MINER":"Nether",
+		"SIMU_SKIN_MINER_EMERALD":"Emerald",
+		"SIMU_SKIN_MINER_ORANGE":"Palladium",
+
+
+
+		"SIMU_SKIN_ARSONIST_ORANGE":"Ember",
+		"SIMU_SKIN_ARSONIST_BLUE":"Azure",
+		"SIMU_SKIN_ARSONIST_GM_BLUE":"Lightningbug",
+		 
+		"TESLA_COLOR_RED_NEON":"Neon Red",
+		"TESLA_COLOR_ORANGE_NEON":"Neon Orange",
+		"TESLA_COLOR_YELLOW_NEON":"Neon Yellow",
+		"TESLA_COLOR_YELLOW_SAFE":"Safety Yellow",
+		"TESLA_COLOR_GREEN_NEON":"Neon Green",
+		"TESLA_COLOR_GREEN_STRONG":"Strong Green",
+		"TESLA_COLOR_CYAN_NEON":"Neon Cyan",
+		"TESLA_COLOR_BLUE_NEON":"Neon Blue",
+		"TESLA_COLOR_BLUE_STRONG":"Strong Blue",
+		"TESLA_COLOR_PINK_NEON":"Hot Pink",
+		"TESLA_COLOR_GRAY":"Gray",
+		"TESLA_COLOR_WHITE":"White",
+		
+		
+		
+		
+		"SIMU_SKIN_CHIRR":"Bloom",
+		"SIMU_SKIN_CHIRR_ORANGE":"Detonator",
+
+		"SIMU_SKIN_EXECUTIONER":"Edge",
+		"SIMU_SKIN_EXECUTIONER_GOLD":"Shiny",
+		"SIMU_SKIN_EXECUTIONER_BLUE":"Nerd",
+		 
+		"SIMU_SKIN_NEM_COMMANDO":"Orange",
+		 
+		"SIMU_SKIN_NEM_MERCENARY":"Red",
+		
+		"SIMU_SKIN_NEM_ENFORCER":"Reverted",
+
+	}
+}

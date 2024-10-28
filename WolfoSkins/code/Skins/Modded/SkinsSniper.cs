@@ -7,30 +7,16 @@ namespace WolfoSkinsMod
 {
     public class SkinsSniper
     {
-        private static UnlockableDef unlockableDef;
-
-        internal static void CallDuringAwake()
-        {
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_SNIPER_NAME", "Sniper: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_SNIPER_DESCRIPTION", "As Sniper" + Unlocks.unlockCondition);
-
-            unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_SNIPER_NAME";
-            unlockableDef.cachedName = "Skins.Sniper.Wolfo";
-            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinSniperIcon);
-            unlockableDef.hidden = true;
-            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-           
-        }
-
         internal static void ModdedSkin(GameObject SniperBody)
         {
+            ModdedSkin_Orange(SniperBody);
+            ModdedSkinGRAY(SniperBody);
+            
+        }
+
+        internal static void ModdedSkin_Orange(GameObject SniperBody)
+        {
             Debug.Log("Sniper Skins");
-            unlockableDef.hidden = false;
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
             BodyIndex SniperIndex = SniperBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = SniperBody.transform.GetChild(0).GetChild(2).GetComponent<ModelSkinController>();
             SkinDef skinSniper = modelSkinController.skins[0];
@@ -47,8 +33,7 @@ namespace WolfoSkinsMod
 
             Material matSniper = Object.Instantiate(skinSniperMASTERY.rendererInfos[0].defaultMaterial);
  
-            Texture2D texSniperDefault = new Texture2D(128, 128, TextureFormat.RGB24, false);
-            texSniperDefault.LoadImage(Properties.Resources.texSniperDefault, true);
+            Texture2D texSniperDefault = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Sniper/texSniperDefault.png");
             texSniperDefault.filterMode = FilterMode.Point;
             texSniperDefault.wrapMode = TextureWrapMode.Repeat;
 
@@ -67,24 +52,13 @@ namespace WolfoSkinsMod
             NewRenderInfos[3].defaultMaterial = matSniper;
             NewRenderInfos[4].defaultMaterial = matSniper;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinSniperIcon, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
-            //
-            //
-            //Unlockable
-            LanguageAPI.Add("SIMU_SKIN_SNIPER", "Dune");
-            
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinSniperWolfo",
+                Name = "skinSniperWolfo_Simu",
                 NameToken = "SIMU_SKIN_SNIPER",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Sniper/skinSniperIcon.png")),
                 BaseSkins = new SkinDef[] { skinSniper },
                 RootObject = skinSniper.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinSniper.meshReplacements,
                 //GameObjectActivations = skinSniper.gameObjectActivations,
@@ -95,10 +69,10 @@ namespace WolfoSkinsMod
 
             modelSkinController.skins = modelSkinController.skins.Add(SniperSkinDefNew);
             BodyCatalog.skins[(int)SniperIndex] = BodyCatalog.skins[(int)SniperIndex].Add(SniperSkinDefNew);
-            ModdedSkinGRAY(SniperBody, unlockableDef);
+
         }
 
-        internal static void ModdedSkinGRAY(GameObject SniperBody, UnlockableDef unlockableDef)
+        internal static void ModdedSkinGRAY(GameObject SniperBody)
         {
             BodyIndex SniperIndex = SniperBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = SniperBody.transform.GetChild(0).GetChild(2).GetComponent<ModelSkinController>();
@@ -110,13 +84,13 @@ namespace WolfoSkinsMod
 
             Material matSniper = Object.Instantiate(skinSniperMASTERY.rendererInfos[0].defaultMaterial);
 
-            Texture2D texSniperDefault = new Texture2D(128, 128, TextureFormat.RGB24, false);
-            texSniperDefault.LoadImage(Properties.Resources.texSniperDefaultGRAY, true);
+            //Texture2D texSniperDefault = new Texture2D(128, 128, TextureFormat.RGB24, false);
+            Texture2D texSniperDefault = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Sniper/texSniperDefaultGRAY.png");
             texSniperDefault.filterMode = FilterMode.Point;
             texSniperDefault.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texSniperDefault_Emission = new Texture2D(128, 128, TextureFormat.RGB24, false);
-            texSniperDefault_Emission.LoadImage(Properties.Resources.texSniperDefault_EmissionGRAY, true);
+            //Texture2D texSniperDefault_Emission = new Texture2D(128, 128, TextureFormat.RGB24, false);
+            Texture2D texSniperDefault_Emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Sniper/texSniperDefault_EmissionGRAY.png");
             texSniperDefault_Emission.filterMode = FilterMode.Point;
             texSniperDefault_Emission.wrapMode = TextureWrapMode.Repeat;
 
@@ -130,24 +104,13 @@ namespace WolfoSkinsMod
             NewRenderInfos[3].defaultMaterial = matSniper;
             NewRenderInfos[4].defaultMaterial = matSniper;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinSniperIconGRAY, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
-            //
-            //
-            //Unlockable
-            LanguageAPI.Add("SIMU_SKIN_SNIPER_GRAY", "Lone");
-
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinSniperWolfo_GRAY",
+                Name = "skinSniperWolfo_GRAY_Simu",
                 NameToken = "SIMU_SKIN_SNIPER_GRAY",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Sniper/skinSniperIconGRAY.png")),
                 BaseSkins = new SkinDef[] { skinSniper },
                 RootObject = skinSniper.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinSniper.meshReplacements,
                 //GameObjectActivations = skinSniper.gameObjectActivations,
@@ -160,8 +123,8 @@ namespace WolfoSkinsMod
             BodyCatalog.skins[(int)SniperIndex] = BodyCatalog.skins[(int)SniperIndex].Add(SniperSkinDefNew);
         }
 
-        [RegisterAchievement("SIMU_SKIN_SNIPER", "Skins.Sniper.Wolfo", null, 5, null)]
-        public class ClearSimulacrumSniperClassic : AchievementSimuVoidTwisted
+        [RegisterAchievement("CLEAR_ANY_SNIPERCLASSIC", "Skins.SniperClassic.Wolfo.First", null, 5, null)]
+        public class ClearSimulacrumSniperClassic : Achievement_AltBoss_Simu
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

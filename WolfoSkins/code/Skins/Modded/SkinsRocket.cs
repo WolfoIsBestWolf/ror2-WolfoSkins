@@ -7,35 +7,74 @@ namespace WolfoSkinsMod
 {
     public class SkinsRocket
     {
-        private static UnlockableDef unlockableDef;
-
-        internal static void CallDuringAwake()
-        {
-            LanguageAPI.Add("SIMU_SKIN_ROCKET_RED", "Reliable Excavation Demolition");
-            LanguageAPI.Add("SIMU_SKIN_ROCKET_BLUE", "Builders League United");
-
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_ROCKET_NAME", "Rocket: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_ROCKET_DESCRIPTION", "As Rocket" + Unlocks.unlockCondition);
-
-            unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_ROCKET_NAME";
-            unlockableDef.cachedName = "Skins.Rocket.Wolfo";
-            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.texRocketSkinDefault);
-            unlockableDef.hidden = true;
-            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            
-        }
-
         internal static void ModdedSkin(GameObject RocketBody)
         {
             Debug.Log("Rocket Skins");
-            unlockableDef.hidden = false;
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
             SkinRED(RocketBody);
             SkinBLUE(RocketBody);
+            Rocket_MasteryRed(RocketBody);
+        }
+
+        internal static void Rocket_MasteryRed(GameObject RocketBody)
+        {
+            BodyIndex RocketIndex = RocketBody.GetComponent<CharacterBody>().bodyIndex;
+            ModelSkinController modelSkinController = RocketBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
+            SkinDef skinRocket = modelSkinController.skins[1];
+
+            //0 MatRocketBackpack
+            //1 MatGrenade
+            //2 MatGrenade
+            //3 MatRocketBombardier
+            //4 MatRocketBombardier
+            //5 MatShovel
+            //6 MatRocket
+
+            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinRocket.rendererInfos.Length];
+            System.Array.Copy(skinRocket.rendererInfos, NewRenderInfos, skinRocket.rendererInfos.Length);
+
+            Material MatRocketBackpack = Object.Instantiate(skinRocket.rendererInfos[0].defaultMaterial);
+            Material MatRocketBombardier = Object.Instantiate(skinRocket.rendererInfos[4].defaultMaterial);
+            
+            Texture2D TexRocketBackpack = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Red/TexRocketBackpack.png");
+            TexRocketBackpack.wrapMode = TextureWrapMode.Repeat;
+
+            Texture2D TexRocket = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/RedMaster/texrocketbombardier.png");
+            TexRocket.wrapMode = TextureWrapMode.Repeat;
+ 
+
+            MatRocketBombardier.mainTexture = TexRocket;
+            //MatRocketBombardier.color = new Color(1.1f,1.1f,0.9f,1f);
+            MatRocketBombardier.SetColor("_EmColor", new Color(1.2f, 1.2f, 0.5f));
+            //MatRocketBombardier.color = new Color(1, 0.8f, 0.8f);
+            //MatRocketBombardier.SetTexture("_EmTex", TexRocketEmissive);
+
+ 
+
+            //
+            NewRenderInfos[0].defaultMaterial = MatRocketBackpack;
+            //NewRenderInfos[1].defaultMaterial = MatGrenade;
+            //NewRenderInfos[2].defaultMaterial = MatGrenade;
+            NewRenderInfos[3].defaultMaterial = MatRocketBombardier;
+            NewRenderInfos[4].defaultMaterial = MatRocketBombardier;
+            //NewRenderInfos[5].defaultMaterial = MatShovel;
+            //NewRenderInfos[6].defaultMaterial = MatRocketProjectile;
+            //
+            SkinDefInfo SkinInfo = new SkinDefInfo
+            {
+                Name = "skinRocketAltWolfo_Red_Simu",
+                NameToken = "SIMU_SKIN_ROCKET_RED_MASTER",
+                Icon = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/RedMaster/texrocketskinmastery.png")),
+                BaseSkins = new SkinDef[] { skinRocket },
+                RootObject = skinRocket.rootObject,
+                RendererInfos = NewRenderInfos,
+                MeshReplacements = skinRocket.meshReplacements,
+                GameObjectActivations = skinRocket.gameObjectActivations,
+                ProjectileGhostReplacements = skinRocket.projectileGhostReplacements,
+            };
+            SkinDef RocketSkinDefNew = Skins.CreateNewSkinDef(SkinInfo);
+
+            modelSkinController.skins = modelSkinController.skins.Add(RocketSkinDefNew);
+            BodyCatalog.skins[(int)RocketIndex] = BodyCatalog.skins[(int)RocketIndex].Add(RocketSkinDefNew);
         }
 
         internal static void SkinRED(GameObject RocketBody)
@@ -60,29 +99,19 @@ namespace WolfoSkinsMod
             Material MatRocket = Object.Instantiate(skinRocket.rendererInfos[4].defaultMaterial);
             Material MatShovel = Object.Instantiate(skinRocket.rendererInfos[5].defaultMaterial);
 
-            Texture2D TexRocketBackpack = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            TexRocketBackpack.LoadImage(Properties.Resources.TexRocketBackpack, true);
-            TexRocketBackpack.filterMode = FilterMode.Bilinear;
+            Texture2D TexRocketBackpack = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Red/TexRocketBackpack.png");
             TexRocketBackpack.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexBlackBox = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            TexBlackBox.LoadImage(Properties.Resources.TexBlackBox, true);
-            TexBlackBox.filterMode = FilterMode.Bilinear;
+            Texture2D TexBlackBox = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Red/TexBlackBox.png");
             TexBlackBox.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexRocket = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            TexRocket.LoadImage(Properties.Resources.TexRocket, true);
-            TexRocket.filterMode = FilterMode.Bilinear;
+            Texture2D TexRocket = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Red/TexRocket.png");
             TexRocket.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexRocketEmissive = new Texture2D(2048, 2048, TextureFormat.DXT1, false);
-            TexRocketEmissive.LoadImage(Properties.Resources.TexRocketEmissive, true);
-            TexRocketEmissive.filterMode = FilterMode.Bilinear;
+            Texture2D TexRocketEmissive = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Red/TexRocketEmissive.png");
             TexRocketEmissive.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexShovel = new Texture2D(512, 512, TextureFormat.DXT5, false);
-            TexShovel.LoadImage(Properties.Resources.TexShovel, true);
-            TexShovel.filterMode = FilterMode.Bilinear;
+            Texture2D TexShovel = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Red/TexShovel.png");
             TexShovel.wrapMode = TextureWrapMode.Repeat;
 
 
@@ -104,20 +133,13 @@ namespace WolfoSkinsMod
             NewRenderInfos[5].defaultMaterial = MatShovel;
             NewRenderInfos[6].defaultMaterial = MatRocket;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.texRocketSkinDefault, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
-            //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinRocketWolfo_Red",
+                Name = "skinRocketWolfo_Red_Simu",
                 NameToken = "SIMU_SKIN_ROCKET_RED",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Red/texRocketSkinDefault.png")),
                 BaseSkins = new SkinDef[] { skinRocket },
                 RootObject = skinRocket.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinRocket.meshReplacements,
                 GameObjectActivations = skinRocket.gameObjectActivations,
@@ -152,34 +174,22 @@ namespace WolfoSkinsMod
             Material MatShovel = Object.Instantiate(skinRocket.rendererInfos[5].defaultMaterial);
             Material MatGrenade = Object.Instantiate(skinRocket.rendererInfos[2].defaultMaterial);
 
-            Texture2D TexRocketBackpack = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            TexRocketBackpack.LoadImage(Properties.Resources.TexRocketBackpackBLUE, true);
-            TexRocketBackpack.filterMode = FilterMode.Bilinear;
+            Texture2D TexRocketBackpack = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Blue/TexRocketBackpackBLUE.png");
             TexRocketBackpack.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexBlackBox = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            TexBlackBox.LoadImage(Properties.Resources.TexBlackBoxBLUE, true);
-            TexBlackBox.filterMode = FilterMode.Bilinear;
+            Texture2D TexBlackBox = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Blue/TexBlackBoxBLUE.png");
             TexBlackBox.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexRocket = new Texture2D(2048, 2048, TextureFormat.DXT5, false);
-            TexRocket.LoadImage(Properties.Resources.TexRocketBLUE, true);
-            TexRocket.filterMode = FilterMode.Bilinear;
+            Texture2D TexRocket = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Blue/TexRocketBLUE.png");
             TexRocket.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexRocketEmissive = new Texture2D(2048, 2048, TextureFormat.DXT1, false);
-            TexRocketEmissive.LoadImage(Properties.Resources.TexRocketEmissiveBLUE, true);
-            TexRocketEmissive.filterMode = FilterMode.Bilinear;
+            Texture2D TexRocketEmissive = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Blue/TexRocketEmissiveBLUE.png");
             TexRocketEmissive.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexShovel = new Texture2D(512, 512, TextureFormat.DXT5, false);
-            TexShovel.LoadImage(Properties.Resources.TexShovelBLUE, true);
-            TexShovel.filterMode = FilterMode.Bilinear;
+            Texture2D TexShovel = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Blue/TexShovelBLUE.png");
             TexShovel.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D TexGrenade = new Texture2D(512, 512, TextureFormat.DXT5, false);
-            TexGrenade.LoadImage(Properties.Resources.TexGrenadeBLUE, true);
-            TexGrenade.filterMode = FilterMode.Bilinear;
+            Texture2D TexGrenade = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Blue/TexGrenadeBLUE.png");
             TexGrenade.wrapMode = TextureWrapMode.Repeat;
 
 
@@ -204,20 +214,14 @@ namespace WolfoSkinsMod
             NewRenderInfos[5].defaultMaterial = MatShovel;
             NewRenderInfos[6].defaultMaterial = MatRocket;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.texRocketSkinDefaultBLUE, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinRocketWolfo_Blue",
+                Name = "skinRocketWolfo_Blue_Simu",
                 NameToken = "SIMU_SKIN_ROCKET_BLUE",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Rocket/Blue/texRocketSkinDefaultBLUE.png")),
                 BaseSkins = new SkinDef[] { skinRocket },
                 RootObject = skinRocket.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinRocket.meshReplacements,
                 GameObjectActivations = skinRocket.gameObjectActivations,
@@ -230,14 +234,23 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_ROCKET", "Skins.Rocket.Wolfo", null, 5, null)]
-        public class ClearSimulacrumRocket : AchievementSimuVoidTwisted
+        [RegisterAchievement("CLEAR_ANY_ROCKETSURVIVOR", "Skins.RocketSurvivor.Wolfo.First", null, 5, null)]
+        public class ClearSimulacrumRocket : Achievement_AltBoss_Simu
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("RocketSurvivorBody");
             }
         }
-
+        /*
+        [RegisterAchievement("CLEAR_BOTH_ROCKETSURVIVOR", "Skins.RocketSurvivor.Wolfo.Both", null, 5, null)]
+        public class ClearSimulacrumRocket2 : Achievement_AltBoss
+        {
+            public override BodyIndex LookUpRequiredBodyIndex()
+            {
+                return BodyCatalog.FindBodyIndex("RocketSurvivorBody");
+            }
+        }
+        */
     }
 }

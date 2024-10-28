@@ -1,7 +1,51 @@
 ## Changelog
 ```
+v2.0.0 : Real Sots update.
+
+New Colossus reskins will need you to do both; Beat Wave 50 and Defeat and one of the Alt Bosses. 
+
+A lot of technical achievement stuff, achievements are reset.
+An automatic unlock checker should run the first time so not much should be lost.
+
+Mod now uses AssetBundle for optimization.
+Mow now uses LanguageFiles for translation and organisation.
+
+Added False Son : Gold
+Added False Son : Mastery Providence
+Added Commando : Colossus Blue
+Added Huntress : Colossus Red
+Added Bandit : Colossus Orange
+Added Engi : Colossus Black/Red
+Added Mul-T : Colossus Purple
+Added Artificer : Colossus Purple (Replacing previous Purple skin)
+Added Artificer : Colossus Gray/Blue
+Redid Merc : Colossus Green
+Added REX : Colossus Orange
+Added Loader : Colossus Yellow
+Added Acrid : Colossus Purple
+Added Acrid : Colossus Green-er
+Added Captain : Colossus Red/Black (Replacing previous Red skin)
+Added Railgunner : Colossus Purple
+
+Added Enforcer : Bot Red
+Added Rocket : Mastery Red
+
+Made Mul-T skins have missive parts. (despite saner judgement)
+Changed Rex lava flowers to petals instead of daisies.
+Changed Miner Orange to Blacksmith model.
+Fixed Paladin to use updated texture.
+Fixed some issues on the Chef textures.
+
+
+v1.9.15 - Textures added by this mod can now scale down as they should. (Optimization)
+v1.9.14 - Fixed unlock all issue with starting at Desolator Skins
+v1.9.13 - Fixed unlock all issue with starting at Chef_DLC2 Skins
 v1.9.12
-(TODO)Fixed a bug with RedAlert2 replacing TeslaTrooper mod.
+Fixed skins from this mod unlocking from Rebirth ending.
+Fixed a bug related to StarStorm2 Executioner VFX not working.
+Fixed a bug with RedAlert2 replacing TeslaTrooper mod.
+Added Merc Colossus variant : White/Neon Green 
+Added basic Chef Recolors (Red/Yellow,Green/Orange,Blue/Pink)(Will probably be changed later on)
 
 v1.9.11
 Fixed a error during startup if the unlock all config was enabled.

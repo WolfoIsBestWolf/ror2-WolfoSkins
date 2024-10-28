@@ -7,28 +7,12 @@ namespace WolfoSkinsMod
 {
     public class SkinsHand
     {
-        private static UnlockableDef unlockableDef;
-
-        internal static void CallDuringAwake()
-        {
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_HAND_NAME", "HAN-D: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_HAND_DESCRIPTION", "As HAN-D" + Unlocks.unlockCondition);
-
-            unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_HandBody_NAME";
-            unlockableDef.cachedName = "Skins.Hand.Wolfo";
-            unlockableDef.achievementIcon = WRect.MakeIcon256(Properties.Resources.texHANDSkinIconRorr);
-            unlockableDef.hidden = true;
-            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            //
-        }
-
         internal static void ModdedSkin(GameObject HandBody)
         {
 
-            ModdedSkinGold(HandBody);
-            ModdedSkinTWO(HandBody);
-            ModdedSkinGREEN(HandBody);
+            Hand_Gold(HandBody);
+            Hand_Rusty(HandBody);
+            Hand_Green(HandBody);
 
             //Move HO-POO Skin last
             BodyIndex HandBodyIndex = HandBody.GetComponent<CharacterBody>().bodyIndex;
@@ -52,14 +36,9 @@ namespace WolfoSkinsMod
             BodyCatalog.skins[(int)HandBodyIndex] = skinsNew;
         }
 
-        internal static void ModdedSkinGold(GameObject HandBody)
+        internal static void Hand_Gold(GameObject HandBody)
         {
             Debug.Log("HandBody Skins");
-            unlockableDef.hidden = false;
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
             BodyIndex HandBodyIndex = HandBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = HandBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
             SkinDef skinHandDefault = modelSkinController.skins[0];
@@ -84,39 +63,29 @@ namespace WolfoSkinsMod
 
             Material matHANDRorr = Object.Instantiate(skinHandReturns.rendererInfos[0].defaultMaterial);
 
-            Texture2D HanD_Diffuse = new Texture2D(1024, 1024, TextureFormat.DXT5, false);
-            HanD_Diffuse.LoadImage(Properties.Resources.HanD_Diffuse, true);
-            HanD_Diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D HanD_Diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/HanD_Diffuse.png");
             HanD_Diffuse.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D HanD_Emission = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            HanD_Emission.LoadImage(Properties.Resources.HanD_Emission, true);
-            HanD_Emission.filterMode = FilterMode.Bilinear;
+            Texture2D HanD_Emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/HanD_Emission.png");
             HanD_Emission.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D HanDWeapon_Diffuse = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            HanDWeapon_Diffuse.LoadImage(Properties.Resources.HanDWeapon_Diffuse, true);
-            HanDWeapon_Diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D HanDWeapon_Diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/HanDWeapon_Diffuse.png");
             HanDWeapon_Diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texDroneBody = new Texture2D(4, 4, TextureFormat.RGB24, false);
-            texDroneBody.LoadImage(Properties.Resources.texDroneBody, true);
+            //RGB24
+            Texture2D texDroneBody = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/texDroneBody.png");
             texDroneBody.filterMode = FilterMode.Point;
             texDroneBody.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texDroneBodyEmission = new Texture2D(4, 4, TextureFormat.RGB24, false);
-            texDroneBodyEmission.LoadImage(Properties.Resources.texDroneBodyEmission, true);
+            //RGB24
+            Texture2D texDroneBodyEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/texDroneBodyEmission.png");
             texDroneBodyEmission.filterMode = FilterMode.Point;
             texDroneBodyEmission.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTex = new Texture2D(64, 64, TextureFormat.DXT5, false);
-            RoRRHANDTex.LoadImage(Properties.Resources.RoRRHANDTex, true);
-            RoRRHANDTex.filterMode = FilterMode.Bilinear;
+            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/RoRRHANDTex.png");
             RoRRHANDTex.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTexEmission = new Texture2D(64, 64, TextureFormat.DXT5, false);
-            RoRRHANDTexEmission.LoadImage(Properties.Resources.RoRRHANDTexEmission, true);
-            RoRRHANDTexEmission.filterMode = FilterMode.Bilinear;
+            Texture2D RoRRHANDTexEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/RoRRHANDTexEmission.png");
             RoRRHANDTexEmission.wrapMode = TextureWrapMode.Repeat;
 
 
@@ -147,33 +116,18 @@ namespace WolfoSkinsMod
             NewRenderInfosRETURNS[1].defaultMaterial = matHANDRorr;
             NewRenderInfosRETURNS[2].defaultMaterial = matHANDRorr;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(256, 256, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.texHANDSkinIconDefault, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec256, WRect.half);
-            //
-            Texture2D skinHandBodyIconRETURNS = new Texture2D(256, 256, TextureFormat.DXT5, false);
-            skinHandBodyIconRETURNS.LoadImage(Properties.Resources.texHANDSkinIconRorr, true);
-            skinHandBodyIconRETURNS.filterMode = FilterMode.Bilinear;
-            Sprite skinHandBodyIconRETURNSS = Sprite.Create(skinHandBodyIconRETURNS, WRect.rec256, WRect.half);
-            //
-            //
-            //Unlockable
-            LanguageAPI.Add("SIMU_SKIN_HAND", "Golden");
-            LanguageAPI.Add("SIMU_SKIN_HAND2", "Golden RE-TRN");
+
             
             //ADD SHINY SPARKLES
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinHandBodyWolfo";
+            newSkinDef.name = "skinHandBodyWolfo_Simu";
             newSkinDef.nameToken = "SIMU_SKIN_HAND";
-            newSkinDef.icon = SkinIconS;
+            newSkinDef.icon = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/texHANDSkinIconDefault.png"));
             newSkinDef.baseSkins = skinHandReturns.baseSkins;
             newSkinDef.meshReplacements = skinHandDefault.meshReplacements;
             newSkinDef.projectileGhostReplacements = skinHandDefault.projectileGhostReplacements;
             newSkinDef.rendererInfos = NewRenderInfos;
             newSkinDef.rootObject = skinHandDefault.rootObject;
-            newSkinDef.unlockableDef = unlockableDef;
 
             GameObject GoldAffixEffect = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Junk/EliteGold/GoldAffixEffect.prefab").WaitForCompletion();
             GameObject GoldAffixEffectNew = R2API.PrefabAPI.InstantiateClone(GoldAffixEffect, "HANDGoldSparkles", false);
@@ -212,22 +166,21 @@ namespace WolfoSkinsMod
 
 
             SkinDefWolfo newSkinDefRETURNS = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDefRETURNS.name = "skinHandBodyWolfo_RETURN";
+            newSkinDefRETURNS.name = "skinHandBodyWolfo_RETURN_Simu";
             newSkinDefRETURNS.nameToken = "SIMU_SKIN_HAND2";
-            newSkinDefRETURNS.icon = skinHandBodyIconRETURNSS;
+            newSkinDefRETURNS.icon = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/texHANDSkinIconRorr.png"));
             newSkinDefRETURNS.baseSkins = skinHandReturns.baseSkins;
             newSkinDefRETURNS.meshReplacements = skinHandReturns.meshReplacements;
             newSkinDefRETURNS.projectileGhostReplacements = skinHandReturns.projectileGhostReplacements;
             newSkinDefRETURNS.rendererInfos = NewRenderInfosRETURNS;
             newSkinDefRETURNS.rootObject = skinHandDefault.rootObject;
-            newSkinDefRETURNS.unlockableDef = unlockableDef;
             newSkinDefRETURNS.addGameObjects = newSkinDef.addGameObjects;
 
             modelSkinController.skins = modelSkinController.skins.Add(newSkinDef, newSkinDefRETURNS);
             BodyCatalog.skins[(int)HandBodyIndex] = BodyCatalog.skins[(int)HandBodyIndex].Add(newSkinDef, newSkinDefRETURNS);
         }
 
-        internal static void ModdedSkinTWO(GameObject HandBody)
+        internal static void Hand_Rusty(GameObject HandBody)
         {
             BodyIndex HandBodyIndex = HandBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = HandBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
@@ -253,25 +206,22 @@ namespace WolfoSkinsMod
 
             Material matHANDRorr = Object.Instantiate(skinHandReturns.rendererInfos[0].defaultMaterial);
 
-            Texture2D HanD_Diffuse = new Texture2D(1024, 1024, TextureFormat.DXT5, false);
-            HanD_Diffuse.LoadImage(Properties.Resources.HanD_DiffuseORANGE, true);
-            HanD_Diffuse.filterMode = FilterMode.Bilinear;
-            HanD_Diffuse.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D HanDWeapon_Diffuse = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            HanDWeapon_Diffuse.LoadImage(Properties.Resources.HanDWeapon_DiffuseORANGE, true);
-            HanDWeapon_Diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D HanD_Diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/HanD_DiffuseORANGE.png");
+            HanD_Diffuse.wrapMode = TextureWrapMode.Repeat;
+ 
+
+            Texture2D HanDWeapon_Diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/HanDWeapon_DiffuseORANGE.png");
             HanDWeapon_Diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texDroneBody = new Texture2D(4, 4, TextureFormat.RGB24, false);
-            texDroneBody.LoadImage(Properties.Resources.texDroneBodyORANGE, true);
+            //RGB24
+            Texture2D texDroneBody = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/texDroneBodyORANGE.png");
             texDroneBody.filterMode = FilterMode.Point;
             texDroneBody.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTex = new Texture2D(64, 64, TextureFormat.DXT5, false);
-            RoRRHANDTex.LoadImage(Properties.Resources.RoRRHANDTexORANGE, true);
-            RoRRHANDTex.filterMode = FilterMode.Bilinear;
+            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/RoRRHANDTexORANGE.png");
             RoRRHANDTex.wrapMode = TextureWrapMode.Repeat;
+ 
 
 
             Color ExtraColor = new Color(1f, 1f, 1f);
@@ -301,50 +251,33 @@ namespace WolfoSkinsMod
             NewRenderInfosRETURNS[1].defaultMaterial = matHANDRorr;
             NewRenderInfosRETURNS[2].defaultMaterial = matHANDRorr;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(256, 256, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.texHANDSkinIconDefaultORANGE, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec256, WRect.half);
-            //
-            Texture2D skinHandBodyIconRETURNS = new Texture2D(256, 256, TextureFormat.DXT5, false);
-            skinHandBodyIconRETURNS.LoadImage(Properties.Resources.texHANDSkinIconRorrORANGE, true);
-            skinHandBodyIconRETURNS.filterMode = FilterMode.Bilinear;
-            Sprite skinHandBodyIconRETURNSS = Sprite.Create(skinHandBodyIconRETURNS, WRect.rec256, WRect.half);
-            //
-            //
-            //Unlockable
-            LanguageAPI.Add("SIMU_SKIN_HAND_ORANGE", "Rusted");
-            LanguageAPI.Add("SIMU_SKIN_HAND2_ORANGE", "Rusted RE-TRN");
 
-            //ADD SHINY SPARKLES
+
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinHandBodyWolfoRusted";
+            newSkinDef.name = "skinHandBodyWolfoRusted_Simu";
             newSkinDef.nameToken = "SIMU_SKIN_HAND_ORANGE";
-            newSkinDef.icon = SkinIconS;
+            newSkinDef.icon = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/texHANDSkinIconDefaultORANGE.png"));
             newSkinDef.baseSkins = skinHandReturns.baseSkins;
             newSkinDef.meshReplacements = skinHandDefault.meshReplacements;
             newSkinDef.projectileGhostReplacements = skinHandDefault.projectileGhostReplacements;
             newSkinDef.rendererInfos = NewRenderInfos;
             newSkinDef.rootObject = skinHandDefault.rootObject;
-            newSkinDef.unlockableDef = unlockableDef;
 
             SkinDefWolfo newSkinDefRETURNS = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDefRETURNS.name = "skinHandBodyWolfoRusted_RETURN";
+            newSkinDefRETURNS.name = "skinHandBodyWolfoRusted_RETURN_Simu";
             newSkinDefRETURNS.nameToken = "SIMU_SKIN_HAND2_ORANGE";
-            newSkinDefRETURNS.icon = skinHandBodyIconRETURNSS;
+            newSkinDefRETURNS.icon = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/texHANDSkinIconRorrORANGE.png"));
             newSkinDefRETURNS.baseSkins = skinHandReturns.baseSkins;
             newSkinDefRETURNS.meshReplacements = skinHandReturns.meshReplacements;
             newSkinDefRETURNS.projectileGhostReplacements = skinHandReturns.projectileGhostReplacements;
             newSkinDefRETURNS.rendererInfos = NewRenderInfosRETURNS;
             newSkinDefRETURNS.rootObject = skinHandDefault.rootObject;
-            newSkinDefRETURNS.unlockableDef = unlockableDef;
 
             modelSkinController.skins = modelSkinController.skins.Add(newSkinDef, newSkinDefRETURNS);
             BodyCatalog.skins[(int)HandBodyIndex] = BodyCatalog.skins[(int)HandBodyIndex].Add(newSkinDef, newSkinDefRETURNS);
         }
 
-        internal static void ModdedSkinGREEN(GameObject HandBody)
+        internal static void Hand_Green(GameObject HandBody)
         {
             BodyIndex HandBodyIndex = HandBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = HandBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
@@ -370,43 +303,34 @@ namespace WolfoSkinsMod
 
             Material matHANDRorr = Object.Instantiate(skinHandReturns.rendererInfos[0].defaultMaterial);
 
-            Texture2D HanD_Diffuse = new Texture2D(1024, 1024, TextureFormat.DXT5, false);
-            HanD_Diffuse.LoadImage(Properties.Resources.HanD_DiffuseGREEN, true);
-            HanD_Diffuse.filterMode = FilterMode.Bilinear;
+
+            Texture2D HanD_Diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/HanD_DiffuseGREEN.png");
             HanD_Diffuse.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D HanD_Emission = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            HanD_Emission.LoadImage(Properties.Resources.HanD_EmissionGREEN, true);
-            HanD_Emission.filterMode = FilterMode.Bilinear;
+            Texture2D HanD_Emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/HanD_EmissionGREEN.png");
             HanD_Emission.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D HanDWeapon_Diffuse = new Texture2D(1024, 1024, TextureFormat.DXT1, false);
-            HanDWeapon_Diffuse.LoadImage(Properties.Resources.HanDWeapon_DiffuseGREEN, true);
-            HanDWeapon_Diffuse.filterMode = FilterMode.Bilinear;
+            Texture2D HanDWeapon_Diffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/HanDWeapon_DiffuseGREEN.png");
             HanDWeapon_Diffuse.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texDroneBody = new Texture2D(4, 4, TextureFormat.RGB24, false);
-            texDroneBody.LoadImage(Properties.Resources.texDroneBodyGREEN, true);
+            //RGB24
+            Texture2D texDroneBody = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/texDroneBodyGREEN.png");
             texDroneBody.filterMode = FilterMode.Point;
             texDroneBody.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texDroneBodyEmission = new Texture2D(4, 4, TextureFormat.RGB24, false);
-            texDroneBodyEmission.LoadImage(Properties.Resources.texDroneBodyEmissionGREEN, true);
+            //RGB24
+            Texture2D texDroneBodyEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/texDroneBodyEmissionGREEN.png");
             texDroneBodyEmission.filterMode = FilterMode.Point;
             texDroneBodyEmission.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTex = new Texture2D(64, 64, TextureFormat.DXT5, false);
-            RoRRHANDTex.LoadImage(Properties.Resources.RoRRHANDTexGREEN, true);
-            RoRRHANDTex.filterMode = FilterMode.Bilinear;
+            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/RoRRHANDTexGREEN.png");
             RoRRHANDTex.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTexEmission = new Texture2D(64, 64, TextureFormat.DXT5, false);
-            RoRRHANDTexEmission.LoadImage(Properties.Resources.RoRRHANDTexEmissionGREEN, true);
-            RoRRHANDTexEmission.filterMode = FilterMode.Bilinear;
+            Texture2D RoRRHANDTexEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/RoRRHANDTexEmissionGREEN.png");
             RoRRHANDTexEmission.wrapMode = TextureWrapMode.Repeat;
 
-            Color ExtraColor = new Color(1f, 1f, 1f);
 
+            Color ExtraColor = new Color(1f, 1f, 1f);
             matHANDDefault.mainTexture = HanD_Diffuse;
             matHANDDefault.color = ExtraColor;
             matHANDDefault.SetTexture("_EmTex", HanD_Emission);
@@ -432,44 +356,27 @@ namespace WolfoSkinsMod
             NewRenderInfosRETURNS[1].defaultMaterial = matHANDRorr;
             NewRenderInfosRETURNS[2].defaultMaterial = matHANDRorr;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(256, 256, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.texHANDSkinIconDefaultGREEN, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec256, WRect.half);
-            //
-            Texture2D skinHandBodyIconRETURNS = new Texture2D(256, 256, TextureFormat.DXT5, false);
-            skinHandBodyIconRETURNS.LoadImage(Properties.Resources.texHANDSkinIconRorrGREEN, true);
-            skinHandBodyIconRETURNS.filterMode = FilterMode.Bilinear;
-            Sprite skinHandBodyIconRETURNSS = Sprite.Create(skinHandBodyIconRETURNS, WRect.rec256, WRect.half);
-            //
-            //
-            //Unlockable
-            LanguageAPI.Add("SIMU_SKIN_HAND_GREEN", "Oxidized");
-            LanguageAPI.Add("SIMU_SKIN_HAND2_GREEN", "Oxidized RE-TRN");
 
-            //ADD SHINY SPARKLES
+
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinHandBodyWolfo_Green";
+            newSkinDef.name = "skinHandBodyWolfo_Green_Simu";
             newSkinDef.nameToken = "SIMU_SKIN_HAND_GREEN";
-            newSkinDef.icon = SkinIconS;
+            newSkinDef.icon = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/texHANDSkinIconDefaultGREEN.png"));
             newSkinDef.baseSkins = skinHandReturns.baseSkins;
             newSkinDef.meshReplacements = skinHandDefault.meshReplacements;
             newSkinDef.projectileGhostReplacements = skinHandDefault.projectileGhostReplacements;
             newSkinDef.rendererInfos = NewRenderInfos;
             newSkinDef.rootObject = skinHandDefault.rootObject;
-            newSkinDef.unlockableDef = unlockableDef;
 
             SkinDefWolfo newSkinDefRETURNS = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDefRETURNS.name = "skinHandBodyWolfo_Green_RETURN";
+            newSkinDefRETURNS.name = "skinHandBodyWolfo_Green_RETURN_Simu";
             newSkinDefRETURNS.nameToken = "SIMU_SKIN_HAND2_GREEN";
-            newSkinDefRETURNS.icon = skinHandBodyIconRETURNSS;
+            newSkinDefRETURNS.icon = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/texHANDSkinIconRorrGREEN.png"));
             newSkinDefRETURNS.baseSkins = skinHandReturns.baseSkins;
             newSkinDefRETURNS.meshReplacements = skinHandReturns.meshReplacements;
             newSkinDefRETURNS.projectileGhostReplacements = skinHandReturns.projectileGhostReplacements;
             newSkinDefRETURNS.rendererInfos = NewRenderInfosRETURNS;
             newSkinDefRETURNS.rootObject = skinHandDefault.rootObject;
-            newSkinDefRETURNS.unlockableDef = unlockableDef;
 
             //modelSkinController.skins = modelSkinController.skins.Add(newSkinDef, newSkinDefRETURNS);
             //BodyCatalog.skins[(int)HandBodyIndex] = BodyCatalog.skins[(int)HandBodyIndex].Add(newSkinDef, newSkinDefRETURNS);
@@ -479,8 +386,8 @@ namespace WolfoSkinsMod
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_HAND", "Skins.Hand.Wolfo", null, 5, null)]
-        public class ClearSimulacrumHANDOverclockedBody : AchievementSimuVoidTwisted
+        [RegisterAchievement("CLEAR_ANY_HANDOVERCLOCKED", "Skins.HANDOverclocked.Wolfo.First", null, 5, null)]
+        public class ClearSimulacrumHANDOverclockedBody : Achievement_AltBoss_Simu
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
@@ -488,29 +395,15 @@ namespace WolfoSkinsMod
             }
         }
 
-
-        internal static void PrismAchievement()
-        {
-            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_HAND_NAME", "HAN-D" + Unlocks.unlockNamePrism);
-            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_HAND_DESCRIPTION", "As HAN-D" + Unlocks.unlockConditionPrism);
-            //
-            UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDef.nameToken = "ACHIEVEMENT_PRISM_SKIN_HAND_NAME";
-            unlockableDef.cachedName = "Skins.Hand.Wolfo.Prism";
-            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.placeHolder);
-            unlockableDef.hidden = true;
-            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-        }
-
-        /*[RegisterAchievement("PRISM_SKIN_HAND", "Skins.Hand.Wolfo.Prism
-         * 
-         * ", null, 5, null)]
-        public class AchievementPrismaticDissoHand2Body : AchievementPrismaticDisso
+        /*
+        [RegisterAchievement("CLEAR_BOTH_HANDOVERCLOCKED", "Skins.HANDOverclocked.Wolfo.Both", null, 5, null)]
+        public class ClearSimulacrumHANDOverclockedBody2 : Achievement_AltBoss
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("HANDOverclockedBody");
             }
-        }*/
+        }
+        */
     }
 }

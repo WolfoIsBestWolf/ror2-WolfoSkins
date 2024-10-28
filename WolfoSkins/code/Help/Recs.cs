@@ -21,37 +21,26 @@ namespace WolfoSkinsMod
         public static Rect rec32 = new Rect(0, 0, 32, 32);
         public static Vector2 half = new Vector2(0.5f, 0.5f);
 
-        public static Texture MakeTexture(int w, int h, TextureFormat format, FilterMode filter, TextureWrapMode wrap, byte[] texture)
+        public static Texture MakeTexture(TextureWrapMode filter, Texture2D texture2)
         {
-            Texture2D texture2 = new Texture2D(w, h, format, false);
-            texture2.LoadImage(texture, true);
-            texture2.filterMode = filter;
-            texture2.wrapMode = wrap;
+            texture2.wrapMode = filter;
             return texture2;
         }
 
-        public static Sprite MakeIcon(byte[] texture)
+ 
+        public static Sprite MakeIcon(Texture2D texture)
         {
-            Texture2D texture2 = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            texture2.LoadImage(texture, true);
-            texture2.filterMode = FilterMode.Bilinear;
-            return Sprite.Create(texture2, WRect.rec128, WRect.half);
+            return Sprite.Create(texture, WRect.rec128, WRect.half);
         }
 
-        public static Sprite MakeIcon256(byte[] texture)
+        public static Sprite MakeIcon256(Texture2D texture)
         {
-            Texture2D texture2 = new Texture2D(256, 256, TextureFormat.DXT5, false);
-            texture2.LoadImage(texture, true);
-            texture2.filterMode = FilterMode.Bilinear;
-            return Sprite.Create(texture2, WRect.rec256, WRect.half);
+            return Sprite.Create(texture, WRect.rec256, WRect.half);
         }
 
-        public static Sprite MakeIcon32(byte[] texture)
+        public static Sprite MakeIcon32(Texture2D texture)
         {
-            Texture2D texture2 = new Texture2D(32, 32, TextureFormat.ARGB32, false);
-            texture2.LoadImage(texture, true);
-            texture2.filterMode = FilterMode.Bilinear;
-            return Sprite.Create(texture2, WRect.rec32, WRect.half);
+            return Sprite.Create(texture, WRect.rec32, WRect.half);
         }
     }
 }

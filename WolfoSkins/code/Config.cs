@@ -1,5 +1,9 @@
 using BepInEx;
 using BepInEx.Configuration;
+using RiskOfOptions;
+using RiskOfOptions.Options;
+using RiskOfOptions.OptionConfigs;
+using UnityEngine;
 
 namespace WolfoSkinsMod
 {
@@ -8,14 +12,12 @@ namespace WolfoSkinsMod
         public static ConfigFile ConfigFileUNSORTED = new ConfigFile(Paths.ConfigPath + "\\Wolfo.Wolfo_Skins.cfg", true);
 
         public static ConfigEntry<bool> cfgUnlockAll;
+        public static ConfigEntry<bool> cfgRunAutoUnlocker;
+        public static ConfigEntry<bool> cfgLockEverything;
+        public static ConfigEntry<bool> cfgClientHost;
         public static ConfigEntry<bool> cfgSort;
+        public static ConfigEntry<bool> cfgLegacySkins;
 
-        public static ConfigEntry<float> VoidlingHPMultiplier;
-        public static ConfigEntry<float> VoidlingDamageMultiplier;
-        public static ConfigEntry<bool> VoidlingLimitLevel99;
-
-        public static ConfigEntry<bool> VoidlingNoScaleHPMulti;
-        //public static ConfigEntry<bool> VoidlingNoScaleDMGMulti; //Scripted Combat doesn't give bonus bonus dmg in multi
 
         public static void InitConfig()
         {
@@ -25,36 +27,60 @@ namespace WolfoSkinsMod
                 false,
                 "Makes skins not require unlocks."
             );
+           
+            cfgRunAutoUnlocker = ConfigFileUNSORTED.Bind(
+               "Main",
+               "Run Auto Unlocker",
+               true,
+               "Automatically unlock Simu achievements for characters you already beat wave 50 and migrate old achievements from previous versions of the mod."
+           );
+            cfgLockEverything = ConfigFileUNSORTED.Bind(
+               "Main",
+               "Re-lock Everything",
+               false,
+               "Removes all achievements/unlocks related to this mod that you have."
+            );
             cfgSort = ConfigFileUNSORTED.Bind(
                 "Main",
                 "Sort skins later",
                 true,
                 "Sort skins at the end of the skin list. This is mostly here in case it causes issues."
             );
-            VoidlingHPMultiplier = ConfigFileUNSORTED.Bind(
-                "Optional Voidling Nerfs",
-                "HP Multiplier",
-                1f,
-                "Multiply Voidlings HP by this."
-            );
-            VoidlingDamageMultiplier = ConfigFileUNSORTED.Bind(
-                "Optional Voidling Nerfs",
-                "Dmg Multiplier",
-                1f,
-                "Multiply Voidlings HP by this."
-            );
-            VoidlingLimitLevel99 = ConfigFileUNSORTED.Bind(
-                "Optional Voidling Nerfs",
-                "Limit level to 99",
-                true,
-                "Voidling seems to be balanced around level 99 so if you play with a mod that uncaps the levels he gets way too powerful."
-            );
-            /*VoidlingNoScaleHPMulti = ConfigFileUNSORTED.Bind(
-                "Optional Voidling Nerfs",
-                "No extra extra health in Multiplayer",
-                false,
-                "Should Voidlings special scaling scale extra hard in Multiplayer.\nNormally Mithrix and Voidling get more special scaling the more players there are. Twisted Scavs don't seem to do that but that may be a bug."
-            );*/
+
+            cfgRunAutoUnlocker.SettingChanged += CfgRunAutoUnlocker_SettingChanged;
+            cfgLockEverything.SettingChanged += CfgLockEverything_SettingChanged;
+            RiskConfig();
+        }
+
+        private static void CfgLockEverything_SettingChanged(object sender, System.EventArgs e)
+        {
+            if (cfgLockEverything.Value)
+            {
+                Unlocks.LockEverything(null);
+                Unlocks.UpdateBothObjective_AtStartForAll(null);
+            }
+        }
+
+        private static void CfgRunAutoUnlocker_SettingChanged(object sender, System.EventArgs e)
+        {
+            if (cfgRunAutoUnlocker.Value)
+            {
+                Unlocks.CheckForPreviouslyEarned(null);
+                Unlocks.UpdateBothObjective_AtStartForAll(null);
+            }
+            
+        }
+
+        internal static void RiskConfig()
+        {
+            Sprite iconSprite = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/icon.png"));
+            ModSettingsManager.SetModIcon(iconSprite);
+            ModSettingsManager.SetModDescription("Too many skins");
+
+            ModSettingsManager.AddOption(new CheckBoxOption(cfgRunAutoUnlocker, false));
+            ModSettingsManager.AddOption(new CheckBoxOption(cfgUnlockAll, true));
+            ModSettingsManager.AddOption(new CheckBoxOption(cfgLockEverything, false));
+
         }
 
     }

@@ -8,50 +8,9 @@ namespace WolfoSkinsMod
 {
     public class SkinsMiner
     {
-        private static UnlockableDef unlockableDef;
-        //private static UnlockableDef unlockableDefPRISM;
-
-        internal static void CallDuringAwake()
-        {
-            LanguageAPI.Add("SIMU_SKIN_MINER", "Nether");
-            LanguageAPI.Add("SIMU_SKIN_MINER_STUPID", "Emerald");
-            LanguageAPI.Add("SIMU_SKIN_MINER_RED", "Adamantite");
-            LanguageAPI.Add("SIMU_SKIN_MINER_ORANGE", "Palladium");
-            LanguageAPI.Add("SIMU_SKIN_MINER_GREEN", "Mythril");
-            LanguageAPI.Add("SIMU_SKIN_MINER_BLUE", "Cobalt");
-            LanguageAPI.Add("SIMU_SKIN_MINER_PINK", "Orichalcum");
-
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_MINER_NAME", "Miner: Alternated");
-            LanguageAPI.Add("ACHIEVEMENT_SIMU_SKIN_MINER_DESCRIPTION", "As Miner" + Unlocks.unlockCondition);
-
-            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_MINER_NAME", "Miner" + Unlocks.unlockNamePrism);
-            LanguageAPI.Add("ACHIEVEMENT_PRISM_SKIN_MINER_DESCRIPTION", "As Miner" + Unlocks.unlockConditionPrism);
-
-            unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDef.nameToken = "ACHIEVEMENT_SIMU_SKIN_MINER_NAME";
-            unlockableDef.cachedName = "Skins.Miner.Wolfo";
-            unlockableDef.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconMiner);
-            unlockableDef.hidden = true;
-            R2API.ContentAddition.AddUnlockableDef(unlockableDef);
-            //
-            /*unlockableDefPRISM = ScriptableObject.CreateInstance<UnlockableDef>();
-            unlockableDefPRISM.nameToken = "ACHIEVEMENT_PRISM_SKIN_MINER_NAME";
-            unlockableDefPRISM.cachedName = "Skins.Miner.Wolfo.Prism";
-            unlockableDefPRISM.hidden = true;
-            R2API.ContentAddition.AddUnlockableDef(unlockableDefPRISM);
-            unlockableDefPRISM.achievementIcon = WRect.MakeIcon(Properties.Resources.skinIconMinerDiamond);*/
-
-            
-        }
-
         internal static void ModdedSkin(GameObject MinerBody)
         {
             Debug.Log("Miner Skins");
-            unlockableDef.hidden = false;
-            if (WConfig.cfgUnlockAll.Value)
-            {
-                unlockableDef = null;
-            }
 
             //Find Diamond skin and add it
             //Sort Blacksmith skin earlier
@@ -97,46 +56,37 @@ namespace WolfoSkinsMod
             Material MatMinerBody = Object.Instantiate(skinMinerMolten.rendererInfos[0].defaultMaterial);
             MatMinerBody.name = "MatMinerBody";
 
-            Texture2D texMinerMolten = new Texture2D(4, 3, TextureFormat.RGB24, false);
-            texMinerMolten.LoadImage(Properties.Resources.texMinerMolten, true);
+            //RGB24
+            Texture2D texMinerMolten = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/texMinerMolten.png");
             texMinerMolten.filterMode = FilterMode.Point;
             texMinerMolten.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texMinerMoltenEmission = new Texture2D(4, 3, TextureFormat.RGB24, false);
-            texMinerMoltenEmission.LoadImage(Properties.Resources.texMinerMoltenEmission, true);
+            //RGB24
+            Texture2D texMinerMoltenEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/texMinerMoltenEmission.png");
             texMinerMoltenEmission.filterMode = FilterMode.Point;
             texMinerMoltenEmission.wrapMode = TextureWrapMode.Repeat;
 
             MatMinerBody.mainTexture = texMinerMolten;
             MatMinerBody.SetTexture("_EmTex", texMinerMoltenEmission);
             MatMinerBody.SetColor("_EmColor", new Color(1, 1, 0, 1));
+            MatMinerBody.SetFloat("_EmPower", 4);
 
             NewRenderInfos[0].defaultMaterial = MatMinerBody;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconMiner, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinMinerWolfo_Black",
+                Name = "skinMinerWolfo_Black_Simu",
                 NameToken = "SIMU_SKIN_MINER",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/skinIconMiner.png")),
                 BaseSkins = skinMinerMolten.baseSkins,
                 RootObject = skinMinerMolten.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinMinerMolten.meshReplacements,
                 GameObjectActivations = skinMinerMolten.gameObjectActivations,
                 ProjectileGhostReplacements = skinMinerMolten.projectileGhostReplacements,
             };
             return Skins.CreateNewSkinDef(SkinInfo);
-            /*
-            SkinDef MinerSkinDefNew = Skins.CreateNewSkinDef(SkinInfo);
-            modelSkinController.skins = modelSkinController.skins.Add(MinerSkinDefNew);
-            BodyCatalog.skins[(int)MinerIndex] = BodyCatalog.skins[(int)MinerIndex].Add(MinerSkinDefNew);*/
         }
 
         internal static SkinDef SkinsEmerald(GameObject MinerBody)
@@ -150,13 +100,11 @@ namespace WolfoSkinsMod
 
             Material MatMinerBody = Object.Instantiate(skinMinerDefault.rendererInfos[0].defaultMaterial);
 
-            Texture2D texMinerMolten = new Texture2D(4, 3, TextureFormat.RGB24, false);
-            texMinerMolten.LoadImage(Properties.Resources.texMinerDiamond, true);
+            Texture2D texMinerMolten = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/texMinerDiamond.png");
             texMinerMolten.filterMode = FilterMode.Point;
             texMinerMolten.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texMinerMoltenEmission = new Texture2D(4, 3, TextureFormat.RGB24, false);
-            texMinerMoltenEmission.LoadImage(Properties.Resources.texMinerDiamondEmission, true);
+            Texture2D texMinerMoltenEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/texMinerDiamondEmission.png");
             texMinerMoltenEmission.filterMode = FilterMode.Point;
             texMinerMoltenEmission.wrapMode = TextureWrapMode.Repeat;
 
@@ -167,50 +115,38 @@ namespace WolfoSkinsMod
 
             NewRenderInfos[0].defaultMaterial = MatMinerBody;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconMinerDiamond, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinMiner_Stupid1",
-                NameToken = "SIMU_SKIN_MINER_STUPID",
-                Icon = SkinIconS,
+                Name = "skinMinerWolfo_Emerald_Simu",
+                NameToken = "SIMU_SKIN_MINER_EMERALD",
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/skinIconMinerDiamond.png")),
                 BaseSkins = skinMinerDefault.baseSkins,
                 RootObject = skinMinerDefault.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinMinerDefault.meshReplacements,
                 GameObjectActivations = skinMinerDefault.gameObjectActivations,
                 ProjectileGhostReplacements = skinMinerDefault.projectileGhostReplacements,
             };
             return Skins.CreateNewSkinDef(SkinInfo);
-            /*
-            SkinDef MinerSkinDefNew = Skins.CreateNewSkinDef(SkinInfo);
-            modelSkinController.skins = modelSkinController.skins.Add(MinerSkinDefNew);
-            BodyCatalog.skins[(int)MinerIndex] = BodyCatalog.skins[(int)MinerIndex].Add(MinerSkinDefNew);*/
         }
 
         internal static SkinDef SkinsGold(GameObject MinerBody)
         {
             //BodyIndex MinerIndex = MinerBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = MinerBody.GetComponentInChildren<ModelSkinController>();
-            SkinDef skinMinerDefault = modelSkinController.skins[0];
+            SkinDef skinMinerDefault = modelSkinController.skins[5];
 
             CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinMinerDefault.rendererInfos.Length];
             System.Array.Copy(skinMinerDefault.rendererInfos, NewRenderInfos, skinMinerDefault.rendererInfos.Length);
 
             Material MatMinerBody = Object.Instantiate(skinMinerDefault.rendererInfos[0].defaultMaterial);
 
-            Texture2D texMinerMolten = new Texture2D(4, 3, TextureFormat.RGB24, false);
-            texMinerMolten.LoadImage(Properties.Resources.texMinerGold, true);
+            Texture2D texMinerMolten = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/texMinerGold.png");
             texMinerMolten.filterMode = FilterMode.Point;
             texMinerMolten.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texMinerMoltenEmission = new Texture2D(4, 3, TextureFormat.RGB24, false);
-            texMinerMoltenEmission.LoadImage(Properties.Resources.texMinerGoldEmission, true);
+            Texture2D texMinerMoltenEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/texMinerGoldEmission.png");
             texMinerMoltenEmission.filterMode = FilterMode.Point;
             texMinerMoltenEmission.wrapMode = TextureWrapMode.Repeat;
 
@@ -222,49 +158,40 @@ namespace WolfoSkinsMod
 
             NewRenderInfos[0].defaultMaterial = MatMinerBody;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconMinerGold, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
-            R2API.SkinDefInfo SkinInfo = new R2API.SkinDefInfo
+            SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinMiner_Gold2",
+                Name = "skinMinerWolfo_Simu",
                 NameToken = "SIMU_SKIN_MINER_ORANGE",
-                Icon = SkinIconS,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Miner/skinIconMinerGold.png")),
                 BaseSkins = skinMinerDefault.baseSkins,
                 RootObject = skinMinerDefault.rootObject,
-                UnlockableDef = unlockableDef,
                 RendererInfos = NewRenderInfos,
                 MeshReplacements = skinMinerDefault.meshReplacements,
                 GameObjectActivations = skinMinerDefault.gameObjectActivations,
                 ProjectileGhostReplacements = skinMinerDefault.projectileGhostReplacements,
             };
             return Skins.CreateNewSkinDef(SkinInfo);
-            /*
-            SkinDef MinerSkinDefNew = Skins.CreateNewSkinDef(SkinInfo);
-            modelSkinController.skins = modelSkinController.skins.Add(MinerSkinDefNew);
-            BodyCatalog.skins[(int)MinerIndex] = BodyCatalog.skins[(int)MinerIndex].Add(MinerSkinDefNew);*/
         }
 
 
-        [RegisterAchievement("SIMU_SKIN_MINER", "Skins.Miner.Wolfo", null, 5, null)]
-        public class ClearSimulacrumMiner : AchievementSimuVoidTwisted
+        [RegisterAchievement("CLEAR_ANY_MINER", "Skins.Miner.Wolfo.First", null, 5, null)]
+        public class ClearSimulacrumMiner : Achievement_AltBoss_Simu
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("MinerBody");
             }
         }
-
-        /*[RegisterAchievement("PRISM_SKIN_MINER", "Skins.Miner.Wolfo.Prism", null, 5, null)]
-        public class AchievementPrismaticDissoMinerBody : AchievementPrismaticDisso
+        /*
+        [RegisterAchievement("CLEAR_BOTH_MINER", "Skins.Miner.Wolfo.Both", null, 5, null)]
+        public class ClearSimulacrumMiner2 : Achievement_AltBoss
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
                 return BodyCatalog.FindBodyIndex("MinerBody");
             }
-        }*/
+        }
+        */
     }
 }
