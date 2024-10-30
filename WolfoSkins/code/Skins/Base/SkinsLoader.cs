@@ -182,12 +182,6 @@ namespace WolfoSkinsMod
             NewRenderInfos[1].defaultMaterial = matLoaderPilotDiffuseAlt;
             NewRenderInfos[2].defaultMaterial = matLoaderPilotDiffuseAlt;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconLoaderALT, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
-            //
             //
             //Unlockable
        

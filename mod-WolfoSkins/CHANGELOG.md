@@ -1,7 +1,21 @@
 ## Changelog
 ```
-v2.0.0 : Real Sots update.
+v2.0.2
+Fixed Captain not migrating anymore.
+Fixed Paladin skin not being emssive anymore.
+Fixed Pilot and NemForcer not migrating. 
 
+v2.0.1
+Now uses achievements for trackers since those stay even if a mod gets uninstalled.
+Fixed issue with transffering old achievements leading to always getting unlocks for some of the characters. 
+(Should automatically revoke the the achievements it should not have granted, alternatively just re-lock, auto-unlock)
+(Bandit, Engi, HanD, Sniper, Rocket, Arsonist, Paladin, Ravager were affected)
+Fixed one Commando skin not being unlockable
+Fixed one Merc skin not being unlockable
+Fixed Executioner skins not migrating.
+
+
+v2.0.0 : Real Sots update.
 New Colossus reskins will need you to do both; Beat Wave 50 and Defeat and one of the Alt Bosses. 
 
 A lot of technical achievement stuff, achievements are reset.

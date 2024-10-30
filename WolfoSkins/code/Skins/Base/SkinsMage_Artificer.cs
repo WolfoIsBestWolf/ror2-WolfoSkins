@@ -234,11 +234,6 @@ namespace WolfoSkinsMod
             skinMageAlt.meshReplacements.CopyTo(MeshReplacements, 0);
             MeshReplacements[1].mesh = skinMageDefault.meshReplacements[1].mesh;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconMage, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
@@ -321,14 +316,6 @@ namespace WolfoSkinsMod
             NewRenderInfos[2].defaultMaterial = matMage;//Cape
             NewRenderInfos[3].defaultMaterial = matMage;//Mage
 
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconMagePURPLE, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
-            //
-            //Unlockable
-            
 
             SkinDefInfo SkinInfo = new SkinDefInfo
             {

@@ -2,7 +2,7 @@ Many recolor skins unlocked by beating Simulacrum Wave 50, Twisted Scavs or Void
 Colossus recolors will be unlocked by beating both objectives. (Achievement should tell you what you have left to do).
 
 First time running the mod will check what characters you already beat wave 50 on and give you the achievements for it.\
-There's config to re-run the auto checker, remove all achievements granted.\ 
+There's config to re-run the auto checker or remove all achievements granted.\
 Or for all skins to not require an unlock.
 
 A lot of colors are inspired by RoRR palettes.

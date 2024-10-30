@@ -250,11 +250,6 @@ namespace WolfoSkinsMod
             //NewRenderInfos[7].defaultMaterial = null;
             NewRenderInfos[8].defaultMaterial = matNeoArsonistCloth;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(256, 256, TextureFormat.DXT5, false);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec256, WRect.half);
-            //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
                 Name = "skinArsonistWolfo_GM_BLUE_Simu",

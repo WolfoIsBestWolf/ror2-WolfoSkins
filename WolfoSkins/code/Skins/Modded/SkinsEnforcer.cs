@@ -449,11 +449,6 @@ namespace WolfoSkinsMod
             NewRenderInfos[7].defaultMaterial = matEnforcer;
             NewRenderInfos[8].defaultMaterial = matEnforcer;
             //
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinEnforcerIconGREEN, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {

@@ -27,7 +27,7 @@ namespace WolfoSkinsMod
             CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinPaladinDefault.rendererInfos.Length];
             System.Array.Copy(skinPaladinDefault.rendererInfos, NewRenderInfos, skinPaladinDefault.rendererInfos.Length);
 
-            Material matPaladin = Object.Instantiate(skinPaladinDefault.rendererInfos[1].defaultMaterial);
+            Material matPaladin = Object.Instantiate(skinPaladinDefault.rendererInfos[5].defaultMaterial);
             Material matPaladinSword = Object.Instantiate(skinPaladinDefault.rendererInfos[0].defaultMaterial);
             Material matPaladinGMOld = Object.Instantiate(skinPaladinDefault.rendererInfos[1].defaultMaterial);
 
@@ -46,7 +46,7 @@ namespace WolfoSkinsMod
 
 
             matPaladin.mainTexture = texPaladin;
-            matPaladin.SetColor("_EmColor", new Color(1.25f, 0.25f,0.25f,1f));
+            matPaladin.SetColor("_EmColor", new Color(1.25f, 0.25f, 0.25f, 1f));
             matPaladinSword.mainTexture = texPaladinSword;
             matPaladinSword.SetTexture("_EmTex", texPaladinSwordEmission);
             matPaladinGMOld.mainTexture = texPaladinGMOld;
@@ -159,12 +159,7 @@ namespace WolfoSkinsMod
             RoR2.SkinDef.GameObjectActivation[] GameObjectActivations = new SkinDef.GameObjectActivation[skinPaladinDefault.gameObjectActivations.Length];
             skinPaladinDefault.gameObjectActivations.CopyTo(GameObjectActivations, 0);
 
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconPaladin, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
-            //
+
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
             newSkinDef.name = "skinPaladinWolfo_BLACK";
             newSkinDef.nameToken = "SIMU_SKIN_PALADIN_BLACK";

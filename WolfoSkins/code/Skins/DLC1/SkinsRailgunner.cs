@@ -339,14 +339,7 @@ namespace WolfoSkinsMod
             skinRailGunnerDefault.meshReplacements.CopyTo(MeshReplacements, 0);
             MeshReplacements[2].mesh = skinRailGunnerAlt.meshReplacements[2].mesh;
 
-            //SkinIcon
-            Texture2D SkinIcon = new Texture2D(128, 128, TextureFormat.DXT5, false);
-            SkinIcon.LoadImage(Properties.Resources.skinIconRailgunnerSNIPER, true);
-            SkinIcon.filterMode = FilterMode.Bilinear;
-            Sprite SkinIconS = Sprite.Create(SkinIcon, WRect.rec128, WRect.half);
-            //
-            //
-        
+    
 
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
             newSkinDef.name = "skinRailGunnerWolfo_Sniper_Simu";
