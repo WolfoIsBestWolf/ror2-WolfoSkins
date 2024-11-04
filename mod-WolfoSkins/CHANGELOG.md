@@ -1,5 +1,16 @@
 ## Changelog
 ```
+v2.0.5
+Colored Braclet and Cleaned up FalseSon:Provi
+
+v2.0.4
+Added more saftey checks because mod wouldn't load with incomplete/unnamed SurvivorDefs.
+Fixed mod not loading when downloaded manually.
+
+v2.0.3
+Fixed issue with Acrids spikes being missing on some skins in lobby.
+First-time achievements will no longer give notifications.
+
 v2.0.2
 Fixed Captain not migrating anymore.
 Fixed Paladin skin not being emssive anymore.

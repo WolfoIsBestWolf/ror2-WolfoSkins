@@ -13,13 +13,9 @@ namespace WolfoSkinsMod
             Achievements.Hooks();
             On.RoR2.UI.LogBook.LogBookController.CanSelectAchievementEntry += HideUnimplementedUnlocks;
 
-            //Idk which would be better
-            //On.RoR2.UnlockableCatalog.SetUnlockableDefs += UnlockableCatalog_SetUnlockableDefs;
             On.RoR2.RoR2Content.CreateEclipseUnlockablesForSurvivor += AutogenerateUnlockableDefs;
 
-
             On.RoR2.LocalUserManager.AddMainUser_UserProfile += LocalUserManager_AddMainUser_UserProfile;
-
 
             On.RoR2.UnlockableCatalog.GenerateUnlockableMetaData += UnlockableCatalog_GenerateUnlockableMetaData;
             GameModeCatalog.availability.CallWhenAvailable(AutogenerateTokens);
@@ -46,7 +42,7 @@ namespace WolfoSkinsMod
                 }
                 if (WConfig.cfgRunAutoUnlocker.Value)
                 {
-                    CheckForPreviouslyEarned(userProfile, false);
+                    CheckForPreviouslyEarned(userProfile, true);
                 }         
             }          
             UpdateBothObjective_AtStartForAll(userProfile);           
@@ -171,11 +167,11 @@ namespace WolfoSkinsMod
                     if (main_unlock)
                     {
                         Debug.Log(main_unlock.cachedName);
-                        if (!userProfile.HasAchievement("CLEAR_ANY_" + upperName))
-                        {
-                            userProfile.GrantUnlockable(main_unlock);
-                            userProfile.AddAchievement("CLEAR_ANY_" + upperName, true);
-                        }
+                        userProfile.GrantUnlockable(main_unlock);
+                    }
+                    if (!userProfile.HasAchievement("CLEAR_ANY_" + upperName))
+                    {
+                        userProfile.AddAchievement("CLEAR_ANY_" + upperName, true);
                     }
                 }
                 if (hasSimu && hasAltBoss)
@@ -184,11 +180,11 @@ namespace WolfoSkinsMod
                     if (safe)
                     {
                         Debug.Log(safe.cachedName);
-                        if (!userProfile.HasAchievement("CLEAR_BOTH_" + upperName))
-                        {
-                            userProfile.GrantUnlockable(safe);
-                            userProfile.AddAchievement("CLEAR_BOTH_" + upperName, true);
-                        }
+                        userProfile.GrantUnlockable(safe);                       
+                    }
+                    if (!userProfile.HasAchievement("CLEAR_BOTH_" + upperName))
+                    {
+                        userProfile.AddAchievement("CLEAR_BOTH_" + upperName, true);
                     }
                 }
             }
@@ -221,11 +217,26 @@ namespace WolfoSkinsMod
             {
                 string upperName = survivorDef.cachedName.ToUpperInvariant();
 
-                userProfile.RevokeUnlockable(UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.First"));
-                userProfile.RevokeUnlockable(UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.Both"));
-
-                userProfile.RevokeUnlockable(UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.Simu"));
- 
+                var First = UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.First");
+                var Both = UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.Both");
+                var Simu = UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.Simu");
+                if (First)
+                {
+                    userProfile.RevokeUnlockable(First);
+                }
+                else
+                {
+                    Debug.LogWarning("Unlockables not properly generated for :" + survivorDef.cachedName);
+                }
+                if (Both)
+                {
+                    userProfile.RevokeUnlockable(Both);
+                }
+                if (Simu)
+                {
+                    userProfile.RevokeUnlockable(Simu);
+                }
+                
                 userProfile.RevokeAchievement("CLEAR_ALTBOSS_" + upperName);
                 userProfile.RevokeAchievement("CLEAR_SIMU_" + upperName);
 
@@ -356,101 +367,7 @@ namespace WolfoSkinsMod
                     userProfile.AddAchievement("CLEAR_ALTBOSS_MOFFEINPILOT", false);
                 }
             }
-
             #endregion
-
-
-
-
-            /*
-            if (userProfile.HasUnlockable("Skins.Bandit.Wolfo") && !userProfile.HasUnlockable("Skins.Bandit2.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.Bandit2.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-                userProfile.AddAchievement("CLEAR_ALTBOSS_BANDIT", false);
-            }
-            if (userProfile.HasUnlockable("Skins.Engineer.Wolfo") && !userProfile.HasUnlockable("Skins.Engi.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.Engi.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-            }
-
-
-            if (userProfile.HasUnlockable("Skins.Paladin.Wolfo") && !userProfile.HasUnlockable("Skins.RobPaladin.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.RobPaladin.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-            }
-            if (userProfile.HasUnlockable("Skins.Ravager.Wolfo") && !userProfile.HasUnlockable("Skins.ROB_RAVAGER_BODY_NAME.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.ROB_RAVAGER_BODY_NAME.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-            }
-            if (userProfile.HasUnlockable("Skins.Arsonist.Wolfo") && !userProfile.HasUnlockable("Skins.POPCORN_ARSONIST_BODY_.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.POPCORN_ARSONIST_BODY_.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-            }
-
-
-            if (userProfile.HasUnlockable("Skins.Rocket.Wolfo") && !userProfile.HasUnlockable("Skins.RocketSurvivor.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.RocketSurvivor.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-            }
-            if (userProfile.HasUnlockable("Skins.Sniper.Wolfo") && !userProfile.HasUnlockable("Skins.SniperClassic.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.SniperClassic.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-            }
-
-            if (userProfile.HasUnlockable("Skins.Hand.Wolfo") && !userProfile.HasUnlockable("Skins.HANDOverclocked.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.HANDOverclocked.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-            }
-            if (userProfile.HasUnlockable("Skins.Executioner.Wolfo") && !userProfile.HasUnlockable("Skins.survivorExecutioner2.Wolfo.Simu"))
-            {
-                UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins.survivorExecutioner2.Wolfo.AltBoss");
-                if (safe)
-                {
-                    Debug.Log(safe.cachedName);
-                    userProfile.GrantUnlockable(safe);
-                }
-            }
-            */
         }
 
         public static void UpdateBothObjective_Specific(UserProfile userProfile, SurvivorDef survivorDef)
@@ -674,8 +591,7 @@ namespace WolfoSkinsMod
                     UnlockableDef unlockable = null;
                     if (skinDefs[skin].name.EndsWith("_Simu"))
                     {
-                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + SurvivorCatalog.survivorDefs[i].cachedName + ".Wolfo.First");
-                        
+                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + SurvivorCatalog.survivorDefs[i].cachedName + ".Wolfo.First");                 
                     }
                     else if (skinDefs[skin].name.EndsWith("_AltBoss"))
                     {

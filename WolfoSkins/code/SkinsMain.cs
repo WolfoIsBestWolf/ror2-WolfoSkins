@@ -19,7 +19,7 @@ namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
     [BepInDependency("com.TheTimeSweeper.RedAlert", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.0.0")]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.0.4")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
 
     public class WolfoSkins : BaseUnityPlugin
@@ -329,6 +329,7 @@ namespace WolfoSkinsMod
                     Debug.LogWarning(lightColorsChanges[i].lightPath + " : Not Found");
                 }
             }
+            
             skinDefWolfoTracker.addedObjects = new GameObject[addGameObjects.Length];
             for (int i = 0; addGameObjects.Length > i; i++)
             {
@@ -352,6 +353,11 @@ namespace WolfoSkinsMod
             if (!Run.instance && modelObject.transform.parent && modelObject.name.EndsWith("Engi"))
             {
                 this.EngiDisplay(modelObject, skinDefWolfoTracker);
+            }
+            if (disableThis)
+            {
+                disableThis.gameObject.SetActive(false);
+                skinDefWolfoTracker.disabledTransform = disableThis;
             }
         }
 
@@ -381,6 +387,7 @@ namespace WolfoSkinsMod
         public LightColorChanges[] lightColorsChanges = System.Array.Empty<LightColorChanges>();
         public ItemDisplayRule[] addGameObjects = System.Array.Empty<ItemDisplayRule>();
         public MaterialChanger changeMaterial;
+        public Transform disableThis;
 
 
         [System.Serializable]
@@ -404,7 +411,8 @@ namespace WolfoSkinsMod
         public GameObject[] addedObjects;
         public ChangedLightColors[] changedLights;
         public CharacterModel model;
-        
+        public Transform disabledTransform;
+
         [System.Serializable]
         public struct ChangedLightColors
         {
@@ -416,6 +424,11 @@ namespace WolfoSkinsMod
 
         public void UndoWolfoSkin()
         {
+            if (disabledTransform)
+            {
+                disabledTransform.gameObject.SetActive(true);
+            }
+   
             if (changedLights != null)
             {
                 for (int i = 0; changedLights.Length > i; i++)

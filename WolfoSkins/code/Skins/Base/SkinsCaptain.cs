@@ -9,10 +9,11 @@ namespace WolfoSkinsMod
     {
         internal static void Start()
         {
-            CaptainSkin();
-            CaptainSkinBLUE();
+            Captain_Pink();
+            Captain_Blue();
             //CaptainSkinRED();
             Captain_AltColossus();
+            Colossus_Orange();
         }
 
         internal static void Captain_AltColossus()
@@ -86,7 +87,79 @@ namespace WolfoSkinsMod
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), SkinInfo2);
         }
 
-        internal static void CaptainSkin()
+
+        internal static void Colossus_Orange()
+        {
+            SkinDef skinCaptainAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Captain/skinCaptainAltColossus.asset").WaitForCompletion();
+
+            CharacterModel.RendererInfo[] renderInfo = new CharacterModel.RendererInfo[7];
+            System.Array.Copy(skinCaptainAltColossus.rendererInfos, renderInfo, 7);
+
+            //0 matCaptainColossusAltClothes
+            //1 matCaptainColossusAltArmor
+            //2 matCaptainColossusAltArmor
+            //3 matCaptainColossusAltClothes
+            //4 matCaptainColossusAltArmor
+            //5 matCaptainColossusAltArmor
+            //6 matCaptainColossusAltClothes
+
+            Texture2D texCaptainColossusClothesDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusClothesDiffuse.png");
+            texCaptainColossusClothesDiffuse.wrapMode = TextureWrapMode.Clamp;
+
+            Texture2D texCaptainColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusDiffuse.png");
+            texCaptainColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
+
+            Texture2D texCaptainColossusDiffuseHat = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusDiffuseHat.png");
+            texCaptainColossusDiffuseHat.wrapMode = TextureWrapMode.Clamp;
+
+            Texture2D texCaptainColossusFresnelMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusFresnelMask.png");
+            texCaptainColossusFresnelMask.wrapMode = TextureWrapMode.Clamp;
+
+
+            //Just edit the base game one it looks like shit
+            skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_NormalTex", null);
+            skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
+
+            Material matCaptainColossusAltClothes = Object.Instantiate(skinCaptainAltColossus.rendererInfos[0].defaultMaterial);
+            Material matCaptainColossusAltArmor = Object.Instantiate(skinCaptainAltColossus.rendererInfos[1].defaultMaterial);
+
+            matCaptainColossusAltClothes.mainTexture = texCaptainColossusClothesDiffuse;
+            matCaptainColossusAltArmor.mainTexture = texCaptainColossusDiffuse;
+            matCaptainColossusAltArmor.SetTexture("_NormalTex", null); //texTrimSheetLemurianRuins
+            matCaptainColossusAltArmor.SetTexture("_GreenChannelTex", null); //texTrimSheetLemurianRuins
+            matCaptainColossusAltArmor.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
+
+            matCaptainColossusAltArmor.SetColor("_EmColor", new Color(1f, 1f, 0.2f, 1f));
+            Material matCaptainColossusAltArmorHat = Object.Instantiate(matCaptainColossusAltArmor);
+
+
+            //matCaptainColossusAltArmor.SetTexture("_FresnelMask", texCaptainColossusFresnelMask);
+            matCaptainColossusAltArmorHat.mainTexture = texCaptainColossusDiffuseHat;
+
+            //
+            renderInfo[0].defaultMaterial = matCaptainColossusAltClothes; //
+            renderInfo[1].defaultMaterial = matCaptainColossusAltArmorHat; //Hat
+            renderInfo[2].defaultMaterial = matCaptainColossusAltArmor; //
+            renderInfo[3].defaultMaterial = matCaptainColossusAltClothes; //
+            renderInfo[4].defaultMaterial = matCaptainColossusAltArmor; //
+            renderInfo[5].defaultMaterial = matCaptainColossusAltArmor; //
+            renderInfo[6].defaultMaterial = matCaptainColossusAltClothes; //
+            //
+
+            SkinDefInfo SkinInfo2 = new SkinDefInfo
+            {
+                NameToken = "SIMU_SKIN_CAPTAIN_COLOSSUS",
+                Name = "skinCaptainAltColossusWolfo_AltBoss2",
+                BaseSkins = skinCaptainAltColossus.baseSkins,
+                RootObject = skinCaptainAltColossus.rootObject,
+                RendererInfos = renderInfo,
+                MeshReplacements = skinCaptainAltColossus.meshReplacements,
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/Captain.png")),
+            };
+            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), SkinInfo2);
+        }
+
+        internal static void Captain_Pink()
         {
             //Pink stuff test
             //SkinDef CaptainSkinDefault = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[0];
@@ -148,7 +221,7 @@ namespace WolfoSkinsMod
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), CaptainPinkSkinInfos);
         }
 
-        internal static void CaptainSkinBLUE()
+        internal static void Captain_Blue()
         {
             SkinDef CaptainSkinDefault = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[0];
             SkinDef CaptainSkinWhite = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[1];

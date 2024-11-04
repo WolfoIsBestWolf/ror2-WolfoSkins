@@ -283,26 +283,7 @@ namespace WolfoSkinsMod
             newSkinDef.meshReplacements = skinCrocoDefault.meshReplacements;
             newSkinDef.rendererInfos = NewRenderInfos;
             newSkinDef.rootObject = skinCrocoDefault.rootObject;
-
-            newSkinDef.gameObjectActivations = new SkinDef.GameObjectActivation[]
-            {
-                new SkinDef.GameObjectActivation
-                {
-                    gameObject = skinCrocoDefault.rootObject.transform.GetChild(7).gameObject,
-                    shouldActivate = false
-                }
-            };
-
-
-            skinCrocoDefault.runtimeSkin = null;
-            skinCrocoDefault.gameObjectActivations = new SkinDef.GameObjectActivation[]
-            {
-                new SkinDef.GameObjectActivation
-                {
-                    gameObject = skinCrocoDefault.rootObject.transform.GetChild(7).gameObject,
-                    shouldActivate = true
-                }
-            };
+            newSkinDef.disableThis = skinCrocoDefault.rootObject.transform.GetChild(7);
 
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CrocoBody"), newSkinDef);
         }
