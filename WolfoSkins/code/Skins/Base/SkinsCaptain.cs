@@ -13,7 +13,7 @@ namespace WolfoSkinsMod
             Captain_Blue();
             //CaptainSkinRED();
             Captain_AltColossus();
-            Colossus_Orange();
+            //Colossus_Orange();
         }
 
         internal static void Captain_AltColossus()

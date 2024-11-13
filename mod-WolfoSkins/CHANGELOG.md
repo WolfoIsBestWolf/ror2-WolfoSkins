@@ -1,7 +1,13 @@
 ## Changelog
 ```
-v2.0.5
-Colored Braclet and Cleaned up FalseSon:Provi
+v2.1.0
+Added Seeker : Default : Black/Orange
+Colored Braclet and cleaned up FalseSon:Provi
+Made Ne Colossus Engi Red slightly less strong.
+Adjusted Harpoons on Engi skins.
+Made Green Colossus Acrid more green and need 2nd Achievement.
+Made Purple Colossus Arti have more emission like the white one.
+
 
 v2.0.4
 Added more saftey checks because mod wouldn't load with incomplete/unnamed SurvivorDefs.

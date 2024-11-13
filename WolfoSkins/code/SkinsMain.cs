@@ -19,7 +19,7 @@ namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
     [BepInDependency("com.TheTimeSweeper.RedAlert", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.0.4")]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.1.0")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
 
     public class WolfoSkins : BaseUnityPlugin

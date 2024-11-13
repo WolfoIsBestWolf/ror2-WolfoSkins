@@ -56,6 +56,7 @@ Void Fiend : Default : Orange/Yellow
 Chef : Default : Red Hat / Yellow
 Chef : Default : Green Hat / Orange
 Chef : Default : Blue Hat / Pink
+Seeker : Default : Black / Orange
 False Son : Default : Gold
 False Son : Mastery : Provi Colors
 
@@ -103,13 +104,26 @@ Chef_Mod : (RoRR Provi Trial colors)
 ```
 
 <details>
-  <summary>All skins ingame</summary>
-
+  <summary>All skins ingame (Vanilla Characters)</summary>
+  
 ![](https://github.com/WolfoIsBestWolf/ror2-WolfoSkins/blob/main/modPageImages/allSkins.png?raw=true)
+</details>
+
+<details>
+  <summary>All skins ingame. (Modded Characters)</summary>
+  
 ![](https://github.com/WolfoIsBestWolf/ror2-WolfoSkins/blob/main/modPageImages/allSkinsModded.png?raw=true)
 </details>
+
 
 #
 This mod is intended to be used along side:\
 [WolfoQualityOfLife](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/) colored vines for REX, Red effects for Red Mercs.\
 [SimulacrumAdditions](https://thunderstore.io/package/Wolfo/SimulacrumAdditions) a more interesting Simulacrum.
+
+
+Also includes this:  
+
+![](https://github.com/WolfoIsBestWolf/ror2-WolfoSkins/blob/main/modPageImages/lemurian.png?raw=true)
+
+

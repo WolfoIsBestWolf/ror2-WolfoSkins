@@ -39,16 +39,11 @@ namespace WolfoSkinsMod
             texMageAltColossusFlowMask.wrapMode = TextureWrapMode.Clamp;
 
 
-            /*Texture2D texRampThermite2 = new Texture2D(256, 16, TextureFormat.RGB24, false);
-            texRampThermite2.LoadImage(Properties.Resources.texRampThermite2, true);
-            texRampThermite2.wrapMode = TextureWrapMode.Clamp;*/
-
-
             matMageAltColossus.mainTexture = texMageAltColossusDiffuse;
             matMageAltColossus.SetTexture("_FlowHeightmap", texMageAltColossusFlowMask);
            // matMageAltColossus.SetTexture("_FlowHeightMask", texMageAltColossusFlowMask);//texRampDroneFire.png
             matMageAltColossus.SetTexture("_FlowHeightRamp", texRampLightning2);//texRampThermite2.png
-            matMageAltColossus.SetFloat("_FlowEmissionStrength", 0.6f);//3
+            matMageAltColossus.SetFloat("_FlowEmissionStrength", 0.75f);//3
 
             NewRenderInfos[2].defaultMaterial = matMageAltColossus;
             NewRenderInfos[3].defaultMaterial = matMageAltColossus;
@@ -111,7 +106,7 @@ namespace WolfoSkinsMod
             {
                 new SkinDefWolfo.LightColorChanges
                 {
-                    color = new Color(0,1f,0.4f),
+                    color = new Color(0.1f,0.5f,0.8f),
                     lightPath = "MageArmature/ROOT/base/stomach/chest/JetsOn/Point Light",
                 },
             };
@@ -137,8 +132,12 @@ namespace WolfoSkinsMod
             Texture2D texMageAltColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/Purple/texMageAltColossusDiffuse.png");
             texMageAltColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
 
+            Texture2D texMageAltColossusFlowMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/White/texMageAltColossusFlowMask.png");
+            texMageAltColossusFlowMask.wrapMode = TextureWrapMode.Clamp;
+
             matMageAltColossus.mainTexture = texMageAltColossusDiffuse;
-            matMageAltColossus.SetFloat("_FlowEmissionStrength", 3);//0.9
+            matMageAltColossus.SetTexture("_FlowHeightmap", texMageAltColossusFlowMask);
+            matMageAltColossus.SetFloat("_FlowEmissionStrength", 1);//0.9
             matMageAltColossus.SetFloat("_NormalStrength", 2);//0.9
             
             NewRenderInfos[2].defaultMaterial = matMageAltColossus;

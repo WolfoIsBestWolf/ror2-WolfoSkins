@@ -58,6 +58,7 @@ namespace WolfoSkinsMod
             matEngiAltColossus.SetTexture("_FresnelRamp", texRampCrocoDiseaseDark1); //texRampCrocoDiseaseDark.png
             matEngiAltColossus.SetFloat("_FlowEmissionStrength", 5f);
             matEngiAltColossus.SetFloat("_FresnelPower", 2f);
+            matEngiAltColossus.SetFloat("_FresnelBoost", 15f); //20
 
             matEngiTrail.SetTexture("_RemapTex", texRampEngiAltColossus);
 
@@ -111,11 +112,13 @@ namespace WolfoSkinsMod
             //
             ParticleSystemRenderer particleSystem = EngiHarpoonGhostSkinW.transform.GetChild(0).GetComponent<ParticleSystemRenderer>(); //matEngiHarpoonRing 
             Material newShards = Object.Instantiate(particleSystem.material);
-            newShards.SetTexture("_RemapTex", texRampEngiAltColossus);
+            newShards.SetColor("_TintColor", new Color(1f, 0.2f, 0.2f, 1));
             particleSystem.material = newShards;
 
             EngiHarpoonGhostSkinW.transform.GetChild(1).GetComponent<MeshRenderer>().material = matEngiAltColossus;
             TrailRenderer trailRender = EngiHarpoonGhostSkinW.transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>(); //matEngiHarpoonTrail 
+            trailRender.startColor = new Color(1f,1f,1f,0f); //0.4392 1 0.3451 0
+            trailRender.endColor = new Color(0.5f,0.5f,0.5f,0f); //0.3451 0.9529 1 0
             Material newTrail = Object.Instantiate(trailRender.material);
             newTrail.SetTexture("_RemapTex", texRampEngiAltColossus);
             trailRender.material = newTrail;
@@ -293,11 +296,13 @@ namespace WolfoSkinsMod
             //
             ParticleSystemRenderer particleSystem = EngiHarpoonGhostSkinW.transform.GetChild(0).GetComponent<ParticleSystemRenderer>(); //matEngiHarpoonRing 
             Material newShards = Object.Instantiate(particleSystem.material);
-            newShards.SetTexture("_RemapTex", texRampEngiAlt2);
+            newShards.SetColor("_TintColor", new Color(1f, 1f, 0.2f, 1));
             particleSystem.material = newShards;
 
             EngiHarpoonGhostSkinW.transform.GetChild(1).GetComponent<MeshRenderer>().material = matEngi;
             TrailRenderer trailRender = EngiHarpoonGhostSkinW.transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>(); //matEngiHarpoonTrail 
+            trailRender.startColor = new Color(1f, 1f, 0.75f, 0f); //0.4392 1 0.3451 0
+            trailRender.endColor = new Color(0.6f, 1f, 0.25f, 0f); //0.3451 0.9529
             Material newTrail = Object.Instantiate(trailRender.material);
             newTrail.SetTexture("_RemapTex", texRampEngiAlt2);
             trailRender.material = newTrail;
@@ -306,7 +311,7 @@ namespace WolfoSkinsMod
             particleSystem = EngiHarpoonGhostSkinW.transform.GetChild(3).GetComponent<ParticleSystemRenderer>(); //matEngiShieldSHards 
             newShards = Object.Instantiate(particleSystem.material);
             newShards.SetTexture("_RemapTex", texRampEngiAlt2);
-            newShards.SetColor("_TintColor", new Color(1,1,0,1));
+            newShards.SetColor("_TintColor", new Color(1,1f,0,1));
             particleSystem.material = newShards;
 
             //Would ideally also need a muzzle flash replacement guh
@@ -421,11 +426,11 @@ namespace WolfoSkinsMod
 
             matEngiTurret.mainTexture = texEngiTurretDiffuseAlt2;
             matEngiTurret.SetTexture("_PrintRamp", texRampEngiAlt2);
-            matEngiTurret.SetColor("_EmColor", new Color(2f, 1f, 2f));
+            matEngiTurret.SetColor("_EmColor", new Color(2f, 1f, 2f) * 0.8f);
 
             matEngi.mainTexture = texEngiDiffuseAlt2;
             matEngi.SetTexture("_EmTex", texEngiEmissionAlt2);
-            matEngi.SetColor("_EmColor", new Color(1.6f, 0.75f, 1.6f, 1));
+            matEngi.SetColor("_EmColor", new Color(1.6f, 0.75f, 1.6f, 1)*0.8f);
 
             matEngiTrail.SetTexture("_RemapTex", texRampEngiAlt2);
 
@@ -436,12 +441,12 @@ namespace WolfoSkinsMod
             TurretNewRenderInfos[0].defaultMaterial = matEngiTurret;
             //
             //ProjectileReplacements
-            GameObject EngiGrenadeGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW", false);
-            GameObject EngiMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW", false);
-            GameObject SpiderMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW", false);
-            GameObject EngiBubbleShieldGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiBubbleShieldGhost2.prefab").WaitForCompletion(), "EngiBubbleShieldGhostW", false);
+            GameObject EngiGrenadeGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW_B", false);
+            GameObject EngiMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW_B", false);
+            GameObject SpiderMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW_B", false);
+            GameObject EngiBubbleShieldGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiBubbleShieldGhost2.prefab").WaitForCompletion(), "EngiBubbleShieldGhostW_B", false);
             GameObject EngiHarpoonProjectile = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoon.prefab").WaitForCompletion();
-            GameObject EngiHarpoonGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoonGhost.prefab").WaitForCompletion(), "EngiHarpoonGhostSkinW", false);
+            GameObject EngiHarpoonGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoonGhost.prefab").WaitForCompletion(), "EngiHarpoonGhostSkinW_B", false);
 
             RoR2.SkinDef.ProjectileGhostReplacement[] ProjectileGhostReplacements = new SkinDef.ProjectileGhostReplacement[5];
             skinEngiAlt.projectileGhostReplacements.CopyTo(ProjectileGhostReplacements, 0);
@@ -475,21 +480,23 @@ namespace WolfoSkinsMod
             //
             ParticleSystemRenderer particleSystem = EngiHarpoonGhostSkinW.transform.GetChild(0).GetComponent<ParticleSystemRenderer>(); //matEngiHarpoonRing 
             Material newShards = Object.Instantiate(particleSystem.material);
-            newShards.SetTexture("_RemapTex", texRampEngiAlt2BLUEForWeapons);
+            newShards.SetColor("_TintColor", new Color(1f, 0.375f, 1f, 1));
             particleSystem.material = newShards;
 
             EngiHarpoonGhostSkinW.transform.GetChild(1).GetComponent<MeshRenderer>().material = matEngi;
             TrailRenderer trailRender = EngiHarpoonGhostSkinW.transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>(); //matEngiHarpoonTrail 
+            trailRender.startColor = new Color(1.2f, 1f, 1f, 0f); //0.4392 1 0.3451 0
+            trailRender.endColor = new Color(1.2f, 1f, 1f, 0f); //0.3451 0.9529 1 0
             Material newTrail = Object.Instantiate(trailRender.material);
-            newTrail.SetTexture("_RemapTex", texRampEngiAlt2BLUEForWeapons);
+            newTrail.SetTexture("_RemapTex", texRampEngiAlt2);
             trailRender.material = newTrail;
 
             //EngiHarpoonGhostSkinW.transform.GetChild(2).GetComponent<ParticleSystemRenderer>(); //GenericFlash
-            particleSystem = EngiHarpoonGhostSkinW.transform.GetChild(3).GetComponent<ParticleSystemRenderer>(); //matEngiShieldSHards 
-            newShards = Object.Instantiate(particleSystem.material);
-            newShards.SetTexture("_RemapTex", texRampEngiAlt2BLUEForWeapons);
-            newShards.SetColor("_TintColor", new Color(1, 2.7f, 0.1f, 1));
-            particleSystem.material = newShards;
+            //particleSystem = EngiHarpoonGhostSkinW.transform.GetChild(3).GetComponent<ParticleSystemRenderer>(); //matEngiShieldSHards 
+            //newShards = Object.Instantiate(particleSystem.material);
+            //newShards.SetTexture("_RemapTex", texRampEngiAlt2);//
+            //newShards.SetColor("_TintColor", new Color(1, 1f, 1f, 1f));
+            //particleSystem.material = newShards;
 
             //Would ideally also need a muzzle flash replacement guh
 

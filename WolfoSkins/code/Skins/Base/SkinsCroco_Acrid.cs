@@ -55,7 +55,7 @@ namespace WolfoSkinsMod
             SkinDefInfo SkinInfo2 = new SkinDefInfo
             {
                 NameToken = "CROCO_SKIN_ALT2_NAME2",
-                Name = "skinCrocoAltColossusWolfoBaseAlt",
+                Name = "skinCrocoAltColossusWolfo_Green_AltBoss",
                 BaseSkins = skinCrocoAltColossus.baseSkins,
                 RootObject = skinCrocoAltColossus.rootObject,
                 RendererInfos = renderInfo,
