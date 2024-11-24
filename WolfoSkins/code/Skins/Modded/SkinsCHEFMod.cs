@@ -221,7 +221,7 @@ namespace WolfoSkinsMod
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinCHEF_MOD_Wolfo_Black_Any",
+                Name = "skinCHEF_MOD_Wolfo_Black_Simu",
                 NameToken = "SIMU_SKIN_CHEFMOD_BLACK",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconBLACK.png")),
                 BaseSkins = new SkinDef[] { skinChef },
@@ -230,7 +230,7 @@ namespace WolfoSkinsMod
             };
             SkinDefInfo SkinInfoRED = new SkinDefInfo
             {
-                Name = "skinCHEF_MOD_Wolfo_Red_Any",
+                Name = "skinCHEF_MOD_Wolfo_Red_Simu",
                 NameToken = "SIMU_SKIN_CHEFMOD_RED",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconRed.png")),
                 BaseSkins = new SkinDef[] { skinChef },
@@ -239,7 +239,7 @@ namespace WolfoSkinsMod
             };
             SkinDefInfo SkinInfoGREEN = new SkinDefInfo
             {
-                Name = "skinCHEF_MOD_Wolfo_Green_Any",
+                Name = "skinCHEF_MOD_Wolfo_Green_Simu",
                 NameToken = "SIMU_SKIN_CHEFMOD_GREEN",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconGreen.png")),
                 BaseSkins = new SkinDef[] { skinChef },
@@ -257,7 +257,7 @@ namespace WolfoSkinsMod
             };
             SkinDefInfo SkinInfoCYAN = new SkinDefInfo
             {
-                Name = "skinCHEF_MOD_Wolfo_CYAN_Any",
+                Name = "skinCHEF_MOD_Wolfo_CYAN_Simu",
                 NameToken = "SIMU_SKIN_CHEFMOD_CYAN",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconCYAN.png")),
                 BaseSkins = new SkinDef[] { skinChef },
@@ -266,7 +266,7 @@ namespace WolfoSkinsMod
             };
             SkinDefInfo SkinInfoPROVI = new SkinDefInfo
             {
-                Name = "skinCHEF_MOD_Wolfo_PROVI_Any",
+                Name = "skinCHEF_MOD_Wolfo_PROVI_Simu",
                 NameToken = "SIMU_SKIN_CHEFMOD_PROVI",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chef/skinChefIconProvi.png")),
                 BaseSkins = new SkinDef[] { skinChef },

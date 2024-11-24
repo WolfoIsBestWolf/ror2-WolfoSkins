@@ -93,7 +93,7 @@ namespace WolfoSkinsMod
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinPilotWolfo_White_Any",
+                Name = "skinPilotWolfo_White_Simu",
                 NameToken = "SIMU_SKIN_PILOT_WHITE",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/skinIconPilotWHITE.png")),
                 BaseSkins = new SkinDef[] { skinPilotDefault },
@@ -188,7 +188,7 @@ namespace WolfoSkinsMod
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinPilotWolfo_Red_Any",
+                Name = "skinPilotWolfo_Red_Simu",
                 NameToken = "SIMU_SKIN_PILOT_RED",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Red/skinIconPilotRED.png")),
                 BaseSkins = new SkinDef[] { skinPilotDefault },
@@ -284,7 +284,7 @@ namespace WolfoSkinsMod
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinPilotWolfo_Blue_Any",
+                Name = "skinPilotWolfo_Blue_Simu",
                 NameToken = "SIMU_SKIN_PILOT_BLUE",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/skinIconPilot.png")),
                 BaseSkins = new SkinDef[] { skinPilotDefault },

@@ -105,7 +105,7 @@ namespace WolfoSkinsMod
             //
 
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinExecutionerWolfo_Any";
+            newSkinDef.name = "skinExecutionerWolfo_Simu";
             newSkinDef.nameToken = "SIMU_SKIN_EXECUTIONER";
             newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/skinExecutionerIcon.png"));
             newSkinDef.baseSkins = new SkinDef[] { skinExecutioner };
@@ -215,7 +215,7 @@ namespace WolfoSkinsMod
             //
 
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinExecutionerWolfo_Blue_Any";
+            newSkinDef.name = "skinExecutionerWolfo_Blue_Simu";
             newSkinDef.nameToken = "SIMU_SKIN_EXECUTIONER_BLUE";
             newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/skinExecutionerIconBLUE.png"));
             newSkinDef.baseSkins = new SkinDef[] { skinExecutioner };
@@ -320,7 +320,7 @@ namespace WolfoSkinsMod
 
  //
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinExecutionerMasteryWolfo_Any";
+            newSkinDef.name = "skinExecutionerMasteryWolfo_Simu";
             newSkinDef.nameToken = "SIMU_SKIN_EXECUTIONER_GOLD";
             newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/skinExecutionerIconGOLD.png"));
             newSkinDef.baseSkins = new SkinDef[] { skinExecutioner };

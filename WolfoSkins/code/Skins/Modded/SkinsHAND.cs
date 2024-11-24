@@ -51,7 +51,6 @@ namespace WolfoSkinsMod
             CharacterModel.RendererInfo[] NewRenderInfosRETURNS = new CharacterModel.RendererInfo[skinHandReturns.rendererInfos.Length];
             System.Array.Copy(skinHandReturns.rendererInfos, NewRenderInfosRETURNS, skinHandReturns.rendererInfos.Length);
 
-
             //0 matHANDRorr
             //1 matHANDRorr
             //2 matHANDRorr
@@ -82,10 +81,10 @@ namespace WolfoSkinsMod
             texDroneBodyEmission.filterMode = FilterMode.Point;
             texDroneBodyEmission.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/RoRRHANDTex.png");
+            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/textrimsheetjanitortransparent.png");
             RoRRHANDTex.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTexEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/RoRRHANDTexEmission.png");
+            Texture2D RoRRHANDTexEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/textrimsheetconstructionemission.png");
             RoRRHANDTexEmission.wrapMode = TextureWrapMode.Repeat;
 
 
@@ -115,9 +114,12 @@ namespace WolfoSkinsMod
             NewRenderInfosRETURNS[0].defaultMaterial = matHANDRorr;
             NewRenderInfosRETURNS[1].defaultMaterial = matHANDRorr;
             NewRenderInfosRETURNS[2].defaultMaterial = matHANDRorr;
+
+
+
             //
 
-            
+
             //ADD SHINY SPARKLES
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
             newSkinDef.name = "skinHandBodyWolfo_Simu";
@@ -170,11 +172,11 @@ namespace WolfoSkinsMod
             newSkinDefRETURNS.nameToken = "SIMU_SKIN_HAND2";
             newSkinDefRETURNS.icon = WRect.MakeIcon256(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/Gold/texHANDSkinIconRorr.png"));
             newSkinDefRETURNS.baseSkins = skinHandReturns.baseSkins;
-            newSkinDefRETURNS.meshReplacements = skinHandReturns.meshReplacements;
             newSkinDefRETURNS.projectileGhostReplacements = skinHandReturns.projectileGhostReplacements;
             newSkinDefRETURNS.rendererInfos = NewRenderInfosRETURNS;
             newSkinDefRETURNS.rootObject = skinHandDefault.rootObject;
             newSkinDefRETURNS.addGameObjects = newSkinDef.addGameObjects;
+            newSkinDefRETURNS.meshReplacements = skinHandReturns.meshReplacements;
 
             modelSkinController.skins = modelSkinController.skins.Add(newSkinDef, newSkinDefRETURNS);
             BodyCatalog.skins[(int)HandBodyIndex] = BodyCatalog.skins[(int)HandBodyIndex].Add(newSkinDef, newSkinDefRETURNS);
@@ -219,9 +221,11 @@ namespace WolfoSkinsMod
             texDroneBody.filterMode = FilterMode.Point;
             texDroneBody.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/RoRRHANDTexORANGE.png");
+            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/textrimsheetjanitortransparent.png");
             RoRRHANDTex.wrapMode = TextureWrapMode.Repeat;
- 
+
+            Texture2D textrimsheetconstructionemission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/ORANGE/textrimsheetconstructionemission.png");
+            textrimsheetconstructionemission.wrapMode = TextureWrapMode.Repeat;
 
 
             Color ExtraColor = new Color(1f, 1f, 1f);
@@ -241,7 +245,7 @@ namespace WolfoSkinsMod
 
             matHANDRorr.mainTexture = RoRRHANDTex;
             matHANDRorr.color = ExtraColor;
-            //matHANDRorr.SetTexture("_EmTex", RoRRHANDTexEmission);
+            matHANDRorr.SetTexture("_EmTex", textrimsheetconstructionemission);
             matHANDRorr.SetColor("_EmColor", new Color(1.1f, 1, 1f));
 
             NewRenderInfos[0].defaultMaterial = matHANDDefault;
@@ -272,6 +276,7 @@ namespace WolfoSkinsMod
             newSkinDefRETURNS.projectileGhostReplacements = skinHandReturns.projectileGhostReplacements;
             newSkinDefRETURNS.rendererInfos = NewRenderInfosRETURNS;
             newSkinDefRETURNS.rootObject = skinHandDefault.rootObject;
+ 
 
             modelSkinController.skins = modelSkinController.skins.Add(newSkinDef, newSkinDefRETURNS);
             BodyCatalog.skins[(int)HandBodyIndex] = BodyCatalog.skins[(int)HandBodyIndex].Add(newSkinDef, newSkinDefRETURNS);
@@ -323,12 +328,12 @@ namespace WolfoSkinsMod
             texDroneBodyEmission.filterMode = FilterMode.Point;
             texDroneBodyEmission.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/RoRRHANDTexGREEN.png");
+            Texture2D RoRRHANDTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/textrimsheetjanitortransparent.png");
             RoRRHANDTex.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D RoRRHANDTexEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/RoRRHANDTexEmissionGREEN.png");
+            Texture2D RoRRHANDTexEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/textrimsheetconstructionemission.png");
             RoRRHANDTexEmission.wrapMode = TextureWrapMode.Repeat;
-
+ 
 
             Color ExtraColor = new Color(1f, 1f, 1f);
             matHANDDefault.mainTexture = HanD_Diffuse;
@@ -377,7 +382,7 @@ namespace WolfoSkinsMod
             newSkinDefRETURNS.projectileGhostReplacements = skinHandReturns.projectileGhostReplacements;
             newSkinDefRETURNS.rendererInfos = NewRenderInfosRETURNS;
             newSkinDefRETURNS.rootObject = skinHandDefault.rootObject;
-
+ 
             //modelSkinController.skins = modelSkinController.skins.Add(newSkinDef, newSkinDefRETURNS);
             //BodyCatalog.skins[(int)HandBodyIndex] = BodyCatalog.skins[(int)HandBodyIndex].Add(newSkinDef, newSkinDefRETURNS);
             modelSkinController.skins = modelSkinController.skins.Add(newSkinDef, newSkinDefRETURNS);

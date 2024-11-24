@@ -12,11 +12,11 @@ namespace WolfoSkinsMod
             Captain_Pink();
             Captain_Blue();
             //CaptainSkinRED();
-            Captain_AltColossus();
+            AltColossus();
             //Colossus_Orange();
         }
 
-        internal static void Captain_AltColossus()
+        internal static void AltColossus()
         {
             SkinDef skinCaptainAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Captain/skinCaptainAltColossus.asset").WaitForCompletion();
 

@@ -77,7 +77,7 @@ namespace WolfoSkinsMod
 
             //
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinPaladinWolfo_Any";
+            newSkinDef.name = "skinPaladinWolfo_Simu";
             newSkinDef.nameToken = "SIMU_SKIN_PALADIN";
             newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Yellow/skinIconPaladin.png"));
             newSkinDef.baseSkins = new SkinDef[] { skinPaladinDefault };
@@ -137,7 +137,7 @@ namespace WolfoSkinsMod
 
             //
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinPaladinWolfo_Any";
+            newSkinDef.name = "skinPaladinWolfo_Simu";
             newSkinDef.nameToken = "SIMU_SKIN_PALADIN_BLACK";
             newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Black/skinIconPaladin.png"));
             newSkinDef.baseSkins = new SkinDef[] { skinPaladinDefault };

@@ -32,8 +32,13 @@ namespace WolfoSkinsMod
             Texture2D texTreebotFlowerDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Treebot/Colossus/texTreebotFlowerDiffuse.png");
             texTreebotFlowerDiffuse.wrapMode = TextureWrapMode.Clamp;
 
+            Texture2D texRampDroneFire = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Treebot/Colossus/texRampDroneFire.png");
+            texRampDroneFire.wrapMode = TextureWrapMode.Clamp;
+
             matTreebotColossus.mainTexture = texTreebotColossusDiffuse;
             matTreebotColossus.SetColor("_EmColor", new Color(1f, 1f, 0.74f,1f)); //0.7379 0.9717 0.9458 1
+            matTreebotColossus.SetFloat("_FresnelBoost", 2.4f);
+            matTreebotColossus.SetTexture("_FresnelRamp", texRampDroneFire);
             Vines.mainTexture = texTreebotFlowerDiffuse;
 
             NewRenderInfos[0].defaultMaterial = matTreebotColossus;

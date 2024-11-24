@@ -258,9 +258,9 @@ namespace WolfoSkinsMod
             {
                 Debug.Log("Has manual Legacy : SIMU_SKIN_BANDIT2");
                 //userProfile.AddUnlockToken("Skins.Bandit2.Wolfo.AltBoss");
-                if (!userProfile.HasAchievement("CLEAR_ALTBOSS_BANDIT"))
+                if (!userProfile.HasAchievement("CLEAR_ALTBOSS_BANDIT2"))
                 {
-                    userProfile.AddAchievement("CLEAR_ALTBOSS_BANDIT", false);
+                    userProfile.AddAchievement("CLEAR_ALTBOSS_BANDIT2", false);
                 }
             }
             if (userProfile.HasAchievement("SIMU_SKIN_ENGINEER") && !userProfile.HasAchievement("CLEAR_SIMU_ENGI"))
@@ -596,10 +596,6 @@ namespace WolfoSkinsMod
                     else if (skinDefs[skin].name.EndsWith("_AltBoss"))
                     {
                         unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + SurvivorCatalog.survivorDefs[i].cachedName + ".Wolfo.Both");
-                    }
-                    else if (skinDefs[skin].name.EndsWith("_Any"))
-                    {
-                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + SurvivorCatalog.survivorDefs[i].cachedName + ".Wolfo.First");
                     }
                     if (unlockable)
                     {

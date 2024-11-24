@@ -1,5 +1,13 @@
 ## Changelog
 ```
+v2.1.1
+Redid Han-D returns skins as the new model they added needed new textures.
+Fixed Han-D Default drones wrong texture format.
+Crystals in False Sons attacks are now colored (automatically)
+Fixed issue with FalseSon:Provi spikes.
+Fixed Bandit achievement not migrating
+
+
 v2.1.0
 Added Seeker : Default : Black/Orange
 Colored Braclet and cleaned up FalseSon:Provi

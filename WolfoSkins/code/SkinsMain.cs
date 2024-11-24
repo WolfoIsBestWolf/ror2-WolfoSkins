@@ -9,6 +9,7 @@ using System.Security.Permissions;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
+using IL.RoR2.Achievements.Artifacts;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -83,6 +84,7 @@ namespace WolfoSkinsMod
 
         internal static void SortSkinsLate()
         {
+            //Manually sorting these 
             List<string> blacklistedSorting = new List<string>()
             {
                 "Enforcer",
@@ -102,11 +104,15 @@ namespace WolfoSkinsMod
 
                 //Debug.LogWarning(SurvivorCatalog.survivorDefs[i]);
                 GameObject Body = SurvivorCatalog.survivorDefs[i].bodyPrefab;
-                BodyIndex Index = Body.GetComponent<CharacterBody>().bodyIndex;
                 ModelSkinController modelSkinController = Body.GetComponentInChildren<ModelSkinController>();
+                if (!modelSkinController)
+                {
+                    Debug.LogWarning(SurvivorCatalog.survivorDefs[i] + " has no ModelSkinController");
+                }
+                else if (modelSkinController.skins.Length > 4)
+                {
+                    BodyIndex Index = Body.GetComponent<CharacterBody>().bodyIndex;
 
-                if (modelSkinController.skins.Length > 4)
-                {                   
                     List<SkinDef> oldList = new List<SkinDef>();
                     List<SkinDef> wolfList = new List<SkinDef>();
                     for (int ii = 0; ii < modelSkinController.skins.Length; ii++)
@@ -136,7 +142,6 @@ namespace WolfoSkinsMod
 
         internal static void ModSupport()
         {
-            //SortSkinsLate();
             GameObject ModdedBody = BodyCatalog.FindBodyPrefab("GnomeChefBody");
             if (ModdedBody != null)
             {

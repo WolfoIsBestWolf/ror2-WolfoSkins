@@ -35,7 +35,7 @@ namespace WolfoSkinsMod
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinNemesisEnforcerWolfo_Any",
+                Name = "skinNemesisEnforcerWolfo_Simu",
                 NameToken = "SIMU_SKIN_NEM_ENFORCER",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/NemesisEnforcer/skinIconNemEnforcer.png")),
                 BaseSkins = skinDefault.baseSkins,

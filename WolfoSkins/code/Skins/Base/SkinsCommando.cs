@@ -2,6 +2,7 @@ using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static RoR2.SkinDef;
 
 namespace WolfoSkinsMod
 {
@@ -15,6 +16,7 @@ namespace WolfoSkinsMod
             CommandoSkin_Unused();
             CommandoSkin_Provi();
             Commando_AltColossus();
+            //Commando_AltColossusRed();
 
             On.EntityStates.Commando.DodgeState.OnEnter += DodgeState_OnEnter;
             On.EntityStates.Commando.SlideState.OnEnter += SlideState_OnEnter;
@@ -72,6 +74,66 @@ namespace WolfoSkinsMod
 
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), newSkinDef);
         }
+
+        internal static void Commando_AltColossusRed()
+        {
+            SkinDef skinCommandoAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Commando/skinCommandoAltColossus.asset").WaitForCompletion();
+
+            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinCommandoAltColossus.rendererInfos.Length];
+            System.Array.Copy(skinCommandoAltColossus.rendererInfos, NewRenderInfos, skinCommandoAltColossus.rendererInfos.Length);
+
+            Material matCommandoAltColossus = Object.Instantiate(skinCommandoAltColossus.rendererInfos[2].defaultMaterial);
+
+
+            Texture2D texCommandoAltColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Commando/ColossusRed/texCommandoAltColossusDiffuse.png");
+            texCommandoAltColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
+
+            Texture2D texRampBeetleQueen = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Commando/ColossusRed/texRampBeetleQueen.png");
+            texRampBeetleQueen.wrapMode = TextureWrapMode.Clamp;
+
+            Texture2D texCommandoAltColossusEmissive = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Commando/ColossusRed/texCommandoAltColossusEmissive.png");
+            texCommandoAltColossusEmissive.wrapMode = TextureWrapMode.Clamp;
+
+
+            matCommandoAltColossus.mainTexture = texCommandoAltColossusDiffuse;
+            //matCommandoAltColossus.SetTexture("_FlowHeightmap", texCommandoAltColossusEmissive);
+            matCommandoAltColossus.SetTexture("_FlowHeightRamp", texRampBeetleQueen); //0.8491 0.5267 0.1402 1
+            matCommandoAltColossus.SetFloat("_FlowEmissionStrength", 2);
+
+            NewRenderInfos[0].defaultMaterial = matCommandoAltColossus;
+            NewRenderInfos[1].defaultMaterial = matCommandoAltColossus;
+            NewRenderInfos[2].defaultMaterial = matCommandoAltColossus;
+            //
+
+
+
+            GameObject CommandoGrenadeProjectile = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Commando/CommandoGrenadeProjectile.prefab").WaitForCompletion();
+            GameObject CommandoGrenadeGhost = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Commando/CommandoGrenadeGhost.prefab").WaitForCompletion(), "CommandoGrenadeGhostPROVI", false);
+
+            CommandoGrenadeGhost.transform.GetChild(0).GetComponent<MeshRenderer>().material = matCommandoAltColossus;
+            CommandoGrenadeGhost.transform.GetChild(4).GetComponent<Light>().color = new Color(0.34f, 0.67f, 1f);//0.8679 0.6413 0.2334 1
+
+            SkinDefInfo SkinInfo = new SkinDefInfo
+            {
+                Name = "skinCommandoAltColossusWolfoRed_AltBoss",
+                NameToken = "SIMU_SKIN_COMMANDO_COLOSSUSRED",
+                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Commando/ColossusRed/commando.png")),
+                BaseSkins = skinCommandoAltColossus.baseSkins,
+                MeshReplacements = skinCommandoAltColossus.meshReplacements,
+                RendererInfos = NewRenderInfos,
+                RootObject = skinCommandoAltColossus.rootObject,
+                ProjectileGhostReplacements = new SkinDef.ProjectileGhostReplacement[]
+                {
+                    new SkinDef.ProjectileGhostReplacement
+                    {
+                        projectilePrefab = CommandoGrenadeProjectile,
+                        projectileGhostReplacementPrefab = CommandoGrenadeGhost,
+                    }
+                },
+            };
+            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), SkinInfo);
+        }
+
 
         internal static void CommandoSkin_Unused()
         {

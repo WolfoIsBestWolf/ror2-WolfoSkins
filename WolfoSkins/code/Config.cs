@@ -20,6 +20,7 @@ namespace WolfoSkinsMod
         public static ConfigEntry<bool> cfgLegacySkins;
         public static ConfigEntry<bool> cfgSilentRelockReunlock;
         public static ConfigEntry<bool> cfgClearAchievementView;
+        public static ConfigEntry<bool> cfgFalseSonAttackColors;
 
         public static void InitConfig()
         {
@@ -32,7 +33,7 @@ namespace WolfoSkinsMod
            
             cfgRunAutoUnlocker = ConfigFileUNSORTED.Bind(
                "Main",
-               "Run Auto Unlocker",
+               "Check for missing unlocks",
                true,
                "Automatically grants Simu achievements for characters you already beat wave 50.\n\nGrants the AltBoss tracker if you have the old achievement but did not beat Wave 50.\n\nAnd just generally makes sure you didn't lose anything."
            );

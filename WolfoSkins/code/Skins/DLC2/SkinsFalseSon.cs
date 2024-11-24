@@ -7,10 +7,71 @@ namespace WolfoSkinsMod
 {
     public class SkinsFalseSon
     {
+        public static GameObject LunarSpikeGhost = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/LunarSpikeGhost.prefab").WaitForCompletion();
+        public static GameObject FalseSonGroundSlam = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/FalseSonGroundSlam.prefab").WaitForCompletion();
+        public static GameObject FalseSonMeteorGroundImpact = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/FalseSonMeteorGroundImpact.prefab").WaitForCompletion();
+
         internal static void Start()
         {
             Default_Alt();
             Mastery_Alt();
+
+
+            //Circumvent the dumb effect thing gearbox added
+            //Lobby
+            //Uses different texture, would not look good
+            //Projectile
+            On.EntityStates.FalseSon.LunarSpikes.FireLunarSpike += LunarSpikes_FireLunarSpike;
+            //Slam Grounded
+            On.EntityStates.FalseSon.ChargedClubSwing.InitializeBlastAttackAsCharged += ChargedClubSwing_InitializeBlastAttackAsCharged;
+            //Slam Airborne
+            On.EntityStates.FalseSon.ClubGroundSlam.DetonateAuthority += ClubGroundSlam_DetonateAuthority;
+            //Spawn Animation
+            //On.EntityStates.FalseSonMeteorPod.Descent.OnExit += Descent_OnExit;
+
+            On.RoR2.EffectManager.OnSceneUnloaded += EffectManager_OnSceneUnloaded;
+        }
+
+        private static void EffectManager_OnSceneUnloaded(On.RoR2.EffectManager.orig_OnSceneUnloaded orig, UnityEngine.SceneManagement.Scene scene)
+        {
+            orig(scene);
+            EffectManager._ShouldUsePooledEffectMap.Add(LunarSpikeGhost, false);
+            EffectManager._ShouldUsePooledEffectMap.Add(FalseSonGroundSlam, false);
+        }
+
+        public static Material ReturnMaterialFromEntityState(Transform modelTransform, int child)
+        {
+            return modelTransform.GetChild(0).GetComponent<Renderer>().material;
+        }
+
+
+        private static void LunarSpikes_FireLunarSpike(On.EntityStates.FalseSon.LunarSpikes.orig_FireLunarSpike orig, EntityStates.FalseSon.LunarSpikes self)
+        {
+            Material mat = ReturnMaterialFromEntityState(self.modelLocator.modelTransform, 0);
+            LunarSpikeGhost.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = mat;
+            LunarSpikeGhost.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = mat;
+            orig(self);
+        }
+
+        private static void ChargedClubSwing_InitializeBlastAttackAsCharged(On.EntityStates.FalseSon.ChargedClubSwing.orig_InitializeBlastAttackAsCharged orig, EntityStates.FalseSon.ChargedClubSwing self, ref BlastAttack blast)
+        {
+            Material mat = ReturnMaterialFromEntityState(self.modelLocator.modelTransform, 0);
+            FalseSonGroundSlam.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = mat;
+            orig(self, ref blast);
+        }
+
+        private static BlastAttack.Result ClubGroundSlam_DetonateAuthority(On.EntityStates.FalseSon.ClubGroundSlam.orig_DetonateAuthority orig, EntityStates.FalseSon.ClubGroundSlam self)
+        {
+            Material mat = ReturnMaterialFromEntityState(self.modelLocator.modelTransform, 0);
+            FalseSonGroundSlam.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = mat;
+            return orig(self);
+        }
+
+        private static void Descent_OnExit(On.EntityStates.FalseSonMeteorPod.Descent.orig_OnExit orig, EntityStates.FalseSonMeteorPod.Descent self)
+        {
+            Material mat = ReturnMaterialFromEntityState(self.GetComponent<VehicleSeat>().currentPassengerBody.modelLocator.modelTransform, 0);
+            FalseSonMeteorGroundImpact.transform.GetChild(0).GetChild(7).GetChild(0).GetComponent<Renderer>().material = mat;
+            orig(self);
         }
 
         internal static void Mastery_Alt()

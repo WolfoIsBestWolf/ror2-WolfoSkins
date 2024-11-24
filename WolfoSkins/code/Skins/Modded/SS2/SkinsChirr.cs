@@ -107,7 +107,7 @@ namespace WolfoSkinsMod
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinChirrWolfo_Pink_Any",
+                Name = "skinChirrWolfo_Pink_Simu",
                 NameToken = "SIMU_SKIN_CHIRR",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chirr/skinIconChirr.png")),
                 BaseSkins = skinChirr.baseSkins,
@@ -144,7 +144,7 @@ namespace WolfoSkinsMod
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinChirrWolfo_ORANGE_Any",
+                Name = "skinChirrWolfo_ORANGE_Simu",
                 NameToken = "SIMU_SKIN_CHIRR_ORANGE",
                 Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chirr/skinIconChirrORANGE.png")),
                 BaseSkins = skinChirr.baseSkins,
