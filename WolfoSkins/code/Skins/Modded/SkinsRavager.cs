@@ -1,7 +1,7 @@
-using R2API;
 using RoR2;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
+
 
 namespace WolfoSkinsMod
 {
@@ -17,63 +17,40 @@ namespace WolfoSkinsMod
             //0 matRavager
             //1 matRavager
             //2 matRavager
-            
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinRavager.rendererInfos.Length];
-            System.Array.Copy(skinRavager.rendererInfos, NewRenderInfos, skinRavager.rendererInfos.Length);
+            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
+            {
+                name = "skinRavager_1",
+                nameToken = "SIMU_SKIN_RAVAGER",
+                icon = H.GetIcon("mod/ravager"),
+                original = skinRavager,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matBody = Object.Instantiate(skinRavager.rendererInfos[0].defaultMaterial);
-            Material matSword = Object.Instantiate(skinRavager.rendererInfos[1].defaultMaterial);
-            Material matImpBoss = Object.Instantiate(skinRavager.rendererInfos[2].defaultMaterial);
-            
-            Texture2D texBody = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexBody.png");
-            texBody.wrapMode = TextureWrapMode.Repeat;
+            Material matBody = CloneMat(newRenderInfos, 0);
+            Material matSword = CloneMat(newRenderInfos, 1);
+            Material matImpBoss = CloneMat(newRenderInfos, 2);
 
-            Texture2D texBodyEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexBodyEmission.png");
-            texBodyEmission.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D texSword = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexSword.png");
-            texSword.wrapMode = TextureWrapMode.Repeat;
+            matBody.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexBody.png");
+            matBody.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexBodyEmission.png"));
 
-            Texture2D texSwordEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexSwordEmission.png");
-            texSwordEmission.wrapMode = TextureWrapMode.Repeat;
-
-            matBody.mainTexture = texBody;
-            matBody.SetTexture("_EmTex", texBodyEmission);
-
-            matSword.mainTexture = texSword;
-            matSword.SetTexture("_EmTex", texSwordEmission);
+            matSword.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexSword.png");
+            matSword.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexSwordEmission.png"));
 
             matImpBoss.color = new Color(1f, 0.8f, 0.7f); //0.5 0.5 0.4 1
             matImpBoss.DisableKeyword("FORCE_SPEC");
             matImpBoss.SetColor("_EmColor", Color.red);
 
-            NewRenderInfos[0].defaultMaterial = matBody;
-            NewRenderInfos[1].defaultMaterial = matSword;
-            NewRenderInfos[2].defaultMaterial = matImpBoss;
-            //
-            //
-            //
-            SkinDefInfo SkinInfo = new SkinDefInfo
-            {
-                Name = "skinRavagerWolfo_Simu",
-                NameToken = "SIMU_SKIN_RAVAGER",
-                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/skinRavagerIcon.png")),
-                BaseSkins = new SkinDef[] { skinRavager },
-                RootObject = skinRavager.rootObject,
-                RendererInfos = NewRenderInfos,
-                MeshReplacements = skinRavager.meshReplacements,
-                GameObjectActivations = skinRavager.gameObjectActivations,
-                ProjectileGhostReplacements = skinRavager.projectileGhostReplacements,
-            };
-            SkinDef RavagerSkinDefNew = Skins.CreateNewSkinDef(SkinInfo);
+            newRenderInfos[0].defaultMaterial = matBody;
+            newRenderInfos[1].defaultMaterial = matSword;
+            newRenderInfos[2].defaultMaterial = matImpBoss;
 
 
-            modelSkinController.skins = modelSkinController.skins.Add(RavagerSkinDefNew);
-            BodyCatalog.skins[(int)RavagerIndex] = BodyCatalog.skins[(int)RavagerIndex].Add(RavagerSkinDefNew);
+            SkinCatalog.skinsByBody[(int)RavagerIndex] = modelSkinController.skins;
         }
 
         [RegisterAchievement("CLEAR_ANY_ROB_RAVAGER_BODY_NAME", "Skins.ROB_RAVAGER_BODY_NAME.Wolfo.First", null, 5, null)]
-        public class ClearSimulacrumRobRavager : Achievement_AltBoss_Simu
+        public class ClearSimulacrumRobRavager : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

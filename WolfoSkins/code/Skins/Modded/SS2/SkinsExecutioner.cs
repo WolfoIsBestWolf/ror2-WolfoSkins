@@ -1,8 +1,9 @@
 using R2API;
+using R2API.Utils;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using R2API.Utils;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
@@ -21,57 +22,44 @@ namespace WolfoSkinsMod
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += ExecAddVFXLate;
             ExecutionerBodyS = ExecutionerBody;
 
-            ModdedSkinRED(ExecutionerBody);
-            ModdedSkinYELLOW(ExecutionerBody);
-            ModdedSkinBLUE(ExecutionerBody);
-        }
-
-        internal static void ModdedSkinRED(GameObject ExecutionerBody)
-        {
             BodyIndex ExecutionerIndex = ExecutionerBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = ExecutionerBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
             SkinDef skinExecutioner = modelSkinController.skins[0];
+            SkinDef skinExecutionerMastery = modelSkinController.skins[1];
 
-            //
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinExecutioner.rendererInfos.Length];
-            System.Array.Copy(skinExecutioner.rendererInfos, NewRenderInfos, skinExecutioner.rendererInfos.Length);
 
+            SkinDef red = ModdedSkinRED(skinExecutioner);
+            SkinDef yellow = ModdedSkinYELLOW(skinExecutionerMastery);
+            SkinDef nerd = ModdedSkinBLUE(skinExecutioner);
+ 
+            SkinCatalog.skinsByBody[(int)ExecutionerIndex] = modelSkinController.skins;
             //0 matExe2
             //1 matExe2Armor
             //2 matExe2Jumpkit
             //3 matExe2Gun
             //4 matExecutionerAxe
+        }
 
-            Material matExe2 = Object.Instantiate(skinExecutioner.rendererInfos[0].defaultMaterial);
-            Material matExe2Armor = Object.Instantiate(skinExecutioner.rendererInfos[1].defaultMaterial);
-            Material matExe2Jumpkit = Object.Instantiate(skinExecutioner.rendererInfos[2].defaultMaterial);
-            Material matExe2Gun = Object.Instantiate(skinExecutioner.rendererInfos[3].defaultMaterial);
-            Material matExecutionerAxe = Object.Instantiate(skinExecutioner.rendererInfos[4].defaultMaterial);
+        internal static SkinDef ModdedSkinRED(SkinDef skinExecutioner)
+        {
+            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            {
+                name = "skinExecutioner_1",
+                nameToken = "SIMU_SKIN_EXECUTIONER",
+                icon = H.GetIcon("mod/ss2/executioner_red"),
+                original = skinExecutioner,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
+            Material matExe2 = CloneMat(newRenderInfos, 0);
+            Material matExe2Armor = CloneMat(newRenderInfos, 1);
+            Material matExe2Jumpkit = CloneMat(newRenderInfos, 2);
+            Material matExe2Gun = CloneMat(newRenderInfos, 3);
+            Material matExecutionerAxe = CloneMat(newRenderInfos, 4);
 
             Texture2D ExeTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExeTex.png");
-            ExeTex.wrapMode = TextureWrapMode.Repeat;
-
             Texture2D exeem = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/exeem.png");
-            exeem.wrapMode = TextureWrapMode.Repeat;
 
-            Texture2D exeRamp = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/exeRamp.png");
-            exeRamp.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D ExeKitTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExeKitTex.png");
-            ExeKitTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExeKitEm = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExeKitEm.png");
-            ExeKitEm.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExegunTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExegunTex.png");
-            ExegunTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExegunEmTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExegunEmTex.png");
-            ExegunEmTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D texExeAxeRamp = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/texExeAxeRamp.png");
-            texExeAxeRamp.wrapMode = TextureWrapMode.Clamp;
 
             Color EmColor = new Color(1.5f, 0f, 0f, 1f);  //0.7098 0.8118 0.902 1
 
@@ -81,39 +69,27 @@ namespace WolfoSkinsMod
 
             matExe2Armor.mainTexture = ExeTex;
             matExe2Armor.SetTexture("_EmTex", exeem);
-            matExe2Armor.SetTexture("_FresnelRamp", exeRamp);
+            matExe2Armor.SetTexture("_FresnelRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/exeRamp.png"));
             matExe2Armor.SetColor("_EmColor", EmColor); //0.7098 0.8118 0.902 1
 
-            matExe2Jumpkit.mainTexture = ExeKitTex;
-            matExe2Jumpkit.SetTexture("_EmTex", exeem);
+            matExe2Jumpkit.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExeKitTex.png");
+            matExe2Jumpkit.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExeKitEm.png"));
             matExe2Jumpkit.SetColor("_EmColor", EmColor); //0.7098 0.8118 0.902 1
 
-            matExe2Gun.mainTexture = ExegunTex;
-            matExe2Gun.SetTexture("_EmTex", ExegunEmTex);
+            matExe2Gun.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExegunTex.png");
+            matExe2Gun.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/ExegunEmTex.png"));
             matExe2Gun.SetColor("_EmColor", EmColor);
 
             //matExecutionerAxe.mainTexture = ExeAxe4;
-            matExecutionerAxe.SetTexture("_RemapTex", texExeAxeRamp);
+            matExecutionerAxe.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/texExeAxeRamp.png"));
             matExecutionerAxe.SetColor("_TintColor", EmColor); //0.0688 0.5619 0.9717 1
 
-            NewRenderInfos[0].defaultMaterial = matExe2;
-            NewRenderInfos[1].defaultMaterial = matExe2Armor;
-            NewRenderInfos[2].defaultMaterial = matExe2Jumpkit;
-            NewRenderInfos[3].defaultMaterial = matExe2Gun;
-            NewRenderInfos[4].defaultMaterial = matExecutionerAxe;
+            newRenderInfos[0].defaultMaterial = matExe2;
+            newRenderInfos[1].defaultMaterial = matExe2Armor;
+            newRenderInfos[2].defaultMaterial = matExe2Jumpkit;
+            newRenderInfos[3].defaultMaterial = matExe2Gun;
+            newRenderInfos[4].defaultMaterial = matExecutionerAxe;
 
-            //
-
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinExecutionerWolfo_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_EXECUTIONER";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Red/skinExecutionerIcon.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinExecutioner };
-            newSkinDef.rootObject = skinExecutioner.rootObject;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.meshReplacements = skinExecutioner.meshReplacements;
-            newSkinDef.projectileGhostReplacements = skinExecutioner.projectileGhostReplacements;
-            newSkinDef.gameObjectActivations = skinExecutioner.gameObjectActivations;
 
             Material oldHuntress = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
             Material newHuntress = Object.Instantiate(oldHuntress);
@@ -123,65 +99,29 @@ namespace WolfoSkinsMod
                 targetMaterial = oldHuntress,
                 replacementMaterial = newHuntress
             };
-
             SkinDefRED = newSkinDef;
-            modelSkinController.skins = modelSkinController.skins.Add(newSkinDef);
-            BodyCatalog.skins[(int)ExecutionerIndex] = BodyCatalog.skins[(int)ExecutionerIndex].Add(newSkinDef);
+            return newSkinDef;
         }
 
-        private static void ExecAddVFXLate(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_Awake orig, RoR2.UI.MainMenu.BaseMainMenuScreen self)
+        internal static SkinDef ModdedSkinBLUE(SkinDef skinExecutioner)
         {
-            orig(self);
-            AddVFXLate();
-            On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake -= ExecAddVFXLate;
-        }
+            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            {
+                name = "skinExecutioner_Blue_1",
+                nameToken = "SIMU_SKIN_EXECUTIONER_BLUE",
+                icon = H.GetIcon("mod/ss2/executioner_blue"),
+                original = skinExecutioner,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-        internal static void ModdedSkinBLUE(GameObject ExecutionerBody)
-        {
-            BodyIndex ExecutionerIndex = ExecutionerBody.GetComponent<CharacterBody>().bodyIndex;
-            ModelSkinController modelSkinController = ExecutionerBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
-            SkinDef skinExecutioner = modelSkinController.skins[0];
-
-            //
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinExecutioner.rendererInfos.Length];
-            System.Array.Copy(skinExecutioner.rendererInfos, NewRenderInfos, skinExecutioner.rendererInfos.Length);
-
-            //0 matExe2
-            //1 matExe2Armor
-            //2 matExe2Jumpkit
-            //3 matExe2Gun
-            //4 matExecutionerAxe
-
-            Material matExe2 = Object.Instantiate(skinExecutioner.rendererInfos[0].defaultMaterial);
-            Material matExe2Armor = Object.Instantiate(skinExecutioner.rendererInfos[1].defaultMaterial);
-            Material matExe2Jumpkit = Object.Instantiate(skinExecutioner.rendererInfos[2].defaultMaterial);
-            Material matExe2Gun = Object.Instantiate(skinExecutioner.rendererInfos[3].defaultMaterial);
-            Material matExecutionerAxe = Object.Instantiate(skinExecutioner.rendererInfos[4].defaultMaterial);
-
+            Material matExe2 = CloneMat(newRenderInfos, 0);
+            Material matExe2Armor = CloneMat(newRenderInfos, 1);
+            Material matExe2Jumpkit = CloneMat(newRenderInfos, 2);
+            Material matExe2Gun = CloneMat(newRenderInfos, 3);
+            Material matExecutionerAxe = CloneMat(newRenderInfos, 4);
 
             Texture2D ExeTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExeTexBLUE.png");
-            ExeTex.wrapMode = TextureWrapMode.Repeat;
-
             Texture2D exeem = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/exeemBLUE.png");
-            exeem.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D exeRamp = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/exeRampBLUE.png");
-            exeRamp.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D ExeKitTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExeKitTexBLUE.png");
-            ExeKitTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExeKitEm = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExeKitEmBLUE.png");
-            ExeKitEm.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExegunTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExegunTexBLUE.png");
-            ExegunTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExegunEmTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExegunEmTexBLUE.png");
-            ExegunEmTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D texExeAxeRamp = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/texExeAxeRampBLUE.png");
-            texExeAxeRamp.wrapMode = TextureWrapMode.Clamp;
 
             Color EmColor = new Color(0f, 1.1f, 0f, 1f);  //0.7098 0.8118 0.902 1
 
@@ -191,39 +131,27 @@ namespace WolfoSkinsMod
 
             matExe2Armor.mainTexture = ExeTex;
             matExe2Armor.SetTexture("_EmTex", exeem);
-            matExe2Armor.SetTexture("_FresnelRamp", exeRamp);
+            matExe2Armor.SetTexture("_FresnelRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/exeRampBLUE.png"));
             matExe2Armor.SetColor("_EmColor", EmColor); //0.7098 0.8118 0.902 1
 
-            matExe2Jumpkit.mainTexture = ExeKitTex;
-            matExe2Jumpkit.SetTexture("_EmTex", exeem);
+            matExe2Jumpkit.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExeKitTexBLUE.png");
+            matExe2Jumpkit.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExeKitEmBLUE.png"));
             matExe2Jumpkit.SetColor("_EmColor", EmColor); //0.7098 0.8118 0.902 1
 
-            matExe2Gun.mainTexture = ExegunTex;
-            matExe2Gun.SetTexture("_EmTex", ExegunEmTex);
+            matExe2Gun.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExegunTexBLUE.png");
+            matExe2Gun.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/ExegunEmTexBLUE.png"));
             matExe2Gun.SetColor("_EmColor", EmColor);
 
             //matExecutionerAxe.mainTexture = ExeAxe4;
-            matExecutionerAxe.SetTexture("_RemapTex", texExeAxeRamp);
-            matExecutionerAxe.SetColor("_TintColor", new Color(0.1f,1f,0.1f)); //0.0688 0.5619 0.9717 1
+            matExecutionerAxe.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/texExeAxeRampBLUE.png"));
+            matExecutionerAxe.SetColor("_TintColor", new Color(0.1f, 1f, 0.1f)); //0.0688 0.5619 0.9717 1
 
-            NewRenderInfos[0].defaultMaterial = matExe2;
-            NewRenderInfos[1].defaultMaterial = matExe2Armor;
-            NewRenderInfos[2].defaultMaterial = matExe2Jumpkit;
-            NewRenderInfos[3].defaultMaterial = matExe2Gun;
-            NewRenderInfos[4].defaultMaterial = matExecutionerAxe;
+            newRenderInfos[0].defaultMaterial = matExe2;
+            newRenderInfos[1].defaultMaterial = matExe2Armor;
+            newRenderInfos[2].defaultMaterial = matExe2Jumpkit;
+            newRenderInfos[3].defaultMaterial = matExe2Gun;
+            newRenderInfos[4].defaultMaterial = matExecutionerAxe;
 
-            //
-
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinExecutionerWolfo_Blue_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_EXECUTIONER_BLUE";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Blue/skinExecutionerIconBLUE.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinExecutioner };
-            newSkinDef.rootObject = skinExecutioner.rootObject;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.meshReplacements = skinExecutioner.meshReplacements;
-            newSkinDef.projectileGhostReplacements = skinExecutioner.projectileGhostReplacements;
-            newSkinDef.gameObjectActivations = skinExecutioner.gameObjectActivations;
 
             Material oldHuntress = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
             Material newHuntress = Object.Instantiate(oldHuntress);
@@ -235,100 +163,56 @@ namespace WolfoSkinsMod
             };
 
             SkinDefBLUE = newSkinDef;
-            modelSkinController.skins = modelSkinController.skins.Add(newSkinDef);
-            BodyCatalog.skins[(int)ExecutionerIndex] = BodyCatalog.skins[(int)ExecutionerIndex].Add(newSkinDef);
+            return newSkinDef;
         }
 
-        internal static void ModdedSkinYELLOW(GameObject ExecutionerBody)
+        internal static SkinDef ModdedSkinYELLOW(SkinDef skinExecutioner)
         {
-            BodyIndex ExecutionerIndex = ExecutionerBody.GetComponent<CharacterBody>().bodyIndex;
-            ModelSkinController modelSkinController = ExecutionerBody.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
-            SkinDef skinExecutioner = modelSkinController.skins[1];
+            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            {
+                name = "skinExecutionerMastery_1",
+                nameToken = "SIMU_SKIN_EXECUTIONER_GOLD",
+                icon = H.GetIcon("mod/ss2/executioner_gold"),
+                original = skinExecutioner,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            //
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinExecutioner.rendererInfos.Length];
-            System.Array.Copy(skinExecutioner.rendererInfos, NewRenderInfos, skinExecutioner.rendererInfos.Length);
-
-            //0 matExe2
-            //1 matExe2Armor
-            //2 matExe2Jumpkit
-            //3 matExe2Gun
-            //4 matExecutionerAxe
-
-            //YELLOW
-
-            Material matExeMasteryBody = Object.Instantiate(skinExecutioner.rendererInfos[0].defaultMaterial);
-            Material matExeMasteryArmor = Object.Instantiate(skinExecutioner.rendererInfos[1].defaultMaterial);
-            Material matExeMasteryJumpkit = Object.Instantiate(skinExecutioner.rendererInfos[2].defaultMaterial);
-            Material matExeMasteryGun = Object.Instantiate(skinExecutioner.rendererInfos[3].defaultMaterial);
-            Material matExecutionerSword = Object.Instantiate(skinExecutioner.rendererInfos[4].defaultMaterial);
-
-
-            Texture2D ExeSkinTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeSkinTexGOLD.png");
-            ExeSkinTex.wrapMode = TextureWrapMode.Repeat;
+            Material matExeMasteryBody = CloneMat(newRenderInfos, 0);
+            Material matExeMasteryArmor = CloneMat(newRenderInfos, 1);
+            Material matExeMasteryJumpkit = CloneMat(newRenderInfos, 2);
+            Material matExeMasteryGun = CloneMat(newRenderInfos, 3);
+            Material matExecutionerSword = CloneMat(newRenderInfos, 4);
 
             Texture2D ExeSkinEM = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeSkinEMGOLD.png");
-            ExeSkinEM.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D SilverRamp = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/SilverRampGOLD.png");
-            SilverRamp.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D ExeMasteryKitTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeMasteryKitTexGOLD.png");
-            ExeMasteryKitTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExeKitEm = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeKitEmGOLD.png");
-            ExeKitEm.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExeMasterygunTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeMasterygunTexGOLD.png");
-            ExeMasterygunTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D ExegunEmTex = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExegunEmTexGOLD.png");
-            ExegunEmTex.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D texExeAxeRampBlack = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/texExeAxeRampBlackGOLD.png");
-            texExeAxeRampBlack.wrapMode = TextureWrapMode.Clamp;
- 
 
             Color EmColor = new Color(1.3f, 1.3f, 0f, 1f);  //0.7098 0.8118 0.902 1
 
-            matExeMasteryBody.mainTexture = ExeSkinTex;
+            matExeMasteryBody.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeSkinTexGOLD.png");
             matExeMasteryBody.SetTexture("_EmTex", ExeSkinEM);
             matExeMasteryBody.SetColor("_EmColor", EmColor); //0.7098 0.8118 0.902 1
 
-            matExeMasteryArmor.mainTexture = ExeSkinTex;
+            matExeMasteryArmor.mainTexture = matExeMasteryBody.mainTexture;
             matExeMasteryArmor.SetTexture("_EmTex", ExeSkinEM);
-            matExeMasteryArmor.SetTexture("_FresnelRamp", SilverRamp);
+            matExeMasteryArmor.SetTexture("_FresnelRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/SilverRampGOLD.png"));
             matExeMasteryArmor.SetColor("_EmColor", EmColor); //0.7098 0.8118 0.902 1
 
-            matExeMasteryJumpkit.mainTexture = ExeMasteryKitTex;
-            matExeMasteryJumpkit.SetTexture("_EmTex", ExeSkinEM);
+            matExeMasteryJumpkit.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeMasteryKitTexGOLD.png");
+            matExeMasteryJumpkit.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeKitEmGOLD.png"));
             matExeMasteryJumpkit.SetColor("_EmColor", EmColor); //0.7098 0.8118 0.902 1
 
-            matExeMasteryGun.mainTexture = ExeMasterygunTex;
-            matExeMasteryGun.SetTexture("_EmTex", ExegunEmTex);
+            matExeMasteryGun.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExeMasterygunTexGOLD.png");
+            matExeMasteryGun.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/ExegunEmTexGOLD.png"));
             matExeMasteryGun.SetColor("_EmColor", EmColor);
 
             //matExecutionerSword.mainTexture = ExeAxe4;
-            matExecutionerSword.SetTexture("_RemapTex", texExeAxeRampBlack);
-            matExecutionerSword.SetColor("_TintColor", new Color(1,1,0,1)); //0.0688 0.5619 0.9717 1
+            matExecutionerSword.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/texExeAxeRampBlackGOLD.png"));
+            matExecutionerSword.SetColor("_TintColor", new Color(1, 1, 0, 1)); //0.0688 0.5619 0.9717 1
 
-            NewRenderInfos[0].defaultMaterial = matExeMasteryBody;
-            NewRenderInfos[1].defaultMaterial = matExeMasteryArmor;
-            NewRenderInfos[2].defaultMaterial = matExeMasteryJumpkit;
-            NewRenderInfos[3].defaultMaterial = matExeMasteryGun;
-            NewRenderInfos[4].defaultMaterial = matExecutionerSword;
-
- //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinExecutionerMasteryWolfo_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_EXECUTIONER_GOLD";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Executioner/Gold/skinExecutionerIconGOLD.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinExecutioner };
-            newSkinDef.rootObject = skinExecutioner.rootObject;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.meshReplacements = skinExecutioner.meshReplacements;
-            newSkinDef.projectileGhostReplacements = skinExecutioner.projectileGhostReplacements;
-            newSkinDef.gameObjectActivations = skinExecutioner.gameObjectActivations;
+            newRenderInfos[0].defaultMaterial = matExeMasteryBody;
+            newRenderInfos[1].defaultMaterial = matExeMasteryArmor;
+            newRenderInfos[2].defaultMaterial = matExeMasteryJumpkit;
+            newRenderInfos[3].defaultMaterial = matExeMasteryGun;
+            newRenderInfos[4].defaultMaterial = matExecutionerSword;
 
             Material oldHuntress = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
             Material newHuntress = Object.Instantiate(oldHuntress);
@@ -338,10 +222,16 @@ namespace WolfoSkinsMod
                 targetMaterial = oldHuntress,
                 replacementMaterial = newHuntress
             };
-
             SkinDefYELLOW = newSkinDef;
-            modelSkinController.skins = modelSkinController.skins.Add(newSkinDef);
-            BodyCatalog.skins[(int)ExecutionerIndex] = BodyCatalog.skins[(int)ExecutionerIndex].Add(newSkinDef);
+            return newSkinDef;
+        }
+
+
+        private static void ExecAddVFXLate(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_Awake orig, RoR2.UI.MainMenu.BaseMainMenuScreen self)
+        {
+            orig(self);
+            AddVFXLate();
+            On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake -= ExecAddVFXLate;
         }
 
         internal static void AddVFXLateOLD()
@@ -389,47 +279,47 @@ namespace WolfoSkinsMod
                     if (EffectCatalog.entries[i].prefab.name.EndsWith("exeExhaust"))
                     {
                         exeExhaust = EffectCatalog.entries[i].prefab;
-                        exeExhaustRED = PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustRED", false);
-                        exeExhaustYELLOW = PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustYELLOW", false);
-                        exeExhaustBLUE = PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustBLUE", false);
+                        exeExhaustRED = R2API.PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustRED", false);
+                        exeExhaustYELLOW = R2API.PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustYELLOW", false);
+                        exeExhaustBLUE = R2API.PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustBLUE", false);
                     }
                     else if (EffectCatalog.entries[i].prefab.name.EndsWith("ExecutionerAxeSlamEffect"))
                     {
                         ExecutionerAxeSlamEffect = EffectCatalog.entries[i].prefab;
-                        ExecutionerAxeSlamEffectRED = PrefabAPI.InstantiateClone(ExecutionerAxeSlamEffect, "ExecutionerAxeSlamEffectRED", false);
-                        ExecutionerAxeSlamEffectYELLOW = PrefabAPI.InstantiateClone(ExecutionerAxeSlamEffect, "ExecutionerAxeSlamEffectYELLOW", false);
-                        ExecutionerAxeSlamEffectBLUE = PrefabAPI.InstantiateClone(ExecutionerAxeSlamEffect, "ExecutionerAxeSlamEffectBLUE", false);
+                        ExecutionerAxeSlamEffectRED = R2API.PrefabAPI.InstantiateClone(ExecutionerAxeSlamEffect, "ExecutionerAxeSlamEffectRED", false);
+                        ExecutionerAxeSlamEffectYELLOW = R2API.PrefabAPI.InstantiateClone(ExecutionerAxeSlamEffect, "ExecutionerAxeSlamEffectYELLOW", false);
+                        ExecutionerAxeSlamEffectBLUE = R2API.PrefabAPI.InstantiateClone(ExecutionerAxeSlamEffect, "ExecutionerAxeSlamEffectBLUE", false);
                     }
                     /*
                     else if (EffectCatalog.entries[i].prefab.name.EndsWith("TracerIonBullet"))
                     {
                         TracerIonBullet = EffectCatalog.entries[i].prefab;
-                        TracerIonBulletRED = PrefabAPI.InstantiateClone(TracerIonBullet, "TracerIonBulletRED", false);
+                        TracerIonBulletRED = R2API.PrefabAPI.InstantiateClone(TracerIonBullet, "TracerIonBulletRED", false);
                     }
                     else if (EffectCatalog.entries[i].prefab.name.EndsWith("exeChargeGun"))
                     {
                         exeChargeGun = EffectCatalog.entries[i].prefab;
-                        exeChargeGunRED = PrefabAPI.InstantiateClone(exeChargeGun, "exeChargeGunRED", false);
+                        exeChargeGunRED = R2API.PrefabAPI.InstantiateClone(exeChargeGun, "exeChargeGunRED", false);
                     }
                     else if (EffectCatalog.entries[i].prefab.name.EndsWith("exePlumeBig"))
                     {
                         exePlumeBig = EffectCatalog.entries[i].prefab;
-                        exePlumeBigRED = PrefabAPI.InstantiateClone(exePlumeBig, "exePlumeBigRED", false);
+                        exePlumeBigRED = R2API.PrefabAPI.InstantiateClone(exePlumeBig, "exePlumeBigRED", false);
                     }
                     else if (EffectCatalog.entries[i].prefab.name.EndsWith("exePlume"))
                     {
                         exePlume = EffectCatalog.entries[i].prefab;
-                        exePlumeRED = PrefabAPI.InstantiateClone(exePlume, "exePlumeRED", false);
+                        exePlumeRED = R2API.PrefabAPI.InstantiateClone(exePlume, "exePlumeRED", false);
                     }
                     else if (EffectCatalog.entries[i].prefab.name.EndsWith("LightningFlash"))
                     {
                         LightningFlash = EffectCatalog.entries[i].prefab;
-                        LightningFlashRED = PrefabAPI.InstantiateClone(LightningFlash, "LightningFlashRED", false);
+                        LightningFlashRED = R2API.PrefabAPI.InstantiateClone(LightningFlash, "LightningFlashRED", false);
                     }
                     else if (EffectCatalog.entries[i].prefab.name.EndsWith("MuzzleflashFMJ"))
                     {
                         MuzzleflashFMJ = EffectCatalog.entries[i].prefab;
-                        MuzzleflashFMJRED = PrefabAPI.InstantiateClone(MuzzleflashFMJ, "MuzzleflashFMJRED", false);
+                        MuzzleflashFMJRED = R2API.PrefabAPI.InstantiateClone(MuzzleflashFMJ, "MuzzleflashFMJRED", false);
                     }*/
                 }
 
@@ -595,22 +485,22 @@ namespace WolfoSkinsMod
             GameObject MuzzleflashFMJRED = null;
             GameObject MuzzleflashFMJYELLOW = null;*/
 
-     
- 
+
+
             Debug.Log("Executioner Skin VFX");
- 
+
             GameObject exeExhaust = ExecutionerBodyS.GetComponent<SkillLocator>().utility.skillFamily.defaultSkillDef.activationState.stateType.GetFieldValue<GameObject>("dashEffect");
-            Debug.Log("ExecExhaustEffect : "+exeExhaust);
- 
+            Debug.Log("ExecExhaustEffect : " + exeExhaust);
+
             if (!exeExhaust)
             {
                 Debug.LogWarning("Executioner Dust Effect could not be found");
                 return;
             }
 
-            GameObject exeExhaustRED = PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustRED", false);
-            GameObject exeExhaustYELLOW = PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustYELLOW", false);
-            GameObject exeExhaustBLUE = PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustBLUE", false);
+            GameObject exeExhaustRED = R2API.PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustRED", false);
+            GameObject exeExhaustYELLOW = R2API.PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustYELLOW", false);
+            GameObject exeExhaustBLUE = R2API.PrefabAPI.InstantiateClone(exeExhaust, "exeExhaustBLUE", false);
 
             GameObject[] replacementsRED = new GameObject[]
             {
@@ -742,7 +632,7 @@ namespace WolfoSkinsMod
 
 
         [RegisterAchievement("CLEAR_ANY_SURVIVOREXECUTIONER2", "Skins.survivorExecutioner2.Wolfo.First", null, 5, null)]
-        public class ClearSimulacrumExecutioner : Achievement_AltBoss_Simu
+        public class ClearSimulacrumExecutioner : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

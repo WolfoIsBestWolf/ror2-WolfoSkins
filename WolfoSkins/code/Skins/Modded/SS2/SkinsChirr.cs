@@ -1,8 +1,6 @@
-using R2API;
 using RoR2;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using System.Collections.Generic;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
@@ -10,12 +8,16 @@ namespace WolfoSkinsMod
     {
         internal static void ModdedSkin(GameObject ChirrBody)
         {
-            Debug.Log("Chirr Skins");
-            SkinsPink(ChirrBody);
-            SkinsORANGE(ChirrBody);
+            BodyIndex ChirrIndex = ChirrBody.GetComponent<CharacterBody>().bodyIndex;
+            ModelSkinController modelSkinController = ChirrBody.GetComponentInChildren<ModelSkinController>();
+            SkinDef skinChirr = modelSkinController.skins[0];
 
-            //GameModeCatalog.availability.CallWhenAvailable(AddProjectiles);
-            //On.RoR2.ProjectileGhostReplacementManager.Init += ProjectileGhostReplacementManager_Init;
+            Debug.Log("Chirr Skins");
+            SkinDef pink = SkinsPink(skinChirr);
+            SkinDef orange = SkinsORANGE(skinChirr);
+
+
+            SkinCatalog.skinsByBody[(int)ChirrIndex] = modelSkinController.skins;
         }
 
         private static SkinDef skinDefPink;
@@ -26,7 +28,7 @@ namespace WolfoSkinsMod
         {
             int catalogIndex = ProjectileCatalog.FindProjectileIndex("ChirrLeafProjectile");
             Debug.Log(catalogIndex);
-            
+
             if (catalogIndex == -1)
             {
                 Debug.LogWarning("NO Chirr Projectile");
@@ -34,7 +36,7 @@ namespace WolfoSkinsMod
             }
 
             GameObject ChirrLeaf = ProjectileCatalog.GetProjectilePrefab(catalogIndex);
-            GameObject LeafGhost = PrefabAPI.InstantiateClone(ChirrLeaf.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab, "ChirrDartGhostPink", false);
+            GameObject LeafGhost = R2API.PrefabAPI.InstantiateClone(ChirrLeaf.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab, "ChirrDartGhostPink", false);
             Material newMaterial = Object.Instantiate(LeafGhost.transform.GetChild(1).GetComponent<MeshRenderer>().material);
             newMaterial.color = new Color(0f, 0.9f, 0.6f); //0.9528 0.2735 0.0405 1
             LeafGhost.transform.GetChild(1).GetComponent<MeshRenderer>().material = newMaterial;
@@ -49,8 +51,8 @@ namespace WolfoSkinsMod
 
                     }
                 };
-            
-            GameObject LeafGhostORANGE = PrefabAPI.InstantiateClone(ChirrLeaf.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab, "ChirrDartGhostYellow", false);
+
+            GameObject LeafGhostORANGE = R2API.PrefabAPI.InstantiateClone(ChirrLeaf.GetComponent<RoR2.Projectile.ProjectileController>().ghostPrefab, "ChirrDartGhostYellow", false);
             newMaterial = Object.Instantiate(LeafGhostORANGE.transform.GetChild(1).GetComponent<MeshRenderer>().material);
             newMaterial.color = new Color(1f, 0.9f, 0.4f); //0.9528 0.2735 0.0405 1
             LeafGhostORANGE.transform.GetChild(1).GetComponent<MeshRenderer>().material = newMaterial;
@@ -87,83 +89,39 @@ namespace WolfoSkinsMod
         }
 
 
-        internal static void SkinsPink(GameObject ChirrBody)
+        internal static SkinDef SkinsPink(SkinDef skinChirr)
         {
-            BodyIndex ChirrIndex = ChirrBody.GetComponent<CharacterBody>().bodyIndex;
-            ModelSkinController modelSkinController = ChirrBody.GetComponentInChildren<ModelSkinController>();
-            SkinDef skinChirr = modelSkinController.skins[0];
-
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinChirr.rendererInfos.Length];
-            System.Array.Copy(skinChirr.rendererInfos, NewRenderInfos, skinChirr.rendererInfos.Length);
-
-            Material MatChirrBody = Object.Instantiate(skinChirr.rendererInfos[0].defaultMaterial);
-
-            Texture2D texChirrDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chirr/texChirrDiffuse.png");
-            texChirrDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            MatChirrBody.mainTexture = texChirrDiffuse;
-
-            NewRenderInfos[0].defaultMaterial = MatChirrBody;
-            //
-            SkinDefInfo SkinInfo = new SkinDefInfo
+            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
-                Name = "skinChirrWolfo_Pink_Simu",
-                NameToken = "SIMU_SKIN_CHIRR",
-                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chirr/skinIconChirr.png")),
-                BaseSkins = skinChirr.baseSkins,
-                RootObject = skinChirr.rootObject,
-                RendererInfos = NewRenderInfos,
-                MeshReplacements = skinChirr.meshReplacements,
-                GameObjectActivations = skinChirr.gameObjectActivations,
-            };
-
-            SkinDef ChirrSkinDefNew = Skins.CreateNewSkinDef(SkinInfo);
-            skinDefPink = ChirrSkinDefNew;
-            modelSkinController.skins = modelSkinController.skins.Add(ChirrSkinDefNew);
-            BodyCatalog.skins[(int)ChirrIndex] = BodyCatalog.skins[(int)ChirrIndex].Add(ChirrSkinDefNew);
+                name = "skinChirr_Pink_1",
+                nameToken = "SIMU_SKIN_CHIRR",
+                icon = H.GetIcon("mod/ss2/chirr_pink"),
+                original = skinChirr,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+            Material MatChirrBody = CloneMat(newRenderInfos, 0);
+            MatChirrBody.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chirr/texChirrDiffuse.png");
+            return newSkinDef;
         }
 
-        internal static void SkinsORANGE(GameObject ChirrBody)
+        internal static SkinDef SkinsORANGE(SkinDef skinChirr)
         {
-            BodyIndex ChirrIndex = ChirrBody.GetComponent<CharacterBody>().bodyIndex;
-            ModelSkinController modelSkinController = ChirrBody.GetComponentInChildren<ModelSkinController>();
-            SkinDef skinChirr = modelSkinController.skins[0];
-
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinChirr.rendererInfos.Length];
-            System.Array.Copy(skinChirr.rendererInfos, NewRenderInfos, skinChirr.rendererInfos.Length);
-
-            Material MatChirrBody = Object.Instantiate(skinChirr.rendererInfos[0].defaultMaterial);
-
-            Texture2D texChirrDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chirr/texChirrDiffuseORANGE.png");
-            texChirrDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            MatChirrBody.mainTexture = texChirrDiffuse;
-
-            NewRenderInfos[0].defaultMaterial = MatChirrBody;
-            //
-            //
-            SkinDefInfo SkinInfo = new SkinDefInfo
+            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
-                Name = "skinChirrWolfo_ORANGE_Simu",
-                NameToken = "SIMU_SKIN_CHIRR_ORANGE",
-                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chirr/skinIconChirrORANGE.png")),
-                BaseSkins = skinChirr.baseSkins,
-                RootObject = skinChirr.rootObject,
-                RendererInfos = NewRenderInfos,
-                MeshReplacements = skinChirr.meshReplacements,
-                GameObjectActivations = skinChirr.gameObjectActivations,
-                ProjectileGhostReplacements = skinChirr.projectileGhostReplacements,
-            };
-
-            SkinDef ChirrSkinDefNew = Skins.CreateNewSkinDef(SkinInfo);
-            skinDefOrange = ChirrSkinDefNew;
-            modelSkinController.skins = modelSkinController.skins.Add(ChirrSkinDefNew);
-            BodyCatalog.skins[(int)ChirrIndex] = BodyCatalog.skins[(int)ChirrIndex].Add(ChirrSkinDefNew);
+                name = "skinChirr_Pink_1",
+                nameToken = "SIMU_SKIN_CHIRR",
+                icon = H.GetIcon("mod/ss2/chirr_pink"),
+                original = skinChirr,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+            Material MatChirrBody = CloneMat(newRenderInfos, 0);
+            MatChirrBody.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Chirr/texChirrDiffuseORANGE.png");
+            return newSkinDef;
         }
 
 
         [RegisterAchievement("CLEAR_ANY_CHIRR", "Skins.Chirr.Wolfo.First", null, 5, null)]
-        public class ClearSimulacrumChirr : Achievement_AltBoss_Simu
+        public class ClearSimulacrumChirr : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

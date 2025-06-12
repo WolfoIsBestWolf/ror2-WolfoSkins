@@ -1,5 +1,26 @@
 ## Changelog
 ```
+v2.2.0 
+Updated for SotSf 3 & 4
+-Fixed Chef Skins for Oven
+-Updated Chef skins for Ice Box
+-Updated False Son skins for new M2
+
+Generally optimized mod, before MemOp hit.
+Bit hard to tell how well it works out with the new additions.
+Mod now tagged as Client Side.
+Unlocks now includes Eclipse 4 (or above) as possible unlock spot.
+Tier 2 unlock now just needs 2 of 4, not specifically AltBoss & AltMode
+Colossus Recolors now need you to own DLC2.
+Recolored wine red engi to be normal Red. (Weird returns palette)
+Removed ChefMod skins.
+Fixed Unlock-All config not unlocking some skins.
+ 
+
+
+v2.1.2
+Quick fix for mod not loading with mods that add Engi Turrets.
+
 v2.1.1
 Redid Han-D returns skins as the new model they added needed new textures.
 Fixed Han-D Default drones wrong texture format.

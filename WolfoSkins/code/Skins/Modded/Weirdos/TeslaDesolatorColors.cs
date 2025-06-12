@@ -30,29 +30,29 @@ namespace WolfoSkinsMod
             SkillDef skillNeonRed = GameObject.Instantiate(TeslaRecolors.variants[0].skillDef);
             skillNeonRed.skillName = "NeonRed";
             skillNeonRed.skillNameToken = "TESLA_COLOR_RED_NEON";
-            skillNeonRed.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaColorRed.png"));
+            skillNeonRed.icon = H.GetIcon("mod/Tesla/neonRed");
             SkillDef skillNeonBlue = GameObject.Instantiate(TeslaRecolors.variants[1].skillDef);
             skillNeonBlue.skillName = "NeonBlue";
             skillNeonBlue.skillNameToken = "TESLA_COLOR_BLUE_NEON";
-            skillNeonBlue.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaColorBlue.png"));
+            skillNeonBlue.icon = H.GetIcon("mod/Tesla/neonBlue");
             SkillDef skillStrongBlue = GameObject.Instantiate(TeslaRecolors.variants[2].skillDef);
             skillStrongBlue.skillName = "strongblue";
             skillStrongBlue.skillNameToken = "TESLA_COLOR_BLUE_STRONG";
-            skillStrongBlue.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaSimpleBlue.png"));
+            skillStrongBlue.icon = H.GetIcon("mod/Tesla/blue");
             SkillDef skillNeonCyan = GameObject.Instantiate(TeslaRecolors.variants[1].skillDef);
             skillNeonCyan.skillName = "NeonCyan";
             skillNeonCyan.skillNameToken = "TESLA_COLOR_CYAN_NEON";
-            skillNeonCyan.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaColorCyan.png"));
+            skillNeonCyan.icon = H.GetIcon("mod/Tesla/neonCyan");
             SkillDef skillNeonPurple = GameObject.Instantiate(TeslaRecolors.variants[6].skillDef);
             skillNeonPurple.skillName = "NeonPurple";
             skillNeonPurple.skillNameToken = "TESLA_COLOR_PINK_NEON";
-            skillNeonPurple.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaColorPurple.png"));
+            skillNeonPurple.icon = H.GetIcon("mod/Tesla/neonPink");
             SkillDef skillWhite = GameObject.Instantiate(TeslaRecolors.variants[6].skillDef);
             skillWhite.skillName = "white";
             skillWhite.skillNameToken = "TESLA_COLOR_WHITE";
-            skillWhite.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaSimpleWhite.png"));
+            skillWhite.icon = H.GetIcon("mod/Tesla/white");
 
- 
+
             SkillFamily.Variant varWhite = new SkillFamily.Variant
             {
                 skillDef = skillWhite,
@@ -78,13 +78,16 @@ namespace WolfoSkinsMod
                 skillDef = skillNeonPurple,
             };
 
+            SkillFamily.Variant[] newColors =
+            {
+                varWhite, varNormalBlue, varNeonBlue, varNeonCyan, varNeonPurple, varNeonRed
+            };
+            TeslaRecolors.variants = HG.ArrayUtils.Join(TeslaRecolors.variants, newColors);
             teslaColors = TeslaRecolors;
-            TeslaRecolors.variants = TeslaRecolors.variants.Add(varWhite, varNormalBlue, varNeonBlue, varNeonCyan, varNeonPurple, varNeonRed);
-
 
             RA2Mod.General.Components.SkinRecolorController controller = TeslaTrooperBody.GetComponentInChildren<RA2Mod.General.Components.SkinRecolorController>();
 
-            RA2Mod.General.Components.Recolor[] newRecolors = controller.Recolors;
+
             //controller.Recolors.CopyTo(newRecolors, 0);
 
             float mult1 = 2.5f;
@@ -166,13 +169,18 @@ namespace WolfoSkinsMod
                     controller.Recolors[6].colors[3]*multLamps
     }
             };
-            newRecolors = newRecolors.Add(rcWhite, normalBlue, neonBlue, neonCyan, neonPurple, neonRed);
-            controller.SetFieldValue<RA2Mod.General.Components.Recolor[]>("recolors", newRecolors);
+
+            RA2Mod.General.Components.Recolor[] newRecolors = new RA2Mod.General.Components.Recolor[]
+            {
+                rcWhite, normalBlue, neonBlue, neonCyan, neonPurple, neonRed
+            };
+            controller.SetFieldValue("recolors", HG.ArrayUtils.Join(controller.Recolors, newRecolors));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         internal static void AddToDesolator(GameObject DesolatorBody)
         {
+            #region Skills
             Debug.Log("Desolator Colors");
             GenericSkill[] skills = DesolatorBody.GetComponents<GenericSkill>();
             SkillFamily TeslaRecolors = skills[skills.Length - 1].skillFamily;
@@ -180,27 +188,27 @@ namespace WolfoSkinsMod
             SkillDef skillStrongGreen = GameObject.Instantiate(TeslaRecolors.variants[3].skillDef);
             skillStrongGreen.skillName = "greenstrong";
             skillStrongGreen.skillNameToken = "TESLA_COLOR_GREEN_STRONG";
-            skillStrongGreen.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaSimpleGreen.png"));
+            skillStrongGreen.icon = H.GetIcon("mod/Tesla/green");
             SkillDef skillNeonGreen = GameObject.Instantiate(TeslaRecolors.variants[2].skillDef);
             skillNeonGreen.skillName = "NeonGreen";
             skillNeonGreen.skillNameToken = "TESLA_COLOR_GREEN_NEON";
-            skillNeonGreen.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaColorGreen.png"));
+            skillNeonGreen.icon = H.GetIcon("mod/Tesla/neonGreen");
             SkillDef skillNeonYellow = GameObject.Instantiate(TeslaRecolors.variants[3].skillDef);
             skillNeonYellow.skillName = "NeonYellow";
             skillNeonYellow.skillNameToken = "TESLA_COLOR_YELLOW_NEON";
-            skillNeonYellow.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaColorYellow.png"));
+            skillNeonYellow.icon = H.GetIcon("mod/Tesla/neonYellow");
             SkillDef skillNeonOrange = GameObject.Instantiate(TeslaRecolors.variants[4].skillDef);
             skillNeonOrange.skillName = "NeonOrange";
             skillNeonOrange.skillNameToken = "TESLA_COLOR_ORANGE_NEON";
-            skillNeonOrange.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaColorOrange.png"));
+            skillNeonOrange.icon = H.GetIcon("mod/Tesla/neonOrange");
             SkillDef skillSafteyYellow = GameObject.Instantiate(TeslaRecolors.variants[4].skillDef);
             skillSafteyYellow.skillName = "SafetyYellow";
             skillSafteyYellow.skillNameToken = "TESLA_COLOR_YELLOW_SAFE";
-            skillSafteyYellow.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaColorYellowGreen.png"));
+            skillSafteyYellow.icon = H.GetIcon("mod/Tesla/neonMarker");
             SkillDef skillWhite = GameObject.Instantiate(TeslaRecolors.variants[4].skillDef);
             skillWhite.skillName = "white";
             skillWhite.skillNameToken = "TESLA_COLOR_GRAY";
-            skillWhite.icon = WRect.MakeIcon32(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/teslaSimpleGray.png"));
+            skillWhite.icon = H.GetIcon("mod/Tesla/gray");
 
 
             SkillFamily.Variant varWhite = new SkillFamily.Variant
@@ -228,25 +236,23 @@ namespace WolfoSkinsMod
                 skillDef = skillSafteyYellow,
             };
 
+
+
+            SkillFamily.Variant[] newColors =
+           {
+                varWhite, varGreener, varNeonGreen, varNeonSafetyYellow, varNeonYellow, varNeonOrange
+            };
+            TeslaRecolors.variants = HG.ArrayUtils.Join(TeslaRecolors.variants, newColors);
             desolatorColors = TeslaRecolors;
-
-
-            TeslaRecolors.variants = TeslaRecolors.variants.Add(varWhite, varGreener, varNeonGreen, varNeonSafetyYellow, varNeonYellow, varNeonOrange);
-
+            #endregion
+            #region Recolor Component
             RA2Mod.General.Components.SkinRecolorController controller = DesolatorBody.GetComponentInChildren<RA2Mod.General.Components.SkinRecolorController>();
 
-            RA2Mod.General.Components.Recolor[] newRecolors = controller.Recolors;
-            //controller.Recolors.CopyTo(newRecolors, 0);
-
-            int mult1 = 5;
-            float multTank = 1.5f;
 
             //Main Clothing
             //Tank
             //Nothing?
             //Nothing?
-
-
             RA2Mod.General.Components.Recolor rcWhite = new RA2Mod.General.Components.Recolor
             {
                 recolorName = "white",
@@ -296,7 +302,7 @@ namespace WolfoSkinsMod
                 recolorName = "neonyellow",
                 colors = new Color[]
     {
-                    new Color(2.2f,2.05f,0), 
+                    new Color(2.2f,2.05f,0),
                     new Color(0.4f,0.375f,0),
                     new Color(2,1.8f,0),
                     new Color(2,1.8f,0)
@@ -314,8 +320,13 @@ namespace WolfoSkinsMod
     }
             };
 
-            newRecolors = newRecolors.Add(rcWhite, normalGreen, neonGreen, SafteyYellow, NeonYellow, NeonOrange);
-            controller.SetFieldValue<RA2Mod.General.Components.Recolor[]>("recolors", newRecolors);
+            RA2Mod.General.Components.Recolor[] newRecolors = new RA2Mod.General.Components.Recolor[]
+            {
+                rcWhite, normalGreen, neonGreen, SafteyYellow, NeonYellow, NeonOrange
+            };
+
+            controller.SetFieldValue("recolors", HG.ArrayUtils.Join(controller.Recolors, newRecolors));
+            #endregion
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
@@ -323,7 +334,6 @@ namespace WolfoSkinsMod
         {
             Debug.Log("Tesla Tower Colors");
             RA2Mod.General.Components.SkinRecolorController controller = TeslaTowerBody.GetComponentInChildren<RA2Mod.General.Components.SkinRecolorController>();
-            RA2Mod.General.Components.Recolor[] newRecolors = controller.Recolors;
 
             float mult1 = 1.5f;
 
@@ -388,15 +398,19 @@ namespace WolfoSkinsMod
                     controller.Recolors[6].colors[1]*PinkMult,
     }
             };
-            newRecolors = newRecolors.Add(rcWhite, normalBlue, neonBlue, neonCyan, neonPurple, neonRed);
-            controller.SetFieldValue<RA2Mod.General.Components.Recolor[]>("recolors", newRecolors);
+            RA2Mod.General.Components.Recolor[] newRecolors = new RA2Mod.General.Components.Recolor[]
+            {
+                rcWhite, normalBlue, neonBlue, neonCyan, neonPurple, neonRed
+            };
+            var final = HG.ArrayUtils.Join(controller.Recolors, newRecolors);
+            controller.SetFieldValue("recolors", final);
 
             GameObject ScepterBody = BodyCatalog.FindBodyPrefab("TeslaTowerScepterBody");
             if (ScepterBody)
             {
                 RA2Mod.General.Components.SkinRecolorController controllerScepter = ScepterBody.GetComponentInChildren<RA2Mod.General.Components.SkinRecolorController>();
-                controllerScepter.SetFieldValue<RA2Mod.General.Components.Recolor[]>("recolors", controller.Recolors);
-            } 
+                controller.SetFieldValue("recolors", final);
+            }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
@@ -444,7 +458,7 @@ namespace WolfoSkinsMod
                 {
                     skinRecolorController.SetRecolor(color.skillName.ToLowerInvariant());
                 }
-                  
+
 
             }
         }

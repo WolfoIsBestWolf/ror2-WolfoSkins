@@ -1,7 +1,7 @@
-using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
@@ -9,79 +9,84 @@ namespace WolfoSkinsMod
     {
         internal static void Start()
         {
-            EngiSkin();
-            EngiSkinBLUE();
-            Engi_AltColossus();
-        }
-
-        internal static void Engi_AltColossus()
-        {
-            //RoRR Red/Yellow Engineer
             SkinDef skinEngiDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiDefault.asset").WaitForCompletion();
+            SkinDef skinEngiAlt = Addressables.LoadAssetAsync<SkinDef>(key: "17628d80f4c9ee8468fec38d89586df1").WaitForCompletion();
             SkinDef skinEngiAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiAltColossus.asset").WaitForCompletion();
+
             SkinDef skinEngiTurretDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiTurretDefault.asset").WaitForCompletion();
             SkinDef skinEngiTurretAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiTurretAltColossus.asset").WaitForCompletion();
 
-            //Engi
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[3];
-            System.Array.Copy(skinEngiAltColossus.rendererInfos, NewRenderInfos, 3);
+            SkinDef skinEngiWalkerTurretDefault = Addressables.LoadAssetAsync<SkinDef>(key: "80a2e7bddd0c9c4499107e5521978bd6").WaitForCompletion();
+            SkinDef skinEngiWalkerTurretAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "1d85a8d3e48de684ba627a415aa2a6ec").WaitForCompletion();
 
-            CharacterModel.RendererInfo[] TurretNewRenderInfos = new CharacterModel.RendererInfo[1];
-            System.Array.Copy(skinEngiTurretAltColossus.rendererInfos, TurretNewRenderInfos, 1);
 
-            Material matEngiAltColossus = Object.Instantiate(skinEngiAltColossus.rendererInfos[2].defaultMaterial);
-            Material matEngiTrail = Object.Instantiate(skinEngiAltColossus.rendererInfos[0].defaultMaterial);
-            Material matEngiTurret = Object.Instantiate(skinEngiTurretDefault.rendererInfos[0].defaultMaterial);
+            EngiSkin(skinEngiDefault, skinEngiTurretDefault, skinEngiWalkerTurretDefault);
+            EngiSkinBLUE(skinEngiAlt, skinEngiTurretDefault, skinEngiWalkerTurretDefault);
+            Engi_AltColossus(skinEngiAltColossus, skinEngiTurretAltColossus, skinEngiWalkerTurretAltColossus, skinEngiTurretDefault);
+        }
 
-            Texture2D texEngiAltColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texEngiAltColossusDiffuse.png");
-            texEngiAltColossusDiffuse.wrapMode = TextureWrapMode.Repeat;
+        internal static void Engi_AltColossus(SkinDef skinEngiAltColossus, SkinDef skinEngiTurretAltColossus, SkinDef skinEngiWalkerTurretAltColossus, SkinDef skinEngiTurretDefault)
+        {
+            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinEngiAltColossus_DLC2",
+                nameToken = "SIMU_SKIN_ENGINEER_COLOSSUS",
+                icon = H.GetIcon("engineer_dlc2"),
+                original = skinEngiAltColossus,
+                unsetMat = true,
+            });
+            SkinDefWolfo turretSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinEngiTurretAltColossus_DLC2",
+                original = skinEngiTurretAltColossus,
+            });
+            SkinDefWolfo turretSkinDef2 = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinEngiWalkerTurretAltColossus_DLC2",
+                original = skinEngiWalkerTurretAltColossus,
+            });
+
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+            CharacterModel.RendererInfo[] turretRenderInfos = turretSkinDef.skinDefParams.rendererInfos;
+            SkinDefParams.ProjectileGhostReplacement[] projectile = HG.ArrayUtils.Clone(newSkinDef.skinDefParams.projectileGhostReplacements);
+            System.Array.Resize(ref projectile, projectile.Length + 1);
+            SkinDefParams.MinionSkinReplacement[] minion = HG.ArrayUtils.Clone(newSkinDef.skinDefParams.minionSkinReplacements);
+            newSkinDef.skinDefParams.projectileGhostReplacements = projectile;
+            newSkinDef.skinDefParams.minionSkinReplacements = minion;
+
+            Material matEngiAltColossus = CloneMat(newRenderInfos, 2);
+            Material matEngiTrail = CloneMat(newRenderInfos, 0);
+            Material matEngiTurret = CloneMat(turretRenderInfos, 0);
 
             Texture2D texRampEngiAltColossus = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texRampEngiAltColossus.png");
-            texRampEngiAltColossus.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texRampCrocoDiseaseDark1 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texRampCrocoDiseaseDark.png");
-            texRampCrocoDiseaseDark1.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texRampLightning21 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texRampLightning2.png");
-            texRampLightning21.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texEngiTurretAltColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texEngiTurretAltColossusDiffuse.png");
-            texEngiTurretAltColossusDiffuse.wrapMode = TextureWrapMode.Repeat;
-
-            matEngiTurret.mainTexture = texEngiTurretAltColossusDiffuse;
+            matEngiTurret.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texEngiTurretAltColossusDiffuse.png");
             matEngiTurret.SetTexture("_PrintRamp", texRampEngiAltColossus);
             matEngiTurret.SetColor("_EmColor", new Color(1.1f, 0.1f, 0.1f));
 
-            matEngiAltColossus.mainTexture = texEngiAltColossusDiffuse; //texEngiAltColossusDiffuse
-            matEngiAltColossus.SetColor("_EmColor", new Color(1.5f,0f,0f,1f));
-            matEngiAltColossus.SetTexture("_FlowHeightRamp", texRampLightning21); //texRampLightning2.png
-            matEngiAltColossus.SetTexture("_FresnelRamp", texRampCrocoDiseaseDark1); //texRampCrocoDiseaseDark.png
+            matEngiAltColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texEngiAltColossusDiffuse.png"); //texEngiAltColossusDiffuse
+            matEngiAltColossus.SetColor("_EmColor", new Color(1.5f, 0f, 0f, 1f));
+            matEngiAltColossus.SetTexture("_FlowHeightRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texRampLightning2.png")); //texRampLightning2.png
+            matEngiAltColossus.SetTexture("_FresnelRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/texRampCrocoDiseaseDark.png")); //texRampCrocoDiseaseDark.png
             matEngiAltColossus.SetFloat("_FlowEmissionStrength", 5f);
             matEngiAltColossus.SetFloat("_FresnelPower", 2f);
             matEngiAltColossus.SetFloat("_FresnelBoost", 15f); //20
 
             matEngiTrail.SetTexture("_RemapTex", texRampEngiAltColossus);
 
-            NewRenderInfos[0].defaultMaterial = matEngiTrail;     //matEngiTrail
-            NewRenderInfos[1].defaultMaterial = matEngiTrail;     //matEngiTrail
-            NewRenderInfos[2].defaultMaterial = matEngiAltColossus;          //matEngi
+            newRenderInfos[0].defaultMaterial = matEngiTrail;     //matEngiTrail
+            newRenderInfos[1].defaultMaterial = matEngiTrail;     //matEngiTrail
+            newRenderInfos[2].defaultMaterial = matEngiAltColossus;          //matEngi
 
-            TurretNewRenderInfos[0].defaultMaterial = matEngiTurret;
-            //
-            //MeshReplacements
-            RoR2.SkinDef.MeshReplacement[] MeshReplacements = new SkinDef.MeshReplacement[1];
-            skinEngiDefault.meshReplacements.CopyTo(MeshReplacements, 0);
-            //
+            turretSkinDef2.skinDefParams.rendererInfos[0].defaultMaterial = matEngiTurret;
+
             #region ProjectileReplacements
-            GameObject EngiGrenadeGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW_Red", false);
-            GameObject EngiMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW_Red", false);
-            GameObject SpiderMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW_Red", false);
-            GameObject EngiBubbleShieldGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiBubbleShieldGhost2.prefab").WaitForCompletion(), "EngiBubbleShieldGhostW_Red", false);
+            GameObject EngiGrenadeGhostSkinW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW_Red", false);
+            GameObject EngiMineGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW_Red", false);
+            GameObject SpiderMineGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW_Red", false);
+            GameObject EngiBubbleShieldGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiBubbleShieldGhost2.prefab").WaitForCompletion(), "EngiBubbleShieldGhostW_Red", false);
             GameObject EngiHarpoonProjectile = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoon.prefab").WaitForCompletion();
-            GameObject EngiHarpoonGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoonGhost.prefab").WaitForCompletion(), "EngiHarpoonGhostSkinW_Red", false);
-
-            RoR2.SkinDef.ProjectileGhostReplacement[] ProjectileGhostReplacements = new SkinDef.ProjectileGhostReplacement[5];
-            skinEngiAltColossus.projectileGhostReplacements.CopyTo(ProjectileGhostReplacements, 0);
+            GameObject EngiHarpoonGhostSkinW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoonGhost.prefab").WaitForCompletion(), "EngiHarpoonGhostSkinW_Red", false);
 
             EngiGrenadeGhostSkinW.transform.GetChild(0).GetComponent<MeshRenderer>().material = matEngiTurret;
             EngiMineGhostW.transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material = matEngiTurret;
@@ -117,8 +122,8 @@ namespace WolfoSkinsMod
 
             EngiHarpoonGhostSkinW.transform.GetChild(1).GetComponent<MeshRenderer>().material = matEngiAltColossus;
             TrailRenderer trailRender = EngiHarpoonGhostSkinW.transform.GetChild(1).GetChild(0).GetComponent<TrailRenderer>(); //matEngiHarpoonTrail 
-            trailRender.startColor = new Color(1f,1f,1f,0f); //0.4392 1 0.3451 0
-            trailRender.endColor = new Color(0.5f,0.5f,0.5f,0f); //0.3451 0.9529 1 0
+            trailRender.startColor = new Color(1f, 1f, 1f, 0f); //0.4392 1 0.3451 0
+            trailRender.endColor = new Color(0.5f, 0.5f, 0.5f, 0f); //0.3451 0.9529 1 0
             Material newTrail = Object.Instantiate(trailRender.material);
             newTrail.SetTexture("_RemapTex", texRampEngiAltColossus);
             trailRender.material = newTrail;
@@ -132,61 +137,21 @@ namespace WolfoSkinsMod
 
             //Would ideally also need a muzzle flash replacement guh
 
-            ProjectileGhostReplacements[0].projectileGhostReplacementPrefab = EngiGrenadeGhostSkinW;
-            ProjectileGhostReplacements[1].projectileGhostReplacementPrefab = EngiMineGhostW;
-            ProjectileGhostReplacements[2].projectileGhostReplacementPrefab = SpiderMineGhostW;
-            ProjectileGhostReplacements[3].projectileGhostReplacementPrefab = EngiBubbleShieldGhostW;
-            ProjectileGhostReplacements[4] = new SkinDef.ProjectileGhostReplacement
+
+            #endregion
+
+
+            minion[0].minionSkin = turretSkinDef;
+            minion[1].minionSkin = turretSkinDef2;
+            projectile[0].projectileGhostReplacementPrefab = EngiGrenadeGhostSkinW;
+            projectile[1].projectileGhostReplacementPrefab = EngiMineGhostW;
+            projectile[2].projectileGhostReplacementPrefab = SpiderMineGhostW;
+            projectile[3].projectileGhostReplacementPrefab = EngiBubbleShieldGhostW;
+            projectile[4] = new SkinDefParams.ProjectileGhostReplacement
             {
                 projectileGhostReplacementPrefab = EngiHarpoonGhostSkinW,
                 projectilePrefab = EngiHarpoonProjectile
             };
-            #endregion
-            #region MinionReplacements
-            //MinionReplacements
-            RoR2.SkinDef.MinionSkinReplacement[] MinionSkinReplacements = new SkinDef.MinionSkinReplacement[2];
-            skinEngiAltColossus.minionSkinReplacements.CopyTo(MinionSkinReplacements, 0);
-
-            SkinDefInfo SkinInfoTurret = new SkinDefInfo
-            {
-                Name = "skinEngiTurretAltColossusWolfo",
-                NameToken = "",
-                Icon = null,
-                BaseSkins = skinEngiTurretAltColossus.baseSkins,
-                RendererInfos = TurretNewRenderInfos,
-                RootObject = skinEngiTurretDefault.rootObject,
-                UnlockableDef = null,
-            };
-            SkinDef TurretSkinDefNew = Skins.CreateNewSkinDef(SkinInfoTurret);
-            TurretSkinDefNew.Bake();
-            MinionSkinReplacements[0].minionSkin = TurretSkinDefNew;
-
-            TurretNewRenderInfos[0].renderer = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody").transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<SkinnedMeshRenderer>();
-            SkinDefInfo SkinInfoTurret2 = new SkinDefInfo
-            {
-                Name = "skinEngiTurretAltColossusWolfoWalker",
-                NameToken = "",
-                Icon = null,
-                BaseSkins = skinEngiTurretAltColossus.baseSkins,
-                RendererInfos = TurretNewRenderInfos,
-                RootObject = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody").transform.GetChild(0).GetChild(0).gameObject,
-                UnlockableDef = null,
-            };
-            SkinDef TurretSkinDefNew2 = Skins.CreateNewSkinDef(SkinInfoTurret2);
-            TurretSkinDefNew2.Bake();
-            MinionSkinReplacements[1].minionSkin = TurretSkinDefNew2;
-            #endregion
-
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinEngiAltColossusWolfo_AltBoss";
-            newSkinDef.nameToken = "SIMU_SKIN_ENGINEER_COLOSSUS";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/Colossus/EnGI.png"));
-            newSkinDef.baseSkins = skinEngiAltColossus.baseSkins;
-            newSkinDef.meshReplacements = skinEngiAltColossus.meshReplacements;
-            newSkinDef.projectileGhostReplacements = ProjectileGhostReplacements;
-            newSkinDef.minionSkinReplacements = MinionSkinReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinEngiDefault.rootObject;
             newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
             {
                 new SkinDefWolfo.LightColorChanges
@@ -201,71 +166,70 @@ namespace WolfoSkinsMod
                 }
             };
 
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiBody"), newSkinDef);
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiTurretBody"), TurretSkinDefNew);
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody"), TurretSkinDefNew2);
+            H.AddSkinToObject(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody"), turretSkinDef);
         }
 
 
-        internal static void EngiSkin()
+        internal static void EngiSkin(SkinDef skinEngiDefault, SkinDef skinEngiTurretDefault, SkinDef skinEngiWalkerTurretDefault)
         {
-            //RoRR Red/Yellow Engineer
-            SkinDef skinEngiDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiDefault.asset").WaitForCompletion();
-            SkinDef skinEngiAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiAlt.asset").WaitForCompletion();
-            SkinDef skinEngiTurretDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiTurretDefault.asset").WaitForCompletion();
-            SkinDef skinEngiTurretAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiTurretAlt.asset").WaitForCompletion();
+            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinEngi_1",
+                nameToken = "SIMU_SKIN_ENGINEER",
+                icon = H.GetIcon("engineer_red"),
+                original = skinEngiDefault,
+                unsetMat = true,
+            });
+            SkinDef turretSkinDef = CreateNewSkin(new SkinInfo
+            {
+                name = "skinEngiTurret_1",
+                original = skinEngiTurretDefault,
+            });
+            SkinDef turretSkinDefW = CreateNewSkin(new SkinInfo
+            {
+                name = "skinEngiWalkerTurretDefault_1",
+                original = skinEngiWalkerTurretDefault,
+            });
 
-            //Engi
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[3];
-            System.Array.Copy(skinEngiDefault.rendererInfos, NewRenderInfos, 3);
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+            CharacterModel.RendererInfo[] turretRenderInfos = turretSkinDef.skinDefParams.rendererInfos;
+            SkinDefParams.ProjectileGhostReplacement[] projectile = HG.ArrayUtils.Clone(newSkinDef.skinDefParams.projectileGhostReplacements);
+            System.Array.Resize(ref projectile, projectile.Length + 1);
+            SkinDefParams.MinionSkinReplacement[] minion = HG.ArrayUtils.Clone(newSkinDef.skinDefParams.minionSkinReplacements);
+            newSkinDef.skinDefParams.projectileGhostReplacements = projectile;
+            newSkinDef.skinDefParams.minionSkinReplacements = minion;
 
-            CharacterModel.RendererInfo[] TurretNewRenderInfos = new CharacterModel.RendererInfo[1];
-            System.Array.Copy(skinEngiTurretDefault.rendererInfos, TurretNewRenderInfos, 1);
-
-            Material matEngi = Object.Instantiate(skinEngiDefault.rendererInfos[2].defaultMaterial);
-            Material matEngiTrail = Object.Instantiate(skinEngiDefault.rendererInfos[0].defaultMaterial);
-            Material matEngiTurret = Object.Instantiate(skinEngiTurretDefault.rendererInfos[0].defaultMaterial);
-
-            Texture2D texEngiDiffuseAlt2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/wine/texEngiDiffuseAlt2.png");
-            texEngiDiffuseAlt2.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D texEngiEmissionAlt2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/wine/texEngiEmissionAlt2.png");
-            texEngiEmissionAlt2.wrapMode = TextureWrapMode.Repeat;
+            Material matEngi = CloneMat(newRenderInfos, 2);
+            Material matEngiTrail = CloneMat(newRenderInfos, 0);
+            Material matEngiTurret = CloneMat(turretRenderInfos, 0);
 
             Texture2D texRampEngiAlt2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/wine/texRampEngiAlt2.png");
-            texRampEngiAlt2.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texEngiTurretDiffuseAlt2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/wine/texEngiTurretDiffuseAlt2.png");
-            texEngiTurretDiffuseAlt2.wrapMode = TextureWrapMode.Repeat;
+            Color red = new Color(1.1f, 1f, 1f);
 
-            matEngiTurret.mainTexture = texEngiTurretDiffuseAlt2;
+            matEngiTurret.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/wine/texEngiTurretDiffuseAlt2.png");
             matEngiTurret.SetTexture("_PrintRamp", texRampEngiAlt2);
             matEngiTurret.SetColor("_EmColor", new Color(0.845f, 0.8f, 0.365f));
+            matEngiTurret.color = red;
 
-            matEngi.mainTexture = texEngiDiffuseAlt2;
-            matEngi.SetTexture("_EmTex", texEngiEmissionAlt2);
+            matEngi.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/wine/texEngiDiffuseAlt2.png");
+            matEngi.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/wine/texEngiEmissionAlt2.png"));
+            matEngi.color = red;
             matEngiTrail.SetTexture("_RemapTex", texRampEngiAlt2);
 
-            NewRenderInfos[0].defaultMaterial = matEngiTrail;     //matEngiTrail
-            NewRenderInfos[1].defaultMaterial = matEngiTrail;     //matEngiTrail
-            NewRenderInfos[2].defaultMaterial = matEngi;          //matEngi
+            newRenderInfos[0].defaultMaterial = matEngiTrail;     //matEngiTrail
+            newRenderInfos[1].defaultMaterial = matEngiTrail;     //matEngiTrail
+            newRenderInfos[2].defaultMaterial = matEngi;          //matEngi
 
-            TurretNewRenderInfos[0].defaultMaterial = matEngiTurret;
-            //
-            //MeshReplacements
-            RoR2.SkinDef.MeshReplacement[] MeshReplacements = new SkinDef.MeshReplacement[1];
-            skinEngiDefault.meshReplacements.CopyTo(MeshReplacements, 0);
-            //
-            //ProjectileReplacements
-            GameObject EngiGrenadeGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW", false);
-            GameObject EngiMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW", false);
-            GameObject SpiderMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW", false);
-            GameObject EngiBubbleShieldGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiBubbleShieldGhost2.prefab").WaitForCompletion(), "EngiBubbleShieldGhostW", false);
+            turretSkinDefW.skinDefParams.rendererInfos[0].defaultMaterial = matEngiTurret;
+       
+            #region
+            GameObject EngiGrenadeGhostSkinW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW", false);
+            GameObject EngiMineGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW", false);
+            GameObject SpiderMineGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW", false);
+            GameObject EngiBubbleShieldGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiBubbleShieldGhost2.prefab").WaitForCompletion(), "EngiBubbleShieldGhostW", false);
             GameObject EngiHarpoonProjectile = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoon.prefab").WaitForCompletion();
-            GameObject EngiHarpoonGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoonGhost.prefab").WaitForCompletion(), "EngiHarpoonGhostSkinW", false);
-
-            RoR2.SkinDef.ProjectileGhostReplacement[] ProjectileGhostReplacements = new SkinDef.ProjectileGhostReplacement[5];
-            skinEngiAlt.projectileGhostReplacements.CopyTo(ProjectileGhostReplacements, 0);
+            GameObject EngiHarpoonGhostSkinW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoonGhost.prefab").WaitForCompletion(), "EngiHarpoonGhostSkinW", false);
 
             EngiGrenadeGhostSkinW.transform.GetChild(0).GetComponent<MeshRenderer>().material = matEngiTurret;
             EngiMineGhostW.transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material = matEngiTurret;
@@ -311,66 +275,21 @@ namespace WolfoSkinsMod
             particleSystem = EngiHarpoonGhostSkinW.transform.GetChild(3).GetComponent<ParticleSystemRenderer>(); //matEngiShieldSHards 
             newShards = Object.Instantiate(particleSystem.material);
             newShards.SetTexture("_RemapTex", texRampEngiAlt2);
-            newShards.SetColor("_TintColor", new Color(1,1f,0,1));
+            newShards.SetColor("_TintColor", new Color(1, 1f, 0, 1));
             particleSystem.material = newShards;
+            #endregion
 
-            //Would ideally also need a muzzle flash replacement guh
-
-            ProjectileGhostReplacements[0].projectileGhostReplacementPrefab = EngiGrenadeGhostSkinW;
-            ProjectileGhostReplacements[1].projectileGhostReplacementPrefab = EngiMineGhostW;
-            ProjectileGhostReplacements[2].projectileGhostReplacementPrefab = SpiderMineGhostW;
-            ProjectileGhostReplacements[3].projectileGhostReplacementPrefab = EngiBubbleShieldGhostW;
-            ProjectileGhostReplacements[4] = new SkinDef.ProjectileGhostReplacement
+            minion[0].minionSkin = turretSkinDef;
+            minion[1].minionSkin = turretSkinDefW;
+            projectile[0].projectileGhostReplacementPrefab = EngiGrenadeGhostSkinW;
+            projectile[1].projectileGhostReplacementPrefab = EngiMineGhostW;
+            projectile[2].projectileGhostReplacementPrefab = SpiderMineGhostW;
+            projectile[3].projectileGhostReplacementPrefab = EngiBubbleShieldGhostW;
+            projectile[4] = new SkinDefParams.ProjectileGhostReplacement
             {
                 projectileGhostReplacementPrefab = EngiHarpoonGhostSkinW,
                 projectilePrefab = EngiHarpoonProjectile
             };
-            //
-            //MinionReplacements
-            RoR2.SkinDef.MinionSkinReplacement[] MinionSkinReplacements = new SkinDef.MinionSkinReplacement[2];
-            skinEngiAlt.minionSkinReplacements.CopyTo(MinionSkinReplacements, 0);
-
-            SkinDefInfo SkinInfoTurret = new SkinDefInfo
-            {
-                Name = "skinEngiTurretWolfo",
-                NameToken = "",
-                Icon = null,
-                BaseSkins = skinEngiTurretAlt.baseSkins,
-                RendererInfos = TurretNewRenderInfos,
-                RootObject = skinEngiTurretDefault.rootObject,
-                UnlockableDef = null,
-            };
-            SkinDef TurretSkinDefNew = Skins.CreateNewSkinDef(SkinInfoTurret);
-            TurretSkinDefNew.Bake();
-            MinionSkinReplacements[0].minionSkin = TurretSkinDefNew;
-
-            TurretNewRenderInfos[0].renderer = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody").transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<SkinnedMeshRenderer>();
-            SkinDefInfo SkinInfoTurret2 = new SkinDefInfo
-            {
-                Name = "skinEngiTurretWalkerWolfo",
-                NameToken = "",
-                Icon = null,
-                BaseSkins = skinEngiTurretAlt.baseSkins,
-                RendererInfos = TurretNewRenderInfos,
-                RootObject = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody").transform.GetChild(0).GetChild(0).gameObject,
-                UnlockableDef = null,
-            };
-            SkinDef TurretSkinDefNew2 = Skins.CreateNewSkinDef(SkinInfoTurret2);
-            TurretSkinDefNew2.Bake();
-            MinionSkinReplacements[1].minionSkin = TurretSkinDefNew2;
-            //
-            //
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinEngiWolfo_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_ENGINEER";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/wine/skinIconEngi.png"));
-            newSkinDef.baseSkins = skinEngiAlt.baseSkins;
-            newSkinDef.meshReplacements = MeshReplacements;
-            newSkinDef.projectileGhostReplacements = ProjectileGhostReplacements;
-            newSkinDef.minionSkinReplacements = MinionSkinReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinEngiDefault.rootObject;
             newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
             {
                 new SkinDefWolfo.LightColorChanges
@@ -385,29 +304,42 @@ namespace WolfoSkinsMod
                 }
             };
 
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiBody"), newSkinDef);
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiTurretBody"), TurretSkinDefNew);
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody"), TurretSkinDefNew2);
+
+            H.AddSkinToObject(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody"), turretSkinDef);
         }
 
-        internal static void EngiSkinBLUE()
+        internal static void EngiSkinBLUE(SkinDef skinEngiAlt, SkinDef skinEngiTurretDefault, SkinDef skinEngiWalkerTurretDefault)
         {
-            //RoRR Red/Yellow Engineer
-            SkinDef skinEngiDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiDefault.asset").WaitForCompletion();
-            SkinDef skinEngiAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiAlt.asset").WaitForCompletion();
-            SkinDef skinEngiTurretDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiTurretDefault.asset").WaitForCompletion();
-            SkinDef skinEngiTurretAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Engi/skinEngiTurretAlt.asset").WaitForCompletion();
+            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinEngiAltWolfoBlue_1",
+                nameToken = "SIMU_SKIN_ENGINEER_BLUE",
+                icon = H.GetIcon("engineer_blue"),
+                original = skinEngiAlt,
+                unsetMat = true,
+            });
+            SkinDefWolfo turretSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinEngiTurretAlt_1",
+                original = skinEngiTurretDefault,
+            });
+            SkinDefWolfo turretSkinDefW = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinEngiWalkerTurretAlt_1",
+                original = skinEngiWalkerTurretDefault,
+            });
 
-            //Engi
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[3];
-            System.Array.Copy(skinEngiDefault.rendererInfos, NewRenderInfos, 3);
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+            CharacterModel.RendererInfo[] turretRenderInfos = turretSkinDef.skinDefParams.rendererInfos;
+            SkinDefParams.ProjectileGhostReplacement[] projectile = HG.ArrayUtils.Clone(newSkinDef.skinDefParams.projectileGhostReplacements);
+            System.Array.Resize(ref projectile, projectile.Length + 1);
+            SkinDefParams.MinionSkinReplacement[] minion = HG.ArrayUtils.Clone(newSkinDef.skinDefParams.minionSkinReplacements);
+            newSkinDef.skinDefParams.projectileGhostReplacements = projectile;
+            newSkinDef.skinDefParams.minionSkinReplacements = minion;
 
-            CharacterModel.RendererInfo[] TurretNewRenderInfos = new CharacterModel.RendererInfo[1];
-            System.Array.Copy(skinEngiTurretDefault.rendererInfos, TurretNewRenderInfos, 1);
-
-            Material matEngi = Object.Instantiate(skinEngiDefault.rendererInfos[2].defaultMaterial);
-            Material matEngiTrail = Object.Instantiate(skinEngiDefault.rendererInfos[0].defaultMaterial);
-            Material matEngiTurret = Object.Instantiate(skinEngiTurretDefault.rendererInfos[0].defaultMaterial);
+            Material matEngi = CloneMat(newRenderInfos, 2);
+            Material matEngiTrail = CloneMat(newRenderInfos, 0);
+            Material matEngiTurret = CloneMat(turretRenderInfos, 0);
 
             Texture2D texEngiDiffuseAlt2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/blue/texEngiDiffuseAlt2BLUE.png");
             texEngiDiffuseAlt2.wrapMode = TextureWrapMode.Repeat;
@@ -416,13 +348,8 @@ namespace WolfoSkinsMod
             texEngiEmissionAlt2.wrapMode = TextureWrapMode.Repeat;
 
             Texture2D texRampEngiAlt2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/blue/texRampEngiAlt2BLUE.png");
-            texRampEngiAlt2.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texRampEngiAlt2BLUEForWeapons = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/blue/texRampEngiAlt2BLUEForWeapons.png");
-            texRampEngiAlt2BLUEForWeapons.wrapMode = TextureWrapMode.Clamp;
 
             Texture2D texEngiTurretDiffuseAlt2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/blue/texEngiTurretDiffuseAlt2BLUE.png");
-            texEngiTurretDiffuseAlt2.wrapMode = TextureWrapMode.Repeat;
 
             matEngiTurret.mainTexture = texEngiTurretDiffuseAlt2;
             matEngiTurret.SetTexture("_PrintRamp", texRampEngiAlt2);
@@ -430,26 +357,23 @@ namespace WolfoSkinsMod
 
             matEngi.mainTexture = texEngiDiffuseAlt2;
             matEngi.SetTexture("_EmTex", texEngiEmissionAlt2);
-            matEngi.SetColor("_EmColor", new Color(1.6f, 0.75f, 1.6f, 1)*0.8f);
+            matEngi.SetColor("_EmColor", new Color(1.6f, 0.75f, 1.6f, 1) * 0.8f);
 
             matEngiTrail.SetTexture("_RemapTex", texRampEngiAlt2);
 
-            NewRenderInfos[0].defaultMaterial = matEngiTrail;     //matEngiTrail
-            NewRenderInfos[1].defaultMaterial = matEngiTrail;     //matEngiTrail
-            NewRenderInfos[2].defaultMaterial = matEngi;          //matEngi
+            newRenderInfos[0].defaultMaterial = matEngiTrail;     //matEngiTrail
+            newRenderInfos[1].defaultMaterial = matEngiTrail;     //matEngiTrail
+            newRenderInfos[2].defaultMaterial = matEngi;          //matEngi
 
-            TurretNewRenderInfos[0].defaultMaterial = matEngiTurret;
+            turretSkinDefW.skinDefParams.rendererInfos[0].defaultMaterial = matEngiTurret;
             //
             //ProjectileReplacements
-            GameObject EngiGrenadeGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW_B", false);
-            GameObject EngiMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW_B", false);
-            GameObject SpiderMineGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW_B", false);
-            GameObject EngiBubbleShieldGhostW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiBubbleShieldGhost2.prefab").WaitForCompletion(), "EngiBubbleShieldGhostW_B", false);
+            GameObject EngiGrenadeGhostSkinW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW_B", false);
+            GameObject EngiMineGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW_B", false);
+            GameObject SpiderMineGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW_B", false);
+            GameObject EngiBubbleShieldGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiBubbleShieldGhost2.prefab").WaitForCompletion(), "EngiBubbleShieldGhostW_B", false);
             GameObject EngiHarpoonProjectile = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoon.prefab").WaitForCompletion();
-            GameObject EngiHarpoonGhostSkinW = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoonGhost.prefab").WaitForCompletion(), "EngiHarpoonGhostSkinW_B", false);
-
-            RoR2.SkinDef.ProjectileGhostReplacement[] ProjectileGhostReplacements = new SkinDef.ProjectileGhostReplacement[5];
-            skinEngiAlt.projectileGhostReplacements.CopyTo(ProjectileGhostReplacements, 0);
+            GameObject EngiHarpoonGhostSkinW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiHarpoonGhost.prefab").WaitForCompletion(), "EngiHarpoonGhostSkinW_B", false);
 
             EngiGrenadeGhostSkinW.transform.GetChild(0).GetComponent<MeshRenderer>().material = matEngiTurret;
             EngiMineGhostW.transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material = matEngiTurret;
@@ -491,68 +415,18 @@ namespace WolfoSkinsMod
             newTrail.SetTexture("_RemapTex", texRampEngiAlt2);
             trailRender.material = newTrail;
 
-            //EngiHarpoonGhostSkinW.transform.GetChild(2).GetComponent<ParticleSystemRenderer>(); //GenericFlash
-            //particleSystem = EngiHarpoonGhostSkinW.transform.GetChild(3).GetComponent<ParticleSystemRenderer>(); //matEngiShieldSHards 
-            //newShards = Object.Instantiate(particleSystem.material);
-            //newShards.SetTexture("_RemapTex", texRampEngiAlt2);//
-            //newShards.SetColor("_TintColor", new Color(1, 1f, 1f, 1f));
-            //particleSystem.material = newShards;
 
-            //Would ideally also need a muzzle flash replacement guh
-
-            ProjectileGhostReplacements[0].projectileGhostReplacementPrefab = EngiGrenadeGhostSkinW;
-            ProjectileGhostReplacements[1].projectileGhostReplacementPrefab = EngiMineGhostW;
-            ProjectileGhostReplacements[2].projectileGhostReplacementPrefab = SpiderMineGhostW;
-            ProjectileGhostReplacements[3].projectileGhostReplacementPrefab = EngiBubbleShieldGhostW;
-            ProjectileGhostReplacements[4] = new SkinDef.ProjectileGhostReplacement
+            minion[0].minionSkin = turretSkinDef;
+            minion[1].minionSkin = turretSkinDefW;
+            projectile[0].projectileGhostReplacementPrefab = EngiGrenadeGhostSkinW;
+            projectile[1].projectileGhostReplacementPrefab = EngiMineGhostW;
+            projectile[2].projectileGhostReplacementPrefab = SpiderMineGhostW;
+            projectile[3].projectileGhostReplacementPrefab = EngiBubbleShieldGhostW;
+            projectile[4] = new SkinDefParams.ProjectileGhostReplacement
             {
                 projectileGhostReplacementPrefab = EngiHarpoonGhostSkinW,
                 projectilePrefab = EngiHarpoonProjectile
             };
-            //
-            //MinionReplacements
-            RoR2.SkinDef.MinionSkinReplacement[] MinionSkinReplacements = new SkinDef.MinionSkinReplacement[2];
-            skinEngiAlt.minionSkinReplacements.CopyTo(MinionSkinReplacements, 0);
-
-            SkinDefInfo SkinInfoTurret = new SkinDefInfo
-            {
-                Name = "skinEngiTurretWolfoBlue",
-                NameToken = "",
-                Icon = null,
-                BaseSkins = skinEngiTurretAlt.baseSkins,
-                RendererInfos = TurretNewRenderInfos,
-                RootObject = skinEngiTurretDefault.rootObject,
-                UnlockableDef = null,
-            };
-            SkinDef TurretSkinDefNew = Skins.CreateNewSkinDef(SkinInfoTurret);
-            TurretSkinDefNew.Bake();
-            MinionSkinReplacements[0].minionSkin = TurretSkinDefNew;
-
-            TurretNewRenderInfos[0].renderer = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody").transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<SkinnedMeshRenderer>();
-            SkinDefInfo SkinInfoTurret2 = new SkinDefInfo
-            {
-                Name = "skinEngiTurretWalkerWolfoBlue",
-                NameToken = "",
-                Icon = null,
-                BaseSkins = skinEngiTurretAlt.baseSkins,
-                RendererInfos = TurretNewRenderInfos,
-                RootObject = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody").transform.GetChild(0).GetChild(0).gameObject,
-                UnlockableDef = null,
-            };
-            SkinDef TurretSkinDefNew2 = Skins.CreateNewSkinDef(SkinInfoTurret2);
-            TurretSkinDefNew2.Bake();
-            MinionSkinReplacements[1].minionSkin = TurretSkinDefNew2;
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinEngiAltWolfoBlue_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_ENGINEER_BLUE";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Engi/blue/skinIconEngiBLUE.png"));
-            newSkinDef.baseSkins = skinEngiAlt.baseSkins;
-            newSkinDef.meshReplacements = skinEngiAlt.meshReplacements;
-            newSkinDef.projectileGhostReplacements = ProjectileGhostReplacements;
-            newSkinDef.minionSkinReplacements = MinionSkinReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinEngiDefault.rootObject;
             newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
             {
                 new SkinDefWolfo.LightColorChanges
@@ -567,13 +441,11 @@ namespace WolfoSkinsMod
                 }
             };
 
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiBody"), newSkinDef);
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiTurretBody"), TurretSkinDefNew);
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody"), TurretSkinDefNew2);
+            H.AddSkinToObject(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/EngiWalkerTurretBody"), turretSkinDef);
         }
 
         [RegisterAchievement("CLEAR_ANY_ENGI", "Skins.Engi.Wolfo.First", "Complete30StagesCareer", 5, null)]
-        public class ClearSimulacrumTreebotBody : Achievement_AltBoss_Simu
+        public class ClearSimulacrumTreebotBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
@@ -582,7 +454,7 @@ namespace WolfoSkinsMod
         }
 
         [RegisterAchievement("CLEAR_BOTH_ENGI", "Skins.Engi.Wolfo.Both", "Complete30StagesCareer", 5, null)]
-        public class ClearSimulacrumTreebotBody2 : Achievement_AltBoss_AND_Simu
+        public class ClearSimulacrumTreebotBody2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

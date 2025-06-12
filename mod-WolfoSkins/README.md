@@ -1,12 +1,15 @@
-Many recolor skins unlocked by beating Simulacrum Wave 50, Twisted Scavs or Voidling.\
-Colossus recolors will be unlocked by beating both objectives. (Achievement should tell you what you have left to do).
-
-First time running the mod will check what characters you already beat wave 50 on and give you the achievements for it. (Won't get notifications for it)\
-There's config to re-run the auto checker or remove all achievements granted.\
-Or for all skins to not require an unlock.
+Many many recolor skins.
 
 A lot of colors are inspired by RoRR palettes.
 
+Unlocked by beating one of : Simulacrum Wave 50, Eclipse 4, Twisted Scavs or Voidling.\
+Colossus recolors will require two of those.
+
+Complete them however you like.\
+Or just unlock all of them with the config.
+
+
+ 
 This mod adds Projectils so it isn't compatible with players who don't have it.
 
 Skin List:
@@ -24,7 +27,7 @@ Bandit : Default : (RoRR Black Hat/Purple)
 Mul-T : Default : Damage (Chest)
 Mul-T : Mastery : Healing (Chest)
 Mul-T : Colossus : Utility (Chest)
-Engineer : Default : (RoRR Wine/Yellow color)
+Engineer : Default : (RoRR Red/Yellow color)
 Engineer : Mastery : (RoRR Light Blue/Pink color)
 Engineer : Colossus : Black / Red
 Artificer : Mix : (RoRR Orange/Black)
@@ -95,12 +98,6 @@ Nemesis Enforcer : (Yellow/Black)
 Pilot : (RoRR White)
 Pilot : (RoRR Red)
 Pilot : (RoRR Blue/Yellow)
-Chef_Mod : (RoRR Red hat)
-Chef_Mod : (RoRR Green hat)
-Chef_Mod : (RoRR Blue hat)
-Chef_Mod : (RoRR Black)
-Chef_Mod : Cyan/Pink/Gray
-Chef_Mod : (RoRR Provi Trial colors)
 ```
 
 <details>

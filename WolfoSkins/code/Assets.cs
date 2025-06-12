@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using System;
 
 namespace WolfoSkinsMod
 {
@@ -12,7 +11,7 @@ namespace WolfoSkinsMod
         public static AssetBundle Bundle;
         public static PluginInfo PluginInfo;
         public static string Folder = "Skins";
- 
+
         internal static void Init(PluginInfo info)
         {
             PluginInfo = info;

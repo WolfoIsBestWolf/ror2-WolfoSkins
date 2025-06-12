@@ -1,7 +1,7 @@
-using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
@@ -9,19 +9,9 @@ namespace WolfoSkinsMod
     {
         internal static void Start()
         {
-            ArtificerSkinORANGE();
-            //ArtificerSkinPURPLE();
-            Artificer_AltColossus();
-            Artificer_AltColossus_Blue();
-            //ArtificerSkinRAINBOW();
-        }
-        internal static void Artificer_AltColossus_Blue()
-        {
+            SkinDef skinMageDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageDefault.asset").WaitForCompletion();
+            SkinDef skinMageAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageAlt.asset").WaitForCompletion();
             SkinDef skinMageAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageAltColossus.asset").WaitForCompletion();
-            Texture2D texRampLightning2 = Addressables.LoadAssetAsync<Texture2D>(key: "RoR2/Base/Common/ColorRamps/texRampLightning2.png").WaitForCompletion();
-
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinMageAltColossus.rendererInfos.Length+4];
-            System.Array.Copy(skinMageAltColossus.rendererInfos, NewRenderInfos, skinMageAltColossus.rendererInfos.Length);
 
             ////Materials
             //0 : Jets
@@ -30,27 +20,42 @@ namespace WolfoSkinsMod
             //3 : matMageAltColossus
 
 
-            Material matMageAltColossus = Object.Instantiate(skinMageAltColossus.rendererInfos[2].defaultMaterial);
-          
-            Texture2D texMageAltColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/White/texMageAltColossusDiffuse.png");
-            texMageAltColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
+            ArtificerSkinORANGE(skinMageDefault, skinMageAlt.ReturnParams());
+            //ArtificerSkinPURPLE();
+            Artificer_AltColossus(skinMageAltColossus);
+            Artificer_AltColossus_Blue(skinMageAltColossus);
+            //ArtificerSkinRAINBOW();
+        }
+        internal static void Artificer_AltColossus_Blue(SkinDef skinMageAltColossus)
+        {
+            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinMageAltColossusWolfo2_DLC2",
+                nameToken = "SIMU_SKIN_MAGE_COLOSSUS_BLUE",
+                icon = H.GetIcon("artificer_dlc2_white"),
+                original = skinMageAltColossus,
+                extraRenders = 4,
+                unsetMat = true,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
+            Material matMageAltColossus = CloneMat(newRenderInfos, 2);
+
+            Texture2D texRampLightning2 = Addressables.LoadAssetAsync<Texture2D>(key: "RoR2/Base/Common/ColorRamps/texRampLightning2.png").WaitForCompletion();
             Texture2D texMageAltColossusFlowMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/White/texMageAltColossusFlowMask.png");
-            texMageAltColossusFlowMask.wrapMode = TextureWrapMode.Clamp;
 
-
-            matMageAltColossus.mainTexture = texMageAltColossusDiffuse;
+            matMageAltColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/White/texMageAltColossusDiffuse.png");
             matMageAltColossus.SetTexture("_FlowHeightmap", texMageAltColossusFlowMask);
-           // matMageAltColossus.SetTexture("_FlowHeightMask", texMageAltColossusFlowMask);//texRampDroneFire.png
+            matMageAltColossus.SetTexture("_FlowHeightMask", texMageAltColossusFlowMask);//texRampDroneFire.png
             matMageAltColossus.SetTexture("_FlowHeightRamp", texRampLightning2);//texRampThermite2.png
             matMageAltColossus.SetFloat("_FlowEmissionStrength", 0.75f);//3
 
-            NewRenderInfos[2].defaultMaterial = matMageAltColossus;
-            NewRenderInfos[3].defaultMaterial = matMageAltColossus;
+            newRenderInfos[2].defaultMaterial = matMageAltColossus;
+            newRenderInfos[3].defaultMaterial = matMageAltColossus;
 
             #region BlueJets
-            Transform JetsOn = NewRenderInfos[0].renderer.transform.parent.GetChild(5);
-            Material mageMageFireStarburst = Object.Instantiate(skinMageAltColossus.rendererInfos[0].defaultMaterial);
+            Transform JetsOn = newRenderInfos[0].renderer.transform.parent.GetChild(5);
+            Material mageMageFireStarburst = CloneMat(newRenderInfos, 0);
             mageMageFireStarburst.SetTexture("_RemapTex", texRampLightning2);
 
             Material matMageFlamethrower = Object.Instantiate(JetsOn.GetChild(0).GetComponent<ParticleSystemRenderer>().material);
@@ -58,9 +63,9 @@ namespace WolfoSkinsMod
             matMageFlamethrower.SetFloat("_Boost", 0.25f);
 
 
-            NewRenderInfos[0].defaultMaterial = mageMageFireStarburst;
-            NewRenderInfos[1].defaultMaterial = mageMageFireStarburst;
-            NewRenderInfos[4] = new CharacterModel.RendererInfo
+            newRenderInfos[0].defaultMaterial = mageMageFireStarburst;
+            newRenderInfos[1].defaultMaterial = mageMageFireStarburst;
+            newRenderInfos[4] = new CharacterModel.RendererInfo
             {
                 renderer = JetsOn.GetChild(0).GetComponent<ParticleSystemRenderer>(), //matMageFlamethrower 
                 defaultMaterial = matMageFlamethrower,
@@ -68,21 +73,21 @@ namespace WolfoSkinsMod
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
             };
             //Light
-            NewRenderInfos[5] = new CharacterModel.RendererInfo
+            newRenderInfos[5] = new CharacterModel.RendererInfo
             {
                 renderer = JetsOn.GetChild(2).GetComponent<MeshRenderer>(), //mageMageFireStarburst  
                 defaultMaterial = mageMageFireStarburst,
                 ignoreOverlays = true,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
             };
-            NewRenderInfos[6] = new CharacterModel.RendererInfo
+            newRenderInfos[6] = new CharacterModel.RendererInfo
             {
                 renderer = JetsOn.GetChild(3).GetComponent<MeshRenderer>(), //mageMageFireStarburst  
                 defaultMaterial = mageMageFireStarburst,
                 ignoreOverlays = true,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
             };
-            NewRenderInfos[7] = new CharacterModel.RendererInfo
+            newRenderInfos[7] = new CharacterModel.RendererInfo
             {
                 renderer = JetsOn.GetChild(4).GetComponent<ParticleSystemRenderer>(), //mageMageFireStarburst  
                 defaultMaterial = mageMageFireStarburst,
@@ -93,15 +98,7 @@ namespace WolfoSkinsMod
 
             #endregion
             //
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinMageAltColossusWolfo2_AltBoss";
-            newSkinDef.nameToken = "SIMU_SKIN_MAGE_COLOSSUS_BLUE";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/White/Artificer.png"));
-            newSkinDef.baseSkins = skinMageAltColossus.baseSkins;
-            newSkinDef.meshReplacements = skinMageAltColossus.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinMageAltColossus.rootObject;
+
             newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
             {
                 new SkinDefWolfo.LightColorChanges
@@ -110,50 +107,26 @@ namespace WolfoSkinsMod
                     lightPath = "MageArmature/ROOT/base/stomach/chest/JetsOn/Point Light",
                 },
             };
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/MageBody"), newSkinDef);
         }
 
-        internal static void Artificer_AltColossus()
+        internal static void Artificer_AltColossus(SkinDef skinMageAltColossus)
         {
-            SkinDef skinMageAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageAltColossus.asset").WaitForCompletion();
-
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinMageAltColossus.rendererInfos.Length];
-            System.Array.Copy(skinMageAltColossus.rendererInfos, NewRenderInfos, skinMageAltColossus.rendererInfos.Length);
-
-            ////Materials
-            //0 : Jets
-            //1 : Jets
-            //2 : matMageAltColossus
-            //3 : matMageAltColossus
-
-            Material matMageAltColossus = Object.Instantiate(skinMageAltColossus.rendererInfos[2].defaultMaterial);
-
-
-            Texture2D texMageAltColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/Purple/texMageAltColossusDiffuse.png");
-            texMageAltColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texMageAltColossusFlowMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/White/texMageAltColossusFlowMask.png");
-            texMageAltColossusFlowMask.wrapMode = TextureWrapMode.Clamp;
-
-            matMageAltColossus.mainTexture = texMageAltColossusDiffuse;
-            matMageAltColossus.SetTexture("_FlowHeightmap", texMageAltColossusFlowMask);
+            CharacterModel.RendererInfo[] newRenderInfos = CreateNewSkinR(new SkinInfo
+            {
+                name = "skinMageAltColossus_DLC2",
+                nameToken = "SIMU_SKIN_MAGE_COLOSSUS",
+                icon = H.GetIcon("artificer_dlc2_purple"),
+                original = skinMageAltColossus,
+            });
+            Material matMageAltColossus = CloneMat(newRenderInfos, 2);
+            matMageAltColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/Purple/texMageAltColossusDiffuse.png");
+            matMageAltColossus.SetTexture("_FlowHeightmap", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/White/texMageAltColossusFlowMask.png"));
             matMageAltColossus.SetFloat("_FlowEmissionStrength", 1);//0.9
             matMageAltColossus.SetFloat("_NormalStrength", 2);//0.9
-            
-            NewRenderInfos[2].defaultMaterial = matMageAltColossus;
-            NewRenderInfos[3].defaultMaterial = matMageAltColossus;
 
+            newRenderInfos[2].defaultMaterial = matMageAltColossus;
+            newRenderInfos[3].defaultMaterial = matMageAltColossus;
 
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinMageAltColossusWolfo_AltBoss";
-            newSkinDef.nameToken = "SIMU_SKIN_MAGE_COLOSSUS";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/Colossus/Purple/icon.png"));
-            newSkinDef.baseSkins = skinMageAltColossus.baseSkins;
-            newSkinDef.meshReplacements = skinMageAltColossus.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinMageAltColossus.rootObject;
-
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/MageBody"), newSkinDef);
         }
 
         #region Old Rainbow
@@ -163,8 +136,8 @@ namespace WolfoSkinsMod
             SkinDef skinMageDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageDefault.asset").WaitForCompletion();
             SkinDef skinMageAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageAlt.asset").WaitForCompletion();
             //
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[9];
-            System.Array.Copy(skinMageAlt.rendererInfos, NewRenderInfos, 4);
+            CharacterModel.RendererInfo[] newRenderInfos = new CharacterModel.RendererInfo[9];
+            System.Array.Copy(skinMageAlt.rendererInfos, newRenderInfos, 4);
 
             Texture2D texMageDiffuseAlt = new Texture2D(512, 512, TextureFormat.DXT5, false);
             texMageDiffuseAlt.LoadImage(Properties.Resources.texMageDiffuseAlt, true);
@@ -177,9 +150,9 @@ namespace WolfoSkinsMod
             texRampMageFire.wrapMode = TextureWrapMode.Clamp;
 
 
-            Material mageMageFireStarburst = Object.Instantiate(skinMageAlt.rendererInfos[0].defaultMaterial);
-            Material matMage = Object.Instantiate(skinMageAlt.rendererInfos[3].defaultMaterial);
-            Material matMageFlamethrower = Object.Instantiate(NewRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(0).GetComponent<ParticleSystemRenderer>().material);
+            Material mageMageFireStarburst = CloneMat(MageAlt.rendererInfos[0].defaultMaterial);
+            Material matMage = CloneMat(MageAlt.rendererInfos[3].defaultMaterial);
+            Material matMageFlamethrower = Object.Instantiate(newRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(0).GetComponent<ParticleSystemRenderer>().material);
 
             matMage.mainTexture = texMageDiffuseAlt;
 
@@ -192,36 +165,36 @@ namespace WolfoSkinsMod
             //matMage.color = new Color(0.66f, 0.66f, 0.66f, 1);
             //matMage.SetColor("_EmColor", new Color(0.4f, 0.2f, 0));
 
-            NewRenderInfos[0].defaultMaterial = mageMageFireStarburst;     //mageMageFireStarburst //Jet
-            NewRenderInfos[1].defaultMaterial = mageMageFireStarburst;     //mageMageFireStarburst
-            NewRenderInfos[2].defaultMaterial = matMage;          //matMage //Cape
-            NewRenderInfos[3].defaultMaterial = matMage;          //matMage //Mage
+            newRenderInfos[0].defaultMaterial = mageMageFireStarburst;     //mageMageFireStarburst //Jet
+            newRenderInfos[1].defaultMaterial = mageMageFireStarburst;     //mageMageFireStarburst
+            newRenderInfos[2].defaultMaterial = matMage;          //matMage //Cape
+            newRenderInfos[3].defaultMaterial = matMage;          //matMage //Mage
 
-            NewRenderInfos[4] = new CharacterModel.RendererInfo
+            newRenderInfos[4] = new CharacterModel.RendererInfo
             {
-                renderer = NewRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(0).GetComponent<ParticleSystemRenderer>(), //matMageFlamethrower 
+                renderer = newRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(0).GetComponent<ParticleSystemRenderer>(), //matMageFlamethrower 
                 defaultMaterial = matMageFlamethrower,
                 ignoreOverlays = true,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
             };
             //Light
-            NewRenderInfos[5] = new CharacterModel.RendererInfo
+            newRenderInfos[5] = new CharacterModel.RendererInfo
             {
-                renderer = NewRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(2).GetComponent<MeshRenderer>(), //mageMageFireStarburst  
+                renderer = newRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(2).GetComponent<MeshRenderer>(), //mageMageFireStarburst  
                 defaultMaterial = mageMageFireStarburst,
                 ignoreOverlays = true,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
             };
-            NewRenderInfos[6] = new CharacterModel.RendererInfo
+            newRenderInfos[6] = new CharacterModel.RendererInfo
             {
-                renderer = NewRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(3).GetComponent<MeshRenderer>(), //mageMageFireStarburst  
+                renderer = newRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(3).GetComponent<MeshRenderer>(), //mageMageFireStarburst  
                 defaultMaterial = mageMageFireStarburst,
                 ignoreOverlays = true,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
             };
-            NewRenderInfos[7] = new CharacterModel.RendererInfo
+            newRenderInfos[7] = new CharacterModel.RendererInfo
             {
-                renderer = NewRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(4).GetComponent<ParticleSystemRenderer>(), //mageMageFireStarburst  
+                renderer = newRenderInfos[0].renderer.transform.parent.GetChild(5).GetChild(4).GetComponent<ParticleSystemRenderer>(), //mageMageFireStarburst  
                 defaultMaterial = mageMageFireStarburst,
                 ignoreOverlays = true,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
@@ -236,12 +209,12 @@ namespace WolfoSkinsMod
             //
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinMageWolfoRainbow_Simu",
+                Name = "skinMageWolfoRainbow_1",
                 NameToken = "SIMU_SKIN_MAGE",
                 Icon = SkinIconS,
                 BaseSkins = skinMageAlt.baseSkins,
                 MeshReplacements = MeshReplacements,
-                RendererInfos = NewRenderInfos,
+                RendererInfos = newRenderInfos,
                 RootObject = skinMageAlt.rootObject,
             };
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/MageBody"), SkinInfo);
@@ -249,46 +222,33 @@ namespace WolfoSkinsMod
         */
         #endregion
 
-        internal static void ArtificerSkinORANGE()
+        internal static void ArtificerSkinORANGE(SkinDef skinMageDefault, SkinDefParams skinMageAlt)
         {
-            //RoRR Orange Artificer
-            SkinDef skinMageDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageDefault.asset").WaitForCompletion();
-            SkinDef skinMageAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageAlt.asset").WaitForCompletion();
-
-            CharacterModel.RendererInfo[] NewRenderInfosORANGE = new CharacterModel.RendererInfo[4];
-            System.Array.Copy(skinMageAlt.rendererInfos, NewRenderInfosORANGE, 4);
+            SkinDef newSkinDef = CreateNewSkin(new SkinInfo
+            {
+                name = "skinMage_1",
+                nameToken = "SIMU_SKIN_MAGE_ORANGE",
+                icon = H.GetIcon("artificer_orange"),
+                original = skinMageDefault,
+                cloneMesh = true
+            });
+            newSkinDef.skinDefParams.meshReplacements[0] = skinMageAlt.meshReplacements[0];
+            CharacterModel.RendererInfo[] newRenderInfosORANGE = newSkinDef.skinDefParams.rendererInfos;
 
             Texture2D texMageDiffuseORANGE = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/texMageDiffuseORANGE.png");
             texMageDiffuseORANGE.wrapMode = TextureWrapMode.Clamp;
 
-            Material matMageORANGE = Object.Instantiate(skinMageAlt.rendererInfos[3].defaultMaterial);
-            Material matMageORANGECOAT = Object.Instantiate(skinMageAlt.rendererInfos[3].defaultMaterial);
+            Material matMageORANGE = CloneMat(newRenderInfosORANGE, 2);
+            Material matMageORANGECOAT = CloneMat(newRenderInfosORANGE, 3);
 
             matMageORANGE.mainTexture = texMageDiffuseORANGE;
             matMageORANGECOAT.mainTexture = texMageDiffuseORANGE;
 
-            NewRenderInfosORANGE[2].defaultMaterial = matMageORANGE;
-            NewRenderInfosORANGE[3].defaultMaterial = matMageORANGE;
+            newRenderInfosORANGE[2].defaultMaterial = matMageORANGE;
+            newRenderInfosORANGE[3].defaultMaterial = matMageORANGE;
 
-            //
-            //MeshReplacements
-            RoR2.SkinDef.MeshReplacement[] MeshReplacements = new SkinDef.MeshReplacement[2];
-            skinMageAlt.meshReplacements.CopyTo(MeshReplacements, 0);
-            MeshReplacements[1].mesh = skinMageDefault.meshReplacements[1].mesh;
-            //
-            SkinDefInfo SkinInfo2 = new SkinDefInfo
-            {
-                Name = "skinMageWolfo_Simu",
-                NameToken = "SIMU_SKIN_MAGE_ORANGE",
-                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/skinIconMageOrange.png")),
-                BaseSkins = skinMageAlt.baseSkins,
-                MeshReplacements = MeshReplacements,
-                RendererInfos = NewRenderInfosORANGE,
-                RootObject = skinMageAlt.rootObject,
-            };
-            //unlockableDef.achievementIcon = SkinIconS2;
 
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/MageBody"), SkinInfo2);
+
         }
 
         #region Old Purple
@@ -300,30 +260,30 @@ namespace WolfoSkinsMod
             SkinDef skinMageAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Mage/skinMageAlt.asset").WaitForCompletion();
 
             //
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[4];
-            System.Array.Copy(skinMageAlt.rendererInfos, NewRenderInfos, 4);
+            CharacterModel.RendererInfo[] newRenderInfos = new CharacterModel.RendererInfo[4];
+            System.Array.Copy(skinMageAlt.rendererInfos, newRenderInfos, 4);
 
             Texture2D texMageDiffuseAlt = new Texture2D(512, 512, TextureFormat.DXT5, false);
             texMageDiffuseAlt.LoadImage(Properties.Resources.texMageDiffuseAltPURPLE, true);
             texMageDiffuseAlt.filterMode = FilterMode.Bilinear;
             texMageDiffuseAlt.wrapMode = TextureWrapMode.Clamp;
 
-            Material matMage = Object.Instantiate(skinMageAlt.rendererInfos[3].defaultMaterial);
+            Material matMage = CloneMat(MageAlt.rendererInfos[3].defaultMaterial);
 
             matMage.mainTexture = texMageDiffuseAlt;
 
-            NewRenderInfos[2].defaultMaterial = matMage;//Cape
-            NewRenderInfos[3].defaultMaterial = matMage;//Mage
+            newRenderInfos[2].defaultMaterial = matMage;//Cape
+            newRenderInfos[3].defaultMaterial = matMage;//Mage
 
 
             SkinDefInfo SkinInfo = new SkinDefInfo
             {
-                Name = "skinMageWolfo_Purple_Simu",
+                Name = "skinMage_Purple_1",
                 NameToken = "SIMU_SKIN_MAGE_PURPLE",
                 Icon = SkinIconS,
                 BaseSkins = skinMageAlt.baseSkins,
                 MeshReplacements = skinMageAlt.meshReplacements,
-                RendererInfos = NewRenderInfos,
+                RendererInfos = newRenderInfos,
                 RootObject = skinMageAlt.rootObject,
             };
 
@@ -331,9 +291,9 @@ namespace WolfoSkinsMod
          }
         */
         #endregion
-        
+
         [RegisterAchievement("CLEAR_ANY_MAGE", "Skins.Mage.Wolfo.First", "FreeMage", 5, null)]
-        public class ClearSimulacrumMageBody : Achievement_AltBoss_Simu
+        public class ClearSimulacrumMageBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
@@ -341,7 +301,7 @@ namespace WolfoSkinsMod
             }
         }
         [RegisterAchievement("CLEAR_BOTH_MAGE", "Skins.Mage.Wolfo.Both", "FreeMage", 5, null)]
-        public class ClearSimulacrumMageBody2: Achievement_AltBoss_AND_Simu
+        public class ClearSimulacrumMageBody2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

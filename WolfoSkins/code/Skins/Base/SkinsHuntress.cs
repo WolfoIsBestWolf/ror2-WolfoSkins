@@ -1,7 +1,7 @@
-using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
@@ -9,68 +9,10 @@ namespace WolfoSkinsMod
     {
         internal static void Start()
         {
-            HuntressSkin();
-            HuntressSkinYellow();
-            Colossus_Alt();
-        }
-
-        internal static void Colossus_Alt()
-        {
+            SkinDef skinHuntressDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Huntress/skinHuntressDefault.asset").WaitForCompletion();
+            SkinDefParams skinHuntressAlt = Addressables.LoadAssetAsync<SkinDefParams>(key: "RoR2/Base/Huntress/skinHuntressAlt_params.asset").WaitForCompletion();
             SkinDef skinHuntressAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Huntress/skinHuntressAltColossus.asset").WaitForCompletion();
 
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinHuntressAltColossus.rendererInfos.Length];
-            System.Array.Copy(skinHuntressAltColossus.rendererInfos, NewRenderInfos, skinHuntressAltColossus.rendererInfos.Length);
-
-            Material matHuntressAltColossus = Object.Instantiate(skinHuntressAltColossus.rendererInfos[2].defaultMaterial);
-            Material matHuntressAltColossusBowString = Object.Instantiate(skinHuntressAltColossus.rendererInfos[3].defaultMaterial);
-            Material matHuntressAltColossusArrow = Object.Instantiate(skinHuntressAltColossus.rendererInfos[4].defaultMaterial);
-
-
-            Texture2D texHuntressAltColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/Colossus/texHuntressAltColossusDiffuse.png");
-            texHuntressAltColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texRampHuntressAltColossus = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/Colossus/texRampHuntressAltColossus.png");
-            texRampHuntressAltColossus.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texRampHuntressAltColossusArrow = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/Colossus/texRampHuntressAltColossusArrow.png");
-            texRampHuntressAltColossusArrow.wrapMode = TextureWrapMode.Clamp;
-
-
-            matHuntressAltColossus.mainTexture = texHuntressAltColossusDiffuse;
-            matHuntressAltColossus.SetTexture("_FresnelRamp", texRampHuntressAltColossus);
-            matHuntressAltColossus.SetColor("_EmTex", new Color(1f,0.5f,0.5f)); //1 0.9296 0.3255 1
-
-            matHuntressAltColossusBowString.SetTexture("_RemapTex", texRampHuntressAltColossusArrow);
-            matHuntressAltColossusArrow.SetTexture("_RemapTex", texRampHuntressAltColossusArrow);
-
-
-            NewRenderInfos[0].defaultMaterial = matHuntressAltColossus;
-            NewRenderInfos[1].defaultMaterial = matHuntressAltColossus;
-            NewRenderInfos[2].defaultMaterial = matHuntressAltColossus;
-            NewRenderInfos[3].defaultMaterial = matHuntressAltColossusBowString;
-            NewRenderInfos[4].defaultMaterial = matHuntressAltColossusArrow;
-            NewRenderInfos[5].defaultMaterial = matHuntressAltColossusArrow;
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinHuntressAltColossusWolfo_AltBoss";
-            newSkinDef.nameToken = "SIMU_SKIN_HUNTRESS_COLOSSUS";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/Colossus/huntress.png"));
-            newSkinDef.baseSkins = skinHuntressAltColossus.baseSkins;
-            newSkinDef.meshReplacements = skinHuntressAltColossus.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinHuntressAltColossus.rootObject;
-
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/HuntressBody"), newSkinDef);
-        }
-
-        internal static void HuntressSkin()
-        {
-            SkinDef skinHuntressDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Huntress/skinHuntressDefault.asset").WaitForCompletion();
-            SkinDef skinHuntressAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Huntress/skinHuntressAlt.asset").WaitForCompletion();
-
-            //
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinHuntressDefault.rendererInfos.Length];
-            System.Array.Copy(skinHuntressDefault.rendererInfos, NewRenderInfos, skinHuntressDefault.rendererInfos.Length);
 
             //0 matBowString BowString
             //1 matHuntress Bow
@@ -86,39 +28,76 @@ namespace WolfoSkinsMod
             //10 matHuntress 
             //11 matHuntressCape 
 
-            Material matBowString = Object.Instantiate(skinHuntressDefault.rendererInfos[0].defaultMaterial);
-            Material matHuntress = Object.Instantiate(skinHuntressDefault.rendererInfos[1].defaultMaterial);
-            Material matHuntressBow = Object.Instantiate(skinHuntressDefault.rendererInfos[1].defaultMaterial);
-            Material matHuntressArrow = Object.Instantiate(skinHuntressDefault.rendererInfos[2].defaultMaterial);
-            Material matHuntressCharged = Object.Instantiate(skinHuntressDefault.rendererInfos[4].defaultMaterial);
-            Material matHuntressCape = Object.Instantiate(skinHuntressDefault.rendererInfos[11].defaultMaterial);
+            HuntressSkin(skinHuntressDefault);
+            HuntressSkinYellow(skinHuntressDefault, skinHuntressAlt);
+            Colossus_Alt(skinHuntressAltColossus);
+        }
 
-            Texture2D texHuntressDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texHuntressDiffuse.png");
-            texHuntressDiffuse.wrapMode = TextureWrapMode.Clamp;
+        internal static void Colossus_Alt(SkinDef skinHuntressAltColossus)
+        {
+            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinHuntressAltColossus_DLC2",
+                nameToken = "SIMU_SKIN_HUNTRESS_COLOSSUS",
+                icon = GetIcon("huntress_dlc2"),
+                original = skinHuntressAltColossus,
+                w = true,
+                unsetMat = true,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Texture2D texHuntressDiffuseBow = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texHuntressDiffuseBow.png");
-            texHuntressDiffuseBow.wrapMode = TextureWrapMode.Clamp;
+            Material matHuntressAltColossus = CloneMat(newRenderInfos, 2);
+            Material matHuntressAltColossusBowString = CloneMat(newRenderInfos, 3);
+            Material matHuntressAltColossusArrow = CloneMat(newRenderInfos, 4);
+
+            Texture2D texRampHuntressAltColossusArrow = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/Colossus/texRampHuntressAltColossusArrow.png");
+
+            matHuntressAltColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/Colossus/texHuntressAltColossusDiffuse.png");
+            matHuntressAltColossus.SetTexture("_FresnelRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/Colossus/texRampHuntressAltColossus.png"));
+            matHuntressAltColossus.SetColor("_EmTex", new Color(1f, 0.5f, 0.5f)); //1 0.9296 0.3255 1
+
+            matHuntressAltColossusBowString.SetTexture("_RemapTex", texRampHuntressAltColossusArrow);
+            matHuntressAltColossusArrow.SetTexture("_RemapTex", texRampHuntressAltColossusArrow);
+
+            newRenderInfos[0].defaultMaterial = matHuntressAltColossus;
+            newRenderInfos[1].defaultMaterial = matHuntressAltColossus;
+            newRenderInfos[2].defaultMaterial = matHuntressAltColossus;
+            newRenderInfos[3].defaultMaterial = matHuntressAltColossusBowString;
+            newRenderInfos[4].defaultMaterial = matHuntressAltColossusArrow;
+            newRenderInfos[5].defaultMaterial = matHuntressAltColossusArrow;
+
+        }
+
+        internal static void HuntressSkin(SkinDef skinHuntressDefault)
+        {
+            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinHuntress_1",
+                nameToken = "SIMU_SKIN_HUNTRESS",
+                icon = GetIcon("huntress_pink"),
+                original = skinHuntressDefault,
+                w = true,
+                unsetMat = true,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+
+            Material matBowString = CloneMat(newRenderInfos, 0);
+            Material matHuntress = CloneMat(newRenderInfos, 1);
+            Material matHuntressBow = CloneMat(newRenderInfos, 1);
+            Material matHuntressArrow = CloneMat(newRenderInfos, 2);
+            Material matHuntressCharged = CloneMat(newRenderInfos, 4);
+            Material matHuntressCape = CloneMat(newRenderInfos, 11);
+
 
             Texture2D texHuntressEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texHuntressEmission.png");
-            texHuntressEmission.wrapMode = TextureWrapMode.Clamp;
 
             Texture2D texRampHuntress = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texRampHuntress.png");
-            texRampHuntress.filterMode = FilterMode.Point;
-            texRampHuntress.wrapMode = TextureWrapMode.Clamp;
 
-            Texture2D texRampHuntressSoft = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texRampHuntressSoft.png");
-            texRampHuntressSoft.filterMode = FilterMode.Point;
-            texRampHuntressSoft.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texRampHuntressSoft2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texRampHuntressSoft2.png");
-            texRampHuntressSoft2.filterMode = FilterMode.Point;
-            texRampHuntressSoft2.wrapMode = TextureWrapMode.Clamp;
-
-            matHuntress.mainTexture = texHuntressDiffuse;
+            matHuntress.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texHuntressDiffuse.png");
             matHuntress.SetTexture("_EmTex", texHuntressEmission);
-            matHuntress.SetColor("_EmColor", new Color(2f,1f,2f));
+            matHuntress.SetColor("_EmColor", new Color(2f, 1f, 2f));
 
-            matHuntressBow.mainTexture = texHuntressDiffuseBow;
+            matHuntressBow.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texHuntressDiffuseBow.png");
             matHuntressBow.SetTexture("_EmTex", texHuntressEmission);
             matHuntressBow.SetColor("_EmColor", new Color(1f, 0.5f, 1f));
             //matHuntressBow.color = new Color(0.5f, 0.5f, 0.5f);
@@ -127,27 +106,27 @@ namespace WolfoSkinsMod
             //matHuntressCape.color = new Color(1f, 0.5f, 0.8f);
             matHuntressCape.color = new Color(0.8f, 0.4f, 0.6f);
 
-            matBowString.SetTexture("_RemapTex", texRampHuntressSoft);
-            matHuntressArrow.SetTexture("_RemapTex", texRampHuntressSoft2);
+            matBowString.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texRampHuntressSoft.png"));
+            matHuntressArrow.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texRampHuntressSoft2.png"));
             matHuntressCharged.SetTexture("_RemapTex", texRampHuntress);
 
-            NewRenderInfos[0].defaultMaterial = matBowString;
-            NewRenderInfos[1].defaultMaterial = matHuntressBow;
-            NewRenderInfos[2].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[3].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[4].defaultMaterial = matHuntressCharged;
-            NewRenderInfos[5].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[6].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[7].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[8].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[9].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[10].defaultMaterial = matHuntress;
-            NewRenderInfos[11].defaultMaterial = matHuntressCape;
+            newRenderInfos[0].defaultMaterial = matBowString;
+            newRenderInfos[1].defaultMaterial = matHuntressBow;
+            newRenderInfos[2].defaultMaterial = matHuntressArrow;
+            newRenderInfos[3].defaultMaterial = matHuntressArrow;
+            newRenderInfos[4].defaultMaterial = matHuntressCharged;
+            newRenderInfos[5].defaultMaterial = matHuntressArrow;
+            newRenderInfos[6].defaultMaterial = matHuntressArrow;
+            newRenderInfos[7].defaultMaterial = matHuntressArrow;
+            newRenderInfos[8].defaultMaterial = matHuntressArrow;
+            newRenderInfos[9].defaultMaterial = matHuntressArrow;
+            newRenderInfos[10].defaultMaterial = matHuntress;
+            newRenderInfos[11].defaultMaterial = matHuntressCape;
             //
 
 
             GameObject HuntressArrowRain = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Huntress/HuntressArrowRain.prefab").WaitForCompletion();
-            GameObject HuntressArrowRainWolfo1 = PrefabAPI.InstantiateClone(HuntressArrowRain, "HuntressArrowRainWolfo1", false);
+            GameObject HuntressArrowRainWolfo1 = R2API.PrefabAPI.InstantiateClone(HuntressArrowRain, "HuntressArrowRainWolfo1", false);
 
             Material matHuntressAreaIndicatorActive = Object.Instantiate(HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material);
             Material matHuntressFlash = Object.Instantiate(HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(6).GetComponent<ParticleSystemRenderer>().material);
@@ -155,24 +134,16 @@ namespace WolfoSkinsMod
             matHuntressAreaIndicatorActive.SetTexture("_RemapTex", texRampHuntress);
             matHuntressFlash.SetTexture("_RemapTex", texRampHuntress);
 
-            HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = matHuntressAreaIndicatorActive ;
-            HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(1).GetComponent<ParticleSystemRenderer>().material = matHuntressArrow; 
+            HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = matHuntressAreaIndicatorActive;
+            HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(1).GetComponent<ParticleSystemRenderer>().material = matHuntressArrow;
             HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(2).GetComponent<ParticleSystemRenderer>().material = matHuntressCharged;
             HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);//HITBOX 
             HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(4).gameObject.SetActive(false); //HITBOX
             HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(5).GetComponent<ParticleSystemRenderer>().material = matHuntressArrow;
             HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(6).GetComponent<ParticleSystemRenderer>().material = matHuntressFlash;
-            HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Light>().color = new Color(0.8f,0.2f,0.8f); 
+            HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Light>().color = new Color(0.8f, 0.2f, 0.8f);
             //
             //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinHuntressWolfo_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_HUNTRESS";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/skinIconHuntress.png"));
-            newSkinDef.baseSkins = skinHuntressAlt.baseSkins;
-            newSkinDef.meshReplacements = skinHuntressDefault.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinHuntressDefault.rootObject;
 
             GameObject DisplayEliteRabbitEars = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/DisplayEliteRabbitEars.prefab").WaitForCompletion();
             GameObject DisplayEliteRabbitEarsNew = R2API.PrefabAPI.InstantiateClone(DisplayEliteRabbitEars, "HuntressRabbitEars", false);
@@ -180,11 +151,8 @@ namespace WolfoSkinsMod
 
             Material matRabbitEars = Object.Instantiate(RabbitMesh.material);
 
-            Texture2D texRabbitEarsDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texRabbitEarsDiffuse.png");
-            texRabbitEarsDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            matRabbitEars.mainTexture = texRabbitEarsDiffuse;
-            matRabbitEars.color = new Color(0.6f,0.3f,0.6f);
+            matRabbitEars.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texRabbitEarsDiffuse.png");
+            matRabbitEars.color = new Color(0.6f, 0.3f, 0.6f);
             matRabbitEars.SetTexture("_FresnelRamp", null);
             RabbitMesh.material = matRabbitEars;
             DisplayEliteRabbitEarsNew.GetComponent<ItemDisplay>().rendererInfos[0].defaultMaterial = matRabbitEars;
@@ -207,55 +175,41 @@ namespace WolfoSkinsMod
             replaceArrowRainVFX.skinDef = newSkinDef;
             replaceArrowRainVFX.newVFX = HuntressArrowRainWolfo1.transform.GetChild(0).gameObject;
 
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/HuntressBody"), newSkinDef);
         }
 
-        internal static void HuntressSkinYellow()
+        internal static void HuntressSkinYellow(SkinDef skinHuntressDefault, SkinDefParams skinHuntressAlt)
         {
-            SkinDef skinHuntressDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Huntress/skinHuntressDefault.asset").WaitForCompletion();
-            SkinDef skinHuntressAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Huntress/skinHuntressAlt.asset").WaitForCompletion();
+            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            {
+                name = "skinHuntressWolfoBee_1",
+                nameToken = "SIMU_SKIN_HUNTRESS2",
+                icon = GetIcon("huntress_yellow"),
+                original = skinHuntressDefault,
+                w = true,
+                unsetMat = true,
+                cloneMesh = true,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+            newSkinDef.skinDefParams.meshReplacements[1] = skinHuntressAlt.meshReplacements[1];
 
-            //
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinHuntressDefault.rendererInfos.Length];
-            System.Array.Copy(skinHuntressDefault.rendererInfos, NewRenderInfos, skinHuntressDefault.rendererInfos.Length);
-
-            Material matBowString = Object.Instantiate(skinHuntressDefault.rendererInfos[0].defaultMaterial);
-            Material matHuntress = Object.Instantiate(skinHuntressDefault.rendererInfos[1].defaultMaterial);
-            Material matHuntressBow = Object.Instantiate(skinHuntressDefault.rendererInfos[1].defaultMaterial);
-            Material matHuntressArrow = Object.Instantiate(skinHuntressDefault.rendererInfos[2].defaultMaterial);
-            Material matHuntressCharged = Object.Instantiate(skinHuntressDefault.rendererInfos[4].defaultMaterial);
-            Material matHuntressCapeALT = Object.Instantiate(skinHuntressAlt.rendererInfos[2].defaultMaterial);
-
-            Texture2D texHuntressDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texHuntressDiffuseYELLOW.png");
-            texHuntressDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texHuntressDiffuseBow = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texHuntressDiffuseBowYELLOW.png");
-            texHuntressDiffuseBow.wrapMode = TextureWrapMode.Clamp;
+            Material matBowString = CloneMat(newRenderInfos, 0);
+            Material matHuntress = CloneMat(newRenderInfos, 1);
+            Material matHuntressBow = CloneMat(newRenderInfos, 1);
+            Material matHuntressArrow = CloneMat(newRenderInfos, 2);
+            Material matHuntressCharged = CloneMat(newRenderInfos, 4);
+            Material matHuntressCapeALT = Object.Instantiate(Addressables.LoadAssetAsync<Material>(key: "fdcb95c014a8f754495f6e564bf17354").WaitForCompletion());
 
             Texture2D texHuntressEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texHuntressEmissionYELLOW.png");
-            texHuntressEmission.wrapMode = TextureWrapMode.Clamp;
 
             Texture2D texRampHuntress = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texRampHuntressYELLOW.png");
-            texRampHuntress.filterMode = FilterMode.Point;
-            texRampHuntress.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texRampHuntressSoft = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texRampHuntressSoftYELLOW.png");
-            texRampHuntressSoft.filterMode = FilterMode.Point;
-            texRampHuntressSoft.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texRampHuntressSoft2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texRampHuntressSoft2YELLOW.png");
-            texRampHuntressSoft2.filterMode = FilterMode.Point;
-            texRampHuntressSoft2.wrapMode = TextureWrapMode.Clamp;
-
             Texture2D texHuntressScarfDiffuseAlt = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texHuntressScarfDiffuseAltYELLOW.png");
-            texHuntressScarfDiffuseAlt.wrapMode = TextureWrapMode.Repeat;
 
 
-            matHuntress.mainTexture = texHuntressDiffuse;
+            matHuntress.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texHuntressDiffuseYELLOW.png");
             matHuntress.SetTexture("_EmTex", texHuntressEmission);
             matHuntress.SetColor("_EmColor", new Color(2f, 2f, 0f));
 
-            matHuntressBow.mainTexture = texHuntressDiffuseBow;
+            matHuntressBow.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texHuntressDiffuseBowYELLOW.png");
             matHuntressBow.SetTexture("_EmTex", texHuntressEmission);
             matHuntressBow.SetColor("_EmColor", new Color(1f, 1f, 0f));
             //matHuntressBow.color = new Color(0.5f, 0.5f, 0.5f);
@@ -263,25 +217,25 @@ namespace WolfoSkinsMod
             //matHuntressCapeALT.color = new Color(0.8f, 0.7f, 0.4f);
             matHuntressCapeALT.mainTexture = texHuntressScarfDiffuseAlt;
 
-            matBowString.SetTexture("_RemapTex", texRampHuntressSoft);
-            matHuntressArrow.SetTexture("_RemapTex", texRampHuntressSoft2);
+            matBowString.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texRampHuntressSoftYELLOW.png"));
+            matHuntressArrow.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texRampHuntressSoft2YELLOW.png"));
             matHuntressCharged.SetTexture("_RemapTex", texRampHuntress);
 
-            NewRenderInfos[0].defaultMaterial = matBowString; 
-            NewRenderInfos[1].defaultMaterial = matHuntressBow;
-            NewRenderInfos[2].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[3].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[4].defaultMaterial = matHuntressCharged;
-            NewRenderInfos[5].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[6].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[7].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[8].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[9].defaultMaterial = matHuntressArrow;
-            NewRenderInfos[10].defaultMaterial = matHuntress;
-            NewRenderInfos[11].defaultMaterial = matHuntressCapeALT;
-       
+            newRenderInfos[0].defaultMaterial = matBowString;
+            newRenderInfos[1].defaultMaterial = matHuntressBow;
+            newRenderInfos[2].defaultMaterial = matHuntressArrow;
+            newRenderInfos[3].defaultMaterial = matHuntressArrow;
+            newRenderInfos[4].defaultMaterial = matHuntressCharged;
+            newRenderInfos[5].defaultMaterial = matHuntressArrow;
+            newRenderInfos[6].defaultMaterial = matHuntressArrow;
+            newRenderInfos[7].defaultMaterial = matHuntressArrow;
+            newRenderInfos[8].defaultMaterial = matHuntressArrow;
+            newRenderInfos[9].defaultMaterial = matHuntressArrow;
+            newRenderInfos[10].defaultMaterial = matHuntress;
+            newRenderInfos[11].defaultMaterial = matHuntressCapeALT;
+
             GameObject HuntressArrowRain = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Huntress/HuntressArrowRain.prefab").WaitForCompletion();
-            GameObject HuntressArrowRainWolfo1 = PrefabAPI.InstantiateClone(HuntressArrowRain, "HuntressArrowRainWolfoYellow", false);
+            GameObject HuntressArrowRainWolfo1 = R2API.PrefabAPI.InstantiateClone(HuntressArrowRain, "HuntressArrowRainWolfoYellow", false);
 
             Material matHuntressAreaIndicatorActive = Object.Instantiate(HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material);
             Material matHuntressFlash = Object.Instantiate(HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(6).GetComponent<ParticleSystemRenderer>().material);
@@ -298,19 +252,7 @@ namespace WolfoSkinsMod
             HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(6).GetComponent<ParticleSystemRenderer>().material = matHuntressFlash;
             HuntressArrowRainWolfo1.transform.GetChild(0).GetChild(6).GetChild(0).GetComponent<Light>().color = new Color(0.8f, 0.2f, 0.8f);
             //
-            //MeshReplacements
-            RoR2.SkinDef.MeshReplacement[] MeshReplacements = new SkinDef.MeshReplacement[skinHuntressAlt.meshReplacements.Length];
-            skinHuntressAlt.meshReplacements.CopyTo(MeshReplacements, 0);
-            MeshReplacements[0].mesh = skinHuntressDefault.meshReplacements[0].mesh;
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinHuntressWolfoBee_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_HUNTRESS2";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/skinIconHuntressYELLOW.png"));
-            newSkinDef.baseSkins = skinHuntressAlt.baseSkins;
-            newSkinDef.meshReplacements = MeshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinHuntressDefault.rootObject;
+
 
             GameObject DisplayShieldBug = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/ShieldOnly/DisplayShieldBug.prefab").WaitForCompletion();
             GameObject DisplayShieldBugNew = R2API.PrefabAPI.InstantiateClone(DisplayShieldBug, "HuntressBeeHead", false);
@@ -322,11 +264,8 @@ namespace WolfoSkinsMod
             ItemDisplay itemDisplayWings = DisplayBugWingsNew.GetComponent<ItemDisplay>();
 
             Material matShieldBug = Object.Instantiate(itemDisplayAntler.rendererInfos[0].defaultMaterial);
-           
-            Texture2D texShieldBugDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texShieldBugDiffuse.png");
-            texShieldBugDiffuse.wrapMode = TextureWrapMode.Repeat;
 
-            matShieldBug.mainTexture = texShieldBugDiffuse;
+            matShieldBug.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texShieldBugDiffuse.png");
             matShieldBug.color = new Color(0.5f, 0.5f, 0.5f); //0.2123 1 0.9836 1
             matShieldBug.SetColor("_EmColor", new Color(0, 0, 0));
             matShieldBug.SetTexture("_EmTex", null);
@@ -334,13 +273,10 @@ namespace WolfoSkinsMod
             itemDisplayAntler.rendererInfos[0].renderer.material = matShieldBug;
             itemDisplayAntler.rendererInfos[0].defaultMaterial = matShieldBug;
 
-            //
+
             Material matBugWings = Object.Instantiate(itemDisplayWings.rendererInfos[0].defaultMaterial);
 
-            Texture2D texBugWingDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texBugWingDiffuse.png");
-            texBugWingDiffuse.wrapMode = TextureWrapMode.Repeat;
-
-            matBugWings.mainTexture = texBugWingDiffuse;
+            matBugWings.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/yellow/texBugWingDiffuse.png");
             matBugWings.SetTexture("_FresnelRamp", null);
             matBugWings.color = new Color(1, 1, 0.9f);
 
@@ -353,7 +289,6 @@ namespace WolfoSkinsMod
 
             itemDisplayWings.rendererInfos[0].renderer.material = matBugWings;
             itemDisplayWings.rendererInfos[0].defaultMaterial = matBugWings;
-
 
             newSkinDef.addGameObjects = new ItemDisplayRule[]
             {
@@ -393,7 +328,6 @@ namespace WolfoSkinsMod
             replaceArrowRainVFX.skinDef = newSkinDef;
             replaceArrowRainVFX.newVFX = HuntressArrowRainWolfo1.transform.GetChild(0).gameObject;
 
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/HuntressBody"), newSkinDef);
         }
 
         public class ReplaceArrowRainVFX : MonoBehaviour
@@ -402,9 +336,9 @@ namespace WolfoSkinsMod
             public SkinDef skinDef;
 
             public void FixedUpdate()
-            {   
+            {
+
                 GameObject owner = this.gameObject.GetComponent<RoR2.Projectile.ProjectileController>().owner;
-                //Debug.LogWarning(owner);
                 if (owner)
                 {
                     CharacterBody body = owner.GetComponent<CharacterBody>();
@@ -422,7 +356,7 @@ namespace WolfoSkinsMod
 
 
         [RegisterAchievement("CLEAR_ANY_HUNTRESS", "Skins.Huntress.Wolfo.First", null, 5, null)]
-        public class ClearSimulacrumHuntressBody : Achievement_AltBoss_Simu
+        public class ClearSimulacrumHuntressBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
@@ -431,7 +365,7 @@ namespace WolfoSkinsMod
         }
 
         [RegisterAchievement("CLEAR_BOTH_HUNTRESS", "Skins.Huntress.Wolfo.Both", null, 5, null)]
-        public class ClearSimulacrumHuntressBody2 : Achievement_AltBoss_AND_Simu
+        public class ClearSimulacrumHuntressBody2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

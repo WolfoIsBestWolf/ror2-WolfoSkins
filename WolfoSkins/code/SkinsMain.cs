@@ -1,38 +1,39 @@
 ﻿using BepInEx;
-using R2API;
 using R2API.Utils;
 using RoR2;
-using System.Text;
 using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.AddressableAssets;
-using IL.RoR2.Achievements.Artifacts;
 
-#pragma warning disable CS0618 // Type or member is obsolete
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
-#pragma warning restore CS0618 // Type or member is obsolete
 [module: UnverifiableCode]
 
 namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
     [BepInDependency("com.TheTimeSweeper.RedAlert", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.1.0")]
-    [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.2.0")]
+    [NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.DifferentModVersionsAreOk)]
 
     public class WolfoSkins : BaseUnityPlugin
     {
 
         public void Awake()
         {
-            Assets.Init(Info);
             WConfig.InitConfig();
+ 
+            if (WConfig.cfgTest.Value)
+            {
+                WConfig.cfgTest.Value = false;
+                Destroy(this);
+                return;
+            }
+            Assets.Init(Info);
             Unlocks.Hooks();
 
-            //
+
+            //BASE
             SkinsCommando.Start();
             SkinsHuntress.Start();
             SkinsBandit2.Start();
@@ -44,28 +45,62 @@ namespace WolfoSkinsMod
             SkinsLoader.Start();
             SkinsCroco_Acrid.Start();
             SkinsCaptain.Start();
+            //DLC1
             SkinsRailGunner.Start();
             SkinsVoidFiend.Start();
-
             //DLC2
             SkinsSeeker.Start();
             SkinsChef.Start();
             SkinsFalseSon.Start();
+            //DLC3
+            //
+            //
 
- 
-            BodyCatalog.availability.CallWhenAvailable(ModSupport);
-             
+            RuleCatalog.availability.CallWhenAvailable(ModSupport);
+
             GameModeCatalog.availability.CallWhenAvailable(SortSkinsLate);
 
-            On.RoR2.SkinDef.Apply += SkinDef_Apply;
+            On.RoR2.SkinDef.ApplyAsync += SkinDef_ApplyAsync;
 
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
-           
-            GameObject AssassinBody = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/AssassinBody");
-            if (AssassinBody)
+
+            ChatMessageBase.chatMessageTypeToIndex.Add(typeof(FakeAchievementMessage), (byte)ChatMessageBase.chatMessageIndexToType.Count);
+            ChatMessageBase.chatMessageIndexToType.Add(typeof(FakeAchievementMessage));
+
+            On.RoR2.SkinDef.BakeAsync += SkinDef_BakeAsync;
+        }
+
+        private System.Collections.IEnumerator SkinDef_ApplyAsync(On.RoR2.SkinDef.orig_ApplyAsync orig, SkinDef self, GameObject modelObject, List<UnityEngine.AddressableAssets.AssetReferenceT<Material>> loadedMaterials, List<UnityEngine.AddressableAssets.AssetReferenceT<Mesh>> loadedMeshes, RoR2.ContentManagement.AsyncReferenceHandleUnloadType unloadType)
+        {
+            var temp = orig(self, modelObject, loadedMaterials, loadedMeshes, unloadType);
+            //Debug.Log("SkinApply " + self);
+            if (modelObject.GetComponent<SkinDefWolfoTracker>())
             {
-                AssassinBody.GetComponent<CharacterBody>().baseNameToken = "ASSASSIN";
+                modelObject.GetComponent<SkinDefWolfoTracker>().UndoWolfoSkin();
             }
+            if (self is SkinDefWolfo)
+            {
+                (self as SkinDefWolfo).ApplyExtras(modelObject);
+            }
+            return temp;
+        }
+
+        private System.Collections.IEnumerator SkinDef_BakeAsync(On.RoR2.SkinDef.orig_BakeAsync orig, SkinDef self)
+        {
+            if (self.runtimeSkin == null)
+            {
+                if (self is SkinDefPrioritizeDirect)
+                {
+                    for (int i = 0; self.skinDefParams.rendererInfos.Length > i; i++)
+                    {
+                        if (self.skinDefParams.rendererInfos[i].defaultMaterial != null)
+                        {
+                            self.skinDefParams.rendererInfos[i].defaultMaterialAddress = null;
+                        }
+                    }
+                }  
+            }
+            return orig(self);
         }
 
         private void SkinDef_Apply(On.RoR2.SkinDef.orig_Apply orig, SkinDef self, GameObject model)
@@ -84,6 +119,13 @@ namespace WolfoSkinsMod
 
         internal static void SortSkinsLate()
         {
+            //What is this again?
+            if (!WConfig.cfgSort.Value)
+            {
+                return;
+            }
+
+
             //Manually sorting these 
             List<string> blacklistedSorting = new List<string>()
             {
@@ -132,9 +174,9 @@ namespace WolfoSkinsMod
                         oldList.AddRange(wolfList);
                         SkinDef[] skinsNew = oldList.ToArray();
                         modelSkinController.skins = skinsNew;
-                        BodyCatalog.skins[(int)Index] = skinsNew;
                         SkinCatalog.skinsByBody[(int)Index] = skinsNew;
-                    }           
+                        SkinCatalog.skinsByBody[(int)Index] = skinsNew;
+                    }
                 }
             }
             System.GC.Collect(); //?
@@ -142,13 +184,14 @@ namespace WolfoSkinsMod
 
         internal static void ModSupport()
         {
-            GameObject ModdedBody = BodyCatalog.FindBodyPrefab("GnomeChefBody");
+            WConfig.RiskConfig();
+            /*GameObject ModdedBody = BodyCatalog.FindBodyPrefab("GnomeChefBody");
             if (ModdedBody != null)
             {
-                SkinsCHEFMod.ModdedSkin(ModdedBody);
-            }
+                //SkinsCHEFMod.ModdedSkin(ModdedBody);
+            }*/
             //HAND
-            ModdedBody = BodyCatalog.FindBodyPrefab("HANDOverclockedBody");
+            GameObject ModdedBody = BodyCatalog.FindBodyPrefab("HANDOverclockedBody");
             if (ModdedBody != null)
             {
                 SkinsHand.ModdedSkin(ModdedBody);
@@ -245,7 +288,7 @@ namespace WolfoSkinsMod
 
         private void ReplaceTemporaryOverlayMaterial(On.RoR2.TemporaryOverlay.orig_AddToCharacerModel orig, TemporaryOverlay self, CharacterModel characterModel)
         {
-            if(characterModel)
+            if (characterModel)
             {
                 OverlayMaterialReplacer overlayMaterialReplacer = characterModel.GetComponent<OverlayMaterialReplacer>();
                 if (overlayMaterialReplacer)
@@ -257,18 +300,19 @@ namespace WolfoSkinsMod
                     }
                 }
             }
-            orig(self,characterModel);
+            orig(self, characterModel);
         }
 
-        
+
     }
 
-    public class SkinDefWolfo : SkinDef
+    public class SkinDefPrioritizeDirect : SkinDef
     {
-        public new void Awake()
-        {
-            //Debug.LogWarning("SkinDefWolfo");
-        }
+
+    }
+
+    public class SkinDefWolfo : SkinDefPrioritizeDirect
+    {
 
         //Some sort of Undo thing
         public void ApplyExtras(GameObject modelObject)
@@ -295,7 +339,7 @@ namespace WolfoSkinsMod
                 Transform transform = modelObject.transform.Find(lightColorsChanges[i].lightPath);
                 if (transform)
                 {
-                    Light light = transform.GetComponent<Light>();               
+                    Light light = transform.GetComponent<Light>();
                     if (light)
                     {
                         skinDefWolfoTracker.changedLights[i] = new SkinDefWolfoTracker.ChangedLightColors
@@ -334,7 +378,7 @@ namespace WolfoSkinsMod
                     Debug.LogWarning(lightColorsChanges[i].lightPath + " : Not Found");
                 }
             }
-            
+
             skinDefWolfoTracker.addedObjects = new GameObject[addGameObjects.Length];
             for (int i = 0; addGameObjects.Length > i; i++)
             {
@@ -351,7 +395,7 @@ namespace WolfoSkinsMod
                     ItemDisplay itemDisplay = display.GetComponent<ItemDisplay>();
                     if (itemDisplay)
                     {
-                        model.baseRendererInfos = model.baseRendererInfos.Add(itemDisplay.rendererInfos);
+                        model.baseRendererInfos = HG.ArrayUtils.Join(model.baseRendererInfos, itemDisplay.rendererInfos);
                     }
                 }
             }
@@ -369,10 +413,10 @@ namespace WolfoSkinsMod
         public void EngiDisplay(GameObject modelObject, SkinDefWolfoTracker tracker)
         {
             Transform mineHolder = modelObject.transform.parent.Find("mdlEngi/EngiArmature/ROOT/base/stomach/chest/upper_arm.l/lower_arm.l/hand.l/IKBoneStart/IKBoneMid/MineHolder");
-            Material newMaterial = this.minionSkinReplacements[0].minionSkin.rendererInfos[0].defaultMaterial;
+            Material newMaterial = this.skinDefParams.minionSkinReplacements[0].minionSkin.skinDefParams.rendererInfos[0].defaultMaterial;
 
-            GameObject Mine1 = Instantiate(this.projectileGhostReplacements[1].projectileGhostReplacementPrefab, mineHolder.GetChild(0));
-            GameObject Mine2 = Instantiate(this.projectileGhostReplacements[2].projectileGhostReplacementPrefab, mineHolder.GetChild(1));
+            GameObject Mine1 = Instantiate(this.skinDefParams.projectileGhostReplacements[1].projectileGhostReplacementPrefab, mineHolder.GetChild(0));
+            GameObject Mine2 = Instantiate(this.skinDefParams.projectileGhostReplacements[2].projectileGhostReplacementPrefab, mineHolder.GetChild(1));
             Mine2.transform.localEulerAngles = new Vector3(0, 0, 0);
 
             tracker.addedObjects = new GameObject[]
@@ -433,7 +477,7 @@ namespace WolfoSkinsMod
             {
                 disabledTransform.gameObject.SetActive(true);
             }
-   
+
             if (changedLights != null)
             {
                 for (int i = 0; changedLights.Length > i; i++)
@@ -464,6 +508,15 @@ namespace WolfoSkinsMod
                 }
             }
             DestroyImmediate(this);
+        }
+    }
+
+    public class FakeSkinId : RoR2.SubjectChatMessage
+    {
+        public override string ConstructChatString()
+        {
+
+            return null;
         }
     }
 

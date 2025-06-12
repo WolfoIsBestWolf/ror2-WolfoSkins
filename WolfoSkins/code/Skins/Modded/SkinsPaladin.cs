@@ -1,7 +1,6 @@
-using R2API;
 using RoR2;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
@@ -11,14 +10,15 @@ namespace WolfoSkinsMod
         internal static void ModdedSkin(GameObject PaladinBody)
         {
             Debug.Log("Paladin Skins");
-            SkinDef yellow = ModdedSkinYellow(PaladinBody);
-            //SkinDef black = ModdedSkinBlack(PaladinBody);
-
 
             BodyIndex CharacterIndex = PaladinBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = PaladinBody.GetComponentInChildren<ModelSkinController>();
-            SkinDef[] skinsNew = new SkinDef[modelSkinController.skins.Length + 1];
+            SkinDef skinPaladinDefault = modelSkinController.skins[0];
 
+            SkinDef yellow = ModdedSkinYellow(skinPaladinDefault);
+            //SkinDef black = ModdedSkinBlack(PaladinBody);
+
+            SkinDef[] skinsNew = new SkinDef[modelSkinController.skins.Length];
             skinsNew[0] = modelSkinController.skins[0]; //D
             skinsNew[1] = modelSkinController.skins[1]; //M
             skinsNew[2] = modelSkinController.skins[2]; //GM
@@ -27,19 +27,12 @@ namespace WolfoSkinsMod
             skinsNew[5] = yellow;
             //skinsNew[6] = black;
 
-            for (int i = 5; i < modelSkinController.skins.Length; i++)
+            for (int i = 6; i < modelSkinController.skins.Length; i++)
             {
-                skinsNew[i + 1] = modelSkinController.skins[i];
+                skinsNew[i] = modelSkinController.skins[i-1];
             }
             modelSkinController.skins = skinsNew;
-            BodyCatalog.skins[(int)CharacterIndex] = skinsNew;
-        }
-
-
-        internal static SkinDef ModdedSkinYellow(GameObject PaladinBody)
-        {
-            ModelSkinController modelSkinController = PaladinBody.GetComponentInChildren<ModelSkinController>();
-            SkinDef skinPaladinDefault = modelSkinController.skins[0];
+            SkinCatalog.skinsByBody[(int)CharacterIndex] = skinsNew;
 
             //0 matPaladinSword
             //1 matPaladin : CAPE
@@ -48,44 +41,32 @@ namespace WolfoSkinsMod
             //4 matPaladinGMSword
             //5 matPaladin
 
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinPaladinDefault.rendererInfos.Length];
-            System.Array.Copy(skinPaladinDefault.rendererInfos, NewRenderInfos, skinPaladinDefault.rendererInfos.Length);
-
-            Material matPaladin = Object.Instantiate(skinPaladinDefault.rendererInfos[5].defaultMaterial);
-            Material matPaladinSword = Object.Instantiate(skinPaladinDefault.rendererInfos[0].defaultMaterial);
-
-            Texture2D texPaladin = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Yellow/texPaladin.png");
-            texPaladin.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D texPaladinSword = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Yellow/texPaladinSword.png");
-            texPaladinSword.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D texPaladinSwordEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Yellow/texPaladinSwordEmission.png");
-            texPaladinSwordEmission.wrapMode = TextureWrapMode.Repeat;
+        }
 
 
-            matPaladin.mainTexture = texPaladin;
+        internal static SkinDef ModdedSkinYellow(SkinDef skinPaladinDefault)
+        {
+            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            {
+                name = "skinPaladin_1",
+                nameToken = "SIMU_SKIN_PALADIN",
+                icon = H.GetIcon("mod/paladin_yellow"),
+                original = skinPaladinDefault,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+
+            Material matPaladin = CloneMat(newRenderInfos, 5);
+            Material matPaladinSword = CloneMat(newRenderInfos, 0);
+
+            matPaladin.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Yellow/texPaladin.png");
             matPaladin.SetColor("_EmColor", new Color(1.25f, 0.25f, 0.25f, 1f));
-            matPaladinSword.mainTexture = texPaladinSword;
-            matPaladinSword.SetTexture("_EmTex", texPaladinSwordEmission);
+            matPaladinSword.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Yellow/texPaladinSword.png");
+            matPaladinSword.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Yellow/texPaladinSwordEmission.png"));
 
-            NewRenderInfos[0].defaultMaterial = matPaladinSword;
-            NewRenderInfos[1].defaultMaterial = matPaladin;
-            NewRenderInfos[5].defaultMaterial = matPaladin;
+            newRenderInfos[0].defaultMaterial = matPaladinSword;
+            newRenderInfos[1].defaultMaterial = matPaladin;
+            newRenderInfos[5].defaultMaterial = matPaladin;
 
-            //mdlPaladin/Armature/spine/spine.001/spine.002/spine.003/spine.004/neck/head/EyeTrail/Trail
-
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinPaladinWolfo_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_PALADIN";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Yellow/skinIconPaladin.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinPaladinDefault };
-            newSkinDef.rootObject = skinPaladinDefault.rootObject;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.meshReplacements = skinPaladinDefault.meshReplacements;
-            newSkinDef.gameObjectActivations = skinPaladinDefault.gameObjectActivations;
-            newSkinDef.projectileGhostReplacements = skinPaladinDefault.projectileGhostReplacements;
             newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
             {
                 new SkinDefWolfo.LightColorChanges
@@ -98,54 +79,30 @@ namespace WolfoSkinsMod
             return newSkinDef;
         }
 
-        internal static SkinDef ModdedSkinBlack(GameObject PaladinBody)
+        internal static SkinDef ModdedSkinBlack(SkinDef skinPaladinDefault)
         {
-            ModelSkinController modelSkinController = PaladinBody.GetComponentInChildren<ModelSkinController>();
-            SkinDef skinPaladinDefault = modelSkinController.skins[0];
+            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            {
+                name = "skinPaladin_1",
+                nameToken = "SIMU_SKIN_PALADIN_BLACK",
+                icon = H.GetIcon("mod/paladin_black"),
+                original = skinPaladinDefault,
+            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            //0 matPaladinSword
-            //1 matPaladin : CAPE
-            //2 matPaladinNkuhana
-            //3 matPaladinNkuhana
-            //4 matPaladinGMSword
-            //5 matPaladin
-
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinPaladinDefault.rendererInfos.Length];
-            System.Array.Copy(skinPaladinDefault.rendererInfos, NewRenderInfos, skinPaladinDefault.rendererInfos.Length);
-
-            Material matPaladin = Object.Instantiate(skinPaladinDefault.rendererInfos[5].defaultMaterial);
-            Material matPaladinSword = Object.Instantiate(skinPaladinDefault.rendererInfos[0].defaultMaterial);
-
-            Texture2D texPaladin = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Black/texPaladin.png");
-            texPaladin.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D texPaladinSword = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Black/texPaladinSword.png");
-            texPaladinSword.wrapMode = TextureWrapMode.Repeat;
-
-            Texture2D texPaladinSwordEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Black/texPaladinSwordEmission.png");
-            texPaladinSwordEmission.wrapMode = TextureWrapMode.Repeat;
+            Material matPaladin = CloneMat(newRenderInfos, 5);
+            Material matPaladinSword = CloneMat(newRenderInfos, 0);
 
 
-            matPaladin.mainTexture = texPaladin;
+            matPaladin.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Black/texPaladin.png");
             matPaladin.SetColor("_EmColor", new Color(1.25f, 0.25f, 0.25f, 1f));
-            matPaladinSword.mainTexture = texPaladinSword;
-            matPaladinSword.SetTexture("_EmTex", texPaladinSwordEmission);
+            matPaladinSword.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Black/texPaladinSword.png");
+            matPaladinSword.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Black/texPaladinSwordEmission.png"));
 
-            NewRenderInfos[0].defaultMaterial = matPaladinSword;
-            NewRenderInfos[1].defaultMaterial = matPaladin;
-            NewRenderInfos[5].defaultMaterial = matPaladin;
+            newRenderInfos[0].defaultMaterial = matPaladinSword;
+            newRenderInfos[1].defaultMaterial = matPaladin;
+            newRenderInfos[5].defaultMaterial = matPaladin;
 
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinPaladinWolfo_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_PALADIN_BLACK";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Paladin/Black/skinIconPaladin.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinPaladinDefault };
-            newSkinDef.rootObject = skinPaladinDefault.rootObject;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.meshReplacements = skinPaladinDefault.meshReplacements;
-            newSkinDef.gameObjectActivations = skinPaladinDefault.gameObjectActivations;
-            newSkinDef.projectileGhostReplacements = skinPaladinDefault.projectileGhostReplacements;
             newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
             {
                 new SkinDefWolfo.LightColorChanges
@@ -160,7 +117,7 @@ namespace WolfoSkinsMod
 
 
         [RegisterAchievement("CLEAR_ANY_ROBPALADIN", "Skins.RobPaladin.Wolfo.First", null, 5, null)]
-        public class ClearSimulacrumRobPaladinBody : Achievement_AltBoss_Simu
+        public class ClearSimulacrumRobPaladinBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

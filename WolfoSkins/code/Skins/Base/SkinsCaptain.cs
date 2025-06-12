@@ -1,7 +1,7 @@
-using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
@@ -9,273 +9,210 @@ namespace WolfoSkinsMod
     {
         internal static void Start()
         {
-            Captain_Pink();
-            Captain_Blue();
-            //CaptainSkinRED();
-            AltColossus();
-            //Colossus_Orange();
-        }
-
-        internal static void AltColossus()
-        {
-            SkinDef skinCaptainAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Captain/skinCaptainAltColossus.asset").WaitForCompletion();
-
-            CharacterModel.RendererInfo[] renderInfo = new CharacterModel.RendererInfo[7];
-            System.Array.Copy(skinCaptainAltColossus.rendererInfos, renderInfo, 7);
-
-            //0 matCaptainColossusAltClothes
-            //1 matCaptainColossusAltArmor
-            //2 matCaptainColossusAltArmor
-            //3 matCaptainColossusAltClothes
-            //4 matCaptainColossusAltArmor
-            //5 matCaptainColossusAltArmor
-            //6 matCaptainColossusAltClothes
-
-            Texture2D texCaptainColossusClothesDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusClothesDiffuse.png");
-            texCaptainColossusClothesDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texCaptainColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusDiffuse.png");
-            texCaptainColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texCaptainColossusDiffuseHat = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusDiffuseHat.png");
-            texCaptainColossusDiffuseHat.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texCaptainColossusFresnelMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusFresnelMask.png");
-            texCaptainColossusFresnelMask.wrapMode = TextureWrapMode.Clamp;
-
-
-            //Just edit the base game one it looks like shit
-            skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_NormalTex", null);
-            skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
-
-            Material matCaptainColossusAltClothes = Object.Instantiate(skinCaptainAltColossus.rendererInfos[0].defaultMaterial);
-            Material matCaptainColossusAltArmor = Object.Instantiate(skinCaptainAltColossus.rendererInfos[1].defaultMaterial);
-         
-            matCaptainColossusAltClothes.mainTexture = texCaptainColossusClothesDiffuse;
-            matCaptainColossusAltArmor.mainTexture = texCaptainColossusDiffuse;
-            matCaptainColossusAltArmor.SetTexture("_NormalTex", null); //texTrimSheetLemurianRuins
-            matCaptainColossusAltArmor.SetTexture("_GreenChannelTex", null); //texTrimSheetLemurianRuins
-            matCaptainColossusAltArmor.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
-
-            matCaptainColossusAltArmor.SetColor("_EmColor", new Color(1.5f,0.45f,0.3f,1f));
-            Material matCaptainColossusAltArmorHat = Object.Instantiate(matCaptainColossusAltArmor);
-
-
-            //matCaptainColossusAltArmor.SetTexture("_FresnelMask", texCaptainColossusFresnelMask);
-            matCaptainColossusAltArmorHat.mainTexture = texCaptainColossusDiffuseHat;
-
-            //
-            renderInfo[0].defaultMaterial = matCaptainColossusAltClothes; //
-            renderInfo[1].defaultMaterial = matCaptainColossusAltArmorHat; //Hat
-            renderInfo[2].defaultMaterial = matCaptainColossusAltArmor; //
-            renderInfo[3].defaultMaterial = matCaptainColossusAltClothes; //
-            renderInfo[4].defaultMaterial = matCaptainColossusAltArmor; //
-            renderInfo[5].defaultMaterial = matCaptainColossusAltArmor; //
-            renderInfo[6].defaultMaterial = matCaptainColossusAltClothes; //
-            //
-
-            SkinDefInfo SkinInfo2 = new SkinDefInfo
-            {
-                NameToken = "SIMU_SKIN_CAPTAIN_COLOSSUS",
-                Name = "skinCaptainAltColossusWolfo_AltBoss",
-                BaseSkins = skinCaptainAltColossus.baseSkins,  
-                RootObject = skinCaptainAltColossus.rootObject,
-                RendererInfos = renderInfo,
-                MeshReplacements = skinCaptainAltColossus.meshReplacements,
-                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/Captain.png")),
-            };
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), SkinInfo2);
-        }
-
-
-        internal static void Colossus_Orange()
-        {
-            SkinDef skinCaptainAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Captain/skinCaptainAltColossus.asset").WaitForCompletion();
-
-            CharacterModel.RendererInfo[] renderInfo = new CharacterModel.RendererInfo[7];
-            System.Array.Copy(skinCaptainAltColossus.rendererInfos, renderInfo, 7);
-
-            //0 matCaptainColossusAltClothes
-            //1 matCaptainColossusAltArmor
-            //2 matCaptainColossusAltArmor
-            //3 matCaptainColossusAltClothes
-            //4 matCaptainColossusAltArmor
-            //5 matCaptainColossusAltArmor
-            //6 matCaptainColossusAltClothes
-
-            Texture2D texCaptainColossusClothesDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusClothesDiffuse.png");
-            texCaptainColossusClothesDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texCaptainColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusDiffuse.png");
-            texCaptainColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texCaptainColossusDiffuseHat = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusDiffuseHat.png");
-            texCaptainColossusDiffuseHat.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texCaptainColossusFresnelMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusFresnelMask.png");
-            texCaptainColossusFresnelMask.wrapMode = TextureWrapMode.Clamp;
-
-
-            //Just edit the base game one it looks like shit
-            skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_NormalTex", null);
-            skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
-
-            Material matCaptainColossusAltClothes = Object.Instantiate(skinCaptainAltColossus.rendererInfos[0].defaultMaterial);
-            Material matCaptainColossusAltArmor = Object.Instantiate(skinCaptainAltColossus.rendererInfos[1].defaultMaterial);
-
-            matCaptainColossusAltClothes.mainTexture = texCaptainColossusClothesDiffuse;
-            matCaptainColossusAltArmor.mainTexture = texCaptainColossusDiffuse;
-            matCaptainColossusAltArmor.SetTexture("_NormalTex", null); //texTrimSheetLemurianRuins
-            matCaptainColossusAltArmor.SetTexture("_GreenChannelTex", null); //texTrimSheetLemurianRuins
-            matCaptainColossusAltArmor.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
-
-            matCaptainColossusAltArmor.SetColor("_EmColor", new Color(1f, 1f, 0.2f, 1f));
-            Material matCaptainColossusAltArmorHat = Object.Instantiate(matCaptainColossusAltArmor);
-
-
-            //matCaptainColossusAltArmor.SetTexture("_FresnelMask", texCaptainColossusFresnelMask);
-            matCaptainColossusAltArmorHat.mainTexture = texCaptainColossusDiffuseHat;
-
-            //
-            renderInfo[0].defaultMaterial = matCaptainColossusAltClothes; //
-            renderInfo[1].defaultMaterial = matCaptainColossusAltArmorHat; //Hat
-            renderInfo[2].defaultMaterial = matCaptainColossusAltArmor; //
-            renderInfo[3].defaultMaterial = matCaptainColossusAltClothes; //
-            renderInfo[4].defaultMaterial = matCaptainColossusAltArmor; //
-            renderInfo[5].defaultMaterial = matCaptainColossusAltArmor; //
-            renderInfo[6].defaultMaterial = matCaptainColossusAltClothes; //
-            //
-
-            SkinDefInfo SkinInfo2 = new SkinDefInfo
-            {
-                NameToken = "SIMU_SKIN_CAPTAIN_COLOSSUS",
-                Name = "skinCaptainAltColossusWolfo_AltBoss2",
-                BaseSkins = skinCaptainAltColossus.baseSkins,
-                RootObject = skinCaptainAltColossus.rootObject,
-                RendererInfos = renderInfo,
-                MeshReplacements = skinCaptainAltColossus.meshReplacements,
-                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/Captain.png")),
-            };
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), SkinInfo2);
-        }
-
-        internal static void Captain_Pink()
-        {
-            //Pink stuff test
             //SkinDef CaptainSkinDefault = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[0];
-            SkinDef CaptainSkinWhite = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[1];
+            SkinDef skinCaptainAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Captain/skinCaptainAlt.asset").WaitForCompletion();
+            SkinDef skinCaptainAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Captain/skinCaptainAltColossus.asset").WaitForCompletion();
 
-            Texture2D PinktexCaptainJacketDiffuseW = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainJacketDiffuseW.png");
-            PinktexCaptainJacketDiffuseW.wrapMode = TextureWrapMode.Clamp;
+            Captain_Pink(skinCaptainAlt);
+            Captain_Blue(skinCaptainAlt);
+            //CaptainSkinRED();
+            AltColossus(skinCaptainAltColossus);
+            //Colossus_Orange();
 
-            Texture2D PinktexCaptainPaletteW = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW.png");
-            PinktexCaptainPaletteW.wrapMode = TextureWrapMode.Clamp;
+            //0 matCaptainColossusAltClothes
+            //1 matCaptainColossusAltArmor
+            //2 matCaptainColossusAltArmor
+            //3 matCaptainColossusAltClothes
+            //4 matCaptainColossusAltArmor
+            //5 matCaptainColossusAltArmor
+            //6 matCaptainColossusAltClothes
+        }
 
-            Texture2D PinktexCaptainPaletteW2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW2.png");
-            PinktexCaptainPaletteW2.wrapMode = TextureWrapMode.Clamp;
+        internal static void AltColossus(SkinDef skinCaptainAltColossus)
+        {
+            CharacterModel.RendererInfo[] renderInfo = H.CreateNewSkinR(new SkinInfo
+            {
+                nameToken = "SIMU_SKIN_CAPTAIN_COLOSSUS",
+                name = "skinCaptainAltColossus_DLC2",
+                icon = H.GetIcon("captain_dlc2"),
+                original = skinCaptainAltColossus,
+                unsetMat = true
+            });
 
-            //Pallete for HAT
-            Texture2D PinktexCaptainPaletteW3 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW3.png");
-            PinktexCaptainPaletteW3.wrapMode = TextureWrapMode.Clamp;
+
+            Material matCaptainColossusAltClothes = H.CloneMat(renderInfo, 0);
+            Material matCaptainColossusAltArmor = H.CloneMat(renderInfo, 1);
+
+            matCaptainColossusAltClothes.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusClothesDiffuse.png");
+            matCaptainColossusAltArmor.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusDiffuse.png");
+            matCaptainColossusAltArmor.SetTexture("_NormalTex", null); //texTrimSheetLemurianRuins
+            matCaptainColossusAltArmor.SetTexture("_GreenChannelTex", null); //texTrimSheetLemurianRuins
+            matCaptainColossusAltArmor.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
+
+            matCaptainColossusAltArmor.SetColor("_EmColor", new Color(1.5f, 0.45f, 0.3f, 1f));
+            Material matCaptainColossusAltArmorHat = Object.Instantiate(matCaptainColossusAltArmor);
 
 
-            CharacterModel.RendererInfo[] CaptainPinkRenderInfos = new CharacterModel.RendererInfo[7];
-            System.Array.Copy(CaptainSkinWhite.rendererInfos, CaptainPinkRenderInfos, 7);
+            //matCaptainColossusAltArmor.SetTexture("_FresnelMask", texCaptainColossusFresnelMask);
+            matCaptainColossusAltArmorHat.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusDiffuseHat.png");
 
-            Material PinkmatCaptainAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            Material PinkmatCaptainAlt2 = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            Material PinkmatCaptainAlt3 = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            Material PinkmatCaptainArmorAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[2].defaultMaterial);
-            Material PinkmatCaptainJacketAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[3].defaultMaterial);
-            Material PinkmatCaptainRobotBitsAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[4].defaultMaterial);
 
-            PinkmatCaptainAlt.mainTexture = PinktexCaptainPaletteW;
-            PinkmatCaptainAlt2.mainTexture = PinktexCaptainPaletteW2;
-            PinkmatCaptainAlt3.mainTexture = PinktexCaptainPaletteW3;
+            renderInfo[0].defaultMaterial = matCaptainColossusAltClothes;
+            renderInfo[1].defaultMaterial = matCaptainColossusAltArmorHat;
+            renderInfo[2].defaultMaterial = matCaptainColossusAltArmor;
+            renderInfo[3].defaultMaterial = matCaptainColossusAltClothes;
+            renderInfo[4].defaultMaterial = matCaptainColossusAltArmor;
+            renderInfo[5].defaultMaterial = matCaptainColossusAltArmor;
+            renderInfo[6].defaultMaterial = matCaptainColossusAltClothes;
+
+        }
+        #region Orange Idea
+        /*
+                internal static void Colossus_Orange(SkinDef skinCaptainAltColossus)
+                {
+
+                    CharacterModel.RendererInfo[] renderInfo = new CharacterModel.RendererInfo[skinCaptainAltColossus.rendererInfos.Length];
+                    System.Array.Copy(skinCaptainAltColossus.rendererInfos, renderInfo, skinCaptainAltColossus.rendererInfos.Length);
+
+                    //0 matCaptainColossusAltClothes
+                    //1 matCaptainColossusAltArmor
+                    //2 matCaptainColossusAltArmor
+                    //3 matCaptainColossusAltClothes
+                    //4 matCaptainColossusAltArmor
+                    //5 matCaptainColossusAltArmor
+                    //6 matCaptainColossusAltClothes
+
+                    Texture2D texCaptainColossusClothesDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusClothesDiffuse.png");
+                    texCaptainColossusClothesDiffuse.wrapMode = TextureWrapMode.Clamp;
+
+                    Texture2D texCaptainColossusDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusDiffuse.png");
+                    texCaptainColossusDiffuse.wrapMode = TextureWrapMode.Clamp;
+
+                    Texture2D texCaptainColossusDiffuseHat = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusDiffuseHat.png");
+                    texCaptainColossusDiffuseHat.wrapMode = TextureWrapMode.Clamp;
+
+                    Texture2D texCaptainColossusFresnelMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusFresnelMask.png");
+                    texCaptainColossusFresnelMask.wrapMode = TextureWrapMode.Clamp;
+
+
+                    //Just edit the base game one it looks like shit
+                    skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_NormalTex", null);
+                    skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
+
+                    Material matCaptainColossusAltClothes = CloneMat(CaptainAltColossus.rendererInfos[0].defaultMaterial);
+                    Material matCaptainColossusAltArmor = CloneMat(CaptainAltColossus.rendererInfos[1].defaultMaterial);
+
+                    matCaptainColossusAltClothes.mainTexture = texCaptainColossusClothesDiffuse;
+                    matCaptainColossusAltArmor.mainTexture = texCaptainColossusDiffuse;
+                    matCaptainColossusAltArmor.SetTexture("_NormalTex", null); //texTrimSheetLemurianRuins
+                    matCaptainColossusAltArmor.SetTexture("_GreenChannelTex", null); //texTrimSheetLemurianRuins
+                    matCaptainColossusAltArmor.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
+
+                    matCaptainColossusAltArmor.SetColor("_EmColor", new Color(1f, 1f, 0.2f, 1f));
+                    Material matCaptainColossusAltArmorHat = Object.Instantiate(matCaptainColossusAltArmor);
+
+
+                    //matCaptainColossusAltArmor.SetTexture("_FresnelMask", texCaptainColossusFresnelMask);
+                    matCaptainColossusAltArmorHat.mainTexture = texCaptainColossusDiffuseHat;
+
+                    //
+                    renderInfo[0].defaultMaterial = matCaptainColossusAltClothes; //
+                    renderInfo[1].defaultMaterial = matCaptainColossusAltArmorHat; //Hat
+                    renderInfo[2].defaultMaterial = matCaptainColossusAltArmor; //
+                    renderInfo[3].defaultMaterial = matCaptainColossusAltClothes; //
+                    renderInfo[4].defaultMaterial = matCaptainColossusAltArmor; //
+                    renderInfo[5].defaultMaterial = matCaptainColossusAltArmor; //
+                    renderInfo[6].defaultMaterial = matCaptainColossusAltClothes; //
+                    //
+
+                    SkinDefInfo SkinInfo2 = new SkinDefInfo
+                    {
+                        NameToken = "SIMU_SKIN_CAPTAIN_COLOSSUS",
+                        Name = "skinCaptainAltColossus_AltBoss2",
+                        BaseSkins = skinCaptainAltColossus.baseSkins,
+                        RootObject = skinCaptainAltColossus.rootObject,
+                        RendererInfos = renderInfo,
+                        MeshReplacements = skinCaptainAltColossus.meshReplacements,
+                        Icon = Help.GetIcon("captain_orange2"),
+                    };
+                    Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), SkinInfo2);
+                }
+                */
+        #endregion
+
+        internal static void Captain_Pink(SkinDef skinCaptainAlt)
+        {
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                nameToken = "SIMU_SKIN_CAPTAIN",
+                name = "skinCaptain_1",
+                icon = H.GetIcon("captain_pink"),
+                original = skinCaptainAlt,
+                unsetMat = true
+            });
+
+            Material PinkmatCaptainAlt = CloneMat(newRenderInfos, 0);
+            Material PinkmatCaptainAlt2 = CloneMat(newRenderInfos, 0);
+            Material PinkmatCaptainAlt3 = CloneMat(newRenderInfos, 0);
+            Material PinkmatCaptainArmorAlt = CloneMat(newRenderInfos, 2);
+            Material PinkmatCaptainJacketAlt = CloneMat(newRenderInfos, 3);
+            Material PinkmatCaptainRobotBitsAlt = CloneMat(newRenderInfos, 4);
+
+            PinkmatCaptainAlt.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW.png");
+            PinkmatCaptainAlt2.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW2.png");
+            PinkmatCaptainAlt3.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW3.png");
             //PinkmatCaptainArmorAlt.color = new Color32(255, 223, 188, 255);
             PinkmatCaptainArmorAlt.color = new Color32(255, 190, 135, 255);//(255, 195, 150, 255);
             //_EmColor is juts fucking weird
-            PinkmatCaptainJacketAlt.mainTexture = PinktexCaptainJacketDiffuseW;
+            PinkmatCaptainJacketAlt.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainJacketDiffuseW.png");
             PinkmatCaptainRobotBitsAlt.SetColor("_EmColor", new Color(1.2f, 0.6f, 1.2f, 1f));
             PinkmatCaptainRobotBitsAlt.color = new Color32(255, 190, 135, 255);
 
-            CaptainPinkRenderInfos[0].defaultMaterial = PinkmatCaptainAlt; //matCaptainAlt
-            CaptainPinkRenderInfos[1].defaultMaterial = PinkmatCaptainAlt3; //matCaptainAlt //Hat
-            CaptainPinkRenderInfos[2].defaultMaterial = PinkmatCaptainArmorAlt; //matCaptainArmorAlt
-            CaptainPinkRenderInfos[3].defaultMaterial = PinkmatCaptainJacketAlt; //matCaptainJacketAlt
-            CaptainPinkRenderInfos[4].defaultMaterial = PinkmatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
-            CaptainPinkRenderInfos[5].defaultMaterial = PinkmatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
-            CaptainPinkRenderInfos[6].defaultMaterial = PinkmatCaptainAlt2; //matCaptainAlt //Skirt
-            //
-            SkinDefInfo CaptainPinkSkinInfos = new SkinDefInfo
-            {
-                BaseSkins = CaptainSkinWhite.baseSkins,
-                NameToken = "SIMU_SKIN_CAPTAIN",
-                RootObject = CaptainSkinWhite.rootObject,
-                RendererInfos = CaptainPinkRenderInfos,
-                Name = "skinCaptainWolfo_Simu",
-                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/texCaptainPinkSkinIcon.png")),
-            };
-            //
+            newRenderInfos[0].defaultMaterial = PinkmatCaptainAlt; //matCaptainAlt
+            newRenderInfos[1].defaultMaterial = PinkmatCaptainAlt3; //matCaptainAlt //Hat
+            newRenderInfos[2].defaultMaterial = PinkmatCaptainArmorAlt; //matCaptainArmorAlt
+            newRenderInfos[3].defaultMaterial = PinkmatCaptainJacketAlt; //matCaptainJacketAlt
+            newRenderInfos[4].defaultMaterial = PinkmatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
+            newRenderInfos[5].defaultMaterial = PinkmatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
+            newRenderInfos[6].defaultMaterial = PinkmatCaptainAlt2; //matCaptainAlt //Skirt
 
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), CaptainPinkSkinInfos);
         }
 
-        internal static void Captain_Blue()
+        internal static void Captain_Blue(SkinDef skinCaptainAlt)
         {
-            SkinDef CaptainSkinDefault = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[0];
-            SkinDef CaptainSkinWhite = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[1];
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                nameToken = "SIMU_SKIN_CAPTAIN_BLUE",
+                name = "skinCaptain_Blue_1",
+                icon = H.GetIcon("captain_blue"),
+                original = skinCaptainAlt,
+                unsetMat = true
+            });
 
-            Texture2D texCaptainJacketDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texCaptainJacketDiffuseAltBLUE.png");
-            texCaptainJacketDiffuse.wrapMode = TextureWrapMode.Clamp;
+            Material MatCaptainAlt = CloneMat(newRenderInfos, 0);
+            Material MatCaptainAltDark = CloneMat(newRenderInfos, 0);
+            Material MatCaptainArmorAlt = CloneMat(newRenderInfos, 2);
+            Material MatCaptainJacketAlt = CloneMat(newRenderInfos, 3);
+            Material MatCaptainRobotBitsAlt = CloneMat(newRenderInfos, 4);
 
-            Texture2D texCaptainPalette = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texCaptainPaletteAltBLUE.png");
-            texCaptainPalette.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texCaptainPalette2 = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texCaptainPaletteAltBLUE2.png");
-            texCaptainPalette2.wrapMode = TextureWrapMode.Clamp;
-
-
-            CharacterModel.RendererInfo[] CaptainRenderInfos = new CharacterModel.RendererInfo[7];
-            System.Array.Copy(CaptainSkinWhite.rendererInfos, CaptainRenderInfos, 7);
-
-            Material MatCaptainAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            Material MatCaptainAltDark = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            //Material MatCaptainAlt3 = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            Material MatCaptainArmorAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[2].defaultMaterial);
-            Material MatCaptainJacketAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[3].defaultMaterial);
-            Material MatCaptainRobotBitsAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[4].defaultMaterial);
-
-            MatCaptainAlt.mainTexture = texCaptainPalette;
-            MatCaptainAltDark.mainTexture = texCaptainPalette2;
+            MatCaptainAlt.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texCaptainPaletteAltBLUE.png");
+            MatCaptainAltDark.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texCaptainPaletteAltBLUE2.png");
             MatCaptainAltDark.color = new Color(0.8f, 0.8f, 0.8f);
-            //MatCaptainAlt3.mainTexture = texCaptainPalette3;
-            //MatCaptainArmorAlt.color = new Color(0.5f, 0.5f, 0.5f);
             MatCaptainArmorAlt.color = new Color32(255, 225, 135, 255);//(255, 195, 150, 255);
-            MatCaptainJacketAlt.mainTexture = texCaptainJacketDiffuse;
+            MatCaptainJacketAlt.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texCaptainJacketDiffuseAltBLUE.png");
 
             MatCaptainRobotBitsAlt.color = new Color32(255, 225, 135, 255);
             MatCaptainRobotBitsAlt.SetColor("_EmColor", new Color(1f, 1f, 0.3f, 1f));
 
-            //
-            CaptainRenderInfos[0].defaultMaterial = MatCaptainAlt; //matCaptainAlt
-            CaptainRenderInfos[1].defaultMaterial = MatCaptainAlt; //matCaptainAlt
-            CaptainRenderInfos[2].defaultMaterial = MatCaptainArmorAlt; //matCaptainArmorAlt
-            CaptainRenderInfos[3].defaultMaterial = MatCaptainJacketAlt; //matCaptainJacketAlt
-            CaptainRenderInfos[4].defaultMaterial = MatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
-            CaptainRenderInfos[5].defaultMaterial = MatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
-            CaptainRenderInfos[6].defaultMaterial = MatCaptainAltDark; //matCaptainAlt //Skirt
-            //
-            SkinDefInfo SkinInfo2 = new SkinDefInfo
-            {
-                BaseSkins = CaptainSkinWhite.baseSkins,
-                NameToken = "SIMU_SKIN_CAPTAIN_BLUE",
-                RootObject = CaptainSkinWhite.rootObject,
-                RendererInfos = CaptainRenderInfos,
-                Name = "skinCaptainWolfo_Blue_Simu",
-                Icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texSkinSwatches_25BLUE.png")),
-            };
-            Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), SkinInfo2);
+
+            newRenderInfos[0].defaultMaterial = MatCaptainAlt; //matCaptainAlt
+            newRenderInfos[1].defaultMaterial = MatCaptainAlt; //matCaptainAlt
+            newRenderInfos[2].defaultMaterial = MatCaptainArmorAlt; //matCaptainArmorAlt
+            newRenderInfos[3].defaultMaterial = MatCaptainJacketAlt; //matCaptainJacketAlt
+            newRenderInfos[4].defaultMaterial = MatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
+            newRenderInfos[5].defaultMaterial = MatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
+            newRenderInfos[6].defaultMaterial = MatCaptainAltDark; //matCaptainAlt //Skirt
+
         }
 
 
@@ -284,7 +221,7 @@ namespace WolfoSkinsMod
         internal static void CaptainSkinRED()
         {
             SkinDef CaptainSkinDefault = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[0];
-            SkinDef CaptainSkinWhite = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[1];
+            SkinDef skinCaptainAlt = LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody").transform.GetChild(0).GetChild(0).gameObject.GetComponent<ModelSkinController>().skins[1];
 
             Texture2D texCaptainJacketDiffuseRED = new Texture2D(512, 512, TextureFormat.DXT1, false);
             texCaptainJacketDiffuseRED.LoadImage(Properties.Resources.texCaptainJacketDiffuseRED, true);
@@ -296,18 +233,18 @@ namespace WolfoSkinsMod
             texCaptainPaletteRED2.filterMode = FilterMode.Bilinear;
             texCaptainPaletteRED2.wrapMode = TextureWrapMode.Clamp;
 
-            CharacterModel.RendererInfo[] CaptainPinkRenderInfos = new CharacterModel.RendererInfo[7];
-            System.Array.Copy(CaptainSkinWhite.rendererInfos, CaptainPinkRenderInfos, 7);
+            CharacterModel.RendererInfo[] newRenderInfos = new CharacterModel.RendererInfo[7];
+            System.Array.Copy(skinCaptainAlt.rendererInfos, newRenderInfos, 7);
 
-            CharacterModel.RendererInfo[] CaptainRenderInfosRED = new CharacterModel.RendererInfo[7];
-            System.Array.Copy(CaptainSkinWhite.rendererInfos, CaptainRenderInfosRED, 7);
+            CharacterModel.RendererInfo[] newRenderInfosRED = new CharacterModel.RendererInfo[7];
+            System.Array.Copy(skinCaptainAlt.rendererInfos, newRenderInfosRED, 7);
 
-            Material RedMatCaptainAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            Material RedMatCaptainAlt2 = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            //Material RedMatCaptainAlt3 = Object.Instantiate(CaptainSkinWhite.rendererInfos[0].defaultMaterial);
-            Material RedMatCaptainArmorAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[2].defaultMaterial);
-            Material RedMatCaptainJacketAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[3].defaultMaterial);
-            Material RedMatCaptainRobotBitsAlt = Object.Instantiate(CaptainSkinWhite.rendererInfos[4].defaultMaterial);
+            Material RedMatCaptainAlt = CloneMat(CaptainAlt.rendererInfos[0].defaultMaterial);
+            Material RedMatCaptainAlt2 = CloneMat(CaptainAlt.rendererInfos[0].defaultMaterial);
+            //Material RedMatCaptainAlt3 = CloneMat(CaptainAlt.rendererInfos[0].defaultMaterial);
+            Material RedMatCaptainArmorAlt = CloneMat(CaptainAlt.rendererInfos[2].defaultMaterial);
+            Material RedMatCaptainJacketAlt = CloneMat(CaptainAlt.rendererInfos[3].defaultMaterial);
+            Material RedMatCaptainRobotBitsAlt = CloneMat(CaptainAlt.rendererInfos[4].defaultMaterial);
 
             RedMatCaptainAlt.mainTexture = texCaptainPaletteRED2;
             RedMatCaptainAlt2.mainTexture = texCaptainPaletteRED2;
@@ -322,13 +259,13 @@ namespace WolfoSkinsMod
             RedMatCaptainRobotBitsAlt.SetColor("_EmColor", new Color(1.3f, 0.6f, 0.4f, 1f));
 
             //
-            CaptainRenderInfosRED[0].defaultMaterial = RedMatCaptainAlt; //matCaptainAlt
-            CaptainRenderInfosRED[1].defaultMaterial = RedMatCaptainAlt2; //matCaptainAlt
-            CaptainRenderInfosRED[2].defaultMaterial = RedMatCaptainArmorAlt; //matCaptainArmorAlt
-            CaptainRenderInfosRED[3].defaultMaterial = RedMatCaptainJacketAlt; //matCaptainJacketAlt
-            CaptainRenderInfosRED[4].defaultMaterial = RedMatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
-            CaptainRenderInfosRED[5].defaultMaterial = RedMatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
-            CaptainRenderInfosRED[6].defaultMaterial = RedMatCaptainAlt2; //matCaptainAlt //Skirt
+            newRenderInfosRED[0].defaultMaterial = RedMatCaptainAlt; //matCaptainAlt
+            newRenderInfosRED[1].defaultMaterial = RedMatCaptainAlt2; //matCaptainAlt
+            newRenderInfosRED[2].defaultMaterial = RedMatCaptainArmorAlt; //matCaptainArmorAlt
+            newRenderInfosRED[3].defaultMaterial = RedMatCaptainJacketAlt; //matCaptainJacketAlt
+            newRenderInfosRED[4].defaultMaterial = RedMatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
+            newRenderInfosRED[5].defaultMaterial = RedMatCaptainRobotBitsAlt; //matCaptainRobotBitsAlt
+            newRenderInfosRED[6].defaultMaterial = RedMatCaptainAlt2; //matCaptainAlt //Skirt
             //
 
             Texture2D skinIconCaptainRED = new Texture2D(128, 128, TextureFormat.DXT5, false);
@@ -338,11 +275,11 @@ namespace WolfoSkinsMod
 
             SkinDefInfo SkinInfo2 = new SkinDefInfo
             {
-                BaseSkins = CaptainSkinWhite.baseSkins,
+                BaseSkins = skinCaptainAlt.baseSkins,
                 NameToken = "SIMU_SKIN_CAPTAIN_RED",
-                RootObject = CaptainSkinWhite.rootObject,
-                RendererInfos = CaptainRenderInfosRED,
-                Name = "skinCaptainWolfo_Red_Simu",
+                RootObject = skinCaptainAlt.rootObject,
+                RendererInfos = newRenderInfosRED,
+                Name = "skinCaptain_Red_1",
                 Icon = skinIconCaptainREDS,
             };
             Skins.AddSkinToCharacter(LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterBodies/CaptainBody"), SkinInfo2);
@@ -351,7 +288,7 @@ namespace WolfoSkinsMod
         #endregion
 
         [RegisterAchievement("CLEAR_ANY_CAPTAIN", "Skins.Captain.Wolfo.First", "CompleteMainEnding", 5, null)]
-        public class Bandit2ClearGameMonsoonAchievement : Achievement_AltBoss_Simu
+        public class Bandit2ClearGameMonsoonAchievement : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
@@ -359,7 +296,7 @@ namespace WolfoSkinsMod
             }
         }
         [RegisterAchievement("CLEAR_BOTH_CAPTAIN", "Skins.Captain.Wolfo.Both", "CompleteMainEnding", 5, null)]
-        public class Bandit2ClearGameMonsoonAchievement2 : Achievement_AltBoss_AND_Simu
+        public class Bandit2ClearGameMonsoonAchievement2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

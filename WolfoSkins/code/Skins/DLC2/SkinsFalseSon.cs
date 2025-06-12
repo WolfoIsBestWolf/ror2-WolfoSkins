@@ -1,27 +1,34 @@
-using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
     public class SkinsFalseSon
     {
         public static GameObject LunarSpikeGhost = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/LunarSpikeGhost.prefab").WaitForCompletion();
+        public static GameObject LunarStakeGhost = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/LunarStakeGhost.prefab").WaitForCompletion();
         public static GameObject FalseSonGroundSlam = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/FalseSonGroundSlam.prefab").WaitForCompletion();
-        public static GameObject FalseSonMeteorGroundImpact = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/FalseSonMeteorGroundImpact.prefab").WaitForCompletion();
+        //public static GameObject FalseSonMeteorGroundImpact = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/FalseSonMeteorGroundImpact.prefab").WaitForCompletion();
 
         internal static void Start()
         {
-            Default_Alt();
-            Mastery_Alt();
+            SkinDef skinFalseSonDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/FalseSon/skinFalseSonDefault.asset").WaitForCompletion();
+            SkinDef skinFalseSonAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/FalseSon/skinFalseSonAlt.asset").WaitForCompletion();
+
+            Default_Alt(skinFalseSonDefault);
+            Mastery_Alt(skinFalseSonAlt);
 
 
-            //Circumvent the dumb effect thing gearbox added
+            //0 matFalseSon
+            //1 matFalseSonCloth / 
+            //2 matFalseSon / Weapon
+
             //Lobby
             //Uses different texture, would not look good
             //Projectile
-            On.EntityStates.FalseSon.LunarSpikes.FireLunarSpike += LunarSpikes_FireLunarSpike;
+            On.EntityStates.FalseSon.LunarSpikes.FireLunarSpike += LunarSpikeAndStake;
             //Slam Grounded
             On.EntityStates.FalseSon.ChargedClubSwing.InitializeBlastAttackAsCharged += ChargedClubSwing_InitializeBlastAttackAsCharged;
             //Slam Airborne
@@ -29,15 +36,12 @@ namespace WolfoSkinsMod
             //Spawn Animation
             //On.EntityStates.FalseSonMeteorPod.Descent.OnExit += Descent_OnExit;
 
-            On.RoR2.EffectManager.OnSceneUnloaded += EffectManager_OnSceneUnloaded;
+            LunarSpikeGhost.GetComponent<VFXAttributes>().DoNotPool = true;
+            FalseSonGroundSlam.GetComponent<VFXAttributes>().DoNotPool = true;
+            LunarStakeGhost.GetComponent<VFXAttributes>().DoNotPool = true;
         }
 
-        private static void EffectManager_OnSceneUnloaded(On.RoR2.EffectManager.orig_OnSceneUnloaded orig, UnityEngine.SceneManagement.Scene scene)
-        {
-            orig(scene);
-            EffectManager._ShouldUsePooledEffectMap.Add(LunarSpikeGhost, false);
-            EffectManager._ShouldUsePooledEffectMap.Add(FalseSonGroundSlam, false);
-        }
+
 
         public static Material ReturnMaterialFromEntityState(Transform modelTransform, int child)
         {
@@ -45,11 +49,13 @@ namespace WolfoSkinsMod
         }
 
 
-        private static void LunarSpikes_FireLunarSpike(On.EntityStates.FalseSon.LunarSpikes.orig_FireLunarSpike orig, EntityStates.FalseSon.LunarSpikes self)
+        private static void LunarSpikeAndStake(On.EntityStates.FalseSon.LunarSpikes.orig_FireLunarSpike orig, EntityStates.FalseSon.LunarSpikes self)
         {
             Material mat = ReturnMaterialFromEntityState(self.modelLocator.modelTransform, 0);
             LunarSpikeGhost.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = mat;
             LunarSpikeGhost.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = mat;
+            LunarStakeGhost.transform.GetChild(0).GetComponent<Renderer>().material = mat;
+
             orig(self);
         }
 
@@ -67,134 +73,85 @@ namespace WolfoSkinsMod
             return orig(self);
         }
 
-        private static void Descent_OnExit(On.EntityStates.FalseSonMeteorPod.Descent.orig_OnExit orig, EntityStates.FalseSonMeteorPod.Descent self)
+        /*private static void Descent_OnExit(On.EntityStates.FalseSonMeteorPod.Descent.orig_OnExit orig, EntityStates.FalseSonMeteorPod.Descent self)
         {
             Material mat = ReturnMaterialFromEntityState(self.GetComponent<VehicleSeat>().currentPassengerBody.modelLocator.modelTransform, 0);
             FalseSonMeteorGroundImpact.transform.GetChild(0).GetChild(7).GetChild(0).GetComponent<Renderer>().material = mat;
             orig(self);
-        }
+        }*/
 
-        internal static void Mastery_Alt()
+        internal static void Mastery_Alt(SkinDef skinFalseSonAlt)
         {
-            SkinDef skinFalseSonAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/FalseSon/skinFalseSonAlt.asset").WaitForCompletion();
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                name = "skinFalseSonAlt_Provi_1",
+                nameToken = "SIMU_SKIN_FALSESON_PROVI",
+                icon = H.GetIcon("dlc2/falseson_provi"),
+                original = skinFalseSonAlt,
+                extraRenders = 1
+            });
 
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinFalseSonAlt.rendererInfos.Length];
-            System.Array.Copy(skinFalseSonAlt.rendererInfos, NewRenderInfos, skinFalseSonAlt.rendererInfos.Length);
+            Material matFalseSon = CloneMat(newRenderInfos, 0);
+            Material matFalseSonCloth = CloneMat(newRenderInfos, 1);
 
-            //0 matFalseSon
-            //1 matFalseSonCloth / 
-            //2 matFalseSon / Weapon
-
-
-            Material matFalseSon = Object.Instantiate(skinFalseSonAlt.rendererInfos[0].defaultMaterial);
-            Material matFalseSonCloth = Object.Instantiate(skinFalseSonAlt.rendererInfos[1].defaultMaterial);
-
-            Texture2D texFalseSonAltDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltDiffuse.png");
-            texFalseSonAltDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texFalseSonAltClothDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltClothDiffuse.png");
-            texFalseSonAltClothDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texFalseSonAltSwordDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltSwordDiffuse.png");
-            texFalseSonAltSwordDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texFalseSonAltFlow = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltFlow.png");
-            texFalseSonAltFlow.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texFalseSonAltFresnel = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltFresnel.png");
-            texFalseSonAltFresnel.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texFalseSonAltFlowSword = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltFlowSword.png");
-            texFalseSonAltFlowSword.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texRampCaptainAirstrike = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texRampCaptainAirstrike.png");
-            texRampCaptainAirstrike.wrapMode = TextureWrapMode.Clamp;
-
-
-            matFalseSon.mainTexture = texFalseSonAltDiffuse;
+            matFalseSon.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltDiffuse.png");
             matFalseSon.SetColor("_EmColor", new Color(0.55f, 1f, 0.85f));
-            matFalseSon.SetTexture("_FresnelMask", texFalseSonAltFresnel);
-            matFalseSon.SetTexture("_FlowHeightmap", texFalseSonAltFlow);
-            matFalseSon.SetTexture("_FlowHeightRamp", texRampCaptainAirstrike);
+            matFalseSon.SetTexture("_FresnelMask", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltFresnel.png"));
+            matFalseSon.SetTexture("_FlowHeightmap", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltFlow.png"));
+            matFalseSon.SetTexture("_FlowHeightRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texRampCaptainAirstrike.png"));
 
-            matFalseSonCloth.mainTexture = texFalseSonAltClothDiffuse;
+            matFalseSonCloth.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltClothDiffuse.png");
             matFalseSonCloth.color = Color.white;
             matFalseSonCloth.SetTexture("_FlowHeightRamp", null);
 
             Material matFalseSonSword = Object.Instantiate(matFalseSon);
-            matFalseSonSword.mainTexture = texFalseSonAltSwordDiffuse;
-            matFalseSonSword.SetTexture("_FlowHeightmap", texFalseSonAltFlowSword);
+            matFalseSonSword.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltSwordDiffuse.png");
+            matFalseSonSword.SetTexture("_FlowHeightmap", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltFlowSword.png"));
 
-            NewRenderInfos[0].defaultMaterial = matFalseSon;
-            NewRenderInfos[1].defaultMaterial = matFalseSonCloth;
-            NewRenderInfos[2].defaultMaterial = matFalseSonSword;
-
-            //
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinFalseSonAltWolfo_Provi_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_FALSESON_PROVI";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Provi/icon.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinFalseSonAlt };
-            newSkinDef.meshReplacements = skinFalseSonAlt.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinFalseSonAlt.rootObject;
-
-            Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/FalseSonBody.prefab").WaitForCompletion(), newSkinDef);
-
+            newRenderInfos[0].defaultMaterial = matFalseSon;
+            newRenderInfos[1].defaultMaterial = matFalseSonCloth;
+            newRenderInfos[2].defaultMaterial = matFalseSonSword;
+            newRenderInfos[3] = new CharacterModel.RendererInfo
+            {
+                defaultMaterial = matFalseSon,
+                renderer = skinFalseSonAlt.rootObject.transform.Find("FSArmature/Root/Hips/Spine1/Spine2/Spine3/SpineEnd/L_Clav/L_Upperarm/L_Forearm/L_Hand/L_Hand_Object/L_Weapon/OverHeadSwingPoint/FSClubGroundTrail/Dust/Debris, 3D").GetComponent<ParticleSystemRenderer>()
+            };
         }
 
 
-        internal static void Default_Alt()
+        internal static void Default_Alt(SkinDef skinFalseSonDefault)
         {
-            SkinDef skinFalseSonDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/FalseSon/skinFalseSonDefault.asset").WaitForCompletion();
-            
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinFalseSonDefault.rendererInfos.Length];
-            System.Array.Copy(skinFalseSonDefault.rendererInfos, NewRenderInfos, skinFalseSonDefault.rendererInfos.Length);
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                name = "skinFalseSon_Gold_1",
+                nameToken = "SIMU_SKIN_FALSESON_GOLD",
+                icon = H.GetIcon("dlc2/falseson_gold"),
+                original = skinFalseSonDefault,
+                extraRenders = 1
+            });
 
-            //0 matFalseSon
-            //1 matFalseSonCloth / 
-            //2 matFalseSon / Weapon
+            Material matFalseSon = CloneMat(newRenderInfos, 0);
+            Material matFalseSonCloth = CloneMat(newRenderInfos, 1);
 
-            Material matFalseSon = Object.Instantiate(skinFalseSonDefault.rendererInfos[0].defaultMaterial);
-            Material matFalseSonCloth = Object.Instantiate(skinFalseSonDefault.rendererInfos[1].defaultMaterial);
-
-            Texture2D texFalseSonDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Gold/texFalseSonDiffuse.png");
-            texFalseSonDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texFalseSonFresnel = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Gold/texFalseSonFresnel.png");
-            texFalseSonFresnel.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texFalseSonClothDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Gold/texFalseSonClothDiffuse.png");
-            texFalseSonClothDiffuse.wrapMode = TextureWrapMode.Clamp;
-
-            matFalseSon.mainTexture = texFalseSonDiffuse;
-            matFalseSon.SetColor("_EmColor", new Color(1f,0.8f,0.8f));
-            matFalseSon.SetTexture("_FresnelMask", texFalseSonFresnel);
+            matFalseSon.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Gold/texFalseSonDiffuse.png");
+            matFalseSon.SetColor("_EmColor", new Color(1f, 0.8f, 0.8f));
+            matFalseSon.SetTexture("_FresnelMask", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Gold/texFalseSonFresnel.png"));
             matFalseSon.SetTexture("_FlowHeightRamp", matFalseSon.GetTexture("_FresnelRamp"));
-            matFalseSonCloth.mainTexture = texFalseSonClothDiffuse;
+            matFalseSonCloth.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Gold/texFalseSonClothDiffuse.png");
             matFalseSonCloth.color = Color.white;
-            
 
-            NewRenderInfos[0].defaultMaterial = matFalseSon;
-            NewRenderInfos[1].defaultMaterial = matFalseSonCloth;
-            NewRenderInfos[2].defaultMaterial = matFalseSon;
-            //
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinFalseSonWolfo_Gold_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_FALSESON_GOLD";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/FalseSon/Gold/icon.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinFalseSonDefault };
-            newSkinDef.meshReplacements = skinFalseSonDefault.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinFalseSonDefault.rootObject;
-
-            Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/FalseSon/FalseSonBody.prefab").WaitForCompletion(), newSkinDef);
+            newRenderInfos[0].defaultMaterial = matFalseSon;
+            newRenderInfos[1].defaultMaterial = matFalseSonCloth;
+            newRenderInfos[2].defaultMaterial = matFalseSon;
+            newRenderInfos[3] = new CharacterModel.RendererInfo
+            {
+                defaultMaterial = matFalseSon,
+                renderer = skinFalseSonDefault.rootObject.transform.Find("FSArmature/Root/Hips/Spine1/Spine2/Spine3/SpineEnd/L_Clav/L_Upperarm/L_Forearm/L_Hand/L_Hand_Object/L_Weapon/OverHeadSwingPoint/FSClubGroundTrail/Dust/Debris, 3D").GetComponent<ParticleSystemRenderer>()
+            };
         }
 
         [RegisterAchievement("CLEAR_ANY_FALSESON", "Skins.FalseSon.Wolfo.First", null, 5, null)]
-        public class ClearSimulacrumFalseSonBody : Achievement_AltBoss_Simu
+        public class ClearSimulacrumFalseSonBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

@@ -1,44 +1,42 @@
-using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
     public class SkinsVoidFiend
     {
         internal static void Start()
-        {           
-            VoidSkins();
-            VoidSkinsIMP();
-            VoidSkinsINV();
-        }
-
-        internal static void VoidSkins()
         {
             SkinDef skinVoidSurvivorDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/VoidSurvivor/skinVoidSurvivorDefault.asset").WaitForCompletion();
-            
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinVoidSurvivorDefault.rendererInfos.Length+1];
-            System.Array.Copy(skinVoidSurvivorDefault.rendererInfos, NewRenderInfos, skinVoidSurvivorDefault.rendererInfos.Length);
 
-            Material matVoidSurvivorFlesh = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[0].defaultMaterial);
-            Material matVoidSurvivorHead = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[1].defaultMaterial);
-            Material matVoidSurvivorMetal = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[2].defaultMaterial);
+            VoidSkinsALY(skinVoidSurvivorDefault);
+            VoidSkinsIMP(skinVoidSurvivorDefault);
+            VoidSkinsINV(skinVoidSurvivorDefault);
+        }
 
+        internal static void VoidSkinsALY(SkinDef skinVoidSurvivorDefault)
+        {
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                name = "skinVoidSurvivorWolfoFriend_1",
+                nameToken = "SIMU_SKIN_VOIDSURVIVOR",
+                icon = H.GetIcon("dlc1/voidfiend_blue"),
+                original = skinVoidSurvivorDefault,
+            });
+
+            Material matVoidSurvivorFlesh = CloneMat(newRenderInfos, 0);
+            Material matVoidSurvivorHead = CloneMat(newRenderInfos, 1);
+            Material matVoidSurvivorMetal = CloneMat(newRenderInfos, 2);
 
             Texture2D texVoidSurvivorFleshDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Blue/texVoidSurvivorFleshDiffuse.png");
-            texVoidSurvivorFleshDiffuse.wrapMode = TextureWrapMode.Clamp;
-
             Texture2D texVoidSurvivorFleshEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Blue/texVoidSurvivorFleshEmission.png");
-            texVoidSurvivorFleshEmission.wrapMode = TextureWrapMode.Clamp;
-
             Texture2D texRampNullifierOffset = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Blue/texRampNullifierOffset.png");
-            texRampNullifierOffset.wrapMode = TextureWrapMode.Clamp;
-
 
             matVoidSurvivorFlesh.mainTexture = texVoidSurvivorFleshDiffuse;
             matVoidSurvivorFlesh.SetTexture("_EmTex", texVoidSurvivorFleshEmission);
-            matVoidSurvivorFlesh.SetColor("_EmColor", new Color(1,2,2));
+            matVoidSurvivorFlesh.SetColor("_EmColor", new Color(1, 2, 2));
             //matVoidSurvivorFlesh.SetTexture("_FresnelRamp", texRampNullifierOffset);
 
             matVoidSurvivorHead.mainTexture = texVoidSurvivorFleshDiffuse;
@@ -50,48 +48,31 @@ namespace WolfoSkinsMod
             //matVoidSurvivorMetal.SetTexture("_PrintRamp", texRampNullifierOffset);
 
 
-            NewRenderInfos[0].defaultMaterial = matVoidSurvivorFlesh;
-            NewRenderInfos[1].defaultMaterial = matVoidSurvivorHead;
-            NewRenderInfos[2].defaultMaterial = matVoidSurvivorMetal;
-            NewRenderInfos[3] = new CharacterModel.RendererInfo
-            {
-                renderer = skinVoidSurvivorDefault.rendererInfos[0].renderer.transform.parent.GetChild(3).GetComponent<SkinnedMeshRenderer>(),
-                defaultMaterial = matVoidSurvivorFlesh,
-            };
-            //
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinVoidSurvivorWolfo_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_VOIDSURVIVOR";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Blue/skinIconVoidSurvivor.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinVoidSurvivorDefault };
-            newSkinDef.meshReplacements = skinVoidSurvivorDefault.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinVoidSurvivorDefault.rootObject;
+            newRenderInfos[0].defaultMaterial = matVoidSurvivorFlesh;
+            newRenderInfos[1].defaultMaterial = matVoidSurvivorHead;
+            newRenderInfos[2].defaultMaterial = matVoidSurvivorMetal;
+            newRenderInfos[3].defaultMaterial = matVoidSurvivorFlesh;
 
-            Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion(), newSkinDef);
+
         }
 
-        internal static void VoidSkinsIMP()
+        internal static void VoidSkinsIMP(SkinDef skinVoidSurvivorDefault)
         {
-            SkinDef skinVoidSurvivorDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/VoidSurvivor/skinVoidSurvivorDefault.asset").WaitForCompletion();
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                name = "skinVoidSurvivorWolfo2_1",
+                nameToken = "SIMU_SKIN_VOIDSURVIVOR2",
+                icon = H.GetIcon("dlc1/voidfiend_red"),
+                original = skinVoidSurvivorDefault,
+            });
 
-            CharacterModel.RendererInfo[] NewRenderInfosIMP = new CharacterModel.RendererInfo[skinVoidSurvivorDefault.rendererInfos.Length + 1];
-            System.Array.Copy(skinVoidSurvivorDefault.rendererInfos, NewRenderInfosIMP, skinVoidSurvivorDefault.rendererInfos.Length);
-
-            Material matVoidSurvivorFleshIMP = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[0].defaultMaterial);
-            Material matVoidSurvivorHeadIMP = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[1].defaultMaterial);
-            Material matVoidSurvivorMetalIMP = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[2].defaultMaterial);
-
+            Material matVoidSurvivorFleshIMP = CloneMat(newRenderInfos, 0);
+            Material matVoidSurvivorHeadIMP = CloneMat(newRenderInfos, 1);
+            Material matVoidSurvivorMetalIMP = CloneMat(newRenderInfos, 2);
 
             Texture2D texVoidSurvivorFleshDiffuseIMP = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Red/texVoidSurvivorFleshDiffuseIMP.png");
-            texVoidSurvivorFleshDiffuseIMP.wrapMode = TextureWrapMode.Clamp;
-
             Texture2D texVoidSurvivorFleshEmissionIMP = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Red/texVoidSurvivorFleshEmissionIMP.png");
-            texVoidSurvivorFleshEmissionIMP.wrapMode = TextureWrapMode.Clamp;
-
             Texture2D texRampNullifierOffsetIMP = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Red/texRampNullifierOffsetIMP.png");
-            texRampNullifierOffsetIMP.wrapMode = TextureWrapMode.Clamp;
 
 
             matVoidSurvivorFleshIMP.mainTexture = texVoidSurvivorFleshDiffuseIMP;
@@ -107,46 +88,30 @@ namespace WolfoSkinsMod
             matVoidSurvivorMetalIMP.SetTexture("_FresnelRamp", texRampNullifierOffsetIMP);
             matVoidSurvivorMetalIMP.SetTexture("_PrintRamp", texRampNullifierOffsetIMP);
 
-            NewRenderInfosIMP[0].defaultMaterial = matVoidSurvivorFleshIMP;
-            NewRenderInfosIMP[1].defaultMaterial = matVoidSurvivorHeadIMP;
-            NewRenderInfosIMP[2].defaultMaterial = matVoidSurvivorMetalIMP;
-            NewRenderInfosIMP[3] = new CharacterModel.RendererInfo
-            {
-                renderer = skinVoidSurvivorDefault.rendererInfos[0].renderer.transform.parent.GetChild(3).GetComponent<SkinnedMeshRenderer>(),
-                defaultMaterial = matVoidSurvivorFleshIMP,
-            };
-
-            SkinDefWolfo newSkinDefIMP = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDefIMP.name = "skinVoidSurvivorWolfo2_Simu";
-            newSkinDefIMP.nameToken = "SIMU_SKIN_VOIDSURVIVOR2";
-            newSkinDefIMP.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Red/skinIconVoidSurvivorIMP.png"));
-            newSkinDefIMP.baseSkins = new SkinDef[] { skinVoidSurvivorDefault };
-            newSkinDefIMP.meshReplacements = skinVoidSurvivorDefault.meshReplacements;
-            newSkinDefIMP.rendererInfos = NewRenderInfosIMP;
-            newSkinDefIMP.rootObject = skinVoidSurvivorDefault.rootObject;
-
-            Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion(), newSkinDefIMP);
+            newRenderInfos[0].defaultMaterial = matVoidSurvivorFleshIMP;
+            newRenderInfos[1].defaultMaterial = matVoidSurvivorHeadIMP;
+            newRenderInfos[2].defaultMaterial = matVoidSurvivorMetalIMP;
+            newRenderInfos[3].defaultMaterial = matVoidSurvivorFleshIMP;
+            
         }
 
-        internal static void VoidSkinsINV()
+        internal static void VoidSkinsINV(SkinDef skinVoidSurvivorDefault)
         {
-            SkinDef skinVoidSurvivorDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/VoidSurvivor/skinVoidSurvivorDefault.asset").WaitForCompletion();
-            
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinVoidSurvivorDefault.rendererInfos.Length + 1];
-            System.Array.Copy(skinVoidSurvivorDefault.rendererInfos, NewRenderInfos, skinVoidSurvivorDefault.rendererInfos.Length);
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                name = "skinVoidSurvivor_Inv_1",
+                nameToken = "SIMU_SKIN_VOIDSURVIVOR_INV",
+                icon = H.GetIcon("dlc1/voidfiend_orange"),
+                original = skinVoidSurvivorDefault,
+            });
 
-            Material matVoidSurvivorFlesh = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[0].defaultMaterial);
-            Material matVoidSurvivorHead = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[1].defaultMaterial);
-            Material matVoidSurvivorMetal = Object.Instantiate(skinVoidSurvivorDefault.rendererInfos[2].defaultMaterial);
+            Material matVoidSurvivorFlesh = CloneMat(newRenderInfos, 0);
+            Material matVoidSurvivorHead = CloneMat(newRenderInfos, 1);
+            Material matVoidSurvivorMetal = CloneMat(newRenderInfos, 2);
 
             Texture2D texVoidSurvivorFleshDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Yellow/texVoidSurvivorFleshDiffuseINV.png");
-            texVoidSurvivorFleshDiffuse.wrapMode = TextureWrapMode.Clamp;
-
             Texture2D texVoidSurvivorFleshEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Yellow/texVoidSurvivorFleshEmissionINV.png");
-            texVoidSurvivorFleshEmission.wrapMode = TextureWrapMode.Clamp;
-
             Texture2D texRampNullifierOffset = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Yellow/texRampNullifierOffsetINV.png");
-            texRampNullifierOffset.wrapMode = TextureWrapMode.Clamp;
 
             matVoidSurvivorFlesh.mainTexture = texVoidSurvivorFleshDiffuse;
             matVoidSurvivorFlesh.SetTexture("_EmTex", texVoidSurvivorFleshEmission);
@@ -161,30 +126,15 @@ namespace WolfoSkinsMod
             matVoidSurvivorMetal.SetTexture("_FresnelRamp", texRampNullifierOffset);
             matVoidSurvivorMetal.SetTexture("_PrintRamp", texRampNullifierOffset);
 
-            NewRenderInfos[0].defaultMaterial = matVoidSurvivorFlesh;
-            NewRenderInfos[1].defaultMaterial = matVoidSurvivorHead;
-            NewRenderInfos[2].defaultMaterial = matVoidSurvivorMetal;
-            NewRenderInfos[3] = new CharacterModel.RendererInfo
-            {
-                renderer = skinVoidSurvivorDefault.rendererInfos[0].renderer.transform.parent.GetChild(3).GetComponent<SkinnedMeshRenderer>(),
-                defaultMaterial = matVoidSurvivorFlesh,
-            };
-            //
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinVoidSurvivorWolfo_Inv_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_VOIDSURVIVOR_INV";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Yellow/skinIconVoidSurvivorINV.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinVoidSurvivorDefault };
-            newSkinDef.meshReplacements = skinVoidSurvivorDefault.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinVoidSurvivorDefault.rootObject;
-
-            Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion(), newSkinDef);
+            newRenderInfos[0].defaultMaterial = matVoidSurvivorFlesh;
+            newRenderInfos[1].defaultMaterial = matVoidSurvivorHead;
+            newRenderInfos[2].defaultMaterial = matVoidSurvivorMetal;
+            newRenderInfos[3].defaultMaterial = matVoidSurvivorFlesh;
+ 
         }
 
         [RegisterAchievement("CLEAR_ANY_VOIDSURVIVOR", "Skins.VoidSurvivor.Wolfo.First", "CompleteVoidEnding", 5, null)]
-        public class ClearSimulacrumVoidSurvivorBody : Achievement_AltBoss_Simu
+        public class ClearSimulacrumVoidSurvivorBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {
@@ -192,6 +142,6 @@ namespace WolfoSkinsMod
             }
         }
 
- 
+
     }
 }

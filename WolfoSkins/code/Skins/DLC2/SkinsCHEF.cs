@@ -1,7 +1,7 @@
-using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod
 {
@@ -9,25 +9,38 @@ namespace WolfoSkinsMod
     {
         internal static void Start()
         {
-            ChefSkin_RED();
-            ChefSkin_GREEN();
-            ChefSkin_Blue();
-            //Mastery_Alt();
-        }
-        
-        internal static void Mastery_Alt()
-        {
+            SkinDef skinChefDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/Chef/skinChefDefault.asset").WaitForCompletion();
             SkinDef skinChefAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/Chef/skinChefAlt.asset").WaitForCompletion();
 
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinChefAlt.rendererInfos.Length];
-            System.Array.Copy(skinChefAlt.rendererInfos, NewRenderInfos, skinChefAlt.rendererInfos.Length);
+            ChefSkin_RED(skinChefDefault);
+            ChefSkin_GREEN(skinChefDefault);
+            ChefSkin_Blue(skinChefDefault);
+            //Mastery_Alt();
+
+            /*
+    
+            skinChefDefault
+            [0] matChef | meshChef
+            [1] matChef | meshChefPizzaCutter
+            [2] matChef | meshlChefCleaver
+            [3] matChef | meshChefOven
+            [4] matChefIceBox | meshChefIceBox
+            */
+        }
+
+        #region Unused Mastery
+        /*
+        internal static void Mastery_Alt(SkinDef skinChefAlt)
+        {
+            CharacterModel.RendererInfo[] newRenderInfos = new CharacterModel.RendererInfo[skinChefAlt.rendererInfos.Length];
+            System.Array.Copy(skinChefAlt.rendererInfos, newRenderInfos, skinChefAlt.rendererInfos.Length);
 
             //0 matChefAlt
             //1 matChefAltAccessories / PizzaCutter
             //2 matChefAlt / Cleaver
 
-            Material matChefAlt = Object.Instantiate(skinChefAlt.rendererInfos[0].defaultMaterial);
-            Material matChefAltAccessories = Object.Instantiate(skinChefAlt.rendererInfos[0].defaultMaterial);
+            Material matChefAlt = CloneMat(ChefAlt.rendererInfos[0].defaultMaterial);
+            Material matChefAltAccessories = CloneMat(ChefAlt.rendererInfos[0].defaultMaterial);
 
             Texture2D texChefAltDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/Master/texChefAltDiffuse.png");
             texChefAltDiffuse.wrapMode = TextureWrapMode.Clamp;
@@ -40,145 +53,99 @@ namespace WolfoSkinsMod
             matChefAltAccessories.mainTexture = texChefAltAccessoriesDiffuse;
 
 
-            NewRenderInfos[0].defaultMaterial = matChefAlt;
-            NewRenderInfos[1].defaultMaterial = matChefAltAccessories;
-            NewRenderInfos[2].defaultMaterial = matChefAlt;
+            newRenderInfos[0].defaultMaterial = matChefAlt;
+            newRenderInfos[1].defaultMaterial = matChefAltAccessories;
+            newRenderInfos[2].defaultMaterial = matChefAlt;
 
             //
             SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinChefWolfo_BLUE_Simu";
+            newSkinDef.name = "skinChef_BLUE_1";
             newSkinDef.nameToken = "SIMU_SKIN_CHEF_BLUE";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/skinIconChef_Blue.png"));
+            newSkinDef.icon =  Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/icon/Chef/skinIconChef_Blue.png"));
             newSkinDef.baseSkins = skinChefAlt.baseSkins;
             newSkinDef.meshReplacements = skinChefAlt.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
+            newSkinDef.rendererInfos = newRenderInfos;
             newSkinDef.rootObject = skinChefAlt.rootObject;
 
             Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/Chef/ChefBody.prefab").WaitForCompletion(), newSkinDef);
         }
-        
-        internal static void ChefSkin_RED()
+        */
+        #endregion
+
+        internal static void ChefSkin_RED(SkinDef skinChefDefault)
         {
-            SkinDef skinChefDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/Chef/skinChefDefault.asset").WaitForCompletion();
-           
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinChefDefault.rendererInfos.Length];
-            System.Array.Copy(skinChefDefault.rendererInfos, NewRenderInfos, skinChefDefault.rendererInfos.Length);
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                name = "skinChef_Red_1",
+                nameToken = "SIMU_SKIN_CHEF_RED",
+                icon = H.GetIcon("dlc2/chef_red"),
+                original = skinChefDefault,
+            });
 
-            //0 matChef
-            //1 matChef / PizzaCutter
-            //2 matChef / Cleaver
+            Material matChef = CloneMat(newRenderInfos, 0);
+            Material matChefIceBox = CloneMat(newRenderInfos, 4);
 
-            Material matChef = Object.Instantiate(skinChefDefault.rendererInfos[0].defaultMaterial);
+            matChef.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/texChefDiffuse_Red.png");
+            matChefIceBox.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/icebox_Red.png");
 
-            Texture2D texChefDiffuse_Red = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/texChefDiffuse_Red.png");
-            texChefDiffuse_Red.wrapMode = TextureWrapMode.Clamp;
-
-            matChef.mainTexture = texChefDiffuse_Red;
-            //matChef.SetTexture("_EmTex", texCrocoEmission);
-            //matChef.SetColor("_EmColor", new Color(1f, 1f, 1f));
-
-            NewRenderInfos[0].defaultMaterial = matChef;
-            NewRenderInfos[1].defaultMaterial = matChef;
-            NewRenderInfos[2].defaultMaterial = matChef;
-
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinChefWolfo_Red_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_CHEF_RED";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/skinIconChef_Red.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinChefDefault };
-            newSkinDef.meshReplacements = skinChefDefault.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinChefDefault.rootObject;
-           
-
-            Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/Chef/ChefBody.prefab").WaitForCompletion(), newSkinDef);
+            newRenderInfos[0].defaultMaterial = matChef;
+            newRenderInfos[1].defaultMaterial = matChef;
+            newRenderInfos[2].defaultMaterial = matChef;
+            newRenderInfos[3].defaultMaterial = matChef;
+            newRenderInfos[4].defaultMaterial = matChefIceBox;
         }
 
-        internal static void ChefSkin_GREEN()
+        internal static void ChefSkin_GREEN(SkinDef skinChefDefault)
         {
-            SkinDef skinChefDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/Chef/skinChefDefault.asset").WaitForCompletion();
-           
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinChefDefault.rendererInfos.Length];
-            System.Array.Copy(skinChefDefault.rendererInfos, NewRenderInfos, skinChefDefault.rendererInfos.Length);
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                name = "skinChef_Green_1",
+                nameToken = "SIMU_SKIN_CHEF_GREEN",
+                icon = H.GetIcon("dlc2/chef_green"),
+                original = skinChefDefault,
+            });
 
-            //0 matChef
-            //1 matChef / PizzaCutter
-            //2 matChef / Cleaver
+            Material matChef = CloneMat(newRenderInfos, 0);
+            Material matChefIceBox = CloneMat(newRenderInfos, 4);
 
-
-            Material matChef = Object.Instantiate(skinChefDefault.rendererInfos[0].defaultMaterial);
-
-            Texture2D texChefDiffuse_Red = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/texChefDiffuse_Green.png");
-            texChefDiffuse_Red.wrapMode = TextureWrapMode.Clamp;
-
-            Texture2D texChefNormalWood = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/texChefNormalWood.png");
-            texChefNormalWood.wrapMode = TextureWrapMode.Clamp;
-
-            matChef.mainTexture = texChefDiffuse_Red;
+            //Texture2D texChefNormalWood = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/texChefNormalWood.png");
+            matChef.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/texChefDiffuse_Green.png");
             //matChef.SetTexture("_NormalTex", texChefNormalWood); //Fucks up a lot of stuff idk how
-            //matChef.SetTexture("_EmTex", texCrocoEmission);
-            //matChef.SetColor("_EmColor", new Color(1f, 1f, 1f));
+            matChefIceBox.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/icebox_green.png");
 
-            NewRenderInfos[0].defaultMaterial = matChef;
-            NewRenderInfos[1].defaultMaterial = matChef;
-            NewRenderInfos[2].defaultMaterial = matChef;
-
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinChefWolfo_Green_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_CHEF_GREEN";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/skinIconChef_Green.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinChefDefault };
-            newSkinDef.meshReplacements = skinChefDefault.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinChefDefault.rootObject;
-             
-            Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/Chef/ChefBody.prefab").WaitForCompletion(), newSkinDef);
-
+            newRenderInfos[0].defaultMaterial = matChef;
+            newRenderInfos[1].defaultMaterial = matChef;
+            newRenderInfos[2].defaultMaterial = matChef;
+            newRenderInfos[3].defaultMaterial = matChef;
+            newRenderInfos[4].defaultMaterial = matChefIceBox;
         }
 
-        internal static void ChefSkin_Blue()
+        internal static void ChefSkin_Blue(SkinDef skinChefDefault)
         {
-            SkinDef skinChefDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/Chef/skinChefDefault.asset").WaitForCompletion();
-            
-            CharacterModel.RendererInfo[] NewRenderInfos = new CharacterModel.RendererInfo[skinChefDefault.rendererInfos.Length];
-            System.Array.Copy(skinChefDefault.rendererInfos, NewRenderInfos, skinChefDefault.rendererInfos.Length);
+            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            {
+                name = "skinChef_BLUE_1",
+                nameToken = "SIMU_SKIN_CHEF_BLUE",
+                icon = H.GetIcon("dlc2/chef_blue"),
+                original = skinChefDefault,
+            });
 
-            //0 matChef
-            //1 matChef / PizzaCutter
-            //2 matChef / Cleaver
+            Material matChef = CloneMat(newRenderInfos, 0);
+            Material matChefIceBox = CloneMat(newRenderInfos, 4);
 
-            Material matChef = Object.Instantiate(skinChefDefault.rendererInfos[0].defaultMaterial);
+            matChef.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/texChefDiffuse_Blue.png");
+            matChefIceBox.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/icebox_blue.png");
 
-            Texture2D texChefDiffuse_Red = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/texChefDiffuse_Blue.png");
-            texChefDiffuse_Red.wrapMode = TextureWrapMode.Clamp;
-
-            matChef.mainTexture = texChefDiffuse_Red;
-            //matChef.SetTexture("_EmTex", texCrocoEmission);
-            //matChef.SetColor("_EmColor", new Color(1f, 1f, 1f));
-
-            NewRenderInfos[0].defaultMaterial = matChef;
-            NewRenderInfos[1].defaultMaterial = matChef;
-            NewRenderInfos[2].defaultMaterial = matChef;
-
-            //
-            SkinDefWolfo newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
-            newSkinDef.name = "skinChefWolfo_BLUE_Simu";
-            newSkinDef.nameToken = "SIMU_SKIN_CHEF_BLUE";
-            newSkinDef.icon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Chef/skinIconChef_Blue.png"));
-            newSkinDef.baseSkins = new SkinDef[] { skinChefDefault };
-            newSkinDef.meshReplacements = skinChefDefault.meshReplacements;
-            newSkinDef.rendererInfos = NewRenderInfos;
-            newSkinDef.rootObject = skinChefDefault.rootObject;
-
-            Skins.AddSkinToCharacter(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC2/Chef/ChefBody.prefab").WaitForCompletion(), newSkinDef);
-
+            newRenderInfos[0].defaultMaterial = matChef;
+            newRenderInfos[1].defaultMaterial = matChef;
+            newRenderInfos[2].defaultMaterial = matChef;
+            newRenderInfos[3].defaultMaterial = matChef;
+            newRenderInfos[4].defaultMaterial = matChefIceBox;
         }
 
 
         [RegisterAchievement("CLEAR_ANY_CHEF", "Skins.Chef.Wolfo.First", null, 5, null)]
-        public class ClearSimulacrumChefBody : Achievement_AltBoss_Simu
+        public class ClearSimulacrumChefBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
             {

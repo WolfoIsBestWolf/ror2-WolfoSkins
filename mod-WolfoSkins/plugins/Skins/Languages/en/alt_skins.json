@@ -3,22 +3,23 @@
 	{      
 		 
 		"ACHIEVEMENT_CLEAR_ANY_NAME": "{0} : Alternated",
-		"ACHIEVEMENT_CLEAR_ANY_DESCRIPTION": "As {0}, complete wave 50 in Simulacrum, A Moment, Whole or the Planetarium.",
+		"ACHIEVEMENT_CLEAR_TIER1": "As {0}, complete one alternate objective.\nA Moment Whole, Eclipse 4, the Planetarium or wave 50 in Simulacrum.",
 		
 		"ACHIEVEMENT_CLEAR_BOTH_NAME": "{0} : Altercation",
-		"ACHIEVEMENT_CLEAR_BOTH_DESCRIPTION": "As {0}, complete both wave 50 in Simulacrum and either A Moment, Whole or the Planetarium.",
-		
-
-		"ACHIEVEMENT_CLEAR_ALTBOSS_DESCRIPTION": "As {0}, complete A Moment, Whole or The Planetarium.",
-		
-		"CLEAR_BOTHFAILED": "Completed both Alt Boss and Simulacrum but failed to unlock. Run auto unlocker in config to make sure everything is up to date.",
-		
-		
+ 
+		"ACHIEVEMENT_CLEAR_TIER2_0": "As {0}, complete two alternate objectives.\nThe Planetarium, wave 50 in Simulacrum, Eclipse 4 or A Moment Whole.",
+		"ACHIEVEMENT_CLEAR_TIER2_1": "As {0}, complete one more alternative objective.\nThe Planetarium, wave 50 in Simulacrum or Eclipse 4",
+		"ACHIEVEMENT_CLEAR_TIER2_2": "As {0}, complete one more alternative objective.\nWave 50 in Simulacrum, Eclipse 4 or A Moment Whole.",
+		"ACHIEVEMENT_CLEAR_TIER2_3": "As {0}, complete one more alternative objective.\nThe Planetarium, Eclipse 4 or A Moment Whole.",
+		"ACHIEVEMENT_CLEAR_TIER2_4": "As {0}, complete one more alternative objective.\nThe Planetarium, wave 50 in Simulacrum or A Moment Whole.",
+		 
+		 
+		 
 		"ACHIEVEMENT_CLEAR_SIMU_NAME": "{0} : Simulated",
 		"ACHIEVEMENT_CLEAR_SIMU_DESCRIPTION": "As {0}, complete wave 50 in Simulacrum",
 		
 		"ACHIEVEMENT_CLEAR_ECLIPSE_NAME": "{0} : Eclipsed",
-		"ACHIEVEMENT_CLEAR_ECLIPSE_DESCRIPTION": "As {0}, beat the game on Eclipse 8.",		
+		"ACHIEVEMENT_CLEAR_ECLIPSE_DESCRIPTION": "As {0}, beat the game on Eclipse 4 or higher.",		
 		
 		"ACHIEVEMENT_CLEAR_LUNARSCAV_NAME": "{0} : Twisted",
 		"ACHIEVEMENT_CLEAR_LUNARSCAV_DESCRIPTION": "As {0}, defeat a Twisted Scavenger.",
@@ -27,7 +28,7 @@
 		"ACHIEVEMENT_CLEAR_VOIDLING_DESCRIPTION": "As {0}, defeat Voidling.",
 
 
-		"SIMU_SKIN_COMMANDO_SOTV":"Marine",
+		"SIMU_SKIN_COMMANDO_SOTV":"Master",
 		"SIMU_SKIN_COMMANDO":"Providence Trial",
 		"SIMU_SKIN_COMMANDO_COLOSSUS":"Oceanus",
 		"SIMU_SKIN_COMMANDO_COLOSSUSRED":"Hades",
@@ -124,7 +125,7 @@
 		"SIMU_SKIN_RAVAGER":"Foolish",
 
 		"SIMU_SKIN_PALADIN":"Coast",
-		"SIMU_SKIN_PALADIN_BLACK":"Granite",
+		"SIMU_SKIN_PALADIN_BLACK":"Titanic",
 
 
 		"SIMU_SKIN_PILOT_WHITE":"Winter",

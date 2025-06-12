@@ -1,5 +1,6 @@
 using R2API;
 using RoR2;
+using RoR2.ExpansionManagement;
 using RoR2.Stats;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -27,146 +28,113 @@ namespace WolfoSkinsMod
 
             //How to check if not first time runner
             //If the auto unlocker ran mod must've run before
-            if (WConfig.cfgSilentRelockReunlock.Value && !WConfig.cfgRunAutoUnlocker.Value)
+            if (WConfig.cfgSilentRelockReunlock.Value && WConfig.cfgRunAutoUnlocker.Value == false)
             {
                 //Silent revoke and regrant everything upon bugged updates                
-                LockEverything(userProfile);
+                LockEverything(userProfile, false);
                 CheckForPreviouslyEarned(userProfile, true);
-                WConfig.cfgSilentRelockReunlock.Value = false;
             }
             else
             {
-                if (WConfig.cfgLockEverything.Value)
+                if (WConfig.RemoveSkinUnlocks.Value)
                 {
-                    LockEverything(userProfile);
+                    LockEverything(userProfile, false);
                 }
                 if (WConfig.cfgRunAutoUnlocker.Value)
                 {
                     CheckForPreviouslyEarned(userProfile, true);
-                }         
-            }          
-            UpdateBothObjective_AtStartForAll(userProfile);           
+                }
+            }
+            UpdateTier2_ForAll(userProfile);
         }
 
         private static void UnlockableCatalog_GenerateUnlockableMetaData(On.RoR2.UnlockableCatalog.orig_GenerateUnlockableMetaData orig, UnlockableDef[] unlockableDefs)
         {
-            try
-            {
-                Unlocks.AssignUnlockables();
-            }
-            catch (System.Exception e)
-            {
-                Debug.Log(e);
-            }
-
+            AssignUnlockables();
             orig(unlockableDefs);
         }
 
 
         public static void CheckForPreviouslyEarned(UserProfile userProfile, bool clearView)
-        { 
+        {
             if (userProfile == null)
             {
-                LocalUser localUser = LocalUserManager.GetFirstLocalUser();     
-                userProfile = localUser.userProfile;                
+                LocalUser localUser = LocalUserManager.GetFirstLocalUser();
+                userProfile = localUser.userProfile;
             }
-            Debug.Log(userProfile);
             if (userProfile == null)
             {
                 Debug.LogWarning("NO USER PROFILE");
                 return;
-            }           
+            }
             WConfig.cfgRunAutoUnlocker.Value = false;
             Debug.LogWarning("Checking for previously earned achievements " + userProfile.name);
             StatSheet statSheet = userProfile.statSheet;
-            
+
+
+            CheckOld(userProfile);
             foreach (SurvivorDef survivorDef in SurvivorCatalog.survivorDefs)
             {
                 string upperName = survivorDef.cachedName.ToUpperInvariant();
 
-                bool hasLegacy = userProfile.HasAchievement("SIMU_SKIN_" + upperName);
-                bool hasAltBoss = userProfile.HasAchievement("CLEAR_ALTBOSS_" + upperName);
-                bool hasSimu = userProfile.HasAchievement("CLEAR_SIMU_" + upperName);
-                bool hasEclipse = userProfile.HasAchievement("CLEAR_ECLIPSE_" + upperName);
-                bool beatLunarScav = userProfile.HasAchievement("CLEAR_LUNARSCAV_" + upperName);
-                bool beatVoidling = userProfile.HasAchievement("CLEAR_VOIDLING_" + upperName);
+                int unlocks = 0;
 
-                //
-                if (hasSimu)
+                if (userProfile.HasAchievement("CLEAR_SIMU_" + upperName))
                 {
-                    userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.Simu");
+                    unlocks++;
                 }
                 else
-                {                    
+                {
                     string bodyName = survivorDef.bodyPrefab.name;
                     ulong simu_H = statSheet.GetStatValueULong(PerBodyStatDef.highestInfiniteTowerWaveReachedHard, bodyName);
                     ulong simu_N = statSheet.GetStatValueULong(PerBodyStatDef.highestInfiniteTowerWaveReachedNormal, bodyName);
                     ulong simu_E = statSheet.GetStatValueULong(PerBodyStatDef.highestInfiniteTowerWaveReachedEasy, bodyName);
                     if (simu_H >= 50 || simu_N >= 50 || simu_E >= 50)
                     {
-                        hasSimu = true;
-                        userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.Simu");
+                        unlocks++;
                         userProfile.AddAchievement("CLEAR_SIMU_" + upperName, false);
                     }
                 }
-                //
-                //
-                if (hasEclipse)
+
+                if (userProfile.HasAchievement("CLEAR_ECLIPSE_" + upperName))
                 {
-                    userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.Eclipse");
+                    unlocks++;
+                    //userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.Eclipse");
                 }
-                else if (userProfile.HasUnlockable("Eclipse." + survivorDef.cachedName + ".9"))
+                else if (userProfile.HasUnlockable("Eclipse." + survivorDef.cachedName + ".5"))
                 {
-                    hasEclipse = true;
-                    userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.Eclipse");
+                    unlocks++;
                     userProfile.AddAchievement("CLEAR_ECLIPSE_" + upperName, false);
+                    //userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.Eclipse");
                 }
-                //
-                //
-                if (beatLunarScav)
+
+                if (userProfile.HasAchievement("CLEAR_LUNARSCAV_" + upperName))
                 {
-                    userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.LunarScav");
+                    unlocks++;
+                    //userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.LunarScav");
                 }
                 else if (userProfile.HasUnlockable("Skins." + survivorDef.cachedName + ".Wolfo.LunarScav"))
                 {
-                    beatLunarScav = true;
+                    unlocks++;
                     userProfile.AddAchievement("CLEAR_LUNARSCAV_" + upperName, false);
                 }
-                if (beatVoidling)
+
+                if (userProfile.HasAchievement("CLEAR_VOIDLING_" + upperName))
                 {
-                    userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.Voidling");
+                    unlocks++;
+                    //userProfile.AddUnlockToken("Skins." + survivorDef.cachedName + ".Wolfo.Voidling");
                 }
                 else if (userProfile.HasUnlockable("Skins." + survivorDef.cachedName + ".Wolfo.Voidling"))
                 {
-                    beatVoidling = true;
+                    unlocks++;
                     userProfile.AddAchievement("CLEAR_VOIDLING_" + upperName, false);
                 }
-                //
-                if (!hasAltBoss)
-                {
-                    if ((hasLegacy && !hasSimu) || beatLunarScav || beatVoidling)
-                    {
-                        hasAltBoss = true;
-                        userProfile.AddAchievement("CLEAR_ALTBOSS_" + upperName, false);
-                    }
-                }
 
-                Debug.Log(survivorDef.cachedName+"\n"+upperName+"\nHas autogenerated legacy: " + hasLegacy + "\nHas AltBoss: " + hasAltBoss + "\nBeat Simu: " + hasSimu + "\nBeat Eclipse: " + hasEclipse + "\nBeat LunarScav: " + beatLunarScav+"\nBeat Voidling: " + beatVoidling);
-            }
-            CheckOld(userProfile);
-            foreach (SurvivorDef survivorDef in SurvivorCatalog.survivorDefs)
-            {
-                //Actual previous
-                string upperName = survivorDef.cachedName.ToUpperInvariant();
-                bool hasAltBoss = userProfile.HasAchievement("CLEAR_ALTBOSS_" + upperName);
-                bool hasSimu = userProfile.HasAchievement("CLEAR_SIMU_" + upperName);
-
-                if (hasSimu || hasAltBoss)
+                if (unlocks > 0)
                 {
                     UnlockableDef main_unlock = UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.First");
                     if (main_unlock)
                     {
-                        Debug.Log(main_unlock.cachedName);
                         userProfile.GrantUnlockable(main_unlock);
                     }
                     if (!userProfile.HasAchievement("CLEAR_ANY_" + upperName))
@@ -174,29 +142,40 @@ namespace WolfoSkinsMod
                         userProfile.AddAchievement("CLEAR_ANY_" + upperName, true);
                     }
                 }
-                if (hasSimu && hasAltBoss)
+                if (unlocks > 1)
                 {
                     UnlockableDef safe = UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.Both");
                     if (safe)
                     {
-                        Debug.Log(safe.cachedName);
-                        userProfile.GrantUnlockable(safe);                       
+                        userProfile.GrantUnlockable(safe);
                     }
                     if (!userProfile.HasAchievement("CLEAR_BOTH_" + upperName))
                     {
                         userProfile.AddAchievement("CLEAR_BOTH_" + upperName, true);
                     }
                 }
-            }
+                if (!clearView)
+                {
+                    Debug.Log(survivorDef.cachedName
+     + "\n hasSimulacrum | " + userProfile.HasAchievement("CLEAR_SIMU_" + upperName)
+     + "\n has Eclipse 4 | " + userProfile.HasAchievement("CLEAR_ECLIPSE_" + upperName)
+     + "\n has LunarScav | " + userProfile.HasAchievement("CLEAR_LUNARSCAV_" + upperName)
+     + "\n has  Voidling | " + userProfile.HasAchievement("CLEAR_VOIDLING_" + upperName));
+                }
 
+            }
             if (clearView)
             {
-                userProfile.ClearAllAchievementNotifications();//I guess?
-                //userProfile.unviewedAchievementsList.Clear();
-            }          
+                userProfile.ClearAllAchievementNotifications();
+            }
+
+            WConfig.RemoveSkinUnlocks.Value = false;
+            WConfig.RemoveAllTrackers.Value = false;
+            WConfig.cfgSilentRelockReunlock.Value = false;
+            userProfile.RequestEventualSave();
         }
 
-        public static void LockEverything(UserProfile userProfile)
+        public static void LockEverything(UserProfile userProfile, bool trueAll)
         {
             if (userProfile == null)
             {
@@ -209,9 +188,9 @@ namespace WolfoSkinsMod
                 Debug.LogWarning("NO USER PROFILE");
                 return;
             }
-            WConfig.cfgLockEverything.Value = false;
+
             Debug.LogWarning("Removing all skin achievements and main unlockables " + userProfile.name);
-  
+
             //Does not remove for survivors that don't exist I guess.
             foreach (SurvivorDef survivorDef in SurvivorCatalog.survivorDefs)
             {
@@ -219,31 +198,28 @@ namespace WolfoSkinsMod
 
                 var First = UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.First");
                 var Both = UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.Both");
-                var Simu = UnlockableCatalog.GetUnlockableDef("Skins." + survivorDef.cachedName + ".Wolfo.Simu");
-                if (First)
-                {
-                    userProfile.RevokeUnlockable(First);
-                }
-                else
-                {
-                    Debug.LogWarning("Unlockables not properly generated for :" + survivorDef.cachedName);
-                }
-                if (Both)
-                {
-                    userProfile.RevokeUnlockable(Both);
-                }
-                if (Simu)
-                {
-                    userProfile.RevokeUnlockable(Simu);
-                }
-                
-                userProfile.RevokeAchievement("CLEAR_ALTBOSS_" + upperName);
-                userProfile.RevokeAchievement("CLEAR_SIMU_" + upperName);
-
+                userProfile.RevokeUnlockable(First);
+                userProfile.RevokeUnlockable(Both);
                 userProfile.RevokeAchievement("CLEAR_ANY_" + upperName);
                 userProfile.RevokeAchievement("CLEAR_BOTH_" + upperName);
+                if (trueAll)
+                {
+                    Debug.Log(survivorDef.cachedName
+                  + "\n hadSimulacrum | " + userProfile.HasAchievement("CLEAR_SIMU_" + upperName)
+                  + "\n had Eclipse 4 | " + userProfile.HasAchievement("CLEAR_ECLIPSE_" + upperName)
+                  + "\n had LunarScav | " + userProfile.HasAchievement("CLEAR_LUNARSCAV_" + upperName)
+                  + "\n had  Voidling | " + userProfile.HasAchievement("CLEAR_VOIDLING_" + upperName));
+                    userProfile.RevokeAchievement("CLEAR_SIMU_" + upperName);
+                    userProfile.RevokeAchievement("CLEAR_ECLIPSE_" + upperName);
+                    userProfile.RevokeAchievement("CLEAR_VOIDLING_" + upperName);
+                    userProfile.RevokeAchievement("CLEAR_LUNARSCAV_" + upperName);
+                }
             }
-            userProfile.ClearAllAchievementNotifications();
+
+            WConfig.RemoveSkinUnlocks.Value = false;
+            WConfig.RemoveAllTrackers.Value = false;
+            WConfig.cfgSilentRelockReunlock.Value = false;
+            userProfile.RequestEventualSave();
         }
 
 
@@ -257,7 +233,6 @@ namespace WolfoSkinsMod
             if (userProfile.HasAchievement("SIMU_SKIN_BANDIT") && !userProfile.HasAchievement("CLEAR_SIMU_BANDIT2"))
             {
                 Debug.Log("Has manual Legacy : SIMU_SKIN_BANDIT2");
-                //userProfile.AddUnlockToken("Skins.Bandit2.Wolfo.AltBoss");
                 if (!userProfile.HasAchievement("CLEAR_ALTBOSS_BANDIT2"))
                 {
                     userProfile.AddAchievement("CLEAR_ALTBOSS_BANDIT2", false);
@@ -266,7 +241,6 @@ namespace WolfoSkinsMod
             if (userProfile.HasAchievement("SIMU_SKIN_ENGINEER") && !userProfile.HasAchievement("CLEAR_SIMU_ENGI"))
             {
                 Debug.Log("Has manual Legacy : SIMU_SKIN_ENGINEER");
-                //userProfile.AddUnlockToken("Skins.Engi.Wolfo.AltBoss");
                 if (!userProfile.HasAchievement("CLEAR_ALTBOSS_ENGI"))
                 {
                     userProfile.AddAchievement("CLEAR_ALTBOSS_ENGI", false);
@@ -275,7 +249,6 @@ namespace WolfoSkinsMod
             if (userProfile.HasAchievement("SIMU_SKIN_Captain") && !userProfile.HasAchievement("CLEAR_SIMU_CAPTAIN"))
             {
                 Debug.Log("Has manual Legacy : SIMU_SKIN_Captain");
-                //userProfile.AddUnlockToken("Skins.Engi.Wolfo.AltBoss");
                 if (!userProfile.HasAchievement("CLEAR_ALTBOSS_CAPTAIN"))
                 {
                     userProfile.AddAchievement("CLEAR_ALTBOSS_CAPTAIN", false);
@@ -370,39 +343,19 @@ namespace WolfoSkinsMod
             #endregion
         }
 
-        public static void UpdateBothObjective_Specific(UserProfile userProfile, SurvivorDef survivorDef)
+        public static void UpdateTier2Objective_Specific(UserProfile userProfile, SurvivorDef survivorDef, int token)
         {
-            //bool beatAltBoss = userProfile.HasUnlockable("Skins." + survivorDef.cachedName + ".Wolfo.AltBoss");
-            //bool beatSimu = userProfile.HasUnlockable("Skins." + survivorDef.cachedName + ".Wolfo.Simu");
-            bool beatAltBoss = userProfile.HasAchievement("CLEAR_ALTBOSS_" + survivorDef.cachedName.ToUpperInvariant());
-            bool beatSimu = userProfile.HasAchievement("CLEAR_SIMU_" + survivorDef.cachedName.ToUpperInvariant());
-
             string name = survivorDef.cachedName.ToUpperInvariant();
             AchievementDef achieve = AchievementManager.GetAchievementDef("CLEAR_BOTH_" + name);
             if (achieve != null)
-            {       
-                if (beatAltBoss && beatSimu)
-                {
-                    achieve.descriptionToken = "ACHIEVEMENT_CLEAR_BOTH_" + name + "_DESCRIPTION";
-                }
-                else if (beatAltBoss)
-                {
-                    achieve.descriptionToken = "ACHIEVEMENT_CLEAR_SIMU_" + name + "_DESCRIPTION";
-                }
-                else if (beatSimu)
-                {
-                    achieve.descriptionToken = "ACHIEVEMENT_CLEAR_ALTBOSS_" + name + "_DESCRIPTION";
-                }
-                else
-                {
-                    achieve.descriptionToken = "ACHIEVEMENT_CLEAR_BOTH_" + name + "_DESCRIPTION";
-                }
+            {
+                achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_" + token), Language.GetString(survivorDef.displayNameToken));
             }
         }
 
-        public static void UpdateBothObjective_AtStartForAll(UserProfile userProfile)
+        public static void UpdateTier2_ForAll(UserProfile userProfile)
         {
-            Debug.Log("UpdateBothObjective_AtStartForAll");
+            Debug.Log("UpdateTier2_ForAll");
             if (userProfile == null)
             {
                 LocalUser localUser = LocalUserManager.GetFirstLocalUser();
@@ -417,39 +370,46 @@ namespace WolfoSkinsMod
             {
                 //bool hasAltBoss = userProfile.HasUnlockable("Skins." + survivorDef.cachedName + ".Wolfo.AltBoss");
                 //bool hasSimu = userProfile.HasUnlockable("Skins." + survivorDef.cachedName + ".Wolfo.Simu");
-
                 string upperName = survivorDef.cachedName.ToUpperInvariant();
-                bool hasAltBoss = userProfile.HasAchievement("CLEAR_ALTBOSS_" + upperName);
-                bool hasSimu = userProfile.HasAchievement("CLEAR_SIMU_" + upperName);
-
-                string name = survivorDef.cachedName.ToUpperInvariant();
-                AchievementDef achieve = AchievementManager.GetAchievementDef("CLEAR_BOTH_"+ name);
-                if (achieve != null)
+                AchievementDef achieve = AchievementManager.GetAchievementDef("CLEAR_BOTH_" + upperName);
+                if (achieve == null)
                 {
-                    if (hasAltBoss && hasSimu)
-                    {
-                        achieve.descriptionToken = "ACHIEVEMENT_CLEAR_BOTH_" + name + "_DESCRIPTION";
-                    }
-                    else if (hasAltBoss)
-                    {
-                        achieve.descriptionToken = "ACHIEVEMENT_CLEAR_SIMU_" + name + "_DESCRIPTION";
-                    }
-                    else if (hasSimu)
-                    {
-                        achieve.descriptionToken = "ACHIEVEMENT_CLEAR_ALTBOSS_" + name + "_DESCRIPTION";
-                    }
-                    else
-                    {
-                        achieve.descriptionToken = "ACHIEVEMENT_CLEAR_BOTH_" + name + "_DESCRIPTION";
-                    }
-                    //Debug.Log(achieve.identifier);
-                    //Debug.Log(altBoss);
-                    //Debug.Log(simu);
-                    //Debug.Log(achieve.descriptionToken);
+                    continue;
+                }
+                if (userProfile.HasAchievement(achieve.identifier))
+                {
+                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_0"), survivorDef.cachedName);
+                    continue;
+                }
+                int token = 0;
+                int unlocks = 0;
+                if (userProfile.HasAchievement("CLEAR_LUNARSCAV_" + upperName))
+                {
+                    unlocks++;
+                    token = 1;
+                }
+                if (userProfile.HasAchievement("CLEAR_VOIDLING_" + upperName))
+                {
+                    unlocks++;
+                    token = 2;
+                }
+                if (userProfile.HasAchievement("CLEAR_SIMU_" + upperName))
+                {
+                    unlocks++;
+                    token = 3;
+                }
+                if (userProfile.HasAchievement("CLEAR_ECLIPSE_" + upperName))
+                {
+                    unlocks++;
+                    token = 4;
+                }
+                if (unlocks >= 2)
+                {
+                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_0"), Language.GetString(survivorDef.displayNameToken));
                 }
                 else
                 {
-                    //Debug.Log("No Achivement for CLEAR_BOTH_" + name);
+                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_" + token), Language.GetString(survivorDef.displayNameToken));
                 }
             }
 
@@ -459,66 +419,67 @@ namespace WolfoSkinsMod
         {
             Debug.Log("AutogenerateTokens");
             //string based = Language.GetString("ACHIEVEMENT_BASE");
-            string[] langs = new string[] { "en", "ru" };
 
             foreach (SurvivorDef survivor in SurvivorCatalog.survivorDefs)
             {
                 string nameT = survivor.cachedName.ToUpperInvariant();
 
-                string token_any = string.Format("ACHIEVEMENT_CLEAR_ANY_{0}_NAME", nameT);
-                string token_both = string.Format("ACHIEVEMENT_CLEAR_BOTH_{0}_NAME", nameT);
+                string token_name_one = string.Format("ACHIEVEMENT_CLEAR_ANY_{0}_NAME", nameT);
+                string token_name_two = string.Format("ACHIEVEMENT_CLEAR_BOTH_{0}_NAME", nameT);
 
-                string token_simu = string.Format("ACHIEVEMENT_CLEAR_SIMU_{0}_NAME", nameT);
-                string token_eclipse = string.Format("ACHIEVEMENT_CLEAR_ECLIPSE_{0}_NAME", nameT);  
-                string token4 = string.Format("ACHIEVEMENT_CLEAR_LUNARSCAV_{0}_NAME", nameT);
-                string token5 = string.Format("ACHIEVEMENT_CLEAR_VOIDLING_{0}_NAME", nameT);
+                string token_desc_one = string.Format("ACHIEVEMENT_CLEAR_ANY_{0}_DESCRIPTION", nameT);
 
-                string token_any2 = string.Format("ACHIEVEMENT_CLEAR_ANY_{0}_DESCRIPTION", nameT);
-                string token_both2 = string.Format("ACHIEVEMENT_CLEAR_BOTH_{0}_DESCRIPTION", nameT);
-                string token_altboss2 = string.Format("ACHIEVEMENT_CLEAR_ALTBOSS_{0}_DESCRIPTION", nameT);
+                /* string token_name_simu = string.Format("ACHIEVEMENT_CLEAR_SIMU_{0}_NAME", nameT);
+                 string token_name_eclipse = string.Format("ACHIEVEMENT_CLEAR_ECLIPSE_{0}_NAME", nameT);  
+                 string token_name_lunarScav = string.Format("ACHIEVEMENT_CLEAR_LUNARSCAV_{0}_NAME", nameT);
+                 string token_name_voidling = string.Format("ACHIEVEMENT_CLEAR_VOIDLING_{0}_NAME", nameT);
 
-                string token_simu2 = string.Format("ACHIEVEMENT_CLEAR_SIMU_{0}_DESCRIPTION", nameT);
-                string token_eclipse2 = string.Format("ACHIEVEMENT_CLEAR_ECLIPSE_{0}_DESCRIPTION", nameT);             
-                string token44 = string.Format("ACHIEVEMENT_CLEAR_LUNARSCAV_{0}_DESCRIPTION", nameT);
-                string token55 = string.Format("ACHIEVEMENT_CLEAR_VOIDLING_{0}_DESCRIPTION", nameT);
 
-                for (int i = 0; i < langs.Length; i++)
-                {
-                    string name = Language.GetString(survivor.displayNameToken, langs[i]);
+                 string token_desc_two = string.Format("ACHIEVEMENT_CLEAR_BOTH_{0}_DESCRIPTION", nameT);
+                 string token_desc_twoboss = string.Format("ACHIEVEMENT_CLEAR_ALTBOSS_{0}_DESCRIPTION", nameT);
 
-                    string string_any = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ANY_NAME", langs[i]), name);
-                    string string_both = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_BOTH_NAME", langs[i]), name);
+                 string token_desc_simu = string.Format("ACHIEVEMENT_CLEAR_SIMU_{0}_DESCRIPTION", nameT);
+                 string token_desc_eclipse = string.Format("ACHIEVEMENT_CLEAR_ECLIPSE_{0}_DESCRIPTION", nameT);             
+                 string token_desc_lunarScav = string.Format("ACHIEVEMENT_CLEAR_LUNARSCAV_{0}_DESCRIPTION", nameT);
+                 string token_desc_voidling = string.Format("ACHIEVEMENT_CLEAR_VOIDLING_{0}_DESCRIPTION", nameT);*/
 
-                    string string_simu = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_SIMU_NAME", langs[i]), name);
-                    string string_eclipse = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ECLIPSE_NAME", langs[i]), name);
-                    string string_lunar = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_LUNARSCAV_NAME", langs[i]), name);
-                    string string_void = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_VOIDLING_NAME", langs[i]), name);
-                    //
-                    //
-                    string string_any2 = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ANY_DESCRIPTION", langs[i]), name);
-                    string string_both2 = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_BOTH_DESCRIPTION", langs[i]), name);
-                    string string_altboss2 = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ALTBOSS_DESCRIPTION", langs[i]), name);
+                string name = Language.GetString(survivor.displayNameToken);
 
-                    string string_simu2 = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_SIMU_DESCRIPTION", langs[i]), name);
-                    string string_eclipse2 = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ECLIPSE_DESCRIPTION", langs[i]), name);
-                    string string44 = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_LUNARSCAV_DESCRIPTION", langs[i]), name);
-                    string string55 = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_VOIDLING_DESCRIPTION", langs[i]), name);
+                string name_one = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ANY_NAME"), name);
+                string name_two = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_BOTH_NAME"), name);
 
-                    LanguageAPI.Add(token_any, string_any, langs[i]);
-                    LanguageAPI.Add(token_simu, string_simu, langs[i]);
-                    LanguageAPI.Add(token4, string_lunar, langs[i]);
-                    LanguageAPI.Add(token5, string_void, langs[i]);
-                    LanguageAPI.Add(token_eclipse, string_eclipse, langs[i]);
-                    LanguageAPI.Add(token_both, string_both, langs[i]);
+                string desc_one = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER1"), name);
+                /*
+               string name_simu = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_SIMU_NAME"), name);
+               string name_eclipse = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ECLIPSE_NAME"), name);
+               string name_lunarScav = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_LUNARSCAV_NAME"), name);
+               string name_Eclipse = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_VOIDLING_NAME"), name);
+                  
+              
+               string desc_two = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_BOTH_DESCRIPTION"), name);
+               string desc_altBoss = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ALTBOSS_DESCRIPTION"), name);
 
-                    LanguageAPI.Add(token_any2, string_any2, langs[i]);
-                    LanguageAPI.Add(token_simu2, string_simu2, langs[i]);
-                    LanguageAPI.Add(token_altboss2, string_altboss2, langs[i]);
-                    LanguageAPI.Add(token44, string44, langs[i]);
-                    LanguageAPI.Add(token55, string55, langs[i]);
-                    LanguageAPI.Add(token_eclipse2, string_eclipse2, langs[i]);
-                    LanguageAPI.Add(token_both2, string_both2, langs[i]);
-                }
+               string desc_Simu = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_SIMU_DESCRIPTION"), name);
+               string desc_Eclipse = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_ECLIPSE_DESCRIPTION"), name);
+               string desc_LunarScav = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_LUNARSCAV_DESCRIPTION"), name);
+               string desc_Voidling = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_VOIDLING_DESCRIPTION"), name);*/
+
+                LanguageAPI.Add(token_name_one, name_one);
+                LanguageAPI.Add(token_name_two, name_two);
+                /*LanguageAPI.Add(token_name_simu, name_simu);
+                LanguageAPI.Add(token_name_lunarScav, name_lunarScav);
+                LanguageAPI.Add(token_name_voidling, name_Eclipse);
+                LanguageAPI.Add(token_name_eclipse, name_eclipse);*/
+
+
+                LanguageAPI.Add(token_desc_one, desc_one);
+                //LanguageAPI.Add(token_desc_two, desc_two);
+                /*LanguageAPI.Add(token_desc_simu, desc_Simu);
+                LanguageAPI.Add(token_desc_lunarScav, desc_LunarScav);
+                LanguageAPI.Add(token_desc_voidling, desc_Voidling);
+                LanguageAPI.Add(token_desc_eclipse, desc_Eclipse);*/
+
+
 
             }
 
@@ -532,10 +493,10 @@ namespace WolfoSkinsMod
             string token1 = string.Format("ACHIEVEMENT_CLEAR_ANY_{0}_NAME", nameT);
             string token3 = string.Format("ACHIEVEMENT_CLEAR_BOTH_{0}_NAME", nameT);
 
-            string token_Simu = string.Format("ACHIEVEMENT_CLEAR_SIMU_{0}_NAME", nameT);    
-            string token4 = string.Format("ACHIEVEMENT_CLEAR_LUNARSCAV_{0}_NAME", nameT);
-            string token5 = string.Format("ACHIEVEMENT_CLEAR_VOIDLING_{0}_NAME", nameT);
-            string token7 = string.Format("ACHIEVEMENT_CLEAR_ECLIPSE_{0}_NAME", nameT);
+            //string token_Simu = string.Format("ACHIEVEMENT_CLEAR_SIMU_{0}_NAME", nameT);    
+            //string token4 = string.Format("ACHIEVEMENT_CLEAR_LUNARSCAV_{0}_NAME", nameT);
+            //string token5 = string.Format("ACHIEVEMENT_CLEAR_VOIDLING_{0}_NAME", nameT);
+            //string token7 = string.Format("ACHIEVEMENT_CLEAR_ECLIPSE_{0}_NAME", nameT);
 
             UnlockableDef unlockable_First = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockable_First.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.First";
@@ -549,118 +510,141 @@ namespace WolfoSkinsMod
 
             UnlockableDef unlockableDef_Simu = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef_Simu.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.Simu";
-            unlockableDef_Simu.hidden = false;
-            unlockableDef_Simu.nameToken = token_Simu;
+            unlockableDef_Simu.hidden = true;
+            //unlockableDef_Simu.nameToken = token_Simu;
 
             UnlockableDef unlockableDef_Lunar = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef_Lunar.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.LunarScav";
-            unlockableDef_Lunar.hidden = false;
-            unlockableDef_Lunar.nameToken = token4;
+            unlockableDef_Lunar.hidden = true;
+            //unlockableDef_Lunar.nameToken = token4;
 
             UnlockableDef unlockableDef_Voidling = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef_Voidling.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.Voidling";
-            unlockableDef_Voidling.hidden = false;
-            unlockableDef_Voidling.nameToken = token5;
+            unlockableDef_Voidling.hidden = true;
+            //unlockableDef_Voidling.nameToken = token5;
 
-            UnlockableDef unlockableDef_Eclipse = ScriptableObject.CreateInstance<UnlockableDef>();
+            /*UnlockableDef unlockableDef_Eclipse = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef_Eclipse.cachedName = "Skins." + survivorDef.cachedName + ".Wolfo.Eclipse";
-            unlockableDef_Eclipse.hidden = false;
-            unlockableDef_Eclipse.nameToken = token7;
+            unlockableDef_Eclipse.hidden = true;*/
+            //unlockableDef_Eclipse.nameToken = token7;
 
-
-            temp = temp.Add(unlockable_First, unlockableDef_Both, unlockableDef_Simu, unlockableDef_Lunar, unlockableDef_Voidling, unlockableDef_Eclipse);
-            //Gets put into EclipseCache but that doesn't seem to do anything.
-            return temp;
+            UnlockableDef[] skinUnlocks = new UnlockableDef[]
+            {
+                unlockable_First,
+                unlockableDef_Both,
+                unlockableDef_Simu,
+                unlockableDef_Lunar,
+                unlockableDef_Voidling,
+            };
+            return HG.ArrayUtils.Join(temp, skinUnlocks);
         }
 
         public static void AssignUnlockables()
         {
+            ExpansionDef DLC2 = Addressables.LoadAssetAsync<ExpansionDef>(key: "RoR2/DLC2/Common/DLC2.asset").WaitForCompletion();
             Debug.Log("AssignUnlockables");
 
             bool noUnlocks = WConfig.cfgUnlockAll.Value;
-            for (int i = 0; i < SurvivorCatalog.survivorDefs.Length; i++)
+            for (int i = 0; i < SurvivorCatalog.survivorIndexToBodyIndex.Length; i++)
             {
-                //Debug.LogWarning(SurvivorCatalog.survivorDefs[i]);
-                GameObject Body = SurvivorCatalog.survivorDefs[i].bodyPrefab;
-                BodyIndex Index = Body.GetComponent<CharacterBody>().bodyIndex;
-                SkinDef[] skinDefs = BodyCatalog.skins[(int)Index];
-                //Debug.Log(SurvivorCatalog.survivorDefs[i]);
+                string name = SurvivorCatalog.survivorDefs[i].cachedName;
+                SkinDef[] skinDefs = SkinCatalog.skinsByBody[(int)SurvivorCatalog.survivorIndexToBodyIndex[i]];
                 for (int skin = 0; skin < skinDefs.Length; skin++)
                 {
                     //Debug.Log(skinDefs[skin].name);
                     UnlockableDef unlockable = null;
-                    if (skinDefs[skin].name.EndsWith("_Simu"))
+                    if (skinDefs[skin].name.EndsWith("_1"))
                     {
-                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + SurvivorCatalog.survivorDefs[i].cachedName + ".Wolfo.First");                 
+                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.First");
                     }
-                    else if (skinDefs[skin].name.EndsWith("_AltBoss"))
+                    else if (skinDefs[skin].name.EndsWith("_DLC2"))
                     {
-                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + SurvivorCatalog.survivorDefs[i].cachedName + ".Wolfo.Both");
+                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.Both");
+                        unlockable.requiredExpansion = DLC2;
                     }
+                    /*else if (skinDefs[skin].name.EndsWith("_DLC3"))
+                    {
+                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.Both");
+                    }*/
                     if (unlockable)
                     {
                         if (!unlockable.achievementIcon)
                         {
                             unlockable.achievementIcon = skinDefs[skin].icon;
                         }
-                        if (!noUnlocks)
+                        if (noUnlocks)
+                        {
+                            skinDefs[skin].unlockableDef = null;
+                        }
+                        else
                         {
                             skinDefs[skin].unlockableDef = unlockable;
-                        }                
+                        }
                     }
                 }
             }
 
             //Manual assigning
-            SkinDef UnusedCommandoSkin = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/skinCommandoMarine.asset").WaitForCompletion();
-            UnlockableDef Commando = UnlockableCatalog.GetUnlockableDef("Skins.Commando.Wolfo.First");
-            UnusedCommandoSkin.unlockableDef = Commando;
 
             UnlockableDef Merc = UnlockableCatalog.GetUnlockableDef("Skins.Merc.Wolfo.First");
             UnlockableDef Merc2 = UnlockableCatalog.GetUnlockableDef("Skins.Merc.Wolfo.Both");
-
-            SkinsMerc.red_SKIN.unlockableDef = Merc;
-            SkinsMerc.green_SKIN.unlockableDef = Merc2;
             Merc2.achievementIcon = SkinsMerc.green_SKIN.icon;
 
             UnlockableDef TeslaTrooper = UnlockableCatalog.GetUnlockableDef("Skins.TeslaTrooper.Wolfo.First");
             UnlockableDef Desolator = UnlockableCatalog.GetUnlockableDef("Skins.Desolator.Wolfo.First");
             if (TeslaTrooper)
             {
+                TeslaTrooper.achievementIcon = H.GetIcon("mod/Tesla/colorsTesla");
+            }
+            if (Desolator)
+            {
+                Desolator.achievementIcon = H.GetIcon("mod/Tesla/colorsDesolator");
+            }
+            if (noUnlocks)
+            {
+                return;
+            }
+
+            SkinsMerc.red_SKIN.unlockableDef = Merc;
+            SkinsMerc.green_SKIN.unlockableDef = Merc2;
+
+            SkinDef UnusedCommandoSkin = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/skinCommandoMarine.asset").WaitForCompletion();
+            UnlockableDef Commando = UnlockableCatalog.GetUnlockableDef("Skins.Commando.Wolfo.First");
+            UnusedCommandoSkin.unlockableDef = Commando;
+
+
+            if (TeslaTrooper)
+            {
                 for (int i = 8; i < TeslaDesolatorColors.teslaColors.variants.Length; i++)
                 {
                     TeslaDesolatorColors.teslaColors.variants[i].unlockableDef = TeslaTrooper;
                 }
-                TeslaTrooper.achievementIcon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/skinIconTesla.png"));
             }
-            if(Desolator)
+            if (Desolator)
             {
                 for (int i = 8; i < TeslaDesolatorColors.desolatorColors.variants.Length; i++)
                 {
                     TeslaDesolatorColors.desolatorColors.variants[i].unlockableDef = Desolator;
                 }
-                Desolator.achievementIcon = WRect.MakeIcon(Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/TeslaDeso/skinIconDesolator.png"));
             }
 
-    
+
             System.GC.Collect(); //
         }
 
         public static bool HideUnimplementedUnlocks(On.RoR2.UI.LogBook.LogBookController.orig_CanSelectAchievementEntry orig, AchievementDef achievementDef, System.Collections.Generic.Dictionary<RoR2.ExpansionManagement.ExpansionDef, bool> expansionAvailability)
         {
-            if (achievementDef.identifier.StartsWith("CLEAR"))
+            //if (achievementDef.identifier.StartsWith("CLEAR")){}
+            UnlockableDef def = UnlockableCatalog.GetUnlockableDef(achievementDef.unlockableRewardIdentifier);
+            if (def && def.hidden)
             {
-                UnlockableDef def = UnlockableCatalog.GetUnlockableDef(achievementDef.unlockableRewardIdentifier);
-                if (def && def.hidden)
-                {
-                    Debug.Log("Hiding : " + achievementDef.identifier);
-                    return false;
-                }
-                else if (!def)
-                {
-                    Debug.Log("Hiding : " + achievementDef.identifier);
-                    return false;
-                }
+                Debug.Log("Hiding : " + achievementDef.identifier);
+                return false;
+            }
+            else if (!def)
+            {
+                Debug.Log("Hiding : " + achievementDef.identifier);
+                return false;
             }
             return orig(achievementDef, expansionAvailability);
         }
