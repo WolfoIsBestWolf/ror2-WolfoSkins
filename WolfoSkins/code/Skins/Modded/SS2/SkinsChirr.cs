@@ -108,9 +108,9 @@ namespace WolfoSkinsMod
         {
             SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
-                name = "skinChirr_Pink_1",
+                name = "skinChirr_BulkDetonator_1",
                 nameToken = "SIMU_SKIN_CHIRR",
-                icon = H.GetIcon("mod/ss2/chirr_pink"),
+                icon = H.GetIcon("mod/ss2/chirr_orange"),
                 original = skinChirr,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;

@@ -16,38 +16,44 @@ namespace WolfoSkinsMod
 
             On.RoR2.RoR2Content.CreateEclipseUnlockablesForSurvivor += AutogenerateUnlockableDefs;
 
-            On.RoR2.LocalUserManager.AddMainUser_UserProfile += LocalUserManager_AddMainUser_UserProfile;
-
+            On.RoR2.LocalUserManager.AddUser += LocalUserManager_AddUser;
+ 
             On.RoR2.UnlockableCatalog.GenerateUnlockableMetaData += UnlockableCatalog_GenerateUnlockableMetaData;
             GameModeCatalog.availability.CallWhenAvailable(AutogenerateTokens);
+
+            On.RoR2.UserProfile.RevokeUnlockable += RevokeUnlock_ActualSafteyCheck;
         }
 
-        private static void LocalUserManager_AddMainUser_UserProfile(On.RoR2.LocalUserManager.orig_AddMainUser_UserProfile orig, UserProfile userProfile)
+        private static void LocalUserManager_AddUser(On.RoR2.LocalUserManager.orig_AddUser orig, Rewired.Player inputPlayer, UserProfile userProfile)
         {
-            orig(userProfile);
-
-            //How to check if not first time runner
-            //If the auto unlocker ran mod must've run before
-            if (WConfig.cfgSilentRelockReunlock.Value && WConfig.cfgRunAutoUnlocker.Value == false)
+            //Surely LocalUser manager isnt used by online
+            orig(inputPlayer, userProfile);
+            if (WConfig.cfgSilentRelockReunlock.Value)
             {
                 //Silent revoke and regrant everything upon bugged updates                
                 LockEverything(userProfile, false);
                 CheckForPreviouslyEarned(userProfile, true);
             }
-            else
+            else if (WConfig.RemoveSkinUnlocks.Value)
             {
-                if (WConfig.RemoveSkinUnlocks.Value)
-                {
-                    LockEverything(userProfile, false);
-                }
-                if (WConfig.cfgRunAutoUnlocker.Value)
-                {
-                    CheckForPreviouslyEarned(userProfile, true);
-                }
+                LockEverything(userProfile, false);
+            }
+            else if (WConfig.cfgRunAutoUnlocker.Value)
+            {
+                CheckForPreviouslyEarned(userProfile, true);
             }
             UpdateTier2_ForAll(userProfile);
         }
 
+        private static void RevokeUnlock_ActualSafteyCheck(On.RoR2.UserProfile.orig_RevokeUnlockable orig, UserProfile self, UnlockableDef unlockableDef)
+        {
+            if (!unlockableDef)
+            {
+                return;
+            }
+            orig(self, unlockableDef);
+        }
+ 
         private static void UnlockableCatalog_GenerateUnlockableMetaData(On.RoR2.UnlockableCatalog.orig_GenerateUnlockableMetaData orig, UnlockableDef[] unlockableDefs)
         {
             AssignUnlockables();
@@ -76,9 +82,7 @@ namespace WolfoSkinsMod
             foreach (SurvivorDef survivorDef in SurvivorCatalog.survivorDefs)
             {
                 string upperName = survivorDef.cachedName.ToUpperInvariant();
-
                 int unlocks = 0;
-
                 if (userProfile.HasAchievement("CLEAR_SIMU_" + upperName))
                 {
                     unlocks++;
@@ -371,6 +375,7 @@ namespace WolfoSkinsMod
                 //bool hasAltBoss = userProfile.HasUnlockable("Skins." + survivorDef.cachedName + ".Wolfo.AltBoss");
                 //bool hasSimu = userProfile.HasUnlockable("Skins." + survivorDef.cachedName + ".Wolfo.Simu");
                 string upperName = survivorDef.cachedName.ToUpperInvariant();
+                string survivorName = Language.GetString(survivorDef.displayNameToken);
                 AchievementDef achieve = AchievementManager.GetAchievementDef("CLEAR_BOTH_" + upperName);
                 if (achieve == null)
                 {
@@ -378,7 +383,7 @@ namespace WolfoSkinsMod
                 }
                 if (userProfile.HasAchievement(achieve.identifier))
                 {
-                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_0"), survivorDef.cachedName);
+                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_0"), survivorName);
                     continue;
                 }
                 int token = 0;
@@ -405,11 +410,11 @@ namespace WolfoSkinsMod
                 }
                 if (unlocks >= 2)
                 {
-                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_0"), Language.GetString(survivorDef.displayNameToken));
+                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_0"), survivorName);
                 }
                 else
                 {
-                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_" + token), Language.GetString(survivorDef.displayNameToken));
+                    achieve.descriptionToken = string.Format(Language.GetString("ACHIEVEMENT_CLEAR_TIER2_" + token), survivorName);
                 }
             }
 
@@ -541,6 +546,11 @@ namespace WolfoSkinsMod
 
         public static void AssignUnlockables()
         {
+            if (SkinCatalog.skinsByBody.Length == 0)
+            {
+                //No
+                return;
+            }
             ExpansionDef DLC2 = Addressables.LoadAssetAsync<ExpansionDef>(key: "RoR2/DLC2/Common/DLC2.asset").WaitForCompletion();
             Debug.Log("AssignUnlockables");
 
@@ -588,10 +598,11 @@ namespace WolfoSkinsMod
 
             UnlockableDef Merc = UnlockableCatalog.GetUnlockableDef("Skins.Merc.Wolfo.First");
             UnlockableDef Merc2 = UnlockableCatalog.GetUnlockableDef("Skins.Merc.Wolfo.Both");
-            Merc2.achievementIcon = SkinsMerc.green_SKIN.icon;
-
+            UnlockableDef Commando = UnlockableCatalog.GetUnlockableDef("Skins.Commando.Wolfo.First");
             UnlockableDef TeslaTrooper = UnlockableCatalog.GetUnlockableDef("Skins.TeslaTrooper.Wolfo.First");
             UnlockableDef Desolator = UnlockableCatalog.GetUnlockableDef("Skins.Desolator.Wolfo.First");
+
+            Merc2.achievementIcon = SkinsMerc.green_SKIN.icon;
             if (TeslaTrooper)
             {
                 TeslaTrooper.achievementIcon = H.GetIcon("mod/Tesla/colorsTesla");
@@ -602,17 +613,18 @@ namespace WolfoSkinsMod
             }
             if (noUnlocks)
             {
-                return;
+                Merc = null;
+                Merc2 = null;
+                Commando = null;
+                TeslaTrooper = null;
+                Desolator = null;
+
             }
 
             SkinsMerc.red_SKIN.unlockableDef = Merc;
             SkinsMerc.green_SKIN.unlockableDef = Merc2;
-
-            SkinDef UnusedCommandoSkin = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/skinCommandoMarine.asset").WaitForCompletion();
-            UnlockableDef Commando = UnlockableCatalog.GetUnlockableDef("Skins.Commando.Wolfo.First");
-            UnusedCommandoSkin.unlockableDef = Commando;
-
-
+            Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/skinCommandoMarine.asset").WaitForCompletion().unlockableDef = Commando;
+ 
             if (TeslaTrooper)
             {
                 for (int i = 8; i < TeslaDesolatorColors.teslaColors.variants.Length; i++)

@@ -1,5 +1,23 @@
 ## Changelog
 ```
+v2.2.3
+Fixed Unlock-All config not unlocking some skins if changed in game.
+Fixed Huntress ears/antenna not showing up.
+Fixed Achievement description not updating when switching profiles.
+Unlock assinging is skipped if Goorakh.ModelSwapSkin to prevent indexOutOfBounds and checking 13k skins.
+
+ 
+v2.2.2
+Fixed potential nullRef on start up on too big modpacks
+
+
+v2.2.1
+Fixed Lunar Stakes small spikes not matching False Sons spikes.
+Fixed Artiificer Orange looking darker than intended.
+Fixed ArsonistGM Blue copying wrong skin and not having icon.
+Fixed a Chirr skin using wrong icon
+
+
 v2.2.0 
 Updated for SotSf 3 & 4
 -Fixed Chef Skins for Oven

@@ -52,7 +52,7 @@ namespace WolfoSkinsMod
             BodyIndex ArsonistIndex = ArsonistBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = ArsonistBody.GetComponentInChildren<ModelSkinController>();
             SkinDef skinArsonist = modelSkinController.skins[0];
-            SkinDef skinArsonistGM = modelSkinController.skins[0];
+            SkinDef skinArsonistGM = modelSkinController.skins[2];
 
             SkinDef orange = ModdedSkinOrange(skinArsonist);
             SkinDef blue = ModdedSkinBlue(skinArsonist);

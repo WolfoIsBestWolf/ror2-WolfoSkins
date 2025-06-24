@@ -18,8 +18,7 @@ namespace WolfoSkinsMod
             //1 : Jets
             //2 : matMageAltColossus
             //3 : matMageAltColossus
-
-
+ 
             ArtificerSkinORANGE(skinMageDefault, skinMageAlt.ReturnParams());
             //ArtificerSkinPURPLE();
             Artificer_AltColossus(skinMageAltColossus);
@@ -238,8 +237,8 @@ namespace WolfoSkinsMod
             Texture2D texMageDiffuseORANGE = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Mage/texMageDiffuseORANGE.png");
             texMageDiffuseORANGE.wrapMode = TextureWrapMode.Clamp;
 
-            Material matMageORANGE = CloneMat(newRenderInfosORANGE, 2);
-            Material matMageORANGECOAT = CloneMat(newRenderInfosORANGE, 3);
+            Material matMageORANGE = CloneFromOriginal(skinMageAlt, 3);
+            Material matMageORANGECOAT = CloneMat(newRenderInfosORANGE, 2);
 
             matMageORANGE.mainTexture = texMageDiffuseORANGE;
             matMageORANGECOAT.mainTexture = texMageDiffuseORANGE;

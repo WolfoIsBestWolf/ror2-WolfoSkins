@@ -73,6 +73,12 @@ namespace WolfoSkinsMod
         private System.Collections.IEnumerator SkinDef_ApplyAsync(On.RoR2.SkinDef.orig_ApplyAsync orig, SkinDef self, GameObject modelObject, List<UnityEngine.AddressableAssets.AssetReferenceT<Material>> loadedMaterials, List<UnityEngine.AddressableAssets.AssetReferenceT<Mesh>> loadedMeshes, RoR2.ContentManagement.AsyncReferenceHandleUnloadType unloadType)
         {
             var temp = orig(self, modelObject, loadedMaterials, loadedMeshes, unloadType);
+            while (temp.MoveNext())
+            {
+                object obj2 = temp.Current;
+                yield return obj2;
+            }
+
             //Debug.Log("SkinApply " + self);
             if (modelObject.GetComponent<SkinDefWolfoTracker>())
             {
@@ -82,7 +88,7 @@ namespace WolfoSkinsMod
             {
                 (self as SkinDefWolfo).ApplyExtras(modelObject);
             }
-            return temp;
+            yield break;
         }
 
         private System.Collections.IEnumerator SkinDef_BakeAsync(On.RoR2.SkinDef.orig_BakeAsync orig, SkinDef self)
@@ -396,6 +402,7 @@ namespace WolfoSkinsMod
                     if (itemDisplay)
                     {
                         model.baseRendererInfos = HG.ArrayUtils.Join(model.baseRendererInfos, itemDisplay.rendererInfos);
+                        itemDisplay.RefreshRenderers();
                     }
                 }
             }

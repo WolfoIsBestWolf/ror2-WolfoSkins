@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1750152129
+CRC: 3910856973
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: feab66d5e84f92c1862dd59b72321697
+    Hash: 00ce00a2d3adbb36208577f537946513
   TypeTreeHash:
     serializedVersion: 2
     Hash: c21d61fe394c58399df3c6fb5c7c99b3
@@ -327,7 +327,6 @@ Assets:
 - Assets/Skins/base/Engi/Colossus/texRampLightning2.png
 - Assets/Skins/dlc2/Seeker/MasteryBad/texRampCaptainAirstrike.png
 - Assets/Skins/mod/Chef/texArmBLACK.png
-- Assets/Skins/Icons/mod/aronist_blueGM.png
 - Assets/Skins/base/Bandit2/Colossus/texBandit2AltColossusWeaponsDiffuse.png
 - Assets/Skins/mod/Chef/texArmPROVI.png
 - Assets/Skins/base/Toolbot/texToolbotCategoryEmission.png
@@ -453,6 +452,7 @@ Assets:
 - Assets/Skins/base/Loader/Colossus/texLoaderAltColossusDiffuse.png
 - Assets/Skins/base/Captain/ColossusOrange/texCaptainColossusDiffuseHat.png
 - Assets/Skins/dlc2/Seeker/MasteryBad/texSeekerAltClothDiffuse.png
+- Assets/Skins/Icons/mod/arsonist_blueGM.png
 - Assets/Skins/mod/Miner/texMinerDiamondEmission.png
 - Assets/Skins/dlc2/Seeker/Mastery/texSeekerAltFresnel.png
 - Assets/Skins/mod/Miner/texMinerEmission.png

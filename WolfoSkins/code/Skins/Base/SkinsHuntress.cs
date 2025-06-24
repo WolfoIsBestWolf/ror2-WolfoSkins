@@ -95,11 +95,11 @@ namespace WolfoSkinsMod
 
             matHuntress.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texHuntressDiffuse.png");
             matHuntress.SetTexture("_EmTex", texHuntressEmission);
-            matHuntress.SetColor("_EmColor", new Color(2f, 1f, 2f));
+            matHuntress.SetColor("_EmColor", new Color(2f, 1f, 1.6f));
 
             matHuntressBow.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texHuntressDiffuseBow.png");
             matHuntressBow.SetTexture("_EmTex", texHuntressEmission);
-            matHuntressBow.SetColor("_EmColor", new Color(1f, 0.5f, 1f));
+            matHuntressBow.SetColor("_EmColor", new Color(1f, 0.5f, 0.8f));
             //matHuntressBow.color = new Color(0.5f, 0.5f, 0.5f);
 
             //matHuntressCape.color = new Color(0.25f, 0.2f, 0.3f);
@@ -152,7 +152,7 @@ namespace WolfoSkinsMod
             Material matRabbitEars = Object.Instantiate(RabbitMesh.material);
 
             matRabbitEars.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Huntress/pink/texRabbitEarsDiffuse.png");
-            matRabbitEars.color = new Color(0.6f, 0.3f, 0.6f);
+            matRabbitEars.color = new Color(0.6f, 0.3f, 0.45f);
             matRabbitEars.SetTexture("_FresnelRamp", null);
             RabbitMesh.material = matRabbitEars;
             DisplayEliteRabbitEarsNew.GetComponent<ItemDisplay>().rendererInfos[0].defaultMaterial = matRabbitEars;
@@ -166,7 +166,7 @@ namespace WolfoSkinsMod
                             childName = "Head",
                             localPos = new Vector3(0f, 0.3f, -0.05f),
                             localAngles = new Vector3(340f,0f,0f),
-                            localScale = new Vector3(0.7f,0.7f,0.7f),
+                            localScale = new Vector3(0.8f,0.8f,0.8f),
                             limbMask = LimbFlags.None
                         },
             };
