@@ -1,5 +1,8 @@
 ## Changelog
 ```
+v2.2.4
+Added check for if False Son skill is actually used by False Son for a Paladin skill mod.
+
 v2.2.3
 Fixed Unlock-All config not unlocking some skins if changed in game.
 Fixed Huntress ears/antenna not showing up.

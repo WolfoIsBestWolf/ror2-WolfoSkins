@@ -191,6 +191,7 @@ namespace WolfoSkinsMod
         internal static void ModSupport()
         {
             WConfig.RiskConfig();
+            SkinsFalseSon.falseSonBodyIndex = DLC2Content.Survivors.FalseSon.bodyPrefab.GetComponent<CharacterBody>().bodyIndex;
             /*GameObject ModdedBody = BodyCatalog.FindBodyPrefab("GnomeChefBody");
             if (ModdedBody != null)
             {

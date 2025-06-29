@@ -37,6 +37,7 @@ namespace WolfoSkinsMod
             //Spawn Animation
             //On.EntityStates.FalseSonMeteorPod.Descent.OnExit += Descent_OnExit;
 
+            //Do not reuse ghosts because we do not reAssign the material when the ghost is reused.
             LunarSpikeGhost.GetComponent<VFXAttributes>().DoNotPool = true;
             FalseSonGroundSlam.GetComponent<VFXAttributes>().DoNotPool = true;
             LunarStakeGhost.GetComponent<VFXAttributes>().DoNotPool = true;
@@ -46,22 +47,25 @@ namespace WolfoSkinsMod
 
         public static Material ReturnMaterialFromEntityState(Transform modelTransform, int child)
         {
-            return modelTransform.GetChild(0).GetComponent<Renderer>().material;
+            return modelTransform.GetChild(child).GetComponent<Renderer>().material;
         }
 
-
+        public static BodyIndex falseSonBodyIndex;
         private static void LunarSpikeAndStake(On.EntityStates.FalseSon.LunarSpikes.orig_FireLunarSpike orig, EntityStates.FalseSon.LunarSpikes self)
         {
-            Material mat = ReturnMaterialFromEntityState(self.modelLocator.modelTransform, 0);
-            if (self is LunarStake)
+            if (self.characterBody.bodyIndex == falseSonBodyIndex)
             {
-                LunarStakeGhost.transform.GetChild(0).GetComponent<Renderer>().material = mat;
-                LunarStakeGhost.transform.GetChild(1).GetChild(0).GetComponent<Renderer>().material = mat;
-            }
-            else
-            {
-                LunarSpikeGhost.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = mat;
-                LunarSpikeGhost.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = mat;
+                Material mat = ReturnMaterialFromEntityState(self.modelLocator.modelTransform, 0);
+                if (self is LunarStake)
+                {
+                    LunarStakeGhost.transform.GetChild(0).GetComponent<Renderer>().material = mat;
+                    LunarStakeGhost.transform.GetChild(1).GetChild(0).GetComponent<Renderer>().material = mat;
+                }
+                else
+                {
+                    LunarSpikeGhost.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material = mat;
+                    LunarSpikeGhost.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = mat;
+                }
             }
             orig(self);
         }
