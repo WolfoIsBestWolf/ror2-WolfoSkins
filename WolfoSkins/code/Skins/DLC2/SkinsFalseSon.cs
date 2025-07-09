@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 using static WolfoSkinsMod.H;
 using EntityStates.FalseSon;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.DLC2
 {
     public class SkinsFalseSon
     {

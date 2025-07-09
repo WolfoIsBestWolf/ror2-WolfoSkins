@@ -1,7 +1,7 @@
 using RoR2;
 using UnityEngine;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.Mod
 {
     public class SkinsNemCommando
     {

@@ -4,7 +4,7 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.Mod
 {
     public class SkinsCHEFMod
     {

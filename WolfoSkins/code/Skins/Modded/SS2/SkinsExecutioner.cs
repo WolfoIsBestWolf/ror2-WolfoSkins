@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using static WolfoSkinsMod.H;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.Mod
 {
     public class SkinsExecutioner
     {
@@ -19,7 +19,8 @@ namespace WolfoSkinsMod
             Debug.Log("Executioner Skins");
             //GameModeCatalog.availability.CallWhenAvailable(AddVFXLate);
             //For some reason needs to be called hella later?
-            On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += ExecAddVFXLate;
+            RoR2Application.onLoad += AddVFXLate;
+     
             ExecutionerBodyS = ExecutionerBody;
 
             BodyIndex ExecutionerIndex = ExecutionerBody.GetComponent<CharacterBody>().bodyIndex;

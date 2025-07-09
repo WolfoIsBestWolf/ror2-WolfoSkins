@@ -2,7 +2,7 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.Base
 {
     public class SkinsBandit2
     {

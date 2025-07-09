@@ -1,6 +1,6 @@
 using RoR2;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.Mod
 {
     public class TeslaDesolatorUnlocks
     {

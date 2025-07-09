@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using static WolfoSkinsMod.H;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.DLC2
 {
     public class SkinsSeeker
     {

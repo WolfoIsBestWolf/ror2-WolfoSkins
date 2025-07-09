@@ -4,7 +4,7 @@ using RoR2.Skills;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.Mod
 {
     public class TeslaDesolatorColors
     {

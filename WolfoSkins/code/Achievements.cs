@@ -226,14 +226,5 @@ namespace WolfoSkinsMod
 
     }
 
-
-    public class FakeAchievementMessage : Chat.SubjectFormatChatMessage
-    {
-        public override string ConstructChatString()
-        {
-            //Just filters out people who don't have the mod because they don't have this class
-            //Should be fine?
-            return base.ConstructChatString();
-        }
-    }
+ 
 }

@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
+using WolfoSkinsMod.Base;
+using WolfoSkinsMod.DLC1;
+using WolfoSkinsMod.DLC2;
+using WolfoSkinsMod.Mod;
 
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 [module: UnverifiableCode]
@@ -13,7 +17,7 @@ namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
     [BepInDependency("com.TheTimeSweeper.RedAlert", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.2.0")]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.2.4")]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.DifferentModVersionsAreOk)]
 
     public class WolfoSkins : BaseUnityPlugin
@@ -63,10 +67,7 @@ namespace WolfoSkinsMod
             On.RoR2.SkinDef.ApplyAsync += SkinDef_ApplyAsync;
 
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
-
-            ChatMessageBase.chatMessageTypeToIndex.Add(typeof(FakeAchievementMessage), (byte)ChatMessageBase.chatMessageIndexToType.Count);
-            ChatMessageBase.chatMessageIndexToType.Add(typeof(FakeAchievementMessage));
-
+ 
             On.RoR2.SkinDef.BakeAsync += SkinDef_BakeAsync;
         }
 
@@ -518,16 +519,7 @@ namespace WolfoSkinsMod
             DestroyImmediate(this);
         }
     }
-
-    public class FakeSkinId : RoR2.SubjectChatMessage
-    {
-        public override string ConstructChatString()
-        {
-
-            return null;
-        }
-    }
-
+ 
     public class OverlayMaterialReplacer : MonoBehaviour
     {
         public Material targetMaterial;

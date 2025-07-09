@@ -2,7 +2,7 @@ using RoR2;
 using UnityEngine;
 using static WolfoSkinsMod.H;
 
-namespace WolfoSkinsMod
+namespace WolfoSkinsMod.Mod
 {
     public class SkinsArsonist
     {

@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="code\Skins\DLC3\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>

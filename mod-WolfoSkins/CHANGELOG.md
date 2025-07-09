@@ -1,5 +1,9 @@
 ## Changelog
 ```
+v2.2.5
+Added more nullref checks for, I guess empty SurvivorDefs?
+Only checks skins added by mod.
+
 v2.2.4
 Added check for if False Son skill is actually used by False Son for a Paladin skill mod.
 

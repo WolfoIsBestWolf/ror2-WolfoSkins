@@ -4,6 +4,8 @@ using RoR2.ExpansionManagement;
 using RoR2.Stats;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using WolfoSkinsMod.Mod;
+using WolfoSkinsMod.Base;
 
 namespace WolfoSkinsMod
 {
@@ -548,50 +550,58 @@ namespace WolfoSkinsMod
         {
             if (SkinCatalog.skinsByBody.Length == 0)
             {
-                //No
-                return;
+                return; //No
             }
             ExpansionDef DLC2 = Addressables.LoadAssetAsync<ExpansionDef>(key: "RoR2/DLC2/Common/DLC2.asset").WaitForCompletion();
             Debug.Log("AssignUnlockables");
-
             bool noUnlocks = WConfig.cfgUnlockAll.Value;
             for (int i = 0; i < SurvivorCatalog.survivorIndexToBodyIndex.Length; i++)
             {
-                string name = SurvivorCatalog.survivorDefs[i].cachedName;
-                SkinDef[] skinDefs = SkinCatalog.skinsByBody[(int)SurvivorCatalog.survivorIndexToBodyIndex[i]];
-                for (int skin = 0; skin < skinDefs.Length; skin++)
+                if (SurvivorCatalog.survivorIndexToBodyIndex[i] != BodyIndex.None)
                 {
-                    //Debug.Log(skinDefs[skin].name);
-                    UnlockableDef unlockable = null;
-                    if (skinDefs[skin].name.EndsWith("_1"))
+                    string name = SurvivorCatalog.survivorDefs[i].cachedName;
+                    SkinDef[] skinDefs = SkinCatalog.skinsByBody[(int)SurvivorCatalog.survivorIndexToBodyIndex[i]];
+                    for (int skin = 0; skin < skinDefs.Length; skin++)
                     {
-                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.First");
-                    }
-                    else if (skinDefs[skin].name.EndsWith("_DLC2"))
-                    {
-                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.Both");
-                        unlockable.requiredExpansion = DLC2;
-                    }
-                    /*else if (skinDefs[skin].name.EndsWith("_DLC3"))
-                    {
-                        unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.Both");
-                    }*/
-                    if (unlockable)
-                    {
-                        if (!unlockable.achievementIcon)
+                        if (skinDefs[skin] is SkinDefPrioritizeDirect)
                         {
-                            unlockable.achievementIcon = skinDefs[skin].icon;
-                        }
-                        if (noUnlocks)
-                        {
-                            skinDefs[skin].unlockableDef = null;
-                        }
-                        else
-                        {
-                            skinDefs[skin].unlockableDef = unlockable;
+                            UnlockableDef unlockable = null;
+                            if (skinDefs[skin].name.EndsWith("_1"))
+                            {
+                                unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.First");
+                            }
+                            else if (skinDefs[skin].name.EndsWith("_DLC2"))
+                            {
+                                unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.Both");
+                                if (unlockable)
+                                {
+                                    unlockable.requiredExpansion = DLC2;
+                                }
+
+                            }
+                            /*else if (skinDefs[skin].name.EndsWith("_DLC3"))
+                            {
+                                unlockable = UnlockableCatalog.GetUnlockableDef("Skins." + name + ".Wolfo.Both");
+                            }*/
+                            if (unlockable)
+                            {
+                                if (!unlockable.achievementIcon)
+                                {
+                                    unlockable.achievementIcon = skinDefs[skin].icon;
+                                }
+                                if (noUnlocks)
+                                {
+                                    skinDefs[skin].unlockableDef = null;
+                                }
+                                else
+                                {
+                                    skinDefs[skin].unlockableDef = unlockable;
+                                }
+                            }
                         }
                     }
                 }
+                
             }
 
             //Manual assigning
