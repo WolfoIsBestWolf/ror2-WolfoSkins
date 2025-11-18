@@ -282,7 +282,7 @@ namespace WolfoSkinsMod.Mod
             SkinDef ChefSkinDefPROVI = Skins.CreatenewSkinDef(SkinInfoPROVI);
 
             modelSkinController.skins = modelSkinController.skins.Add(ChefSkinDefRED, ChefSkinDefGREEN, ChefSkinDefBLUE, ChefSkinDefBLACK, ChefSkinDefCYAN, ChefSkinDefPROVI);
-            SkinCatalog.skinsByBody[(int)ChefIndex] = SkinCatalog.skinsByBody[(int)ChefIndex].Add(ChefSkinDefRED, ChefSkinDefGREEN, ChefSkinDefBLUE, ChefSkinDefBLACK, ChefSkinDefCYAN, ChefSkinDefPROVI);
+            //SkinCatalog.skinsByBody[(int)ChefIndex] = SkinCatalog.skinsByBody[(int)ChefIndex].Add(ChefSkinDefRED, ChefSkinDefGREEN, ChefSkinDefBLUE, ChefSkinDefBLACK, ChefSkinDefCYAN, ChefSkinDefPROVI);
         }
 
         private static void ProjectileCatalog_Init(On.RoR2.ProjectileCatalog.orig_Init orig)

@@ -17,7 +17,7 @@ namespace WolfoSkinsMod.Mod
             SkinDef orange = ModdedSkin_Orange(skinSniper, skinSniperMASTERY.ReturnParams());
             SkinDef grays = ModdedSkinGRAY(skinSniper, skinSniperMASTERY.ReturnParams());
 
-            SkinCatalog.skinsByBody[(int)SniperIndex] = modelSkinController.skins;
+            //SkinCatalog.skinsByBody[(int)SniperIndex] = modelSkinController.skins;
             //0 matSniper
             //1 matSniper
             //2 matSniper

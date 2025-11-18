@@ -20,7 +20,7 @@ namespace WolfoSkinsMod.Mod
             SkinDef blu = SkinBLUE(skinRocket);
             SkinDef redM = Rocket_MasteryRed(skinRocketMastery);
  
-            SkinCatalog.skinsByBody[(int)RocketIndex] = modelSkinController.skins;
+            //SkinCatalog.skinsByBody[(int)RocketIndex] = modelSkinController.skins;
 
             //0 MatRocketBackpack
             //1 MatGrenade

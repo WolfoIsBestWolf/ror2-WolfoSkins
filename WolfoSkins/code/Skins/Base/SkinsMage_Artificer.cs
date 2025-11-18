@@ -27,7 +27,7 @@ namespace WolfoSkinsMod.Base
         }
         internal static void Artificer_AltColossus_Blue(SkinDef skinMageAltColossus)
         {
-            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinMageAltColossusWolfo2_DLC2",
                 nameToken = "SIMU_SKIN_MAGE_COLOSSUS_BLUE",
@@ -98,9 +98,9 @@ namespace WolfoSkinsMod.Base
             #endregion
             //
 
-            newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
+            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
             {
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(0.1f,0.5f,0.8f),
                     lightPath = "MageArmature/ROOT/base/stomach/chest/JetsOn/Point Light",

@@ -17,7 +17,7 @@ namespace WolfoSkinsMod.Mod
             SkinDef orange = SkinsORANGE(skinChirr);
 
 
-            SkinCatalog.skinsByBody[(int)ChirrIndex] = modelSkinController.skins;
+            //SkinCatalog.skinsByBody[(int)ChirrIndex] = modelSkinController.skins;
         }
 
         private static SkinDef skinDefPink;
@@ -91,7 +91,7 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef SkinsPink(SkinDef skinChirr)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinChirr_Pink_1",
                 nameToken = "SIMU_SKIN_CHIRR",
@@ -106,7 +106,7 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef SkinsORANGE(SkinDef skinChirr)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinChirr_BulkDetonator_1",
                 nameToken = "SIMU_SKIN_CHIRR",

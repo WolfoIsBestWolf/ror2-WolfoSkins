@@ -35,7 +35,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void Colossus_Alt(SkinDef skinHuntressAltColossus)
         {
-            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinHuntressAltColossus_DLC2",
                 nameToken = "SIMU_SKIN_HUNTRESS_COLOSSUS",
@@ -70,7 +70,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void HuntressSkin(SkinDef skinHuntressDefault)
         {
-            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinHuntress_1",
                 nameToken = "SIMU_SKIN_HUNTRESS",
@@ -179,7 +179,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void HuntressSkinYellow(SkinDef skinHuntressDefault, SkinDefParams skinHuntressAlt)
         {
-            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinHuntressWolfoBee_1",
                 nameToken = "SIMU_SKIN_HUNTRESS2",

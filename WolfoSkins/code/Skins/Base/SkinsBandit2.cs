@@ -36,7 +36,10 @@ namespace WolfoSkinsMod.Base
             //6 : matBandit2AltColossusWeapons : not Hat
             //7 : matBandit2AltColossusWeapons
         }
+        internal static void Bandit_AltColossus()
+        {
 
+        }
         internal static void Bandit_AltColossus(SkinDef skinBandit2AltColossus)
         {
             SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo

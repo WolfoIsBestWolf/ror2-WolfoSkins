@@ -3,7 +3,7 @@ Many many recolor skins.
 A lot of colors are inspired by RoRR palettes.
 
 Unlocked by beating one of : Simulacrum Wave 50, Eclipse 4, Twisted Scavs or Voidling.\
-Colossus recolors will require two of those.
+Meridian recolors will require two of those.
 
 Complete them however you like.\
 Or just unlock all of them with the config.
@@ -16,46 +16,46 @@ Skin List:
 ```
 Commando : Marine : (Unused SotV skin)
 Commando : Mastery : (RoRR Provi Trial colors)
-Commando : Colossus : Blue
+Commando : Meridian : Blue
 Huntress : Default : Bunny (RoRR Pink/Black)
 Huntress : Mastery  : Bee (Orange/Brown)
-Huntress : Colossus : Dark Red
+Huntress : Meridian : Dark Red
 Bandit : Default : (RoRR Red Hat/Orange)
-Bandit : Colossus : Orange
+Bandit : Meridian : Orange / Black
 Bandit : Default : (RoRR Yellow Hat/Lime)
 Bandit : Default : (RoRR Black Hat/Purple)
 Mul-T : Default : Damage (Chest)
 Mul-T : Mastery : Healing (Chest)
-Mul-T : Colossus : Utility (Chest)
+Mul-T : Meridian : Utility (Chest)
 Engineer : Default : (RoRR Red/Yellow color)
 Engineer : Mastery : (RoRR Light Blue/Pink color)
-Engineer : Colossus : Black / Red
+Engineer : Meridian : Black / Red
 Artificer : Mix : (RoRR Orange/Black)
-Artificer : Colossus : Purple
-Artificer : Colossus : Gray/Blue
+Artificer : Meridian : Purple/Yellow & Stronger Glow
+Artificer : Meridian : White/Blue & Stronger Glow
 Merc : Default : Neon Blue/Grey
 Merc : Mastery : (RoRR Neon Red/Gray)
-Merc : Colossus : Neon Green/Black
+Merc : Meridian : Neon Green/Black
 REX : Mastery : Lepton Daisy (Blue/Yellow/White)
 REX : Default : Lava Daisy (Red/Purple/Black)
-REX : Colossus : Orange
+REX : Meridian : Orange/Green
 Loader : Default : (RoRR Green)
 Loader : Mastery : (RoRR Red)
-Loader : Colossus : Yellow
+Loader : Meridian : Yellow
 Acrid : Default : (RoRR Black/Green)
-Acrid : Mastery : Lunar (RoRR White/Blue)
-Acrid : Colossus : Purple
-Acrid : Colossus : (More emissive)
+Acrid : Meridian : Green / Orange Emissions
+Acrid : Mastery : (RoRR White/Blue) / Lunar
+Acrid : Meridian : Dark Gray / Purple Emissions
 Acrid : Lemurian
 Captain : Default : (Pink/Gold)
 Captain : Mastery : (Blue/Yellow)
-Captain : Colossus : Red/Black
+Captain : Meridian : Red/Black
 Railgunner : Mix : (White/Blue/Black)
-Railgunner : Colossus : Pink/Purple
+Railgunner : Meridian : Pink/Purple
 Railgunner : Default : (Green/Yellow/Brown)
 Void Fiend : Default : Void Ally (White/Blue)
 Void Fiend : Default : Impish (Black/Red)
-Void Fiend : Default : Orange/Yellow
+Void Fiend : Default : Orange/Yellow  
 Chef : Default : Red Hat / Yellow
 Chef : Default : Green Hat / Orange
 Chef : Default : Blue Hat / Pink
@@ -84,11 +84,6 @@ Rocket : Default : Blue
 Rocket : Mastery: Red
 Ravager : Default : Red/Black
 Paladin : Default : Yellow
-Executioner : Default : (Red/Black)
-Executioner : Default : (Blue/Green)
-Executioner : Mastery : (Yellow)
-Chirr : (Pink/White)
-Chirr : (Orange/Yellow)
 Arsonist : Default : Orange/Red
 Arsonist : Default : Blue
 Arsonist : Grand Master : Blue Grand
@@ -98,6 +93,14 @@ Nemesis Enforcer : (Yellow/Black)
 Pilot : (RoRR White)
 Pilot : (RoRR Red)
 Pilot : (RoRR Blue/Yellow)
+
+
+//Temporarily Disabled:
+//Executioner : Default : (Red/Black)
+//Executioner : Default : (Blue/Green)
+//Executioner : Mastery : (Yellow)
+//Chirr : (Pink/White)
+//Chirr : (Orange/Yellow)
 ```
 
 <details>

@@ -27,7 +27,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void Engi_AltColossus(SkinDef skinEngiAltColossus, SkinDef skinEngiTurretAltColossus, SkinDef skinEngiWalkerTurretAltColossus, SkinDef skinEngiTurretDefault)
         {
-            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinEngiAltColossus_DLC2",
                 nameToken = "SIMU_SKIN_ENGINEER_COLOSSUS",
@@ -35,12 +35,12 @@ namespace WolfoSkinsMod.Base
                 original = skinEngiAltColossus,
                 unsetMat = true,
             });
-            SkinDefWolfo turretSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor turretSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinEngiTurretAltColossus_DLC2",
                 original = skinEngiTurretAltColossus,
             });
-            SkinDefWolfo turretSkinDef2 = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor turretSkinDef2 = CreateNewSkinW(new SkinInfo
             {
                 name = "skinEngiWalkerTurretAltColossus_DLC2",
                 original = skinEngiWalkerTurretAltColossus,
@@ -152,14 +152,14 @@ namespace WolfoSkinsMod.Base
                 projectileGhostReplacementPrefab = EngiHarpoonGhostSkinW,
                 projectilePrefab = EngiHarpoonProjectile
             };
-            newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
+            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
             {
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(0.9f,0.1f,0), //0 1 0.5508 1
                     lightPath = "EngiArmature/ROOT/base/stomach/chest/cannonJoint1.l/cannonJoint2.l/cannonHead.l/EngiJet/Point Light",
                 },
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(0.9f,0.1f,0),
                     lightPath = "EngiArmature/ROOT/base/stomach/chest/cannonJoint1.r/cannonJoint2.r/cannonHead.r/EngiJet/Point Light (1)",
@@ -172,7 +172,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void EngiSkin(SkinDef skinEngiDefault, SkinDef skinEngiTurretDefault, SkinDef skinEngiWalkerTurretDefault)
         {
-            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinEngi_1",
                 nameToken = "SIMU_SKIN_ENGINEER",
@@ -290,14 +290,14 @@ namespace WolfoSkinsMod.Base
                 projectileGhostReplacementPrefab = EngiHarpoonGhostSkinW,
                 projectilePrefab = EngiHarpoonProjectile
             };
-            newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
+            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
             {
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(0.9f,0.9f,0), //0 1 0.5508 1
                     lightPath = "EngiArmature/ROOT/base/stomach/chest/cannonJoint1.l/cannonJoint2.l/cannonHead.l/EngiJet/Point Light",
                 },
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(0.9f,0.9f,0),
                     lightPath = "EngiArmature/ROOT/base/stomach/chest/cannonJoint1.r/cannonJoint2.r/cannonHead.r/EngiJet/Point Light (1)",
@@ -310,7 +310,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void EngiSkinBLUE(SkinDef skinEngiAlt, SkinDef skinEngiTurretDefault, SkinDef skinEngiWalkerTurretDefault)
         {
-            SkinDefWolfo newSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinEngiAltWolfoBlue_1",
                 nameToken = "SIMU_SKIN_ENGINEER_BLUE",
@@ -318,12 +318,12 @@ namespace WolfoSkinsMod.Base
                 original = skinEngiAlt,
                 unsetMat = true,
             });
-            SkinDefWolfo turretSkinDef = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor turretSkinDef = CreateNewSkinW(new SkinInfo
             {
                 name = "skinEngiTurretAlt_1",
                 original = skinEngiTurretDefault,
             });
-            SkinDefWolfo turretSkinDefW = CreateNewSkinW(new SkinInfo
+            SkinDefAltColor turretSkinDefW = CreateNewSkinW(new SkinInfo
             {
                 name = "skinEngiWalkerTurretAlt_1",
                 original = skinEngiWalkerTurretDefault,
@@ -366,8 +366,8 @@ namespace WolfoSkinsMod.Base
             newRenderInfos[2].defaultMaterial = matEngi;          //matEngi
 
             turretSkinDefW.skinDefParams.rendererInfos[0].defaultMaterial = matEngiTurret;
-            //
-            //ProjectileReplacements
+
+#region ProjectileReplacements
             GameObject EngiGrenadeGhostSkinW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiGrenadeGhostSkin2.prefab").WaitForCompletion(), "EngiGrenadeGhostSkinW_B", false);
             GameObject EngiMineGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/EngiMineGhost2.prefab").WaitForCompletion(), "EngiMineGhostW_B", false);
             GameObject SpiderMineGhostW = R2API.PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Engi/SpiderMineGhost2.prefab").WaitForCompletion(), "SpiderMineGhostW_B", false);
@@ -414,7 +414,7 @@ namespace WolfoSkinsMod.Base
             Material newTrail = Object.Instantiate(trailRender.material);
             newTrail.SetTexture("_RemapTex", texRampEngiAlt2);
             trailRender.material = newTrail;
-
+#endregion
 
             minion[0].minionSkin = turretSkinDef;
             minion[1].minionSkin = turretSkinDefW;
@@ -427,14 +427,14 @@ namespace WolfoSkinsMod.Base
                 projectileGhostReplacementPrefab = EngiHarpoonGhostSkinW,
                 projectilePrefab = EngiHarpoonProjectile
             };
-            newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
+            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
             {
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(1.8f,0.9f,1.8f), //0 1 0.5508 1
                     lightPath = "EngiArmature/ROOT/base/stomach/chest/cannonJoint1.l/cannonJoint2.l/cannonHead.l/EngiJet/Point Light",
                 },
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(1.8f,0.9f,1.8f),
                     lightPath = "EngiArmature/ROOT/base/stomach/chest/cannonJoint1.r/cannonJoint2.r/cannonHead.r/EngiJet/Point Light (1)",

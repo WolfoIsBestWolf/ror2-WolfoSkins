@@ -206,7 +206,7 @@ namespace WolfoSkinsMod.Base
 
         private static void SlideState_OnEnter(On.EntityStates.Commando.SlideState.orig_OnEnter orig, EntityStates.Commando.SlideState self)
         {
-            if (self.modelLocator.modelTransform.GetComponent<SkinDefWolfoTracker>())
+            if (self.modelLocator.modelTransform.GetComponent<SkinDefAltColorTracker>())
             {
                 GameObject jetOg = EntityStates.Commando.SlideState.jetEffectPrefab;
                 EntityStates.Commando.SlideState.jetEffectPrefab = CommandoDashJetsBlue;
@@ -222,7 +222,7 @@ namespace WolfoSkinsMod.Base
 
         private static void DodgeState_OnEnter(On.EntityStates.Commando.DodgeState.orig_OnEnter orig, EntityStates.Commando.DodgeState self)
         {
-            if (self.modelLocator.modelTransform.GetComponent<SkinDefWolfoTracker>())
+            if (self.modelLocator.modelTransform.GetComponent<SkinDefAltColorTracker>())
             {
                 GameObject jetOg = EntityStates.Commando.DodgeState.jetEffect;
                 EntityStates.Commando.DodgeState.jetEffect = CommandoDashJetsBlue;

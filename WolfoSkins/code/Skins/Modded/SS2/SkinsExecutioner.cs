@@ -33,7 +33,7 @@ namespace WolfoSkinsMod.Mod
             SkinDef yellow = ModdedSkinYELLOW(skinExecutionerMastery);
             SkinDef nerd = ModdedSkinBLUE(skinExecutioner);
  
-            SkinCatalog.skinsByBody[(int)ExecutionerIndex] = modelSkinController.skins;
+            //SkinCatalog.skinsByBody[(int)ExecutionerIndex] = modelSkinController.skins;
             //0 matExe2
             //1 matExe2Armor
             //2 matExe2Jumpkit
@@ -43,7 +43,7 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef ModdedSkinRED(SkinDef skinExecutioner)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinExecutioner_1",
                 nameToken = "SIMU_SKIN_EXECUTIONER",
@@ -95,7 +95,7 @@ namespace WolfoSkinsMod.Mod
             Material oldHuntress = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
             Material newHuntress = Object.Instantiate(oldHuntress);
             newHuntress.SetColor("_TintColor", new Color(2f, 0.2f, 0.2f, 0.75f)); //0.0191 1.1386 1.2973 1
-            newSkinDef.changeMaterial = new SkinDefWolfo.MaterialChanger
+            newSkinDef.changeMaterial = new SkinDefAltColor.MaterialChanger
             {
                 targetMaterial = oldHuntress,
                 replacementMaterial = newHuntress
@@ -106,7 +106,7 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef ModdedSkinBLUE(SkinDef skinExecutioner)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinExecutioner_Blue_1",
                 nameToken = "SIMU_SKIN_EXECUTIONER_BLUE",
@@ -157,7 +157,7 @@ namespace WolfoSkinsMod.Mod
             Material oldHuntress = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
             Material newHuntress = Object.Instantiate(oldHuntress);
             newHuntress.SetColor("_TintColor", new Color(0.2f, 2f, 0.2f, 0.75f)); //0.0191 1.1386 1.2973 1
-            newSkinDef.changeMaterial = new SkinDefWolfo.MaterialChanger
+            newSkinDef.changeMaterial = new SkinDefAltColor.MaterialChanger
             {
                 targetMaterial = oldHuntress,
                 replacementMaterial = newHuntress
@@ -169,7 +169,7 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef ModdedSkinYELLOW(SkinDef skinExecutioner)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinExecutionerMastery_1",
                 nameToken = "SIMU_SKIN_EXECUTIONER_GOLD",
@@ -218,7 +218,7 @@ namespace WolfoSkinsMod.Mod
             Material oldHuntress = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
             Material newHuntress = Object.Instantiate(oldHuntress);
             newHuntress.SetColor("_TintColor", new Color(2f, 2f, 0.8f)); //0.0191 1.1386 1.2973 1
-            newSkinDef.changeMaterial = new SkinDefWolfo.MaterialChanger
+            newSkinDef.changeMaterial = new SkinDefAltColor.MaterialChanger
             {
                 targetMaterial = oldHuntress,
                 replacementMaterial = newHuntress
@@ -228,13 +228,7 @@ namespace WolfoSkinsMod.Mod
         }
 
 
-        private static void ExecAddVFXLate(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_Awake orig, RoR2.UI.MainMenu.BaseMainMenuScreen self)
-        {
-            orig(self);
-            AddVFXLate();
-            On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake -= ExecAddVFXLate;
-        }
-
+  
         internal static void AddVFXLateOLD()
         {
             /*

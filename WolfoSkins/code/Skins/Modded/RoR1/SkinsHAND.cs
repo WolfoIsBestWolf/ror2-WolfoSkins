@@ -39,7 +39,7 @@ namespace WolfoSkinsMod.Mod
                 skinsNew[i] = modelSkinController.skins[i-6];
             }
             modelSkinController.skins = skinsNew;
-            SkinCatalog.skinsByBody[(int)HandBodyIndex] = skinsNew;
+            //SkinCatalog.skinsByBody[(int)HandBodyIndex] = skinsNew;
 
             //0 matHANDRorr
             //1 matHANDRorr
@@ -50,7 +50,7 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef Hand_Gold(SkinDef skinHandDefault)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinHandGold_1",
                 nameToken = "SIMU_SKIN_HAND",
@@ -198,7 +198,7 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef Hand_Gold_RETURNS(SkinDef skinHandReturns)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinHandGold_RETURN_1",
                 nameToken = "SIMU_SKIN_HAND2",

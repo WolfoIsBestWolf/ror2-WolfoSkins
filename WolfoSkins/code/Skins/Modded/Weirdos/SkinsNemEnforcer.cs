@@ -34,7 +34,7 @@ namespace WolfoSkinsMod.Mod
             newRenderInfos[4].defaultMaterial = matNemforcer;
             //
  
-            SkinCatalog.skinsByBody[(int)CharacterIndex] = modelSkinController.skins;
+            //SkinCatalog.skinsByBody[(int)CharacterIndex] = modelSkinController.skins;
         }
 
         [RegisterAchievement("CLEAR_ANY_NEMESISENFORCER", "Skins.NemesisEnforcer.Wolfo.First", null, 5, null)]

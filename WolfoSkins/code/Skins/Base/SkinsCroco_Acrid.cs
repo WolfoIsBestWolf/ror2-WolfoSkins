@@ -18,14 +18,15 @@ namespace WolfoSkinsMod.Base
             //2 matCrocoColossus
 
             //Black Returns
-            AcridSkinBlack(skinCrocoDefault);
+            AcridSkinBlack(skinCrocoDefault);  
+            //Orange highlits      
+            Acrid_AltColossus_Default(skinCrocoAltColossus);
             //Lunar Returns
             RoRR_Lunar(skinCrocoDefault);
             //Purple highlits      
             Acrid_AltColossus(skinCrocoAltColossus);
-            //highlits      
-            Acrid_AltColossus_Default(skinCrocoAltColossus);
-            //Lemurian
+          
+            //Joke Lemurian
             AcridSkinLemurian(skinCrocoDefault);
         }
 
@@ -146,7 +147,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void AcridSkinLemurian(SkinDef skinCrocoDefault)
         {
-            SkinDefWolfo newSkinDef = (SkinDefWolfo)H.CreateNewSkin(new SkinInfo
+            SkinDefAltColor newSkinDef = (SkinDefAltColor)H.CreateNewSkin(new SkinInfo
             {
                 name = "skinCrocoWolfoLemurian",
                 nameToken = "LEMURIAN_BODY_NAME",

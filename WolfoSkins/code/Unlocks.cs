@@ -58,7 +58,14 @@ namespace WolfoSkinsMod
  
         private static void UnlockableCatalog_GenerateUnlockableMetaData(On.RoR2.UnlockableCatalog.orig_GenerateUnlockableMetaData orig, UnlockableDef[] unlockableDefs)
         {
-            AssignUnlockables();
+            try
+            {
+                AssignUnlockables();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e);
+            }
             orig(unlockableDefs);
         }
 
@@ -611,6 +618,12 @@ namespace WolfoSkinsMod
             UnlockableDef Commando = UnlockableCatalog.GetUnlockableDef("Skins.Commando.Wolfo.First");
             UnlockableDef TeslaTrooper = UnlockableCatalog.GetUnlockableDef("Skins.TeslaTrooper.Wolfo.First");
             UnlockableDef Desolator = UnlockableCatalog.GetUnlockableDef("Skins.Desolator.Wolfo.First");
+
+            if (!Merc)
+            {
+                Debug.Log("Failed to generate Merc Unlock, How?");
+                return;
+            }
 
             Merc2.achievementIcon = SkinsMerc.green_SKIN.icon;
             if (TeslaTrooper)

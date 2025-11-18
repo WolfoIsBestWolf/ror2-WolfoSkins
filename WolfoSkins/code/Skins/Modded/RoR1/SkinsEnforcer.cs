@@ -36,7 +36,7 @@ namespace WolfoSkinsMod.Mod
                 skinsNew[i] = modelSkinController.skins[i-3];
             }
             modelSkinController.skins = skinsNew;
-            SkinCatalog.skinsByBody[(int)EnforcerIndex] = skinsNew;
+            //SkinCatalog.skinsByBody[(int)EnforcerIndex] = skinsNew;
 
 
             //0 matEnforcerShield
@@ -347,20 +347,7 @@ namespace WolfoSkinsMod.Mod
             };
             SkinDef EnforcerSkinDefNew = Skins.CreatenewSkinDef(SkinInfo);
 
-            SkinDef[] skinsNew = new SkinDef[modelSkinController.skins.Length + 1];
-
-            skinsNew[0] = modelSkinController.skins[0];
-            skinsNew[1] = modelSkinController.skins[1];
-            skinsNew[2] = modelSkinController.skins[2];
-            skinsNew[3] = modelSkinController.skins[3];
-            skinsNew[4] = EnforcerSkinDefNew;
-
-            for (int i = 4; i < modelSkinController.skins.Length; i++)
-            {
-                skinsNew[i + 1] = modelSkinController.skins[i];
-            }
-            modelSkinController.skins = skinsNew;
-            SkinCatalog.skinsByBody[(int)EnforcerIndex] = skinsNew;
+           
         }
         */
         #endregion

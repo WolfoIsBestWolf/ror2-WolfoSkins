@@ -23,7 +23,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void Merc_MasteryAlt(SkinDef skinMercAlt)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinMerc_Simu_Red",
                 nameToken = "SIMU_SKIN_MERC2",
@@ -45,19 +45,19 @@ namespace WolfoSkinsMod.Base
             matMercSword.SetTexture("_FresnelRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texRampHuntressRed.png"));
 
 
-            newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
+            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
             {
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(1,0,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/Point Light (1)",
                 },
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(1,0,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/Point Light",
                 },
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(1,0,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/SwingCenter/SwordBase/Point Light",
@@ -69,7 +69,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void Merc_Alt(SkinDef skinMercDefault)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinMerc_1",
                 nameToken = "SIMU_SKIN_MERC",
@@ -91,7 +91,7 @@ namespace WolfoSkinsMod.Base
 
         internal static void Merc_AltColossus(SkinDef skinMercAltColossus)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinMerc_DLC2_Green",
                 nameToken = "SIMU_SKIN_MERC_GREEN",
@@ -122,19 +122,19 @@ namespace WolfoSkinsMod.Base
             matMercSword.SetFloat("_EmPower", 1);
             matMercSword.SetColor("_EmColor", new Color(0.2f, 3f, 0.2f));
 
-            newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
+            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
             {
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(0,1f,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/Point Light (1)",
                 },
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(0,0.5f,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/Point Light",
                 },
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(0,0.5f,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/SwingCenter/SwordBase/Point Light",

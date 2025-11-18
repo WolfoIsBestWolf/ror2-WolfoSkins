@@ -32,7 +32,7 @@ namespace WolfoSkinsMod.Mod
                 skinsNew[i] = modelSkinController.skins[i-1];
             }
             modelSkinController.skins = skinsNew;
-            SkinCatalog.skinsByBody[(int)CharacterIndex] = skinsNew;
+            //SkinCatalog.skinsByBody[(int)CharacterIndex] = skinsNew;
 
             //0 matPaladinSword
             //1 matPaladin : CAPE
@@ -42,11 +42,10 @@ namespace WolfoSkinsMod.Mod
             //5 matPaladin
 
         }
-
-
+ 
         internal static SkinDef ModdedSkinYellow(SkinDef skinPaladinDefault)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinPaladin_1",
                 nameToken = "SIMU_SKIN_PALADIN",
@@ -67,9 +66,9 @@ namespace WolfoSkinsMod.Mod
             newRenderInfos[1].defaultMaterial = matPaladin;
             newRenderInfos[5].defaultMaterial = matPaladin;
 
-            newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
+            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
             {
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(1f,0f,0f),
                     color2 = new Color(1f,0.5f,0.5f,0f),
@@ -81,7 +80,7 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef ModdedSkinBlack(SkinDef skinPaladinDefault)
         {
-            SkinDefWolfo newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
                 name = "skinPaladin_1",
                 nameToken = "SIMU_SKIN_PALADIN_BLACK",
@@ -103,9 +102,9 @@ namespace WolfoSkinsMod.Mod
             newRenderInfos[1].defaultMaterial = matPaladin;
             newRenderInfos[5].defaultMaterial = matPaladin;
 
-            newSkinDef.lightColorsChanges = new SkinDefWolfo.LightColorChanges[]
+            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
             {
-                new SkinDefWolfo.LightColorChanges
+                new SkinDefAltColor.LightColorChanges
                 {
                     color = new Color(1f,0f,0f),
                     color2 = new Color(1f,0.5f,0.5f,0f),

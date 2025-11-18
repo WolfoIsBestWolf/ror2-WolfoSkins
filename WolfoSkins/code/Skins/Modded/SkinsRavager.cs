@@ -46,7 +46,7 @@ namespace WolfoSkinsMod.Mod
             newRenderInfos[2].defaultMaterial = matImpBoss;
 
 
-            SkinCatalog.skinsByBody[(int)RavagerIndex] = modelSkinController.skins;
+            //SkinCatalog.skinsByBody[(int)RavagerIndex] = modelSkinController.skins;
         }
 
         [RegisterAchievement("CLEAR_ANY_ROB_RAVAGER_BODY_NAME", "Skins.ROB_RAVAGER_BODY_NAME.Wolfo.First", null, 5, null)]

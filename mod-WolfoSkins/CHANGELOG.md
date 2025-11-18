@@ -1,5 +1,24 @@
 ## Changelog
 ```
+v2.2.10
+Temporarily removed SS2 support, due to conflicts with new updates.
+-Ill get to re-doing the skins sometime after AC.
+
+v2.2.9
+Fixed mod skins sometimes not applying due to the internal changes.
+Fixed Engi Turrets not being skinned for the mods skins.
+
+v2.2.8
+Forgot to fix code for some modded characters, making part of mod support not load.
+
+v2.2.7
+Fixed mod no longer working after R2API updates.
+Resorted Acrid Skins
+
+
+v2.2.6
+Fixed Startup Softlock with Unlockify.
+
 v2.2.5
 Added more nullref checks for, I guess empty SurvivorDefs?
 Only checks skins added by mod.

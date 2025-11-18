@@ -59,7 +59,7 @@ namespace WolfoSkinsMod.Mod
             SkinDef blueGM = ModdedSkinBlueGM(skinArsonistGM);
 
  
-            SkinCatalog.skinsByBody[(int)ArsonistIndex] = modelSkinController.skins;
+            //SkinCatalog.skinsByBody[(int)ArsonistIndex] = modelSkinController.skins;
 
             //0 matArsonist
             //1 matArsonistMetal

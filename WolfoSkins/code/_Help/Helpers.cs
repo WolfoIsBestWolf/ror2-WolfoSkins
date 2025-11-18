@@ -1,5 +1,6 @@
 using RoR2;
 using RoR2.ContentManagement;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace WolfoSkinsMod
         public bool unsetMat;
         public bool w;
         public int extraRenders;
+        //public Action method;
     }
 
     internal static class H
@@ -38,10 +40,10 @@ namespace WolfoSkinsMod
             }
             return skin;
         }
-        public static SkinDefWolfo CreateNewSkinW(SkinInfo skinInfo)
+        public static SkinDefAltColor CreateNewSkinW(SkinInfo skinInfo)
         {
             skinInfo.w = true;
-            return CreateNewSkin(skinInfo) as SkinDefWolfo;
+            return CreateNewSkin(skinInfo) as SkinDefAltColor;
         }
         public static CharacterModel.RendererInfo[] CreateNewSkinR(SkinInfo skinInfo)
         {
@@ -81,7 +83,7 @@ namespace WolfoSkinsMod
             var address = rendererInfos[num].defaultMaterialAddress;
             if (address != null)
             {
-                newmat = GameObject.Instantiate(AssetAsyncReferenceManager<Material>.LoadAsset(rendererInfos[num].defaultMaterialAddress, unloadType).WaitForCompletion());
+                newmat = GameObject.Instantiate(AssetAsyncReferenceManager<Material>.LoadAsset(address, unloadType).WaitForCompletion());
                 for (int i = 0; i < rendererInfos.Length; i++)
                 {
                     if (rendererInfos[i].defaultMaterialAddress == address)
@@ -204,12 +206,17 @@ namespace WolfoSkinsMod
             }
             if (originalParams == null)
             {
+                SkinCatalog.ValidateParams(original);
+                originalParams = original.skinDefParams;
+            }
+            if (originalParams == null)
+            {
                 Debug.LogWarning("Cannot find SkinDefParams for " + original);
             }
             SkinDefPrioritizeDirect newSkinDef = null;
             if (W)
             {
-                newSkinDef = ScriptableObject.CreateInstance<SkinDefWolfo>();
+                newSkinDef = ScriptableObject.CreateInstance<SkinDefAltColor>();
             }
             else
             {
@@ -307,6 +314,7 @@ namespace WolfoSkinsMod
 
         public static SkinDefParams ReturnParams(this SkinDef skinDef)
         {
+            SkinCatalog.ValidateParams(skinDef);
             if (skinDef.skinDefParams)
             {
                 return skinDef.skinDefParams;

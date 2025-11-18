@@ -1,10 +1,12 @@
 ﻿using BepInEx;
+using EntityStates.AffixVoid;
 using R2API.Utils;
 using RoR2;
 using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
+using UnityEngine.XR;
 using WolfoSkinsMod.Base;
 using WolfoSkinsMod.DLC1;
 using WolfoSkinsMod.DLC2;
@@ -17,7 +19,7 @@ namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
     [BepInDependency("com.TheTimeSweeper.RedAlert", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.2.4")]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.3.0")]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.DifferentModVersionsAreOk)]
 
     public class WolfoSkins : BaseUnityPlugin
@@ -57,22 +59,33 @@ namespace WolfoSkinsMod
             SkinsChef.Start();
             SkinsFalseSon.Start();
             //DLC3
-            //
-            //
+            SkinsOperator.Start();
+            SkinsDrifter.Start();
 
-            RuleCatalog.availability.CallWhenAvailable(ModSupport);
 
-            GameModeCatalog.availability.CallWhenAvailable(SortSkinsLate);
+
 
             On.RoR2.SkinDef.ApplyAsync += SkinDef_ApplyAsync;
 
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
  
-            On.RoR2.SkinDef.BakeAsync += SkinDef_BakeAsync;
+            //On.RoR2.SkinDef.BakeAsync += SkinDef_BakeAsync; //Idk why this just doesnt fucking work anymore
+
+            BodyCatalog.availability.CallWhenAvailable(ModSupport);
+
+            GameModeCatalog.availability.CallWhenAvailable(SortSkinsLate);
         }
+
+       
 
         private System.Collections.IEnumerator SkinDef_ApplyAsync(On.RoR2.SkinDef.orig_ApplyAsync orig, SkinDef self, GameObject modelObject, List<UnityEngine.AddressableAssets.AssetReferenceT<Material>> loadedMaterials, List<UnityEngine.AddressableAssets.AssetReferenceT<Mesh>> loadedMeshes, RoR2.ContentManagement.AsyncReferenceHandleUnloadType unloadType)
         {
+            //Debug.Log(self);
+            if (self is SkinDefPrioritizeDirect)
+            {
+                (self as SkinDefPrioritizeDirect).Override();
+            }
+
             var temp = orig(self, modelObject, loadedMaterials, loadedMeshes, unloadType);
             while (temp.MoveNext())
             {
@@ -81,51 +94,44 @@ namespace WolfoSkinsMod
             }
 
             //Debug.Log("SkinApply " + self);
-            if (modelObject.GetComponent<SkinDefWolfoTracker>())
+            if (modelObject.GetComponent<SkinDefAltColorTracker>())
             {
-                modelObject.GetComponent<SkinDefWolfoTracker>().UndoWolfoSkin();
+                modelObject.GetComponent<SkinDefAltColorTracker>().UndoWolfoSkin();
             }
-            if (self is SkinDefWolfo)
+            if (self is SkinDefAltColor)
             {
-                (self as SkinDefWolfo).ApplyExtras(modelObject);
+                (self as SkinDefAltColor).ApplyExtras(modelObject);
             }
             yield break;
         }
 
-        private System.Collections.IEnumerator SkinDef_BakeAsync(On.RoR2.SkinDef.orig_BakeAsync orig, SkinDef self)
+        public System.Collections.IEnumerator SkinDef_BakeAsync(On.RoR2.SkinDef.orig_BakeAsync orig, SkinDef self)
         {
-            if (self.runtimeSkin == null)
-            {
-                if (self is SkinDefPrioritizeDirect)
-                {
-                    for (int i = 0; self.skinDefParams.rendererInfos.Length > i; i++)
-                    {
-                        if (self.skinDefParams.rendererInfos[i].defaultMaterial != null)
-                        {
-                            self.skinDefParams.rendererInfos[i].defaultMaterialAddress = null;
-                        }
-                    }
-                }  
-            }
+            //Somehow does not catch a lot of skins anymore
+            //When first being baked
+            //Something about R2API update
+         
             return orig(self);
         }
-
-        private void SkinDef_Apply(On.RoR2.SkinDef.orig_Apply orig, SkinDef self, GameObject model)
-        {
-            orig(self, model);
-            //Debug.Log("SkinApply " + self);
-            if (model.GetComponent<SkinDefWolfoTracker>())
-            {
-                model.GetComponent<SkinDefWolfoTracker>().UndoWolfoSkin();
-            }
-            if (self is SkinDefWolfo)
-            {
-                (self as SkinDefWolfo).ApplyExtras(model);
-            }
-        }
-
+ 
         internal static void SortSkinsLate()
         {
+            /*for (int i = 0; i < SkinCatalog.skinCount; i++)
+            {
+                if (SkinCatalog.allSkinDefs[i] is SkinDefPrioritizeDirect)
+                {
+                    for (int R = 0; SkinCatalog.allSkinDefs[i].skinDefParams.rendererInfos.Length > R; R++)
+                    {
+                        if (SkinCatalog.allSkinDefs[i].skinDefParams.rendererInfos[R].defaultMaterial != null)
+                        {
+                            SkinCatalog.allSkinDefs[i].skinDefParams.rendererInfos[R].defaultMaterialAddress = null;
+                        }
+                    }
+                    SkinCatalog.allSkinDefs[i]._runtimeSkin = null;
+                }
+            }¨*/
+
+
             //What is this again?
             if (!WConfig.cfgSort.Value)
             {
@@ -182,7 +188,6 @@ namespace WolfoSkinsMod
                         SkinDef[] skinsNew = oldList.ToArray();
                         modelSkinController.skins = skinsNew;
                         SkinCatalog.skinsByBody[(int)Index] = skinsNew;
-                        SkinCatalog.skinsByBody[(int)Index] = skinsNew;
                     }
                 }
             }
@@ -213,12 +218,19 @@ namespace WolfoSkinsMod
                     SkinsEnforcer.ModdedSkin(ModdedBody);
                 }
             }
-            //Executioner2Body
+           /* //Executioner2Body
             ModdedBody = BodyCatalog.FindBodyPrefab("Executioner2Body");
             if (ModdedBody != null)
             {
                 SkinsExecutioner.ModdedSkin(ModdedBody);
             }
+            //ChirrBody
+            ModdedBody = BodyCatalog.FindBodyPrefab("ChirrBody");
+            if (ModdedBody != null)
+            {
+                SkinsChirr.ModdedSkin(ModdedBody);
+            }*/
+
             //SniperClassicBody
             ModdedBody = BodyCatalog.FindBodyPrefab("SniperClassicBody");
             if (ModdedBody != null)
@@ -249,12 +261,7 @@ namespace WolfoSkinsMod
             {
                 SkinsMiner.ModdedSkin(ModdedBody);
             }
-            //ChirrBody
-            ModdedBody = BodyCatalog.FindBodyPrefab("ChirrBody");
-            if (ModdedBody != null)
-            {
-                SkinsChirr.ModdedSkin(ModdedBody);
-            }
+        
             //
             //ArsonistBody
             ModdedBody = BodyCatalog.FindBodyPrefab("ArsonistBody");
@@ -292,6 +299,7 @@ namespace WolfoSkinsMod
             {
                 SkinsNemEnforcer.ModdedSkin(ModdedBody);
             }
+ 
         }
 
         private void ReplaceTemporaryOverlayMaterial(On.RoR2.TemporaryOverlay.orig_AddToCharacerModel orig, TemporaryOverlay self, CharacterModel characterModel)
@@ -316,10 +324,27 @@ namespace WolfoSkinsMod
 
     public class SkinDefPrioritizeDirect : SkinDef
     {
-
+        public bool done = false;
+        public void Override()
+        {
+            
+            //Debug.Log(this);
+            if (!this.done)
+            {
+                this._runtimeSkin = null;
+                for (int i = 0; this.skinDefParams.rendererInfos.Length > i; i++)
+                {
+                    if (this.skinDefParams.rendererInfos[i].defaultMaterial != null)
+                    {
+                        this.skinDefParams.rendererInfos[i].defaultMaterialAddress = null;
+                    }
+                }
+                this.done = true;
+            }
+        }
     }
 
-    public class SkinDefWolfo : SkinDefPrioritizeDirect
+    public class SkinDefAltColor : SkinDefPrioritizeDirect
     {
 
         //Some sort of Undo thing
@@ -327,10 +352,10 @@ namespace WolfoSkinsMod
         {
             CharacterModel model = modelObject.GetComponent<CharacterModel>();
 
-            SkinDefWolfoTracker skinDefWolfoTracker;
-            if (!modelObject.TryGetComponent<SkinDefWolfoTracker>(out skinDefWolfoTracker))
+            SkinDefAltColorTracker skinDefWolfoTracker;
+            if (!modelObject.TryGetComponent<SkinDefAltColorTracker>(out skinDefWolfoTracker))
             {
-                skinDefWolfoTracker = modelObject.AddComponent<SkinDefWolfoTracker>();
+                skinDefWolfoTracker = modelObject.AddComponent<SkinDefAltColorTracker>();
             }
 
             if (changeMaterial.targetMaterial)
@@ -341,7 +366,7 @@ namespace WolfoSkinsMod
             }
 
             skinDefWolfoTracker.model = model;
-            skinDefWolfoTracker.changedLights = new SkinDefWolfoTracker.ChangedLightColors[lightColorsChanges.Length];
+            skinDefWolfoTracker.changedLights = new SkinDefAltColorTracker.ChangedLightColors[lightColorsChanges.Length];
             for (int i = 0; lightColorsChanges.Length > i; i++)
             {
                 Transform transform = modelObject.transform.Find(lightColorsChanges[i].lightPath);
@@ -350,7 +375,7 @@ namespace WolfoSkinsMod
                     Light light = transform.GetComponent<Light>();
                     if (light)
                     {
-                        skinDefWolfoTracker.changedLights[i] = new SkinDefWolfoTracker.ChangedLightColors
+                        skinDefWolfoTracker.changedLights[i] = new SkinDefAltColorTracker.ChangedLightColors
                         {
                             light = light,
                             originalColor = light.color
@@ -367,7 +392,7 @@ namespace WolfoSkinsMod
                     TrailRenderer trail = transform.GetComponent<TrailRenderer>();
                     if (trail)
                     {
-                        skinDefWolfoTracker.changedLights[i] = new SkinDefWolfoTracker.ChangedLightColors
+                        skinDefWolfoTracker.changedLights[i] = new SkinDefAltColorTracker.ChangedLightColors
                         {
                             trail = trail,
                             originalColor = trail.startColor,
@@ -419,7 +444,7 @@ namespace WolfoSkinsMod
             }
         }
 
-        public void EngiDisplay(GameObject modelObject, SkinDefWolfoTracker tracker)
+        public void EngiDisplay(GameObject modelObject, SkinDefAltColorTracker tracker)
         {
             Transform mineHolder = modelObject.transform.parent.Find("mdlEngi/EngiArmature/ROOT/base/stomach/chest/upper_arm.l/lower_arm.l/hand.l/IKBoneStart/IKBoneMid/MineHolder");
             Material newMaterial = this.skinDefParams.minionSkinReplacements[0].minionSkin.skinDefParams.rendererInfos[0].defaultMaterial;
@@ -464,7 +489,7 @@ namespace WolfoSkinsMod
         }
     }
 
-    public class SkinDefWolfoTracker : MonoBehaviour
+    public class SkinDefAltColorTracker : MonoBehaviour
     {
         public GameObject[] addedObjects;
         public ChangedLightColors[] changedLights;
@@ -524,5 +549,10 @@ namespace WolfoSkinsMod
     {
         public Material targetMaterial;
         public Material replacementMaterial;
+    }
+
+    public class SkinDefMakeOnApply : SkinDef
+    {
+        public System.Action creationMethod;
     }
 }

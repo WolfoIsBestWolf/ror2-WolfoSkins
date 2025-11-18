@@ -45,7 +45,7 @@ namespace WolfoSkinsMod.Mod
 
             SkinDef[] array = skinsNew.ToArray();
             modelSkinController.skins = array;
-            SkinCatalog.skinsByBody[(int)MinerIndex] = array;
+            //SkinCatalog.skinsByBody[(int)MinerIndex] = array;
         }
 
         internal static SkinDef SkinsBlack(SkinDef skinMinerMolten)
