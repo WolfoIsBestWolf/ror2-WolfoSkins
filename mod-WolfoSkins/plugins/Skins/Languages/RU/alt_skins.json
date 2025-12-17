@@ -1,0 +1,170 @@
+{
+	"strings":
+	{      
+		 
+		"ACHIEVEMENT_CLEAR_ANY_NAME": "{0} : альтернативный",
+		"ACHIEVEMENT_CLEAR_TIER1": "Играя за {0}, завершите альтернативную цель.\nЦелостное мгновение, Затмение 4, Планетарий или 50 волна в Имитации.",
+		
+		"ACHIEVEMENT_CLEAR_BOTH_NAME": "{0} : Altercation",
+ 
+		"ACHIEVEMENT_CLEAR_TIER2_0": "Играя за {0}, завершите две альтернативные цели.\nПланетарий, 50 волна в Имитации, Затмение 4 или Целостное мгновение.",
+		"ACHIEVEMENT_CLEAR_TIER2_1": "Играя за {0}, завершите еще одну альтернативную цель.\nПланетарий, 50 волна в Имитации или Затмение 4",
+		"ACHIEVEMENT_CLEAR_TIER2_2": "Играя за {0}, завершите еще одну альтернативную цель.\n50 волна в Имитации, Затмение 4 или Целостное мгновение.",
+		"ACHIEVEMENT_CLEAR_TIER2_3": "Играя за {0}, завершите еще одну альтернативную цель.\nПланетарий, Затмение 4 или Целостное мгновение.",
+		"ACHIEVEMENT_CLEAR_TIER2_4": "Играя за {0}, завершите еще одну альтернативную цель.\nПланетарий, 50 волна в Имитации или Целостное мгновение.",
+		 
+		 
+		 
+		"ACHIEVEMENT_CLEAR_SIMU_NAME": "{0} : имитация",
+		"ACHIEVEMENT_CLEAR_SIMU_DESCRIPTION": "Играя за {0}, завершите 50 волну в Имитации",
+		
+		"ACHIEVEMENT_CLEAR_ECLIPSE_NAME": "{0} : затмение",
+		"ACHIEVEMENT_CLEAR_ECLIPSE_DESCRIPTION": "Играя за {0}, пройдите игру на Затмении 4 или выше.",		
+		
+		"ACHIEVEMENT_CLEAR_LUNARSCAV_NAME": "{0} : безумие",
+		"ACHIEVEMENT_CLEAR_LUNARSCAV_DESCRIPTION": "Играя за {0}, победите Безумного собирателя.",
+
+		"ACHIEVEMENT_CLEAR_VOIDLING_NAME": "{0} : пустота",
+		"ACHIEVEMENT_CLEAR_VOIDLING_DESCRIPTION": "Играя за {0}, победите Пустотника.",
+
+
+		"SIMU_SKIN_COMMANDO_SOTV": "Мастер",
+        "SIMU_SKIN_COMMANDO": "Призматическое испытание",
+        "SIMU_SKIN_COMMANDO_COLOSSUS": "Океан",
+        "SIMU_SKIN_COMMANDO_COLOSSUSRED": "Аид",
+
+        "SIMU_SKIN_HUNTRESS": "Эрос",
+        "SIMU_SKIN_HUNTRESS2": "Пчела",
+        "SIMU_SKIN_HUNTRESS_COLOSSUS": "Отродье",
+
+        "SIMU_SKIN_BANDIT": "Осений",
+        "SIMU_SKIN_BANDIT2": "Ловушка",
+        "SIMU_SKIN_BANDIT_GREEN": "Фруктовый",
+        "SIMU_SKIN_BANDIT_COLOSSUS": "Заключённый",
+
+        "SIMU_SKIN_TOOLBOT": "Урон",
+        "SIMU_SKIN_TOOLBOT2": "Исцеляющий",
+        "SIMU_SKIN_TOOLBOT3": "Вспомогательный",
+        "SIMU_SKIN_TOOLBOT4": "Вспомогательный",
+
+        "SIMU_SKIN_ENGINEER": "Гелий",
+        "SIMU_SKIN_ENGINEER_BLUE": "LED Технология",
+        "SIMU_SKIN_ENGINEER_COLOSSUS": "NE Система",
+
+        "SIMU_SKIN_MAGE_ORANGE": "Пожарный",
+        "SIMU_SKIN_MAGE_COLOSSUS": "Изначальное Небо",
+        "SIMU_SKIN_MAGE_COLOSSUS_BLUE": "Ионизирующий",
+        "SIMU_SKIN_MAGE": "Пастельная Радуга",
+        "SIMU_SKIN_MAGE_PURPLE": "Небо",
+
+        "SIMU_SKIN_MERC": "Страж",
+        "SIMU_SKIN_MERC2": "Страж-Дьявол",
+        "SIMU_SKIN_MERC_GREEN": "Часовой",
+
+        "SIMU_SKIN_TREEBOT": "Лептонная Лилия",
+        "SIMU_SKIN_TREEBOT_ALT": "Полуночная Лилия",
+        "SIMU_SKIN_TREEBOT_COLOSSUS": "Злобный",
+
+        "SIMU_SKIN_LOADER": "Экологичный",
+        "SIMU_SKIN_LOADER_RED": "Сигнальный Красный",
+        "SIMU_SKIN_LOADER_ALT": "Повседневный",
+        "SIMU_SKIN_LOADER_COLOSSUS": "Оса",
+
+        "SIMU_SKIN_CROCO": "Лунный",
+        "SIMU_SKIN_CROCO_BLACK": "Светящаяся Палочка",
+        "SIMU_SKIN_CROCO_COLOSSUS": "Токсичный",
+        "CROCO_SKIN_ALT2_NAME2": "Нео-Игуана",
+
+        "SIMU_SKIN_CAPTAIN": "Медовый месяц",
+        "SIMU_SKIN_CAPTAIN_BLUE": "Бортпроводник",
+        "SIMU_SKIN_CAPTAIN_RED": "Торжественный",
+        "SIMU_SKIN_CAPTAIN_COLOSSUS": "Генерал-майор",
+
+        "SIMU_SKIN_RAILGUNNER": "Холодный",
+        "SIMU_SKIN_RAILGUNNER2": "Лесной",
+        "SIMU_SKIN_RAILGUNNER_COLOSSUS": "Меткий Стрелок",
+
+        "SIMU_SKIN_VOIDSURVIVOR": "Друг",
+        "SIMU_SKIN_VOIDSURVIVOR2": "Враг",
+        "SIMU_SKIN_VOIDSURVIVOR_INV": "Цитрус",
+
+        "SIMU_SKIN_CHEF_RED": "Мясник",
+        "SIMU_SKIN_CHEFMOD_RED": "Мясник",
+        "SIMU_SKIN_CHEF_GREEN": "Овощной",
+        "SIMU_SKIN_CHEFMOD_GREEN": "Овощной",
+        "SIMU_SKIN_CHEF_BLUE": "Соусник",
+        "SIMU_SKIN_CHEFMOD_CYAN": "Соусник",
+
+        "SIMU_SKIN_CHEFMOD_BLACK": "Жаровщик",
+        "SIMU_SKIN_CHEFMOD_BLUE": "Рыбный Повар",
+        "SIMU_SKIN_CHEFMOD_PROVI": "Су-Шеф",
+
+        "SIMU_SKIN_FALSESON_GOLD": "Аурум",
+        "SIMU_SKIN_FALSESON_PROVI": "Бастион",
+
+        "SIMU_SKIN_SEEKER": "Колдовской",
+        "SIMU_SKIN_SEEKER_MASTER": "Дизайн",
+
+        "SIMU_SKIN_RAVAGER": "Глупый",
+
+        "SIMU_SKIN_PALADIN": "Побережье",
+        "SIMU_SKIN_PALADIN_BLACK": "Титанический Гранит",
+
+        "SIMU_SKIN_PILOT_WHITE": "Зима",
+        "SIMU_SKIN_PILOT_RED": "Военный",
+        "SIMU_SKIN_PILOT_BLUE": "Курьер",
+
+        "SIMU_SKIN_ENFORCER_RED": "Красный Оператор",
+        "SIMU_SKIN_ENFORCER_RED_ALT": "R3D3R",
+        "SIMU_SKIN_ENFORCER_YELLOW": "Предупредительный",
+
+        "SIMU_SKIN_SNIPER": "Дюна",
+        "SIMU_SKIN_SNIPER_GRAY": "Одинокий",
+
+        "SIMU_SKIN_ROCKET_RED": "Надёжные Раскопки и Снос",
+        "SIMU_SKIN_ROCKET_RED_MASTER": "Снос",
+        "SIMU_SKIN_ROCKET_BLUE": "Строительная Лига Объединённых",
+
+        "SIMU_SKIN_HAND": "Золотой",
+        "SIMU_SKIN_HAND2": "Золотой RE-TRN",
+        "SIMU_SKIN_HAND_GREEN": "Окисленный",
+        "SIMU_SKIN_HAND2_GREEN": "Окисленный RE-TRN",
+        "SIMU_SKIN_HAND_ORANGE": "Ржавый",
+        "SIMU_SKIN_HAND2_ORANGE": "Ржавый RE-TRN",
+
+        "SIMU_SKIN_MINER": "Преисподняя",
+        "SIMU_SKIN_MINER_EMERALD": "Изумруд",
+        "SIMU_SKIN_MINER_ORANGE": "Палладий",
+
+        "SIMU_SKIN_ARSONIST_ORANGE": "Уголёк",
+        "SIMU_SKIN_ARSONIST_BLUE": "Лазурный",
+        "SIMU_SKIN_ARSONIST_GM_BLUE": "Светлячок",
+
+        "TESLA_COLOR_RED_NEON": "Неоново-Красный",
+        "TESLA_COLOR_ORANGE_NEON": "Неоново-Оранжевый",
+        "TESLA_COLOR_YELLOW_NEON": "Неоново-Жёлтый",
+        "TESLA_COLOR_YELLOW_SAFE": "Сигнальный Жёлтый",
+        "TESLA_COLOR_GREEN_NEON": "Неоново-Зелёный",
+        "TESLA_COLOR_GREEN_STRONG": "Насыщенный Зелёный",
+        "TESLA_COLOR_CYAN_NEON": "Неоново-Бирюзовый",
+        "TESLA_COLOR_BLUE_NEON": "Неоново-Синий",
+        "TESLA_COLOR_BLUE_STRONG": "Насыщенный Синий",
+        "TESLA_COLOR_PINK_NEON": "Ярко-Розовый",
+        "TESLA_COLOR_GRAY": "Серый",
+        "TESLA_COLOR_WHITE": "Белый",
+
+        "SIMU_SKIN_CHIRR": "Цветение",
+        "SIMU_SKIN_CHIRR_ORANGE": "Детонатор",
+
+        "SIMU_SKIN_EXECUTIONER": "Острота",
+        "SIMU_SKIN_EXECUTIONER_GOLD": "Блестящий",
+        "SIMU_SKIN_EXECUTIONER_BLUE": "Ботан",
+
+        "SIMU_SKIN_NEM_COMMANDO": "Оранжевый",
+
+        "SIMU_SKIN_NEM_MERCENARY": "Красный",
+
+        "SIMU_SKIN_NEM_ENFORCER": "Возвращённый"
+
+	}
+}

@@ -173,7 +173,7 @@ namespace WolfoSkinsMod
                     for (int ii = 0; ii < modelSkinController.skins.Length; ii++)
                     {
                         //Debug.LogWarning(modelSkinController.skins[ii]);
-                        if (modelSkinController.skins[ii].name.Contains("Wolfo"))
+                        if (modelSkinController.skins[ii] is SkinDefPrioritizeDirect)
                         {
                             wolfList.Add(modelSkinController.skins[ii]);
                         }
