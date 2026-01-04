@@ -1,6 +1,7 @@
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static WolfoSkinsMod.H;
 
 namespace WolfoSkinsMod.Base
 {
@@ -9,13 +10,44 @@ namespace WolfoSkinsMod.Base
         internal static void Start()
         {
             SkinDef skinBandit2Default = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Bandit2/skinBandit2Default.asset").WaitForCompletion();
-            SkinDefParams skinBandit2Alt = Addressables.LoadAssetAsync<SkinDefParams>(key: "RoR2/Base/Bandit2/skinBandit2Alt_params.asset").WaitForCompletion();
+            //SkinDefParams skinBandit2Alt = Addressables.LoadAssetAsync<SkinDefParams>(key: "RoR2/Base/Bandit2/skinBandit2Alt_params.asset").WaitForCompletion();
             SkinDef skinBandit2AltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Bandit2/skinBandit2AltColossus.asset").WaitForCompletion();
 
-            Bandit_Red(skinBandit2Default, skinBandit2Alt);
-            Bandit_AltColossus(skinBandit2AltColossus);
-            Bandit_Green(skinBandit2Default, skinBandit2Alt);
-            Bandit_Purple(skinBandit2Default, skinBandit2Alt);
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinBandit2R_Red_1",
+                nameToken = "SIMU_SKIN_BANDIT",
+                icon = H.GetIcon("base/bandit_red"),
+                original = skinBandit2Default,
+                cloneMesh = true,
+            }, new System.Action<SkinDefMakeOnApply>(Coated_RoRRRed));
+
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinBandit2AltColossus_DLC2",
+                nameToken = "SIMU_SKIN_BANDIT_COLOSSUS",
+                icon = H.GetIcon("base/bandit_dlc2"),
+                original = skinBandit2AltColossus,
+            }, new System.Action<SkinDefMakeOnApply>(Colossus_OrangeBlack));
+
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinBandit2R_Green_1",
+                nameToken = "SIMU_SKIN_BANDIT_GREEN",
+                icon = H.GetIcon("base/bandit_green"),
+                original = skinBandit2Default,
+                cloneMesh = true,
+            }, new System.Action<SkinDefMakeOnApply>(Coated_RoRRGreen));
+
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinBandit2R_Purple_1",
+                nameToken = "SIMU_SKIN_BANDIT2",
+                icon = H.GetIcon("base/bandit_purple"),
+                original = skinBandit2Default,
+                cloneMesh = true,
+            }, new System.Action<SkinDefMakeOnApply>(Coated_RoRRPurple));
+
 
             ////Mesh
             //0 : Shotgun
@@ -36,23 +68,13 @@ namespace WolfoSkinsMod.Base
             //6 : matBandit2AltColossusWeapons : not Hat
             //7 : matBandit2AltColossusWeapons
         }
-        internal static void Bandit_AltColossus()
-        {
 
-        }
-        internal static void Bandit_AltColossus(SkinDef skinBandit2AltColossus)
+        internal static void Colossus_OrangeBlack(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinBandit2AltColossus_DLC2",
-                nameToken = "SIMU_SKIN_BANDIT_COLOSSUS",
-                icon = H.GetIcon("bandit_dlc2"),
-                original = skinBandit2AltColossus,
-            });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matBandit2AltColossus = H.CloneMat(newRenderInfos, 0);
-            Material matBandit2AltColossusWeapons = H.CloneMat(newRenderInfos, 4);
+            Material matBandit2AltColossus = H.CloneMat(ref newRenderInfos, 0);
+            Material matBandit2AltColossusWeapons = H.CloneMat(ref newRenderInfos, 4);
 
             matBandit2AltColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Colossus/texBandit2AltColossusDiffuse.png");
             matBandit2AltColossus.SetColor("_EmColor", new Color(1f, 0.5f, 0f, 1f)); //0.3915 1 0.8729 1
@@ -74,39 +96,34 @@ namespace WolfoSkinsMod.Base
 
         }
 
-        internal static void Bandit_Red(SkinDef skinBandit2Default, SkinDefParams skinBandit2Alt)
+        internal static void Coated_RoRRRed(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinBandit2R_Red_1",
-                nameToken = "SIMU_SKIN_BANDIT",
-                icon = H.GetIcon("bandit_red"),
-                original = skinBandit2Default,
-            });
+            SkinDefParams skinBandit2Alt = Addressables.LoadAssetAsync<SkinDefParams>(key: "RoR2/Base/Bandit2/skinBandit2Alt_params.asset").WaitForCompletion();
+
             CharacterModel.RendererInfo[] BanditRedRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
             newSkinDef.skinDefParams.meshReplacements[3] = skinBandit2Alt.meshReplacements[2];
 
 
-            Material matBanditRed1 = H.CloneMat(BanditRedRenderInfos, 0);
-            Material matBandit2Coat = H.CloneMat(BanditRedRenderInfos, 3);
-            Material matBandit2CoatHat = H.CloneMat(BanditRedRenderInfos, 3);
-            Material matBandit2Shotgun = H.CloneMat(BanditRedRenderInfos, 4);
-            Material matBandit2Knife = H.CloneMat(BanditRedRenderInfos, 5);
-            Material matBandit2Revolver = H.CloneMat(BanditRedRenderInfos, 7);
+            Material matBanditRed1 = H.CloneMat(ref BanditRedRenderInfos, 0);
+            Material matBandit2Coat = H.CloneMat(ref BanditRedRenderInfos, 3);
+            Material matBandit2CoatHat = H.CloneMat(ref BanditRedRenderInfos, 3);
+            Material matBandit2Shotgun = H.CloneMat(ref BanditRedRenderInfos, 4);
+            Material matBandit2Knife = H.CloneMat(ref BanditRedRenderInfos, 5);
+            Material matBandit2Revolver = H.CloneMat(ref BanditRedRenderInfos, 7);
 
 
-            Texture2D texBanditRedCoatDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Red/texBanditRedCoatDiffuse.png");
+            Texture2D texBanditRedCoatDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Red/texBandit2CoatDiffuse.png");
             Texture2D texBanditShotgunDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Red/texBanditShotgunDiffuse.png");
 
-            matBanditRed1.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Red/texBanditRedDiffuse.png");
+            matBanditRed1.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Red/texBandit2Diffuse.png");
             matBandit2Coat.mainTexture = texBanditRedCoatDiffuse;
             matBandit2CoatHat.mainTexture = texBanditRedCoatDiffuse;
             matBandit2Shotgun.mainTexture = texBanditShotgunDiffuse;
             matBandit2Knife.mainTexture = texBanditShotgunDiffuse;
             matBandit2Revolver.mainTexture = texBanditShotgunDiffuse;
 
-            matBanditRed1.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Red/texBanditRedEmission.png"));
+            matBanditRed1.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Red/texBandit2Emission.png"));
             matBanditRed1.SetColor("_EmColor", new Color(1.1f, 0.88f, 1.1f)); //0 0.3491 0.327 1
             matBandit2Shotgun.SetColor("_EmColor", new Color(0.5f, 0.15f, 0.25f)); //100 30 50
             matBandit2Coat.color = new Color(0.95f, 0.95f, 0.87f);
@@ -125,39 +142,32 @@ namespace WolfoSkinsMod.Base
 
         }
 
-        internal static void Bandit_Purple(SkinDef skinBandit2Default, SkinDefParams skinBandit2Alt)
+        internal static void Coated_RoRRPurple(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinBandit2R_Purple_1",
-                nameToken = "SIMU_SKIN_BANDIT2",
-                icon = H.GetIcon("bandit_purple"),
-                original = skinBandit2Default,
-                cloneMesh = true,
-            });
+            SkinDefParams skinBandit2Alt = Addressables.LoadAssetAsync<SkinDefParams>(key: "RoR2/Base/Bandit2/skinBandit2Alt_params.asset").WaitForCompletion();
 
             CharacterModel.RendererInfo[] BanditRedRenderInfos = newSkinDef.skinDefParams.rendererInfos;
             newSkinDef.skinDefParams.meshReplacements[3] = skinBandit2Alt.meshReplacements[2];
 
-            Material matBanditRed1 = H.CloneMat(BanditRedRenderInfos, 0);
-            Material matBandit2Coat = H.CloneMat(BanditRedRenderInfos, 3);
-            Material matBandit2CoatHat = H.CloneMat(BanditRedRenderInfos, 3);
-            Material matBandit2Shotgun = H.CloneMat(BanditRedRenderInfos, 4);
-            Material matBandit2Knife = H.CloneMat(BanditRedRenderInfos, 5);
-            Material matBandit2Revolver = H.CloneMat(BanditRedRenderInfos, 7);
+            Material matBanditRed1 = H.CloneMat(ref BanditRedRenderInfos, 0);
+            Material matBandit2Coat = H.CloneMat(ref BanditRedRenderInfos, 3);
+            Material matBandit2CoatHat = H.CloneMat(ref BanditRedRenderInfos, 3);
+            Material matBandit2Shotgun = H.CloneMat(ref BanditRedRenderInfos, 4);
+            Material matBandit2Knife = H.CloneMat(ref BanditRedRenderInfos, 5);
+            Material matBandit2Revolver = H.CloneMat(ref BanditRedRenderInfos, 7);
 
 
-            Texture2D texBanditRedCoatDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBanditRedCoatDiffusePURPLE.png");
-            Texture2D texBanditShotgunDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBanditShotgunDiffusePURPLE.png");
+            Texture2D texBanditRedCoatDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBandit2CoatDiffuse.png");
+            Texture2D texBanditShotgunDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBanditShotgunDiffuse.png");
 
-            matBanditRed1.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBanditRedDiffusePURPLE.png");
+            matBanditRed1.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBandit2Diffuse.png");
             matBandit2Coat.mainTexture = texBanditRedCoatDiffuse;
             matBandit2CoatHat.mainTexture = texBanditRedCoatDiffuse;
             matBandit2Shotgun.mainTexture = texBanditShotgunDiffuse;
             matBandit2Knife.mainTexture = texBanditShotgunDiffuse;
             matBandit2Revolver.mainTexture = texBanditShotgunDiffuse;
 
-            matBanditRed1.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBanditRedEmissionPURPLE.png"));
+            matBanditRed1.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBandit2Emission.png"));
             matBanditRed1.SetColor("_EmColor", new Color(1.2f, 1.2f, 0.5f)); //0 0.3491 0.327 1
             matBandit2Shotgun.SetColor("_EmColor", new Color(0.8f, 0.7f, 0f)); //100 30 50
 
@@ -172,38 +182,32 @@ namespace WolfoSkinsMod.Base
 
         }
 
-        internal static void Bandit_Green(SkinDef skinBandit2Default, SkinDefParams skinBandit2Alt)
+        internal static void Coated_RoRRGreen(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinBandit2R_Green_1",
-                nameToken = "SIMU_SKIN_BANDIT_GREEN",
-                icon = H.GetIcon("bandit_green"),
-                original = skinBandit2Default,
-                cloneMesh = true,
-            });
+            SkinDefParams skinBandit2Alt = Addressables.LoadAssetAsync<SkinDefParams>(key: "RoR2/Base/Bandit2/skinBandit2Alt_params.asset").WaitForCompletion();
+
             CharacterModel.RendererInfo[] BanditRedRenderInfos = newSkinDef.skinDefParams.rendererInfos;
             newSkinDef.skinDefParams.meshReplacements[3] = skinBandit2Alt.meshReplacements[2];
 
-            Material matBanditRed1 = H.CloneMat(BanditRedRenderInfos, 0);
-            Material matBandit2Coat = H.CloneMat(BanditRedRenderInfos, 3);
-            Material matBandit2CoatHat = H.CloneMat(BanditRedRenderInfos, 3);
-            Material matBandit2Shotgun = H.CloneMat(BanditRedRenderInfos, 4);
-            Material matBandit2Knife = H.CloneMat(BanditRedRenderInfos, 5);
-            Material matBandit2Revolver = H.CloneMat(BanditRedRenderInfos, 7);
+            Material matBanditRed1 = H.CloneMat(ref BanditRedRenderInfos, 0);
+            Material matBandit2Coat = H.CloneMat(ref BanditRedRenderInfos, 3);
+            Material matBandit2CoatHat = H.CloneMat(ref BanditRedRenderInfos, 3);
+            Material matBandit2Shotgun = H.CloneMat(ref BanditRedRenderInfos, 4);
+            Material matBandit2Knife = H.CloneMat(ref BanditRedRenderInfos, 5);
+            Material matBandit2Revolver = H.CloneMat(ref BanditRedRenderInfos, 7);
 
 
-            Texture2D texBanditRedCoatDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Green/texBanditRedCoatDiffuseGREEN.png");
-            Texture2D texBanditShotgunDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Green/texBanditShotgunDiffuseGREEN.png");
+            Texture2D texBanditRedCoatDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Green/texBandit2CoatDiffuse.png");
+            Texture2D texBanditShotgunDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Green/texBanditShotgunDiffuse.png");
 
-            matBanditRed1.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Green/texBanditRedDiffuseGREEN.png");
+            matBanditRed1.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Green/texBandit2Diffuse.png");
             matBandit2Coat.mainTexture = texBanditRedCoatDiffuse;
             matBandit2CoatHat.mainTexture = texBanditRedCoatDiffuse;
             matBandit2Shotgun.mainTexture = texBanditShotgunDiffuse;
             matBandit2Knife.mainTexture = texBanditShotgunDiffuse;
             matBandit2Revolver.mainTexture = texBanditShotgunDiffuse;
 
-            matBanditRed1.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Green/texBanditRedEmissionGREEN.png"));
+            matBanditRed1.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Green/texBandit2Emission.png"));
             matBanditRed1.SetColor("_EmColor", new Color(1f, 1.2f, 0.7f)); //0 0.3491 0.327 1
             matBandit2Shotgun.SetColor("_EmColor", new Color(0.4f, 0.5f, 0.15f)); //100 30 50
 
@@ -218,7 +222,7 @@ namespace WolfoSkinsMod.Base
 
         }
 
-        [RegisterAchievement("CLEAR_ANY_BANDIT2", "Skins.Bandit2.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_BANDIT2", "Skins.Bandit2.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumBandit2Body : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -227,7 +231,7 @@ namespace WolfoSkinsMod.Base
             }
         }
 
-        [RegisterAchievement("CLEAR_BOTH_BANDIT2", "Skins.Bandit2.Wolfo.Both", null, 5, null)]
+        [RegisterAchievement("CLEAR_BOTH_BANDIT2", "Skins.Bandit2.Wolfo.Both", null, 3, null)]
         public class ClearSimulacrumBandit2Body2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

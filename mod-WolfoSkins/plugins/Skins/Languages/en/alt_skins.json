@@ -69,13 +69,12 @@
 
 		
 		"SIMU_SKIN_TREEBOT":"Lepton Lily",
-		"SIMU_SKIN_TREEBOT_ALT":"Midnight Lily",
+		"SIMU_SKIN_TREEBOT_ALT":"Fire Lily",
 		"SIMU_SKIN_TREEBOT_COLOSSUS":"Viscious",
 
 
 		"SIMU_SKIN_LOADER":"Eco Friendly",
 		"SIMU_SKIN_LOADER_RED":"Saftey Red",
-		"SIMU_SKIN_LOADER_ALT":"Casual",
 		"SIMU_SKIN_LOADER_COLOSSUS":"Wasp",
 
 
@@ -83,11 +82,10 @@
 		"SIMU_SKIN_CROCO_BLACK":"Glowstick",
 		"SIMU_SKIN_CROCO_COLOSSUS":"Toxicofera",
 		"CROCO_SKIN_ALT2_NAME2":"Iguania Neo",
-	
+
 
 		"SIMU_SKIN_CAPTAIN":"Honeymoon",
 		"SIMU_SKIN_CAPTAIN_BLUE":"Flight Attendant",
-		"SIMU_SKIN_CAPTAIN_RED":"Occasion",
 		"SIMU_SKIN_CAPTAIN_COLOSSUS":"Major General",
 
 
@@ -99,7 +97,8 @@
 		"SIMU_SKIN_VOIDSURVIVOR":"Friend",
 		"SIMU_SKIN_VOIDSURVIVOR2":"Foe",
 		"SIMU_SKIN_VOIDSURVIVOR_INV":"Citrus",
-
+		"SIMU_SKIN_VOIDSURVIVOR_ALTBLACK":"Putrified",
+		
 
 		"SIMU_SKIN_CHEF_RED":"Boucher",
 		"SIMU_SKIN_CHEFMOD_RED":"Boucher",		
@@ -107,20 +106,29 @@
 		"SIMU_SKIN_CHEFMOD_GREEN":"Entremetier",
 		"SIMU_SKIN_CHEF_BLUE":"Saucier",
 		"SIMU_SKIN_CHEFMOD_CYAN":"Saucier",
-		
+
 		"SIMU_SKIN_CHEFMOD_BLACK":"Rotisseur",
 		"SIMU_SKIN_CHEFMOD_BLUE":"Poissonnier",		
 		"SIMU_SKIN_CHEFMOD_PROVI":"Sous Chef",
 
 		"SIMU_SKIN_FALSESON_GOLD":"Aurum",
-		"SIMU_SKIN_FALSESON_PROVI":"Bulwark",
+		"SIMU_SKIN_FALSESON_LUNAR":"Moonstone",
+		"SIMU_SKIN_FALSESON_PROVI":"Bulwark (Mythos)",
+		"SIMU_SKIN_FALSESON_PROVI2":"Bulwark (Crystaline)",
+		
+		"SIMU_SKIN_SEEKER":"Bewitched",
+		"SIMU_SKIN_SEEKER_ROME":"Roman",
 
 
-		"SIMU_SKIN_SEEKER":"Witching",
-		"SIMU_SKIN_SEEKER_MASTER":"Design",
-
-
-
+		"SIMU_SKIN_OPERATOR_YELLOW": "Machinist",
+		"SIMU_SKIN_OPERATOR_ORANGE": "Rooster",
+		"SIMU_SKIN_OPERATOR_BLUE": "Promoter",
+		
+		"SIMU_SKIN_DRIFTER_RED": "Vagabond",
+		"SIMU_SKIN_DRIFTER_GREEN": "Preserver",
+		"SIMU_SKIN_DRIFTER_PINK": "Bubblegum",
+		"SIMU_SKIN_DRIFTER_FOREST": "Arboist",
+	
 
 		"SIMU_SKIN_RAVAGER":"Foolish",
 
@@ -128,11 +136,11 @@
 		"SIMU_SKIN_PALADIN_BLACK":"Titanic Granite",
 
 
+	
+
 		"SIMU_SKIN_PILOT_WHITE":"Winter",
 		"SIMU_SKIN_PILOT_RED":"Militant",
 		"SIMU_SKIN_PILOT_BLUE":"Courier",	
-
-
 
 		"SIMU_SKIN_ENFORCER_RED":"Red Operator",
 		"SIMU_SKIN_ENFORCER_RED_ALT":"R3D3R",

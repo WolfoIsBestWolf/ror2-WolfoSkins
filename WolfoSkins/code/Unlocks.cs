@@ -4,8 +4,8 @@ using RoR2.ExpansionManagement;
 using RoR2.Stats;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using WolfoSkinsMod.Mod;
 using WolfoSkinsMod.Base;
+using WolfoSkinsMod.Mod;
 
 namespace WolfoSkinsMod
 {
@@ -19,7 +19,7 @@ namespace WolfoSkinsMod
             On.RoR2.RoR2Content.CreateEclipseUnlockablesForSurvivor += AutogenerateUnlockableDefs;
 
             On.RoR2.LocalUserManager.AddUser += LocalUserManager_AddUser;
- 
+
             On.RoR2.UnlockableCatalog.GenerateUnlockableMetaData += UnlockableCatalog_GenerateUnlockableMetaData;
             GameModeCatalog.availability.CallWhenAvailable(AutogenerateTokens);
 
@@ -55,7 +55,7 @@ namespace WolfoSkinsMod
             }
             orig(self, unlockableDef);
         }
- 
+
         private static void UnlockableCatalog_GenerateUnlockableMetaData(On.RoR2.UnlockableCatalog.orig_GenerateUnlockableMetaData orig, UnlockableDef[] unlockableDefs)
         {
             try
@@ -562,16 +562,19 @@ namespace WolfoSkinsMod
             ExpansionDef DLC2 = Addressables.LoadAssetAsync<ExpansionDef>(key: "RoR2/DLC2/Common/DLC2.asset").WaitForCompletion();
             Debug.Log("AssignUnlockables");
             bool noUnlocks = WConfig.cfgUnlockAll.Value;
-            for (int i = 0; i < SurvivorCatalog.survivorIndexToBodyIndex.Length; i++)
+            for (int i = 0; i < SurvivorCatalog.survivorDefs.Length; i++)
             {
-                if (SurvivorCatalog.survivorIndexToBodyIndex[i] != BodyIndex.None)
+                Debug.Log(SurvivorCatalog.survivorDefs[i]);
+                BodyIndex bodyIndex = SurvivorCatalog.GetBodyIndexFromSurvivorIndex(SurvivorCatalog.survivorDefs[i].survivorIndex);
+                if (bodyIndex != BodyIndex.None)
                 {
                     string name = SurvivorCatalog.survivorDefs[i].cachedName;
-                    SkinDef[] skinDefs = SkinCatalog.skinsByBody[(int)SurvivorCatalog.survivorIndexToBodyIndex[i]];
-                    for (int skin = 0; skin < skinDefs.Length; skin++)
+                    SkinDef[] skinDefs = SkinCatalog.skinsByBody[(int)bodyIndex];
+                    for (int skin = 2; skin < skinDefs.Length; skin++)
                     {
-                        if (skinDefs[skin] is SkinDefPrioritizeDirect)
+                        if (skinDefs[skin] is SkinDefMakeOnApply)
                         {
+
                             UnlockableDef unlockable = null;
                             if (skinDefs[skin].name.EndsWith("_1"))
                             {
@@ -584,7 +587,6 @@ namespace WolfoSkinsMod
                                 {
                                     unlockable.requiredExpansion = DLC2;
                                 }
-
                             }
                             /*else if (skinDefs[skin].name.EndsWith("_DLC3"))
                             {
@@ -608,7 +610,7 @@ namespace WolfoSkinsMod
                         }
                     }
                 }
-                
+
             }
 
             //Manual assigning
@@ -647,7 +649,7 @@ namespace WolfoSkinsMod
             SkinsMerc.red_SKIN.unlockableDef = Merc;
             SkinsMerc.green_SKIN.unlockableDef = Merc2;
             Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/skinCommandoMarine.asset").WaitForCompletion().unlockableDef = Commando;
- 
+
             if (TeslaTrooper)
             {
                 for (int i = 8; i < TeslaDesolatorColors.teslaColors.variants.Length; i++)

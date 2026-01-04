@@ -17,31 +17,60 @@ namespace WolfoSkinsMod.Base
             //1 matCrocoDiseaseDrippings
             //2 matCrocoColossus
 
-            //Black Returns
-            AcridSkinBlack(skinCrocoDefault);  
-            //Orange highlits      
-            Acrid_AltColossus_Default(skinCrocoAltColossus);
-            //Lunar Returns
-            RoRR_Lunar(skinCrocoDefault);
-            //Purple highlits      
-            Acrid_AltColossus(skinCrocoAltColossus);
-          
+            //RoRR BlackGreen
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinCrocoWolfoBlack_1",
+                nameToken = "SIMU_SKIN_CROCO_BLACK",
+                icon = H.GetIcon("base/acrid_black"),
+                original = skinCrocoDefault,
+            }, new System.Action<SkinDefMakeOnApply>(RoRR_Black));
+
+            //Greener and glowier
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                nameToken = "CROCO_SKIN_ALT2_NAME2",
+                name = "skinCrocoAltColossus_Green_DLC2",
+                icon = H.GetIcon("base/acrid_dlc2"),
+                original = skinCrocoAltColossus,
+            }, new System.Action<SkinDefMakeOnApply>(Colossus_GrayPink));
+
+            //RoRR WhiteBlue
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                nameToken = "SIMU_SKIN_CROCO",
+                name = "skinCroco_1",
+                icon = H.GetIcon("base/acrid_white"),
+                original = skinCrocoDefault,
+            }, new System.Action<SkinDefMakeOnApply>(RoRR_Lunar));
+
+            //DLC2 Purple
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                nameToken = "SIMU_SKIN_CROCO_COLOSSUS",
+                name = "skinCrocoAltColossus_DLC2",
+                icon = H.GetIcon("base/acrid_dlc2_purple"),
+                original = skinCrocoAltColossus,
+            }, new System.Action<SkinDefMakeOnApply>(Colossus_GreenOrange));
+
             //Joke Lemurian
-            AcridSkinLemurian(skinCrocoDefault);
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinCrocoWolfoLemurian",
+                nameToken = "LEMURIAN_BODY_NAME",
+                icon = H.GetIcon("base/acrid_lemurian"),
+                original = skinCrocoDefault,
+                enhancedSkin = true
+            }, new System.Action<SkinDefMakeOnApply>(Lemurian));
+
         }
 
 
 
-        internal static void Acrid_AltColossus_Default(SkinDef skinCrocoAltColossus)
+        internal static void Colossus_GrayPink(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] renderInfo = H.CreateNewSkinR(new SkinInfo
-            {
-                nameToken = "CROCO_SKIN_ALT2_NAME2",
-                name = "skinCrocoAltColossus_Green_DLC2",
-                icon = H.GetIcon("acrid_dlc2"),
-                original = skinCrocoAltColossus,
-            });
-            Material matCrocoColossus = CloneMat(renderInfo, 0);
+            CharacterModel.RendererInfo[] renderInfo = newSkinDef.skinDefParams.rendererInfos;
+            Material matCrocoColossus = CloneMat(ref renderInfo, 0);
 
             matCrocoColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Croco/Colossus/texCrocoColossusDiffuse2.png");
             matCrocoColossus.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Croco/Colossus/texCrocoColossusEmissive.png")); //texRampHealingVariant
@@ -52,17 +81,10 @@ namespace WolfoSkinsMod.Base
 
         }
 
-
-        internal static void Acrid_AltColossus(SkinDef skinCrocoAltColossus)
+        internal static void Colossus_GreenOrange(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] renderInfo = H.CreateNewSkinR(new SkinInfo
-            {
-                nameToken = "SIMU_SKIN_CROCO_COLOSSUS",
-                name = "skinCrocoAltColossus_DLC2",
-                icon = H.GetIcon("acrid_dlc2_purple"),
-                original = skinCrocoAltColossus,
-            });
-            Material matCrocoColossus = CloneMat(renderInfo, 0);
+            CharacterModel.RendererInfo[] renderInfo = newSkinDef.skinDefParams.rendererInfos;
+            Material matCrocoColossus = CloneMat(ref renderInfo, 0);
 
             matCrocoColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Croco/Colossus/texCrocoColossusDiffuse.png");
             matCrocoColossus.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Croco/Colossus/texCrocoColossusEmissive.png")); //texRampHealingVariant
@@ -75,19 +97,13 @@ namespace WolfoSkinsMod.Base
 
         }
 
-        internal static void RoRR_Lunar(SkinDef skinCrocoDefault)
+        internal static void RoRR_Lunar(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                nameToken = "SIMU_SKIN_CROCO",
-                name = "skinCroco_1",
-                icon = H.GetIcon("acrid_white"),
-                original = skinCrocoDefault,
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matCroco = CloneMat(newRenderInfos, 0);
-            Material matCrocoDiseaseDrippings = CloneMat(newRenderInfos, 1);
-            Material matCrocoSpine = CloneMat(newRenderInfos, 2);
+            Material matCroco = CloneMat(ref newRenderInfos, 0);
+            Material matCrocoDiseaseDrippings = CloneMat(ref newRenderInfos, 1);
+            Material matCrocoSpine = CloneMat(ref newRenderInfos, 2);
 
             Texture2D texCrocoPoisonMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Croco/Lunar/texCrocoPoisonMask.png");
 
@@ -110,20 +126,13 @@ namespace WolfoSkinsMod.Base
 
         }
 
-        internal static void AcridSkinBlack(SkinDef skinCrocoDefault)
+        internal static void RoRR_Black(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                name = "skinCrocoWolfoBlack_1",
-                nameToken = "SIMU_SKIN_CROCO_BLACK",
-                icon = H.GetIcon("acrid_black"),
-                original = skinCrocoDefault,
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-
-            Material matCroco = CloneMat(newRenderInfos, 0);
-            Material matCrocoDiseaseDrippings = CloneMat(newRenderInfos, 1);
-            Material matCrocoSpine = CloneMat(newRenderInfos, 2);
+            Material matCroco = CloneMat(ref newRenderInfos, 0);
+            Material matCrocoDiseaseDrippings = CloneMat(ref newRenderInfos, 1);
+            Material matCrocoSpine = CloneMat(ref newRenderInfos, 2);
 
             Texture2D texCrocoPoisonMask = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Croco/Black/texCrocoPoisonMaskBLACK.png");
 
@@ -145,19 +154,10 @@ namespace WolfoSkinsMod.Base
 
         }
 
-        internal static void AcridSkinLemurian(SkinDef skinCrocoDefault)
+        internal static void Lemurian(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDefAltColor newSkinDef = (SkinDefAltColor)H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinCrocoWolfoLemurian",
-                nameToken = "LEMURIAN_BODY_NAME",
-                icon = H.GetIcon("acrid_lemurian"),
-                original = skinCrocoDefault,
-                w = true,
-                unsetMat = true,
-            });
             var newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
-            Material matCroco = CloneMat(newRenderInfos, 0);
+            Material matCroco = CloneMat(ref newRenderInfos, 0);
 
             matCroco.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Croco/Lemurian/texCrocoDiffuseLEMURIAN.png");
             matCroco.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Croco/Lemurian/texCrocoEmissionLEMURIAN.png"));
@@ -170,11 +170,11 @@ namespace WolfoSkinsMod.Base
             newRenderInfos[1].defaultMaterial = null;
             newRenderInfos[2].defaultMaterial = null;
 
-            newSkinDef.disableThis = skinCrocoDefault.rootObject.transform.GetChild(7);
+            (newSkinDef as SkinDefEnhanced).disableThis = newSkinDef.rootObject.transform.GetChild(7);
         }
 
 
-        [RegisterAchievement("CLEAR_ANY_CROCO", "Skins.Croco.Wolfo.First", "BeatArena", 5, null)]
+        [RegisterAchievement("CLEAR_ANY_CROCO", "Skins.Croco.Wolfo.First", "BeatArena", 3, null)]
         public class CrocoBodyAltEndings : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -183,7 +183,7 @@ namespace WolfoSkinsMod.Base
             }
         }
 
-        [RegisterAchievement("CLEAR_BOTH_CROCO", "Skins.Croco.Wolfo.Both", "BeatArena", 5, null)]
+        [RegisterAchievement("CLEAR_BOTH_CROCO", "Skins.Croco.Wolfo.Both", "BeatArena", 3, null)]
         public class CrocoBodyAltEndings2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

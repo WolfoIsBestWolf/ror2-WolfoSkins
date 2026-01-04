@@ -13,10 +13,32 @@ namespace WolfoSkinsMod.Base
             SkinDef skinCaptainAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Captain/skinCaptainAlt.asset").WaitForCompletion();
             SkinDef skinCaptainAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Captain/skinCaptainAltColossus.asset").WaitForCompletion();
 
-            Captain_Pink(skinCaptainAlt);
-            Captain_Blue(skinCaptainAlt);
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                nameToken = "SIMU_SKIN_CAPTAIN",
+                name = "skinCaptain_1",
+                icon = H.GetIcon("base/captain_pink"),
+                original = skinCaptainAlt,
+            }, new System.Action<SkinDefMakeOnApply>(Captain_Pink));
+
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                nameToken = "SIMU_SKIN_CAPTAIN_BLUE",
+                name = "skinCaptain_Blue_1",
+                icon = H.GetIcon("base/captain_blue"),
+                original = skinCaptainAlt,
+            }, new System.Action<SkinDefMakeOnApply>(Captain_Blue));
+
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                nameToken = "SIMU_SKIN_CAPTAIN_COLOSSUS",
+                name = "skinCaptainAltColossus_DLC2",
+                icon = H.GetIcon("base/captain_dlc2"),
+                original = skinCaptainAltColossus,
+            }, new System.Action<SkinDefMakeOnApply>(AltColossus));
+
+
             //CaptainSkinRED();
-            AltColossus(skinCaptainAltColossus);
             //Colossus_Orange();
 
             //0 matCaptainColossusAltClothes
@@ -28,20 +50,11 @@ namespace WolfoSkinsMod.Base
             //6 matCaptainColossusAltClothes
         }
 
-        internal static void AltColossus(SkinDef skinCaptainAltColossus)
+        internal static void AltColossus(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] renderInfo = H.CreateNewSkinR(new SkinInfo
-            {
-                nameToken = "SIMU_SKIN_CAPTAIN_COLOSSUS",
-                name = "skinCaptainAltColossus_DLC2",
-                icon = H.GetIcon("captain_dlc2"),
-                original = skinCaptainAltColossus,
-                unsetMat = true
-            });
-
-
-            Material matCaptainColossusAltClothes = H.CloneMat(renderInfo, 0);
-            Material matCaptainColossusAltArmor = H.CloneMat(renderInfo, 1);
+            CharacterModel.RendererInfo[] renderInfo = newSkinDef.skinDefParams.rendererInfos;
+            Material matCaptainColossusAltClothes = H.CloneMat(ref renderInfo, 0);
+            Material matCaptainColossusAltArmor = H.CloneMat(ref renderInfo, 1);
 
             matCaptainColossusAltClothes.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusClothesDiffuse.png");
             matCaptainColossusAltArmor.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Colossus/texCaptainColossusDiffuse.png");
@@ -99,8 +112,8 @@ namespace WolfoSkinsMod.Base
                     skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_NormalTex", null);
                     skinCaptainAltColossus.rendererInfos[1].defaultMaterial.SetTexture("_GreenChannelNormalTex", null); //texTrimSheetLemurianRuins
 
-                    Material matCaptainColossusAltClothes = CloneMat(CaptainAltColossus.rendererInfos[0].defaultMaterial);
-                    Material matCaptainColossusAltArmor = CloneMat(CaptainAltColossus.rendererInfos[1].defaultMaterial);
+                    Material matCaptainColossusAltClothes = CloneMat(ref CaptainAltColossus.rendererInfos[0].defaultMaterial);
+                    Material matCaptainColossusAltArmor = CloneMat(ref CaptainAltColossus.rendererInfos[1].defaultMaterial);
 
                     matCaptainColossusAltClothes.mainTexture = texCaptainColossusClothesDiffuse;
                     matCaptainColossusAltArmor.mainTexture = texCaptainColossusDiffuse;
@@ -140,23 +153,16 @@ namespace WolfoSkinsMod.Base
                 */
         #endregion
 
-        internal static void Captain_Pink(SkinDef skinCaptainAlt)
+        internal static void Captain_Pink(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                nameToken = "SIMU_SKIN_CAPTAIN",
-                name = "skinCaptain_1",
-                icon = H.GetIcon("captain_pink"),
-                original = skinCaptainAlt,
-                unsetMat = true
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material PinkmatCaptainAlt = CloneMat(newRenderInfos, 0);
-            Material PinkmatCaptainAlt2 = CloneMat(newRenderInfos, 0);
-            Material PinkmatCaptainAlt3 = CloneMat(newRenderInfos, 0);
-            Material PinkmatCaptainArmorAlt = CloneMat(newRenderInfos, 2);
-            Material PinkmatCaptainJacketAlt = CloneMat(newRenderInfos, 3);
-            Material PinkmatCaptainRobotBitsAlt = CloneMat(newRenderInfos, 4);
+            Material PinkmatCaptainAlt = CloneMat(ref newRenderInfos, 0);
+            Material PinkmatCaptainAlt2 = CloneMat(ref newRenderInfos, 0);
+            Material PinkmatCaptainAlt3 = CloneMat(ref newRenderInfos, 0);
+            Material PinkmatCaptainArmorAlt = CloneMat(ref newRenderInfos, 2);
+            Material PinkmatCaptainJacketAlt = CloneMat(ref newRenderInfos, 3);
+            Material PinkmatCaptainRobotBitsAlt = CloneMat(ref newRenderInfos, 4);
 
             PinkmatCaptainAlt.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW.png");
             PinkmatCaptainAlt2.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW2.png");
@@ -178,22 +184,15 @@ namespace WolfoSkinsMod.Base
 
         }
 
-        internal static void Captain_Blue(SkinDef skinCaptainAlt)
+        internal static void Captain_Blue(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                nameToken = "SIMU_SKIN_CAPTAIN_BLUE",
-                name = "skinCaptain_Blue_1",
-                icon = H.GetIcon("captain_blue"),
-                original = skinCaptainAlt,
-                unsetMat = true
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material MatCaptainAlt = CloneMat(newRenderInfos, 0);
-            Material MatCaptainAltDark = CloneMat(newRenderInfos, 0);
-            Material MatCaptainArmorAlt = CloneMat(newRenderInfos, 2);
-            Material MatCaptainJacketAlt = CloneMat(newRenderInfos, 3);
-            Material MatCaptainRobotBitsAlt = CloneMat(newRenderInfos, 4);
+            Material MatCaptainAlt = CloneMat(ref newRenderInfos, 0);
+            Material MatCaptainAltDark = CloneMat(ref newRenderInfos, 0);
+            Material MatCaptainArmorAlt = CloneMat(ref newRenderInfos, 2);
+            Material MatCaptainJacketAlt = CloneMat(ref newRenderInfos, 3);
+            Material MatCaptainRobotBitsAlt = CloneMat(ref newRenderInfos, 4);
 
             MatCaptainAlt.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texCaptainPaletteAltBLUE.png");
             MatCaptainAltDark.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Captain/Blue/texCaptainPaletteAltBLUE2.png");
@@ -239,12 +238,12 @@ namespace WolfoSkinsMod.Base
             CharacterModel.RendererInfo[] newRenderInfosRED = new CharacterModel.RendererInfo[7];
             System.Array.Copy(skinCaptainAlt.rendererInfos, newRenderInfosRED, 7);
 
-            Material RedMatCaptainAlt = CloneMat(CaptainAlt.rendererInfos[0].defaultMaterial);
-            Material RedMatCaptainAlt2 = CloneMat(CaptainAlt.rendererInfos[0].defaultMaterial);
-            //Material RedMatCaptainAlt3 = CloneMat(CaptainAlt.rendererInfos[0].defaultMaterial);
-            Material RedMatCaptainArmorAlt = CloneMat(CaptainAlt.rendererInfos[2].defaultMaterial);
-            Material RedMatCaptainJacketAlt = CloneMat(CaptainAlt.rendererInfos[3].defaultMaterial);
-            Material RedMatCaptainRobotBitsAlt = CloneMat(CaptainAlt.rendererInfos[4].defaultMaterial);
+            Material RedMatCaptainAlt = CloneMat(ref CaptainAlt.rendererInfos[0].defaultMaterial);
+            Material RedMatCaptainAlt2 = CloneMat(ref CaptainAlt.rendererInfos[0].defaultMaterial);
+            //Material RedMatCaptainAlt3 = CloneMat(ref CaptainAlt.rendererInfos[0].defaultMaterial);
+            Material RedMatCaptainArmorAlt = CloneMat(ref CaptainAlt.rendererInfos[2].defaultMaterial);
+            Material RedMatCaptainJacketAlt = CloneMat(ref CaptainAlt.rendererInfos[3].defaultMaterial);
+            Material RedMatCaptainRobotBitsAlt = CloneMat(ref CaptainAlt.rendererInfos[4].defaultMaterial);
 
             RedMatCaptainAlt.mainTexture = texCaptainPaletteRED2;
             RedMatCaptainAlt2.mainTexture = texCaptainPaletteRED2;
@@ -287,7 +286,7 @@ namespace WolfoSkinsMod.Base
         */
         #endregion
 
-        [RegisterAchievement("CLEAR_ANY_CAPTAIN", "Skins.Captain.Wolfo.First", "CompleteMainEnding", 5, null)]
+        [RegisterAchievement("CLEAR_ANY_CAPTAIN", "Skins.Captain.Wolfo.First", "CompleteMainEnding", 3, null)]
         public class Bandit2ClearGameMonsoonAchievement : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -295,7 +294,7 @@ namespace WolfoSkinsMod.Base
                 return BodyCatalog.FindBodyIndex("CaptainBody");
             }
         }
-        [RegisterAchievement("CLEAR_BOTH_CAPTAIN", "Skins.Captain.Wolfo.Both", "CompleteMainEnding", 5, null)]
+        [RegisterAchievement("CLEAR_BOTH_CAPTAIN", "Skins.Captain.Wolfo.Both", "CompleteMainEnding", 3, null)]
         public class Bandit2ClearGameMonsoonAchievement2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

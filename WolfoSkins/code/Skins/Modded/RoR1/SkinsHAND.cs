@@ -36,7 +36,7 @@ namespace WolfoSkinsMod.Mod
 
             for (int i = 9; i < modelSkinController.skins.Length; i++)
             {
-                skinsNew[i] = modelSkinController.skins[i-6];
+                skinsNew[i] = modelSkinController.skins[i - 6];
             }
             modelSkinController.skins = skinsNew;
             //SkinCatalog.skinsByBody[(int)HandBodyIndex] = skinsNew;
@@ -50,18 +50,18 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef Hand_Gold(SkinDef skinHandDefault)
         {
-            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefEnhanced newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
-                name = "skinHandGold_1",
+                name = "skinHANDOverclockedGold_1",
                 nameToken = "SIMU_SKIN_HAND",
                 icon = H.GetIcon("mod/ror1/hand_gold"),
                 original = skinHandDefault,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matHANDDefault = CloneMat(newRenderInfos, 0);
-            Material matHANDWeaponDefault = CloneMat(newRenderInfos, 1);
-            Material matDroneBody = CloneMat(newRenderInfos, 2);
+            Material matHANDDefault = CloneMat(ref newRenderInfos, 0);
+            Material matHANDWeaponDefault = CloneMat(ref newRenderInfos, 1);
+            Material matDroneBody = CloneMat(ref newRenderInfos, 2);
 
             Color ExtraGold = new Color(1.2f, 1.1f, 1f);
 
@@ -126,16 +126,16 @@ namespace WolfoSkinsMod.Mod
         {
             SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
             {
-                name = "skinHandRusted_1",
+                name = "skinHANDOverclockedRusted_1",
                 nameToken = "SIMU_SKIN_HAND_ORANGE",
                 icon = H.GetIcon("mod/ror1/hand_orange"),
                 original = skinHandDefault,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matHANDDefault = CloneMat(newRenderInfos, 0);
-            Material matHANDWeaponDefault = CloneMat(newRenderInfos, 1);
-            Material matDroneBody = CloneMat(newRenderInfos, 2);
+            Material matHANDDefault = CloneMat(ref newRenderInfos, 0);
+            Material matHANDWeaponDefault = CloneMat(ref newRenderInfos, 1);
+            Material matDroneBody = CloneMat(ref newRenderInfos, 2);
 
             Color ExtraColor = new Color(1f, 1f, 1f);
 
@@ -163,16 +163,16 @@ namespace WolfoSkinsMod.Mod
         {
             SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
             {
-                name = "skinHandOxidized_1",
+                name = "skinHANDOverclockedOxidized_1",
                 nameToken = "SIMU_SKIN_HAND_GREEN",
                 icon = H.GetIcon("mod/ror1/hand_green"),
                 original = skinHandDefault,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matHANDDefault = CloneMat(newRenderInfos, 0);
-            Material matHANDWeaponDefault = CloneMat(newRenderInfos, 1);
-            Material matDroneBody = CloneMat(newRenderInfos, 2);
+            Material matHANDDefault = CloneMat(ref newRenderInfos, 0);
+            Material matHANDWeaponDefault = CloneMat(ref newRenderInfos, 1);
+            Material matDroneBody = CloneMat(ref newRenderInfos, 2);
 
 
             Color ExtraColor = new Color(1f, 1f, 1f);
@@ -198,16 +198,16 @@ namespace WolfoSkinsMod.Mod
 
         internal static SkinDef Hand_Gold_RETURNS(SkinDef skinHandReturns)
         {
-            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
+            SkinDefEnhanced newSkinDef = H.CreateNewSkinW(new SkinInfo
             {
-                name = "skinHandGold_RETURN_1",
+                name = "skinHANDOverclockedGold_RETURN_1",
                 nameToken = "SIMU_SKIN_HAND2",
                 icon = H.GetIcon("mod/ror1/hand_goldGM"),
                 original = skinHandReturns,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matHANDRorr = CloneMat(newRenderInfos, 0);
+            Material matHANDRorr = CloneMat(ref newRenderInfos, 0);
 
             Color ExtraGold = new Color(1.2f, 1.1f, 1f);
 
@@ -241,13 +241,13 @@ namespace WolfoSkinsMod.Mod
         {
             SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
             {
-                name = "skinHandOxidized_RETURN_1",
+                name = "skinHANDOverclockedOxidized_RETURN_1",
                 nameToken = "SIMU_SKIN_HAND2_ORANGE",
                 icon = H.GetIcon("mod/ror1/hand_orangeGM"),
                 original = skinHandReturns,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
-            Material matHANDRorr = CloneMat(newRenderInfos, 0);
+            Material matHANDRorr = CloneMat(ref newRenderInfos, 0);
 
             Color ExtraColor = new Color(1f, 1f, 1f);
 
@@ -267,13 +267,13 @@ namespace WolfoSkinsMod.Mod
         {
             SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
             {
-                name = "skinHandOxidized_RETURN_1",
+                name = "skinHANDOverclockedOxidized_RETURN_1",
                 nameToken = "SIMU_SKIN_HAND2_GREEN",
                 icon = H.GetIcon("mod/ror1/hand_greenGM"),
                 original = skinHandReturns,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
-            Material matHANDRorr = CloneMat(newRenderInfos, 0);
+            Material matHANDRorr = CloneMat(ref newRenderInfos, 0);
 
             Color ExtraColor = new Color(1f, 1f, 1f);
             matHANDRorr.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/HanD/GREEN/textrimsheetjanitortransparent.png");
@@ -290,7 +290,7 @@ namespace WolfoSkinsMod.Mod
 
 
 
-        [RegisterAchievement("CLEAR_ANY_HANDOVERCLOCKED", "Skins.HANDOverclocked.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_HANDOVERCLOCKED", "Skins.HANDOverclocked.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumHANDOverclockedBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -300,7 +300,7 @@ namespace WolfoSkinsMod.Mod
         }
 
         /*
-        [RegisterAchievement("CLEAR_BOTH_HANDOVERCLOCKED", "Skins.HANDOverclocked.Wolfo.Both", null, 5, null)]
+        [RegisterAchievement("CLEAR_BOTH_HANDOVERCLOCKED", "Skins.HANDOverclocked.Wolfo.Both", null, 3, null)]
         public class ClearSimulacrumHANDOverclockedBody2 : Achievement_AltBoss
         {
             public override BodyIndex LookUpRequiredBodyIndex()

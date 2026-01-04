@@ -1,3 +1,4 @@
+/*
 using RoR2;
 using UnityEngine;
 using static WolfoSkinsMod.H;
@@ -23,7 +24,7 @@ namespace WolfoSkinsMod.Mod
                 original = skinDefault,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
-            Material matNemforcer = CloneMat(newRenderInfos, 0);
+            Material matNemforcer = CloneMat(ref newRenderInfos, 0);
 
             matNemforcer.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/NemesisEnforcer/texNemforcer.png");
 
@@ -37,7 +38,7 @@ namespace WolfoSkinsMod.Mod
             //SkinCatalog.skinsByBody[(int)CharacterIndex] = modelSkinController.skins;
         }
 
-        [RegisterAchievement("CLEAR_ANY_NEMESISENFORCER", "Skins.NemesisEnforcer.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_NEMESISENFORCER", "Skins.NemesisEnforcer.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumNemesisEnforcer : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -48,3 +49,4 @@ namespace WolfoSkinsMod.Mod
 
     }
 }
+*/

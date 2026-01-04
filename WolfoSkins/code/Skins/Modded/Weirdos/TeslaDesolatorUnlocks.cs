@@ -4,7 +4,7 @@ namespace WolfoSkinsMod.Mod
 {
     public class TeslaDesolatorUnlocks
     {
-        [RegisterAchievement("CLEAR_ANY_TESLATROOPER", "Skins.TeslaTrooper.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_TESLATROOPER", "Skins.TeslaTrooper.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumTeslaTrooperClassic : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -13,7 +13,7 @@ namespace WolfoSkinsMod.Mod
             }
         }
 
-        [RegisterAchievement("CLEAR_ANY_DESOLATOR", "Skins.Desolator.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_DESOLATOR", "Skins.Desolator.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumDesolatorClassic : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

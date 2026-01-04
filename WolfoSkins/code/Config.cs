@@ -15,7 +15,7 @@ namespace WolfoSkinsMod
         public static ConfigEntry<bool> cfgRunAutoUnlocker;
         public static ConfigEntry<bool> RemoveSkinUnlocks;
         public static ConfigEntry<bool> cfgClientHost;
-        public static ConfigEntry<bool> cfgSort;
+
         public static ConfigEntry<bool> cfgLegacySkins;
         public static ConfigEntry<bool> cfgSilentRelockReunlock;
         public static ConfigEntry<bool> cfgClearAchievementView;
@@ -23,16 +23,9 @@ namespace WolfoSkinsMod
 
 
         public static ConfigEntry<bool> RemoveAllTrackers;
-        public static ConfigEntry<bool> cfgTest;
 
         public static void InitConfig()
         {
-            cfgTest = ConfigFileUNSORTED.Bind(
-                "Test",
-                "cfgTest",
-                false,
-                "Don't"
-            );
             RemoveAllTrackers = ConfigFileUNSORTED.Bind(
                 "Test",
                 "Remove all unlock trackers",
@@ -59,12 +52,7 @@ namespace WolfoSkinsMod
                false,
                "Revoke all achievements related to this mod that you have.\n\nRemoves AltBoss/Simu tracker unlock so you need to reearn them or have the auto unlocker give them to you.\n\nDoes Not remove LunarScav/Voidling Tracker unlock."
             );
-            cfgSort = ConfigFileUNSORTED.Bind(
-                "Main",
-                "Sort Skins",
-                false,
-                "Sort skins at the end of the skin list. This is mostly here in case it causes issues."
-            );
+
             cfgSilentRelockReunlock = ConfigFileUNSORTED.Bind(
                 "Other",
                 "Silently ReLockReUnlock v3",
@@ -149,17 +137,17 @@ namespace WolfoSkinsMod
         internal static void RiskConfig()
         {
             ModSettingsManager.SetModIcon(Assets.Bundle.LoadAsset<Sprite>("Assets/Skins/icon.png"));
-            ModSettingsManager.SetModDescription("Too many skins");
+            ModSettingsManager.SetModDescription("A lot of manually created recolors of skins for vanilla and modded survivors");
 
 
             ModSettingsManager.AddOption(new CheckBoxOption(cfgUnlockAll, false));
-            ModSettingsManager.AddOption(new CheckBoxOption(cfgSort, false));
+
             ModSettingsManager.AddOption(new CheckBoxOption(cfgRunAutoUnlocker, false));
             ModSettingsManager.AddOption(new CheckBoxOption(RemoveSkinUnlocks, false));
             ModSettingsManager.AddOption(new CheckBoxOption(cfgClearAchievementView, false));
             ModSettingsManager.AddOption(new CheckBoxOption(RemoveAllTrackers, false));
-            ModSettingsManager.AddOption(new CheckBoxOption(cfgTest, true));
-            ModSettingsManager.AddOption(new CheckBoxOption(cfgDump, false));
+
+            //ModSettingsManager.AddOption(new CheckBoxOption(cfgDump, false));
 
         }
 

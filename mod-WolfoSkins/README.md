@@ -15,92 +15,98 @@ This mod adds Projectils so it isn't compatible with players who don't have it.
 Skin List:
 ```
 Commando : Marine : (Unused SotV skin)
-Commando : Mastery : (RoRR Provi Trial colors)
+Commando : Mastery : Red/Cyan (RoRR Provi Trial Palette)
 Commando : Meridian : Blue
-Huntress : Default : Bunny (RoRR Pink/Black)
+Huntress : Default : Pink/Black (Joke Rabbit Ears)(RoRR Palette)
 Huntress : Mastery  : Bee (Orange/Brown)
 Huntress : Meridian : Dark Red
-Bandit : Default : (RoRR Red Hat/Orange)
+Bandit : Default : Red Hat/Orange (RoRR Palette)
 Bandit : Meridian : Orange / Black
-Bandit : Default : (RoRR Yellow Hat/Lime)
-Bandit : Default : (RoRR Black Hat/Purple)
-Mul-T : Default : Damage (Chest)
-Mul-T : Mastery : Healing (Chest)
+Bandit : Default : Yellow Hat/Lime (RoRR Palette)
+Bandit : Default : Black Hat/Purple (RoRR Palette)
+Mul-T : Default : Rusted/Black (RoRR HAN-D Palette)
+Mul-T : Mastery : Oxizied/Yellow (RoRR HAN-D Palette)
 Mul-T : Meridian : Utility (Chest)
-Engineer : Default : (RoRR Red/Yellow color)
-Engineer : Mastery : (RoRR Light Blue/Pink color)
-Engineer : Meridian : Black / Red
-Artificer : Mix : (RoRR Orange/Black)
+Engineer : Default : Red/Yellow (RoRR Palette)
+Engineer : Mastery : Blue/Pink (RoRR Palette)
+Engineer : Meridian : Black/Red (Nemesis)
+Artificer : Mix : Orange/Black (RoRR Palette)
 Artificer : Meridian : Purple/Yellow & Stronger Glow
 Artificer : Meridian : White/Blue & Stronger Glow
 Merc : Default : Neon Blue/Grey
-Merc : Mastery : (RoRR Neon Red/Gray)
+Merc : Mastery : Red Gray (RoRR Palette)
 Merc : Meridian : Neon Green/Black
-REX : Mastery : Lepton Daisy (Blue/Yellow/White)
-REX : Default : Lava Daisy (Red/Purple/Black)
+REX : Mastery : Blue/Yellow/White (Lepton Daisy)
+REX : Default : Red/Purple/Black (Lava Lily)
 REX : Meridian : Orange/Green
-Loader : Default : (RoRR Green)
-Loader : Mastery : (RoRR Red)
+Loader : Default : Green Armor (RoRR Palette)
+Loader : Mastery : Red Armor (RoRR Palette)
 Loader : Meridian : Yellow
-Acrid : Default : (RoRR Black/Green)
+Acrid : Default : Black/Green (RoRR Palette)
 Acrid : Meridian : Green / Orange Emissions
-Acrid : Mastery : (RoRR White/Blue) / Lunar
+Acrid : Mastery : White/Blue (RoRR Palette)
 Acrid : Meridian : Dark Gray / Purple Emissions
 Acrid : Lemurian
-Captain : Default : (Pink/Gold)
-Captain : Mastery : (Blue/Yellow)
+Captain : Default : Pink/Gold
+Captain : Mastery : Blue/Yellow
 Captain : Meridian : Red/Black
-Railgunner : Mix : (White/Blue/Black)
+
+Railgunner : Mix : White/Blue/Black
 Railgunner : Meridian : Pink/Purple
-Railgunner : Default : (Green/Yellow/Brown)
-Void Fiend : Default : Void Ally (White/Blue)
-Void Fiend : Default : Impish (Black/Red)
-Void Fiend : Default : Orange/Yellow  
+Railgunner : Default : Green/Yellow/Brown
+Void Fiend : Default : White/Blue (Void Ally)
+Void Fiend : Default : Black/Red (Imp)
+Void Fiend : Mastery : Dark Purple (Void)
+Void Fiend : Default : Orange/Yellow (Inverted)
+
 Chef : Default : Red Hat / Yellow
-Chef : Default : Green Hat / Orange
+Chef : Mastery : Green Hat / Orange
 Chef : Default : Blue Hat / Pink
 Seeker : Default : Black / Orange
-False Son : Default : Gold
-False Son : Mastery : Provi Colors
+Seeker : Mastery : White / Red
+False Son : Default : Gold/Red
+False Son : Mastery : Black/Red/Cyan (Providence)
+False Son : Mastery : Black/Red/Green (Providence)
 
-
+Operator : Default : Red/Yellow/Black
+Operator : Default : Blue/Cyan/Yellow 
+Operator : Mastery : Orange
+Drifter : Default : Red/Orange/Brown (RoRR Palette)
+Drifter : Default : Pink/Purple (RoRR Palette)
+Drifter : Default : Green/Orange (RoRR Palette)
+Drifter : Mastery : Green/Blues
+```
+```
 (Modded Characters)
-Enforcer : Default : (RoRR Red/Blue/Gold)
-Enforcer : Bot: (RoRR Red/Blue/Gold)
-Enforcer : Default : (RoRR Yellow/Blue)
-Sniper : Mix : (Brown)
-Sniper : Mix : (RoRR Gray)
-Han-D : Default : (RoRR Gold)
-Han-D : Grand Master : (RoRR Gold)
-Han-D : Default : (RoRR Orange/Black)
-Han-D : Grand Master : (RoRR Orange/Black)
-Han-D : Default : (RoRR Green/Yellow)
-Han-D : Grand Master : (RoRR Green/Yellow)
-Miner : Default : (Black/Orange)
-Miner : Blacksmith : (Orange)
-Miner : Default : (Green)
+Enforcer : Default : Red/Blue/Gold (RoRR Palette)
+Enforcer : Bot: Red/Blue/Gold (RoRR Palette)
+Enforcer : Default : Yellow/Blue (RoRR Palette)
+Sniper : Mix : Orange/Brown
+Sniper : Mix : Gray/Black (RoRR Palette)
+Han-D : Default : Gold (RoRR Palette)
+Han-D : Grand Master : Gold (RoRR Palette)
+Han-D : Default : Orange/Black (RoRR Palette)
+Han-D : Grand Master : Orange/Black (RoRR Palette)
+Han-D : Default : Green/Yellow (RoRR Palette)
+Han-D : Grand Master : Green/Yellow (RoRR Palette)
+Miner : Default : Black/Orange
+Miner : Blacksmith : Orange
+Miner : Default : Green
+
+Chirr : Pink/White  (Lurantis)
+Chirr : Orange/Yellow (Bulk Detonator)
+
 Rocket : Default : Red
 Rocket : Default : Blue
 Rocket : Mastery: Red
 Ravager : Default : Red/Black
 Paladin : Default : Yellow
+
 Arsonist : Default : Orange/Red
 Arsonist : Default : Blue
-Arsonist : Grand Master : Blue Grand
+Arsonist : Grand Master : Blue
 Tesla Trooper Colors : White, Strong Blue, Neon Blue, Neon Cyan, Hot Pink, Neon Red
 Desolator Colors : Gray, Strong Green, Neon Green, Safety Yellow, Neon Yellow, Neon Orange
-Nemesis Enforcer : (Yellow/Black)
-Pilot : (RoRR White)
-Pilot : (RoRR Red)
-Pilot : (RoRR Blue/Yellow)
-
-
-//Temporarily Disabled:
-//Executioner : Default : (Red/Black)
-//Executioner : Default : (Blue/Green)
-//Executioner : Mastery : (Yellow)
-//Chirr : (Pink/White)
-//Chirr : (Orange/Yellow)
 ```
 
 <details>
@@ -117,11 +123,17 @@ Pilot : (RoRR Blue/Yellow)
 
 
 #
-This mod is intended to be used along side:\
+This mod was intended to be used along side, but can be used on it's own just fine:\
 [WolfoQualityOfLife](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/) colored vines for REX, Red effects for Red Mercs.\
 [SimulacrumAdditions](https://thunderstore.io/package/Wolfo/SimulacrumAdditions) a more interesting Simulacrum.
 
 
+### Translations
+
+Russian translation thanks to 'coldeib' on Discord. (v2.2.10)
+
+
+#
 Also includes this:  
 
 ![](https://github.com/WolfoIsBestWolf/ror2-WolfoSkins/blob/main/modPageImages/lemurian.png?raw=true)

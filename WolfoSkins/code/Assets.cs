@@ -9,6 +9,8 @@ namespace WolfoSkinsMod
     internal static class Assets
     {
         public static AssetBundle Bundle;
+        public static AssetBundle BundleDLC;
+        public static AssetBundle BundleMod;
         public static PluginInfo PluginInfo;
         public static string Folder = "Skins";
 

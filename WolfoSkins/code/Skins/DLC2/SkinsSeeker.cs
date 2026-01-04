@@ -10,28 +10,35 @@ namespace WolfoSkinsMod.DLC2
         internal static void Start()
         {
             SkinDef skinSeekerDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/Seeker/skinSeekerDefault.asset").WaitForCompletion();
+            SkinDef skinSeekerAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/Seeker/skinSeekerAlt.asset").WaitForCompletion();
 
-            Main(skinSeekerDefault);
-            //Mastery();
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinSeekerDefault_1",
+                nameToken = "SIMU_SKIN_SEEKER",
+                icon = H.GetIcon("dlc2/seeker_orange"),
+                original = skinSeekerDefault,
+            }, new System.Action<SkinDefMakeOnApply>(Default_Orange));
 
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinSeekerAltRome_1",
+                nameToken = "SIMU_SKIN_SEEKER_ROME",
+                icon = H.GetIcon("dlc2/seeker_rome"),
+                original = skinSeekerAlt,
+            }, new System.Action<SkinDefMakeOnApply>(Mastery_Rome));
 
             //0 matSeeker
             //1 matSeeker
             //2 matSeekerGlass
         }
 
-        public static void Main(SkinDef skinSeekerDefault)
+        public static void Default_Orange(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                name = "skinSeekerDefault_1",
-                nameToken = "SIMU_SKIN_SEEKER",
-                icon = H.GetIcon("dlc2/seeker_orange"),
-                original = skinSeekerDefault,
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matSeeker = CloneMat(newRenderInfos, 0);
-            Material matSeekerGlass = CloneMat(newRenderInfos, 2);
+            Material matSeeker = CloneMat(ref newRenderInfos, 0);
+            Material matSeekerGlass = CloneMat(ref newRenderInfos, 2);
 
             matSeeker.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Seeker/Main/texSeekerDiffuse.png");
             matSeekerGlass.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Seeker/Main/texRandoRamp.png"));
@@ -41,11 +48,35 @@ namespace WolfoSkinsMod.DLC2
             newRenderInfos[2].defaultMaterial = matSeekerGlass;
         }
 
-        /*
-        public static void Mastery()
+        public static void Mastery_Rome(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef skinSeekerDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC2/Seeker/skinSeekerAlt.asset").WaitForCompletion();
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
+            Material matSeekerAlt = CloneMat(ref newRenderInfos, 0);
+            Material matSeekerAltCloth = CloneMat(ref newRenderInfos, 1);
+            Material matSeekerGlass = CloneMat(ref newRenderInfos, 2);
+
+            matSeekerAlt.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Seeker/Rome/texSeekerAltDiffuse.png");
+            matSeekerAlt.SetTexture("_FlowHeightmap", null);
+            matSeekerAlt.SetTexture("_FlowHeightRamp", null);
+            matSeekerAlt.SetTexture("_FresnelRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Seeker/Rome/texRandoRamp.png"));
+            matSeekerAlt.SetTexture("_FresnelMask", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Seeker/Rome/texSeekerAltFresnel.png"));
+            matSeekerAltCloth.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Seeker/Rome/texSeekerAltDiffuse.png");
+            matSeekerAltCloth.SetTexture("_FlowHeightmap", null);
+            matSeekerAltCloth.SetTexture("_FlowHeightRamp", null);
+            matSeekerGlass.SetTexture("_RemapTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Seeker/Rome/texRandoRamp.png"));
+
+            newRenderInfos[0].defaultMaterial = matSeekerAlt;
+            newRenderInfos[1].defaultMaterial = matSeekerAlt;
+            newRenderInfos[2].defaultMaterial = matSeekerGlass;
+        }
+
+
+        #region Unused Mastery Idea
+        /*
+        public static void Mastery(SkinDef newSkin)
+        {
+           
             CharacterModel.RendererInfo[] newRenderInfos = new CharacterModel.RendererInfo[skinSeekerDefault.rendererInfos.Length];
             System.Array.Copy(skinSeekerDefault.rendererInfos, newRenderInfos, skinSeekerDefault.rendererInfos.Length);
 
@@ -53,9 +84,9 @@ namespace WolfoSkinsMod.DLC2
             //1 matSeeker
             //2 matSeekerGlass
 
-            Material matSeekerAlt = CloneMat(SeekerDefault.rendererInfos[0].defaultMaterial);
-            Material matSeekerAltCloth = CloneMat(SeekerDefault.rendererInfos[1].defaultMaterial);
-            Material matSeekerGlass = CloneMat(SeekerDefault.rendererInfos[2].defaultMaterial);
+            Material matSeekerAlt = CloneMat(ref SeekerDefault.rendererInfos[0].defaultMaterial);
+            Material matSeekerAltCloth = CloneMat(ref SeekerDefault.rendererInfos[1].defaultMaterial);
+            Material matSeekerGlass = CloneMat(ref SeekerDefault.rendererInfos[2].defaultMaterial);
 
 
             Texture2D texSeekerAltDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc2/Seeker/Mastery/texSeekerAltDiffuse.png");
@@ -108,9 +139,9 @@ namespace WolfoSkinsMod.DLC2
 
         }
         */
+        #endregion
 
-
-        [RegisterAchievement("CLEAR_ANY_SEEKER", "Skins.Seeker.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_SEEKER", "Skins.Seeker.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumSeekerBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

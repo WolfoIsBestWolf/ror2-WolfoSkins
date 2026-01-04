@@ -1,7 +1,35 @@
 ## Changelog
 ```
+V3.0.0
+Added 3 Operator Skins
+Added 4 Drifter Skins
+Added 1 Seeker Skin
+Added 1 Void Fiend recolor.
+Remade 2 Chirr skins for new model
+Remade 1 CHEF skin to use Mastery model.
+Added False Son Provi alt with Cyan highlights.
+Adjusted MulT skins.
+Adjusted Engi Blue Pink.
+Adjusted False Son Gold.
+Desaturated Void Fiend Blue.
+
+
+Skins are now created when you select them for the first time, which should speed up load times for lower end machines.
+ 
+Skins now sorted after after SS2 skins (and presumably most skin mods) naturally.
+Removed sort config.
+
+
+Added Russian translation thanks to 'coldeib' on Discord.
+
+Fixed False Son Gold flickering in the lobby.
+Fixed Void Fiend Orange hand looking improper.
+Fixed modded skin glows misaligning at lower texture scales.
+Fixed some skins being less shiny than inteded.
+```
+```
 v2.2.10
-Temporarily removed SS2 support, due to conflicts with new updates.
+Removed SS2 skins, due to charcacters getting a remodel.
 -Ill get to re-doing the skins sometime after AC.
 
 v2.2.9

@@ -58,7 +58,7 @@ namespace WolfoSkinsMod.Mod
             SkinDef blue = ModdedSkinBlue(skinArsonist);
             SkinDef blueGM = ModdedSkinBlueGM(skinArsonistGM);
 
- 
+
             //SkinCatalog.skinsByBody[(int)ArsonistIndex] = modelSkinController.skins;
 
             //0 matArsonist
@@ -94,9 +94,9 @@ namespace WolfoSkinsMod.Mod
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matArsonist = CloneMat(newRenderInfos, 0);
-            Material matArsonistMetal = CloneMat(newRenderInfos, 1);
-            Material matArsonistCloth = CloneMat(newRenderInfos, 8);
+            Material matArsonist = CloneMat(ref newRenderInfos, 0);
+            Material matArsonistMetal = CloneMat(ref newRenderInfos, 1);
+            Material matArsonistCloth = CloneMat(ref newRenderInfos, 8);
 
             Texture2D ArsonistMetal_emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Arsonist/Orange/ArsonistMetal_emission.png");
 
@@ -134,9 +134,9 @@ namespace WolfoSkinsMod.Mod
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matArsonist = CloneMat(newRenderInfos, 0);
-            Material matArsonistMetal = CloneMat(newRenderInfos, 1);
-            Material matArsonistCloth = CloneMat(newRenderInfos, 8);
+            Material matArsonist = CloneMat(ref newRenderInfos, 0);
+            Material matArsonistMetal = CloneMat(ref newRenderInfos, 1);
+            Material matArsonistCloth = CloneMat(ref newRenderInfos, 8);
 
             Texture2D ArsonistMetal_emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Arsonist/Blue/ArsonistMetal_emissionBLUE.png");
 
@@ -174,8 +174,8 @@ namespace WolfoSkinsMod.Mod
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matNeoArsonistMetal = CloneMat(newRenderInfos, 0);
-            Material matNeoArsonistCloth = CloneMat(newRenderInfos, 8);
+            Material matNeoArsonistMetal = CloneMat(ref newRenderInfos, 0);
+            Material matNeoArsonistCloth = CloneMat(ref newRenderInfos, 8);
 
             matNeoArsonistMetal.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Arsonist/BlueGM/NeoArsonistMetal_diffuse.png");
             matNeoArsonistMetal.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Arsonist/BlueGM/NeoArsonistMetal_emission.png"));
@@ -198,7 +198,7 @@ namespace WolfoSkinsMod.Mod
         }
 
 
-        [RegisterAchievement("CLEAR_ANY_POPCORN_ARSONIST_BODY_", "Skins.POPCORN_ARSONIST_BODY_.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_POPCORN_ARSONIST_BODY_", "Skins.POPCORN_ARSONIST_BODY_.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumArsonistClassic : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -207,7 +207,7 @@ namespace WolfoSkinsMod.Mod
             }
         }
 
-        /*[RegisterAchievement("CLEAR_BOTH_POPCORN_ARSONIST_BODY_", "Skins.POPCORN_ARSONIST_BODY_.Wolfo.Both", null, 5, null)]
+        /*[RegisterAchievement("CLEAR_BOTH_POPCORN_ARSONIST_BODY_", "Skins.POPCORN_ARSONIST_BODY_.Wolfo.Both", null, 3, null)]
         public class ClearSimulacrumArsonistClassic2 : Achievement_AltBoss_AND_Simu
         {
             public override BodyIndex LookUpRequiredBodyIndex()

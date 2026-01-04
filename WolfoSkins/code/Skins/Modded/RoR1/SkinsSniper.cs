@@ -62,7 +62,7 @@ namespace WolfoSkinsMod.Mod
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matSniper = CloneMat(newRenderInfos, 0);
+            Material matSniper = CloneMat(ref newRenderInfos, 0);
 
             matSniper.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Sniper/texSniperDefaultGRAY.png");
             matSniper.SetColor("_EmColor", new Color(1f, 1f, 1f));
@@ -78,7 +78,7 @@ namespace WolfoSkinsMod.Mod
             return newSkinDef;
         }
 
-        [RegisterAchievement("CLEAR_ANY_SNIPERCLASSIC", "Skins.SniperClassic.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_SNIPERCLASSIC", "Skins.SniperClassic.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumSniperClassic : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

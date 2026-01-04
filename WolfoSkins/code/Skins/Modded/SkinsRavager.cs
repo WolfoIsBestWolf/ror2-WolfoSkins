@@ -26,9 +26,9 @@ namespace WolfoSkinsMod.Mod
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matBody = CloneMat(newRenderInfos, 0);
-            Material matSword = CloneMat(newRenderInfos, 1);
-            Material matImpBoss = CloneMat(newRenderInfos, 2);
+            Material matBody = CloneMat(ref newRenderInfos, 0);
+            Material matSword = CloneMat(ref newRenderInfos, 1);
+            Material matImpBoss = CloneMat(ref newRenderInfos, 2);
 
 
             matBody.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Ravager/RAVAGERtexBody.png");
@@ -49,7 +49,7 @@ namespace WolfoSkinsMod.Mod
             //SkinCatalog.skinsByBody[(int)RavagerIndex] = modelSkinController.skins;
         }
 
-        [RegisterAchievement("CLEAR_ANY_ROB_RAVAGER_BODY_NAME", "Skins.ROB_RAVAGER_BODY_NAME.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_ROB_RAVAGER_BODY_NAME", "Skins.ROB_RAVAGER_BODY_NAME.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumRobRavager : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

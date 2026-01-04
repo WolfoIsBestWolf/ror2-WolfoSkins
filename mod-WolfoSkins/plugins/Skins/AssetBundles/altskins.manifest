@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3910856973
+CRC: 1186827621
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 00ce00a2d3adbb36208577f537946513
+    Hash: e650747fcef3eed6e8cc9ddc70cf5322
   TypeTreeHash:
     serializedVersion: 2
     Hash: c21d61fe394c58399df3c6fb5c7c99b3
@@ -43,6 +43,7 @@ Assets:
 - Assets/Skins/Icons/mod/paladin_black.png
 - Assets/Skins/mod/Pilot/White/Pilot_diffuseWHITE.png
 - Assets/Skins/base/Treebot/Colossus/texTreebotFlowerDiffuse.png
+- Assets/Skins/Icons/dlc3/operator_yellow.png
 - Assets/Skins/Icons/mod/Tesla/green.png
 - Assets/Skins/base/Mage/texMageDiffuseORANGE.png
 - Assets/Skins/dlc2/Chef/texChefDiffuse_Blue.png
@@ -86,12 +87,12 @@ Assets:
 - Assets/Skins/Icons/artificer_orange.png
 - Assets/Skins/mod/Rocket/Blue/TexGrenadeBLUE.png
 - Assets/Skins/Icons/engineer_dlc2.png
-- Assets/Skins/mod/Pilot/Blue/PIlotWeapon_emission.png
+- Assets/Skins/dlc3/Drifter/Red/texDrifterRamp.png
 - Assets/Skins/mod/HanD/Gold/textrimsheetjanitortransparent.png
-- Assets/Skins/mod/HanD/GREEN/textrimsheetjanitortransparent.png
+- Assets/Skins/mod/Pilot/Blue/PIlotWeapon_emission.png
 - Assets/Skins/mod/Executioner/Gold/ExeMasterygunTexGOLD.png
 - Assets/Skins/dlc2/FalseSon/Gold/texFalseSonDiffuse.png
-- Assets/Skins/base/Merc/Red/texMercSwordDiffuseRed.png
+- Assets/Skins/mod/HanD/GREEN/textrimsheetjanitortransparent.png
 - Assets/Skins/dlc2/Chef/texChefDiffuse_Green.png
 - Assets/Skins/Icons/dlc1/railgunner_green.png
 - Assets/Skins/base/Commando/ColossusRed/texCommandoAltColossusEmissive.png
@@ -107,20 +108,24 @@ Assets:
 - Assets/Skins/base/Huntress/Colossus/texHuntressAltColossusDiffuse.png
 - Assets/Skins/dlc2/Seeker/Mastery/texRandoRamp.png
 - Assets/Skins/base/Toolbot/Old/texToolbotNew_H.png
+- Assets/Skins/base/Merc/Red/texMercSwordDiffuseRed.png
 - Assets/Skins/mod/Paladin/Yellow/texPaladinSword.png
 - Assets/Skins/base/Croco/Lemurian/texCrocoSpinesDiffuseLEMURIAN.png
 - Assets/Skins/dlc1/VoidSurvivor/Blue/texRampNullifierOffset.png
 - Assets/Skins/base/Captain/Pink/PinktexCaptainPaletteW3.png
+- Assets/Skins/dlc3/Drifter/Red/texDrifterfresnelMask.png
 - Assets/Skins/mod/Rocket/Red/TexRocketProjectile.png
 - Assets/Skins/mod/HanD/Gold/HanD_Emission.png
-- Assets/Skins/base/Bandit2/Purple/texBanditShotgunDiffusePURPLE.png
+- Assets/Skins/dlc3/Drifter/Red/texDrifterDiffuse - Copy.png
 - Assets/Skins/mod/Miner/texMinerMoltenEmission.png
-- Assets/Skins/base/Croco/Black/texCrocoEmissionBLACK.png
+- Assets/Skins/base/Bandit2/Purple/texBanditShotgunDiffusePURPLE.png
 - Assets/Skins/base/Huntress/pink/texRabbitEarsDiffuse.png
 - Assets/Skins/base/Toolbot/Colossus/texToolbotAltColossusFresnel.png
+- Assets/Skins/base/Croco/Black/texCrocoEmissionBLACK.png
 - Assets/Skins/Icons/mod/ror1/chef_cyan.png
 - Assets/Skins/base/Loader/Red/texLoaderPilotDiffuseAltRED.png
 - Assets/Skins/Icons/mod/ss2/chirr_pink.png
+- Assets/Skins/dlc3/Drifter/Red/texDrifterDiffuse - Copy (2).png
 - Assets/Skins/dlc1/Railgunner/White/texTrimSheetRailGunnerMetalBody.png
 - Assets/Skins/dlc1/VoidSurvivor/Yellow/texVoidSurvivorFleshDiffuseINV.png
 - Assets/Skins/mod/Enforcer/Yellow/texSexforcerShieldGlassSAFETY.png
@@ -143,6 +148,7 @@ Assets:
 - Assets/Skins/mod/Executioner/Blue/texExeAxeRampBLUE.png
 - Assets/Skins/Icons/dlc1/railgunner_white.png
 - Assets/Skins/base/Engi/Colossus/texRampCrocoDiseaseDark.png
+- Assets/Skins/dlc3/Operator/Orange/texDroneTechAltSkin - Copy.png
 - Assets/Skins/mod/HanD/GREEN/RoRRHANDTexGREEN.png
 - Assets/Skins/base/Toolbot/texToolbotNew_H.png
 - Assets/Skins/base/Commando/ColossusRed/texRampBeetleQueen.png
@@ -173,11 +179,11 @@ Assets:
 - Assets/Skins/Icons/mod/paladin_yellow.png
 - Assets/Skins/mod/Pilot/Blue/PilotParachute_diffuse.png
 - Assets/Skins/mod/Paladin/Yellow/texPaladin.png
-- Assets/Skins/dlc2/Chef/Master/texChefAltAccessoriesDiffuse.png
 - Assets/Skins/base/Loader/Green/texLoaderPilotDiffuse.png
 - Assets/Skins/mod/Rocket/RedMaster/psdrocketbombardier.png
 - Assets/Skins/base/Toolbot/Old/texToolbotNew_D.png
 - Assets/Skins/base/Bandit2/Red/texBanditShotgunDiffuse.png
+- Assets/Skins/dlc2/Chef/Master/texChefAltAccessoriesDiffuse.png
 - Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltFlow.png
 - Assets/Skins/Icons/loader_green.png
 - Assets/Skins/mod/Arsonist/BlueGM/NeoArsonistMetal_emission.png
@@ -227,9 +233,12 @@ Assets:
 - Assets/Skins/Icons/loader_red.png
 - Assets/Skins/Icons/mod/Tesla/neonYellow.png
 - Assets/Skins/mod/Ravager/RAVAGERtexBodyEmission.png
+- Assets/Skins/Icons/dlc3/drifter_red.png
 - Assets/Skins/mod/Chirr/texChirrDiffuse.png
+- Assets/Skins/Icons/dlc3/operator_orange.png
 - Assets/Skins/base/Captain/Blue/texCaptainPaletteAltBLUE.png
 - Assets/Skins/base/Commando/Colossus/texCommandoAltColossusDiffuse.png
+- Assets/Skins/dlc3/Drifter/Red/texDrifterDiffuse.png
 - Assets/Skins/base/Huntress/yellow/texHuntressDiffuseBowYELLOW.png
 - Assets/Skins/mod/Executioner/Red/ExeTex.png
 - Assets/Skins/Icons/huntress_pink.png
@@ -251,6 +260,7 @@ Assets:
 - Assets/Skins/base/Toolbot/Colossus/texRampCrocoDiseaseDark.png
 - Assets/Skins/dlc1/Railgunner/Colossus/texRailgunEmission.png
 - Assets/Skins/dlc2/FalseSon/Gold/texFalseSonClothDiffuse.png
+- Assets/Skins/dlc3/Operator/Yellow/T_DroneTech_C.png
 - Assets/Skins/mod/Pilot/Red/PIlot2_diffuseRED.png
 - Assets/Skins/base/Croco/Lemurian/texRampLunarInfectionLEMURIAN.png
 - Assets/Skins/mod/Enforcer/Yellow/texEnforcerGunSAFETY.png
@@ -260,17 +270,19 @@ Assets:
 - Assets/Skins/base/Mage/Colossus/White/texRampMageFire.png
 - Assets/Skins/mod/Enforcer/Yellow/texEnforcerShieldSAFETY.png
 - Assets/Skins/base/Loader/Colossus/texRampLightning2.png
+- Assets/Skins/dlc3/Operator/Yellow/T_DroneTech_C - Copy.png
 - Assets/Skins/mod/Pilot/Blue/PIlot2_diffuse.png
 - Assets/Skins/dlc2/Chef/icebox_red.png
 - Assets/Skins/Icons/acrid_dlc2.png
 - Assets/Skins/base/Captain/Colossus/texCaptainColossusFresnelMask.png
-- Assets/Skins/mod/Executioner/Gold/ExeMasteryKitTexGOLD.png
+- Assets/Skins/dlc3/Operator/Orange/texDroneTechAltSkin.png
 - Assets/Skins/base/Huntress/pink/texRampHuntressSoft2.png
+- Assets/Skins/mod/Executioner/Gold/ExeMasteryKitTexGOLD.png
 - Assets/Skins/mod/HanD/ORANGE/texDroneBodyORANGE.png
 - Assets/Skins/mod/Paladin/Yellow/texPaladin_Old.png
 - Assets/Skins/mod/Chef/texArmBLUE.png
-- Assets/Skins/base/Croco/Lunar/texCrocoDiffuse.png
 - Assets/Skins/base/Croco/Colossus/texCrocoColossusEmissive.png
+- Assets/Skins/base/Croco/Lunar/texCrocoDiffuse.png
 - Assets/Skins/dlc2/Chef/icebox_blue.png
 - Assets/Skins/dlc2/Chef/texChefNormalWood.png
 - Assets/Skins/mod/Rocket/RedMaster/texrocketbombardier.png
@@ -336,9 +348,10 @@ Assets:
 - Assets/Skins/dlc1/VoidSurvivor/Red/texVoidSurvivorFleshEmissionIMP.png
 - Assets/Skins/Icons/engineer_blue.png
 - Assets/Skins/base/Huntress/yellow/texHuntressEmissionYELLOW.png
+- Assets/Skins/dlc3/Operator/Yellow/T_DroneTech_Glow01_C.png
 - Assets/Skins/mod/HanD/GREEN/HanD_DiffuseGREEN.png
-- Assets/Skins/mod/Rocket/RedMaster/texrocketbombardier_emission.png
 - Assets/Skins/base/Treebot/red/leafStar.png
+- Assets/Skins/mod/Rocket/RedMaster/texrocketbombardier_emission.png
 - Assets/Skins/Icons/mod/ss2/executioner_red.png
 - Assets/Skins/mod/Miner/texMiner.png
 - Assets/Skins/base/Bandit2/Green/texBanditRedCoatDiffuseGREEN.png
@@ -369,6 +382,7 @@ Assets:
 - Assets/Skins/mod/Arsonist/Orange/Arsonist_diffuse.png
 - Assets/Skins/Icons/loader_dlc2.png
 - Assets/Skins/mod/HanD/ORANGE/HanDWeapon_DiffuseORANGE.png
+- Assets/Skins/dlc3/Operator/Orange/texRampNullifier.png
 - Assets/Skins/base/Croco/Black/texCrocoSpinesDiffuseBLACK_EM.png
 - Assets/Skins/dlc2/FalseSon/Gold/texFalseSonEmissive.png
 - Assets/Skins/base/Engi/Colossus/texEngiAltColossusDiffuse.png
@@ -397,6 +411,7 @@ Assets:
 - Assets/Skins/mod/Chef/texChefDefaultBLACK.png
 - Assets/Skins/dlc2/FalseSon/Provi/texFalseSonAltFlowSword.png
 - Assets/Skins/Icons/dlc2/chef_green.png
+- Assets/Skins/Icons/dlc3/drifter_green.png
 - Assets/Skins/Icons/mod/Tesla/blue.png
 - Assets/Skins/Icons/bandit_red.png
 - Assets/Skins/dlc2/Seeker/MasteryBad/texSeekerAltClothFlow.png
@@ -406,17 +421,20 @@ Assets:
 - Assets/Skins/Icons/bandit_purple.png
 - Assets/Skins/mod/Miner/texMinerGoldEmission.png
 - Assets/Skins/mod/Rocket/Red/TexShovel.png
-- Assets/Skins/Icons/mod/ror1/enforcer_red.png
+- Assets/Skins/Icons/dlc3/drifter_red - Copy.png
 - Assets/Skins/mod/Miner/texMinerGold.png
 - Assets/Skins/Icons/artificer_dlc2_purple.png
 - Assets/Skins/Icons/mod/ror1/hand_gold.png
-- Assets/Skins/base/Croco/Black/texCrocoSpinesDiffuseBLACK.png
+- Assets/Skins/Icons/mod/ror1/enforcer_red.png
 - Assets/Skins/Icons/mod/nem_enforcer.png
 - Assets/Skins/base/Huntress/yellow/texHuntressScarfDiffuseAltYELLOW.png
+- Assets/Skins/dlc3/Operator/Yellow/texElusiveAntlersRamp.png
 - Assets/Skins/base/Merc/Red/texRampFallbootsRed.png
+- Assets/Skins/base/Croco/Black/texCrocoSpinesDiffuseBLACK.png
 - Assets/Skins/Icons/captain_blue.png
 - Assets/Skins/mod/Chef/texArmRED.png
 - Assets/Skins/mod/Pilot/Red/PilotParachute_diffuseRED.png
+- Assets/Skins/dlc3/Drifter/Green/texDrifterBodyDiff.png
 - Assets/Skins/dlc2/Chef/texChefIceBoxDiffuse - Copy.png
 - Assets/Skins/dlc2/Seeker/Mastery/texRampCaptainAirstrike.png
 - Assets/Skins/base/Engi/Colossus/texRampEngiAltColossus.png
@@ -478,8 +496,9 @@ Assets:
 - Assets/Skins/mod/Miner/texMinerDiamond.png
 - Assets/Skins/base/Captain/Pink/PinktexCaptainJacketDiffuseW.png
 - Assets/Skins/mod/Chef/texArmCYAN.png
-- Assets/Skins/Icons/dlc2/falseson_gold.png
+- Assets/Skins/dlc3/Drifter/Green/texDrifterBagDiff.png
 - Assets/Skins/mod/Arsonist/Blue/ArsonistCloth_diffuseBLUE.png
+- Assets/Skins/Icons/dlc2/falseson_gold.png
 - Assets/Skins/mod/HanD/GREEN/textrimsheetconstructionemission.png
 - Assets/Skins/mod/Pilot/White/PIlotWeapon_diffuseWHITE.png
 - Assets/Skins/Icons/mod/Tesla/white.png

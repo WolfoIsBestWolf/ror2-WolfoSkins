@@ -13,11 +13,31 @@ namespace WolfoSkinsMod.DLC1
             SkinDef skinRailGunnerAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/Railgunner/skinRailGunnerAlt.asset").WaitForCompletion();
             SkinDef skinRailGunnerAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/Railgunner/skinRailGunnerAltColossus.asset").WaitForCompletion();
 
-            Mixed_White(skinRailGunnerDefault, skinRailGunnerAlt.ReturnParams());
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinRailGunner_1",
+                nameToken = "SIMU_SKIN_RAILGUNNER",
+                icon = H.GetIcon("dlc1/railgunner_white"),
+                original = skinRailGunnerDefault,
+                cloneMesh = true,
+            }, new System.Action<SkinDefMakeOnApply>(Mixed_White));
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinRailGunnerAltColossus_DLC2",
+                nameToken = "SIMU_SKIN_RAILGUNNER_COLOSSUS",
+                icon = H.GetIcon("dlc1/railgunner_dlc2"),
+                original = skinRailGunnerAltColossus,
+                cloneMesh = false,
+            }, new System.Action<SkinDefMakeOnApply>(Colossus_DefaultColors));
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinRailGunnerWolfoCamper_1",
+                nameToken = "SIMU_SKIN_RAILGUNNER2",
+                icon = H.GetIcon("dlc1/railgunner_green"),
+                original = skinRailGunnerDefault,
+                cloneMesh = true,
+            }, new System.Action<SkinDefMakeOnApply>(Default_Camper));
 
-            Colossus(skinRailGunnerAltColossus);
-
-            RailGunnerSkinsCamper(skinRailGunnerDefault, skinRailGunnerAltColossus.ReturnParams());
             //RailGunnerSkinsSniper();
 
             //0 matRailGun
@@ -34,20 +54,12 @@ namespace WolfoSkinsMod.DLC1
             //11 matRailgunBackpackIdle
         }
 
-        internal static void Colossus(SkinDef skinRailGunnerAltColossus)
+        internal static void Colossus_DefaultColors(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinRailGunnerAltColossus_DLC2",
-                nameToken = "SIMU_SKIN_RAILGUNNER_COLOSSUS",
-                icon = H.GetIcon("dlc1/railgunner_dlc2"),
-                original = skinRailGunnerAltColossus,
-                cloneMesh = false,
-            });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matRailGunnerAltColossusMetal = CloneMat(newRenderInfos, 0);
-            Material matRailGunnerAltColossus = CloneMat(newRenderInfos, 2);
+            Material matRailGunnerAltColossusMetal = CloneMat(ref newRenderInfos, 0);
+            Material matRailGunnerAltColossus = CloneMat(ref newRenderInfos, 2);
 
             Texture2D texRailgunEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/Colossus/texRailgunEmission.png");
             texRailgunEmission.wrapModeV = TextureWrapMode.Clamp;
@@ -63,23 +75,17 @@ namespace WolfoSkinsMod.DLC1
             newRenderInfos[4].defaultMaterial = matRailGunnerAltColossusMetal;
         }
 
-        internal static void Mixed_White(SkinDef skinRailGunnerDefault, SkinDefParams skinRailGunnerAlt)
+        internal static void Mixed_White(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinRailGunner_1",
-                nameToken = "SIMU_SKIN_RAILGUNNER",
-                icon = H.GetIcon("dlc1/railgunner_white"),
-                original = skinRailGunnerDefault,
-                cloneMesh = true,
-            });
-            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
-            newSkinDef.skinDefParams.meshReplacements[2] = skinRailGunnerAlt.meshReplacements[2];
+            SkinDefParams skinRailGunnerAlt_params = Addressables.LoadAssetAsync<SkinDefParams>(key: "97baf5cafda49f74cbeb31151eb6fe90").WaitForCompletion();
 
-            Material matRailGun = CloneMat(newRenderInfos, 0);
-            Material matRailGunnerBase = CloneMat(newRenderInfos, 2);
-            Material matRailgunnerTrim = CloneMat(newRenderInfos, 3);
-            //Material matRailgunnerLED = CloneMat(RailGunnerDefault.rendererInfos[5].defaultMaterial);
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+            newSkinDef.skinDefParams.meshReplacements[2] = skinRailGunnerAlt_params.meshReplacements[2];
+
+            Material matRailGun = CloneMat(ref newRenderInfos, 0);
+            Material matRailGunnerBase = CloneMat(ref newRenderInfos, 2);
+            Material matRailgunnerTrim = CloneMat(ref newRenderInfos, 3);
+            //Material matRailgunnerLED = CloneMat(ref RailGunnerDefault.rendererInfos[5].defaultMaterial);
 
             Texture2D texTrimSheetMilitaryLightMetal = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/White/texTrimSheetMilitaryLightMetal.png");
             texTrimSheetMilitaryLightMetal.wrapMode = TextureWrapMode.Repeat;
@@ -121,27 +127,21 @@ namespace WolfoSkinsMod.DLC1
             //newRenderInfos[10].defaultMaterial = matRailgunnerLED;
             //newRenderInfos[11].defaultMaterial = matRailgunBackpackIdle;
 
-          
+
         }
 
-        internal static void RailGunnerSkinsCamper(SkinDef skinRailGunnerDefault, SkinDefParams skinRailGunnerAltColossus)
+        internal static void Default_Camper(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinRailGunnerWolfoCamper_1",
-                nameToken = "SIMU_SKIN_RAILGUNNER2",
-                icon = H.GetIcon("dlc1/railgunner_green"),
-                original = skinRailGunnerDefault,
-                cloneMesh = true,
-            });
+            SkinDefParams skinRailGunnerAltColossus_params = Addressables.LoadAssetAsync<SkinDefParams>(key: "9bfba5c1780c68947a2eb2ff772fde00").WaitForCompletion();
+
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
-            newSkinDef.skinDefParams.meshReplacements[2] = skinRailGunnerAltColossus.meshReplacements[2];
-           
-            Material matRailGun = CloneMat(newRenderInfos, 0);
-            Material matRailGunBACKPACK = CloneMat(newRenderInfos, 0);
-            Material matRailGunnerBase = CloneMat(newRenderInfos, 2);
-            Material matRailgunnerTrim = CloneMat(newRenderInfos, 3);
-            //Material matRailgunnerLED = CloneMat(RailGunnerDefault.rendererInfos[5].defaultMaterial);
+            newSkinDef.skinDefParams.meshReplacements[2] = skinRailGunnerAltColossus_params.meshReplacements[2];
+
+            Material matRailGun = CloneMat(ref newRenderInfos, 0);
+            Material matRailGunBACKPACK = CloneMat(ref newRenderInfos, 0);
+            Material matRailGunnerBase = CloneMat(ref newRenderInfos, 2);
+            Material matRailgunnerTrim = CloneMat(ref newRenderInfos, 3);
+            //Material matRailgunnerLED = CloneMat(ref RailGunnerDefault.rendererInfos[5].defaultMaterial);
 
 
             Texture2D texTrimSheetMilitaryLightMetal = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/Green/RailGunnerCamperMetalGun.png");
@@ -193,7 +193,7 @@ namespace WolfoSkinsMod.DLC1
             //newRenderInfos[9].defaultMaterial = matRailgunnerLED;
             //newRenderInfos[10].defaultMaterial = matRailgunnerLED;
             //newRenderInfos[11].defaultMaterial = matRailgunBackpackIdle;
-           
+
         }
 
         #region Idk Sniper
@@ -211,11 +211,11 @@ namespace WolfoSkinsMod.DLC1
             //2 matRailGunnerBase
             //3 matRailgunnerTrim
             //4 matRailGun
-            Material matRailGun = CloneMat(RailGunnerDefault.rendererInfos[0].defaultMaterial);
-            Material matRailGunBACKPACK = CloneMat(RailGunnerDefault.rendererInfos[0].defaultMaterial);
-            Material matRailGunnerBase = CloneMat(RailGunnerDefault.rendererInfos[2].defaultMaterial);
-            Material matRailgunnerTrim = CloneMat(RailGunnerDefault.rendererInfos[3].defaultMaterial);
-            //Material matRailgunnerLED = CloneMat(RailGunnerDefault.rendererInfos[5].defaultMaterial);
+            Material matRailGun = CloneMat(ref RailGunnerDefault.rendererInfos[0].defaultMaterial);
+            Material matRailGunBACKPACK = CloneMat(ref RailGunnerDefault.rendererInfos[0].defaultMaterial);
+            Material matRailGunnerBase = CloneMat(ref RailGunnerDefault.rendererInfos[2].defaultMaterial);
+            Material matRailgunnerTrim = CloneMat(ref RailGunnerDefault.rendererInfos[3].defaultMaterial);
+            //Material matRailgunnerLED = CloneMat(ref RailGunnerDefault.rendererInfos[5].defaultMaterial);
 
             Texture2D texRailGunnerDiffuse = new Texture2D(1024, 1024, TextureFormat.DXT5, false);
             texRailGunnerDiffuse.LoadImage(Properties.Resources.texRailGunnerDiffuseSNIPER, true);
@@ -294,7 +294,7 @@ namespace WolfoSkinsMod.DLC1
         */
         #endregion
 
-        [RegisterAchievement("CLEAR_ANY_RAILGUNNER", "Skins.Railgunner.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_RAILGUNNER", "Skins.Railgunner.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumRailgunnerBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -303,7 +303,7 @@ namespace WolfoSkinsMod.DLC1
             }
         }
 
-        [RegisterAchievement("CLEAR_BOTH_RAILGUNNER", "Skins.Railgunner.Wolfo.Both", null, 5, null)]
+        [RegisterAchievement("CLEAR_BOTH_RAILGUNNER", "Skins.Railgunner.Wolfo.Both", null, 3, null)]
         public class ClearSimulacrumRailgunnerBody2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

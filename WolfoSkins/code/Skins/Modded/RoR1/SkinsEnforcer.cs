@@ -15,10 +15,31 @@ namespace WolfoSkinsMod.Mod
             SkinDef skinEnforcer = modelSkinController.skins[0];
             SkinDef skinEnforcerBot = modelSkinController.skins[3];
 
-            SkinDef yellow = SkinYELLOW(skinEnforcer);
-            //SkinWAR(EnforcerBody);
-            SkinDef redBot = SkinRED_ALT(skinEnforcerBot);
-            SkinDef red = SkinRED(skinEnforcer);
+            SkinDef red = CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinEnforcer_1",
+                nameToken = "SIMU_SKIN_ENFORCER_RED",
+                icon = H.GetIcon("mod/ror1/enforcer_red"),
+                original = skinEnforcer,
+            }, new System.Action<SkinDefMakeOnApply>(DefaultRed));
+
+            SkinDef redBot = CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinEnforcerBot_1",
+                nameToken = "SIMU_SKIN_ENFORCER_RED_ALT",
+                icon = H.GetIcon("mod/ror1/enforcer_redBot"),
+                original = skinEnforcerBot,
+            }, new System.Action<SkinDefMakeOnApply>(Robot_Red));
+
+            SkinDef yellow = CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinEnforcer_Safety_1",
+                nameToken = "SIMU_SKIN_ENFORCER_YELLOW",
+                icon = H.GetIcon("mod/ror1/enforcer_yellow"),
+                original = skinEnforcer,
+            }, new System.Action<SkinDefMakeOnApply>(DefaultYellow));
+
+
 
             //Fit him in before all the meme skins & After Grand Mastery
             SkinDef[] skinsNew = new SkinDef[modelSkinController.skins.Length];
@@ -33,7 +54,7 @@ namespace WolfoSkinsMod.Mod
 
             for (int i = 7; i < modelSkinController.skins.Length; i++)
             {
-                skinsNew[i] = modelSkinController.skins[i-3];
+                skinsNew[i] = modelSkinController.skins[i - 3];
             }
             modelSkinController.skins = skinsNew;
             //SkinCatalog.skinsByBody[(int)EnforcerIndex] = skinsNew;
@@ -50,7 +71,7 @@ namespace WolfoSkinsMod.Mod
             //8 matEnforcer (Instance)
         }
 
-        internal static SkinDef SkinRED_ALT(SkinDef skinN4CR)
+        internal static void Robot_Red(SkinDefMakeOnApply newSkinDef)
         {
             //0 matN4CR
             //1 matEnforcerShieldGlass (Instance)
@@ -61,21 +82,14 @@ namespace WolfoSkinsMod.Mod
             //6 matEnforcerHammer (Instance)
             //7 matN4CR
             //8 matN4CR
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinEnforcerBot_1",
-                nameToken = "SIMU_SKIN_ENFORCER_RED_ALT",
-                icon = H.GetIcon("mod/ror1/enforcer_redBot"),
-                original = skinN4CR,
-            });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
 
-            Material matN4CR = CloneMat(newRenderInfos, 0);
-            Material matN4CR_W = CloneMat(newRenderInfos, 0);
-            Material matN4CR_S = CloneMat(newRenderInfos, 0);
-            Material matEnforcerShieldGlass = CloneMat(newRenderInfos, 1);
-            Material matEnforcerHammer = CloneMat(newRenderInfos, 6);
+            Material matN4CR = CloneMat(ref newRenderInfos, 0);
+            Material matN4CR_W = CloneMat(ref newRenderInfos, 0);
+            Material matN4CR_S = CloneMat(ref newRenderInfos, 0);
+            Material matEnforcerShieldGlass = CloneMat(ref newRenderInfos, 1);
+            Material matEnforcerHammer = CloneMat(ref newRenderInfos, 6);
 
             Texture2D texN4CREmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Enforcer/RedBot/texN4CREmission.png");
             Texture2D texN4CREmission_Weapon = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Enforcer/RedBot/texN4CREmission_Weapon.png");
@@ -110,30 +124,20 @@ namespace WolfoSkinsMod.Mod
             newRenderInfos[6].defaultMaterial = matEnforcerHammer;
             newRenderInfos[7].defaultMaterial = matN4CR;
             newRenderInfos[8].defaultMaterial = matN4CR;
-
-            return newSkinDef;
         }
 
-        internal static SkinDef SkinRED(SkinDef skinEnforcer)
+        internal static void DefaultRed(SkinDefMakeOnApply newSkinDef)
         {
-
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinEnforcer_1",
-                nameToken = "SIMU_SKIN_ENFORCER_RED",
-                icon = H.GetIcon("mod/ror1/enforcer_red"),
-                original = skinEnforcer,
-            });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matEnforcerShield = CloneMat(newRenderInfos, 0);
-            Material matEnforcerShieldGlass = CloneMat(newRenderInfos, 1);
-            Material matEnforcerBoard = CloneMat(newRenderInfos, 2);
-            Material matEnforcerGun = CloneMat(newRenderInfos, 3);
-            Material matClassicGunSuper = CloneMat(newRenderInfos, 4);
-            Material matClassicGunHMG = CloneMat(newRenderInfos, 5);
-            Material matEnforcerHammer = CloneMat(newRenderInfos, 6);
-            Material matEnforcer = CloneMat(newRenderInfos, 7);
+            Material matEnforcerShield = CloneMat(ref newRenderInfos, 0);
+            Material matEnforcerShieldGlass = CloneMat(ref newRenderInfos, 1);
+            Material matEnforcerBoard = CloneMat(ref newRenderInfos, 2);
+            Material matEnforcerGun = CloneMat(ref newRenderInfos, 3);
+            Material matClassicGunSuper = CloneMat(ref newRenderInfos, 4);
+            Material matClassicGunHMG = CloneMat(ref newRenderInfos, 5);
+            Material matEnforcerHammer = CloneMat(ref newRenderInfos, 6);
+            Material matEnforcer = CloneMat(ref newRenderInfos, 7);
 
             Texture2D texEnforcer_Emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Enforcer/Red/texEnforcer_Emission.png");
 
@@ -170,28 +174,20 @@ namespace WolfoSkinsMod.Mod
             newRenderInfos[6].defaultMaterial = matEnforcerHammer;
             newRenderInfos[7].defaultMaterial = matEnforcer;
             newRenderInfos[8].defaultMaterial = matEnforcer;
-            return newSkinDef;
         }
 
-        internal static SkinDef SkinYELLOW(SkinDef skinEnforcer)
+        internal static void DefaultYellow(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDef newSkinDef = H.CreateNewSkin(new SkinInfo
-            {
-                name = "skinEnforcer_Safety_1",
-                nameToken = "SIMU_SKIN_ENFORCER_YELLOW",
-                icon = H.GetIcon("mod/ror1/enforcer_yellow"),
-                original = skinEnforcer,
-            });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matEnforcerShield = CloneMat(newRenderInfos, 0);
-            Material matEnforcerShieldGlass = CloneMat(newRenderInfos, 1);
-            Material matEnforcerBoard = CloneMat(newRenderInfos, 2);
-            Material matEnforcerGun = CloneMat(newRenderInfos, 3);
-            Material matClassicGunSuper = CloneMat(newRenderInfos, 4);
-            Material matClassicGunHMG = CloneMat(newRenderInfos, 5);
-            Material matEnforcerHammer = CloneMat(newRenderInfos, 6);
-            Material matEnforcer = CloneMat(newRenderInfos, 7);
+            Material matEnforcerShield = CloneMat(ref newRenderInfos, 0);
+            Material matEnforcerShieldGlass = CloneMat(ref newRenderInfos, 1);
+            Material matEnforcerBoard = CloneMat(ref newRenderInfos, 2);
+            Material matEnforcerGun = CloneMat(ref newRenderInfos, 3);
+            Material matClassicGunSuper = CloneMat(ref newRenderInfos, 4);
+            Material matClassicGunHMG = CloneMat(ref newRenderInfos, 5);
+            Material matEnforcerHammer = CloneMat(ref newRenderInfos, 6);
+            Material matEnforcer = CloneMat(ref newRenderInfos, 7);
 
 
             Texture2D texEnforcerGun_Emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Enforcer/Yellow/texEnforcerGun_EmissionSAFETY.png");
@@ -232,8 +228,6 @@ namespace WolfoSkinsMod.Mod
             newRenderInfos[6].defaultMaterial = matEnforcerHammer;
             newRenderInfos[7].defaultMaterial = matEnforcer;
             newRenderInfos[8].defaultMaterial = matEnforcer;
-
-            return newSkinDef;
         }
 
         #region Unfininished Green
@@ -248,14 +242,14 @@ namespace WolfoSkinsMod.Mod
             CharacterModel.RendererInfo[] newRenderInfos = new CharacterModel.RendererInfo[skinEnforcer.rendererInfos.Length];
             System.Array.Copy(skinEnforcer.rendererInfos, newRenderInfos, skinEnforcer.rendererInfos.Length);
 
-            Material matEnforcerShield = CloneMat(Enforcer.rendererInfos[0].defaultMaterial);
-            Material matEnforcerShieldGlass = CloneMat(Enforcer.rendererInfos[1].defaultMaterial);
-            Material matEnforcerBoard = CloneMat(Enforcer.rendererInfos[2].defaultMaterial);
-            Material matEnforcerGun = CloneMat(Enforcer.rendererInfos[3].defaultMaterial);
-            Material matClassicGunSuper = CloneMat(Enforcer.rendererInfos[4].defaultMaterial);
-            Material matClassicGunHMG = CloneMat(Enforcer.rendererInfos[5].defaultMaterial);
-            Material matEnforcerHammer = CloneMat(Enforcer.rendererInfos[6].defaultMaterial);
-            Material matEnforcer = CloneMat(Enforcer.rendererInfos[7].defaultMaterial);
+            Material matEnforcerShield = CloneMat(ref Enforcer.rendererInfos[0].defaultMaterial);
+            Material matEnforcerShieldGlass = CloneMat(ref Enforcer.rendererInfos[1].defaultMaterial);
+            Material matEnforcerBoard = CloneMat(ref Enforcer.rendererInfos[2].defaultMaterial);
+            Material matEnforcerGun = CloneMat(ref Enforcer.rendererInfos[3].defaultMaterial);
+            Material matClassicGunSuper = CloneMat(ref Enforcer.rendererInfos[4].defaultMaterial);
+            Material matClassicGunHMG = CloneMat(ref Enforcer.rendererInfos[5].defaultMaterial);
+            Material matEnforcerHammer = CloneMat(ref Enforcer.rendererInfos[6].defaultMaterial);
+            Material matEnforcer = CloneMat(ref Enforcer.rendererInfos[7].defaultMaterial);
 
             Texture2D texEnforcerShield = new Texture2D(256, 256, TextureFormat.DXT5, false);
             texEnforcerShield.LoadImage(Properties.Resources.texEnforcerShieldGREEN, true);
@@ -352,7 +346,7 @@ namespace WolfoSkinsMod.Mod
         */
         #endregion
 
-        [RegisterAchievement("CLEAR_ANY_ENFORCER", "Skins.Enforcer.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_ENFORCER", "Skins.Enforcer.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumENFORCER : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -362,7 +356,7 @@ namespace WolfoSkinsMod.Mod
         }
 
         /*
-        [RegisterAchievement("CLEAR_BOTH_ENFORCER", "Skins.Enforcer.Wolfo.Both", null, 5, null)]
+        [RegisterAchievement("CLEAR_BOTH_ENFORCER", "Skins.Enforcer.Wolfo.Both", null, 3, null)]
         public class ClearSimulacrumENFORCER2 : Achievement_AltBoss
         {
             public override BodyIndex LookUpRequiredBodyIndex()

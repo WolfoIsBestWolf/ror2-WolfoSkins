@@ -12,24 +12,42 @@ namespace WolfoSkinsMod.Base
             SkinDef skinTreebotAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Treebot/skinTreebotAlt.asset").WaitForCompletion();
             SkinDef skinTreebotAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Treebot/skinTreebotAltColossus.asset").WaitForCompletion();
 
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinTreebotLepton_1",
+                nameToken = "SIMU_SKIN_TREEBOT",
+                icon = H.GetIcon("base/rex_blue"),
+                original = skinTreebotAlt,
+                extraRenders = 1
+            }, new System.Action<SkinDefMakeOnApply>(Default_BlueWhite));
 
-            TreebotSkin_Blue(skinTreebotAlt);
-            TreebotSkin2(skinTreebotAlt);
-            Treebot_AltColossus( skinTreebotAltColossus, skinTreebotAlt.ReturnParams());
-        }
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinTreebotFire_1",
+                nameToken = "SIMU_SKIN_TREEBOT_ALT",
+                icon = H.GetIcon("base/rex_red"),
+                original = skinTreebotAlt,
+                extraRenders = 1
+            }, new System.Action<SkinDefMakeOnApply>(Default_FireBlack));
 
-        internal static void Treebot_AltColossus(SkinDef skinTreebotAltColossus, SkinDefParams skinTreebotAlt)
-        {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            CreateEmptySkinForLaterCreation(new SkinInfo
             {
                 name = "skinTreebotAltColossus_DLC2",
                 nameToken = "SIMU_SKIN_TREEBOT_COLOSSUS",
-                icon = H.GetIcon("rex_dlc2"),
+                icon = H.GetIcon("base/rex_dlc2"),
                 original = skinTreebotAltColossus,
                 extraRenders = 1
-            });
+            }, new System.Action<SkinDefMakeOnApply>(Colossus_Orange));
 
-            Material matTreebotColossus = CloneMat(newRenderInfos, 2);
+        }
+
+        internal static void Colossus_Orange(SkinDefMakeOnApply newSkinDef)
+        {
+            SkinDefParams skinTreebotAlt = Addressables.LoadAssetAsync<SkinDefParams>(key: "RoR2/Base/Treebot/skinTreebotAltColossus_params.asset").WaitForCompletion();
+
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+
+            Material matTreebotColossus = CloneMat(ref newRenderInfos, 2);
             Material Vines = CloneFromOriginal(skinTreebotAlt, 1);
 
             matTreebotColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Treebot/Colossus/texTreebotColossusDiffuse.png");
@@ -46,25 +64,18 @@ namespace WolfoSkinsMod.Base
             {
                 defaultMaterial = Vines,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off,
-                renderer = skinTreebotAltColossus.rootObject.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<ParticleSystemRenderer>()
+                renderer = newSkinDef.rootObject.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<ParticleSystemRenderer>()
             };
         }
 
-        internal static void TreebotSkin_Blue(SkinDef skinTreebotAlt)
+        internal static void Default_BlueWhite(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                name = "skinTreebot_1",
-                nameToken = "SIMU_SKIN_TREEBOT",
-                icon = H.GetIcon("rex_blue"),
-                original = skinTreebotAlt,
-                extraRenders = 1
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matREXBlueRobot = CloneMat(newRenderInfos, 0);
-            Material matREXBlueFlower = CloneMat(newRenderInfos, 1);
-            Material matREXBlueLeaf = CloneMat(newRenderInfos, 2);
-            Material matREXBlueBark = CloneMat(newRenderInfos, 3);
+            Material matREXBlueRobot = CloneMat(ref newRenderInfos, 0);
+            Material matREXBlueFlower = CloneMat(ref newRenderInfos, 1);
+            Material matREXBlueLeaf = CloneMat(ref newRenderInfos, 2);
+            Material matREXBlueBark = CloneMat(ref newRenderInfos, 3);
 
             matREXBlueRobot.color = new Color(0.65f, 0.65f, 0.65f, 1);
             matREXBlueRobot.SetColor("_EmColor", new Color(0.7f, 0.7f, 1.4f, 1));
@@ -82,26 +93,19 @@ namespace WolfoSkinsMod.Base
             {
                 defaultMaterial = matREXBlueFlower,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off,
-                renderer = skinTreebotAlt.rootObject.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<ParticleSystemRenderer>()
+                renderer = newSkinDef.rootObject.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<ParticleSystemRenderer>()
             };
 
         }
 
-        internal static void TreebotSkin2(SkinDef skinTreebotAlt)
+        internal static void Default_FireBlack(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                name = "skinTreebotWolfoLava_1",
-                nameToken = "SIMU_SKIN_TREEBOT_ALT",
-                icon = H.GetIcon("rex_red"),
-                original = skinTreebotAlt,
-                extraRenders = 1
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matTreebotMetal = CloneMat(newRenderInfos, 0);
-            Material matTreebotTreeFlower = CloneMat(newRenderInfos, 1);
-            Material matTreebotTreeLeaf = CloneMat(newRenderInfos, 2);
-            Material matREXBlueBark = CloneMat(newRenderInfos, 3);
+            Material matTreebotMetal = CloneMat(ref newRenderInfos, 0);
+            Material matTreebotTreeFlower = CloneMat(ref newRenderInfos, 1);
+            Material matTreebotTreeLeaf = CloneMat(ref newRenderInfos, 2);
+            Material matREXBlueBark = CloneMat(ref newRenderInfos, 3);
 
             matTreebotMetal.color = new Color(0.4f, 0.4f, 0.4f, 1);
             matTreebotMetal.SetColor("_EmColor", new Color(1.4f, 0.7f, 0.7f, 1));
@@ -119,11 +123,11 @@ namespace WolfoSkinsMod.Base
             {
                 defaultMaterial = matTreebotTreeFlower,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off,
-                renderer = skinTreebotAlt.rootObject.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<ParticleSystemRenderer>()
+                renderer = newSkinDef.rootObject.transform.GetChild(5).GetChild(0).GetChild(2).GetComponent<ParticleSystemRenderer>()
             };
         }
 
-        [RegisterAchievement("CLEAR_ANY_TREEBOT", "Skins.Treebot.Wolfo.First", "RescueTreebot", 5, null)]
+        [RegisterAchievement("CLEAR_ANY_TREEBOT", "Skins.Treebot.Wolfo.First", "RescueTreebot", 3, null)]
         public class ClearSimulacrumTreebotBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -133,7 +137,7 @@ namespace WolfoSkinsMod.Base
         }
 
 
-        [RegisterAchievement("CLEAR_BOTH_TREEBOT", "Skins.Treebot.Wolfo.Both", "RescueTreebot", 5, null)]
+        [RegisterAchievement("CLEAR_BOTH_TREEBOT", "Skins.Treebot.Wolfo.Both", "RescueTreebot", 3, null)]
         public class ClearSimulacrumTreebotBody2 : Achievement_TWO_THINGS
         {
 

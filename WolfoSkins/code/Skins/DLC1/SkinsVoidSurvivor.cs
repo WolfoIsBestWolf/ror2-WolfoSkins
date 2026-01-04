@@ -10,25 +10,72 @@ namespace WolfoSkinsMod.DLC1
         internal static void Start()
         {
             SkinDef skinVoidSurvivorDefault = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/VoidSurvivor/skinVoidSurvivorDefault.asset").WaitForCompletion();
+            SkinDef skinVoidSurvivorAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/VoidSurvivor/skinVoidSurvivorAlt.asset").WaitForCompletion();
 
-            VoidSkinsALY(skinVoidSurvivorDefault);
-            VoidSkinsIMP(skinVoidSurvivorDefault);
-            VoidSkinsINV(skinVoidSurvivorDefault);
-        }
-
-        internal static void VoidSkinsALY(SkinDef skinVoidSurvivorDefault)
-        {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
+            //Void Ally
+            CreateEmptySkinForLaterCreation(new SkinInfo
             {
-                name = "skinVoidSurvivorWolfoFriend_1",
+                name = "skinVoidSurvivorAlly_1",
                 nameToken = "SIMU_SKIN_VOIDSURVIVOR",
                 icon = H.GetIcon("dlc1/voidfiend_blue"),
                 original = skinVoidSurvivorDefault,
-            });
+            }, new System.Action<SkinDefMakeOnApply>(Default_Ally));
+            //Imp
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinVoidSurvivorImp_1",
+                nameToken = "SIMU_SKIN_VOIDSURVIVOR2",
+                icon = H.GetIcon("dlc1/voidfiend_red"),
+                original = skinVoidSurvivorDefault,
+            }, new System.Action<SkinDefMakeOnApply>(Default_Imp));
+            //
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinVoidSurvivorAltDark_1",
+                nameToken = "SIMU_SKIN_VOIDSURVIVOR_ALTBLACK",
+                icon = H.GetIcon("dlc1/voidfiend_dark"),
+                original = skinVoidSurvivorAlt,
+            }, new System.Action<SkinDefMakeOnApply>(Mastery_Voider));
+            //Inverted-ish
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinVoidSurvivorInv_1",
+                nameToken = "SIMU_SKIN_VOIDSURVIVOR_INV",
+                icon = H.GetIcon("dlc1/voidfiend_orange"),
+                original = skinVoidSurvivorDefault,
+            }, new System.Action<SkinDefMakeOnApply>(Default_InvertedShrimpFried));
 
-            Material matVoidSurvivorFlesh = CloneMat(newRenderInfos, 0);
-            Material matVoidSurvivorHead = CloneMat(newRenderInfos, 1);
-            Material matVoidSurvivorMetal = CloneMat(newRenderInfos, 2);
+        }
+
+        internal static void Mastery_Voider(SkinDefMakeOnApply newSkinDef)
+        {
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+
+            Material matVoidSurvivorFlesh = CloneMat(ref newRenderInfos, 0);
+            Material matVoidSurvivorHead = CloneMat(ref newRenderInfos, 1);
+            Material matVoidSurvivorMetal = CloneMat(ref newRenderInfos, 2);
+
+            matVoidSurvivorFlesh.color = new Color(1f, 0.667f, 0.778f, 1f);
+            matVoidSurvivorFlesh.SetColor("_EmColor", new Color(0.7f, 0.2477f, 0.4481f, 1f));
+            matVoidSurvivorFlesh.SetFloat("_FresnelPower", 5f);
+            matVoidSurvivorHead.color = new Color(1f, 0.556f, 0.667f, 1f);
+            matVoidSurvivorHead.SetColor("_EmColor", new Color(0.7f, 0.2477f, 0.4481f, 1f));
+            matVoidSurvivorMetal.color = new Color(0.5f, 0.45f, 0.48f, 1f);
+
+            newRenderInfos[0].defaultMaterial = matVoidSurvivorFlesh;
+            newRenderInfos[1].defaultMaterial = matVoidSurvivorHead;
+            newRenderInfos[2].defaultMaterial = matVoidSurvivorMetal;
+
+        }
+
+
+        internal static void Default_Ally(SkinDefMakeOnApply newSkinDef)
+        {
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+
+            Material matVoidSurvivorFlesh = CloneMat(ref newRenderInfos, 0);
+            Material matVoidSurvivorHead = CloneMat(ref newRenderInfos, 1);
+            Material matVoidSurvivorMetal = CloneMat(ref newRenderInfos, 2);
 
             Texture2D texVoidSurvivorFleshDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Blue/texVoidSurvivorFleshDiffuse.png");
             Texture2D texVoidSurvivorFleshEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Blue/texVoidSurvivorFleshEmission.png");
@@ -56,19 +103,13 @@ namespace WolfoSkinsMod.DLC1
 
         }
 
-        internal static void VoidSkinsIMP(SkinDef skinVoidSurvivorDefault)
+        internal static void Default_Imp(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                name = "skinVoidSurvivorWolfo2_1",
-                nameToken = "SIMU_SKIN_VOIDSURVIVOR2",
-                icon = H.GetIcon("dlc1/voidfiend_red"),
-                original = skinVoidSurvivorDefault,
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matVoidSurvivorFleshIMP = CloneMat(newRenderInfos, 0);
-            Material matVoidSurvivorHeadIMP = CloneMat(newRenderInfos, 1);
-            Material matVoidSurvivorMetalIMP = CloneMat(newRenderInfos, 2);
+            Material matVoidSurvivorFleshIMP = CloneMat(ref newRenderInfos, 0);
+            Material matVoidSurvivorHeadIMP = CloneMat(ref newRenderInfos, 1);
+            Material matVoidSurvivorMetalIMP = CloneMat(ref newRenderInfos, 2);
 
             Texture2D texVoidSurvivorFleshDiffuseIMP = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Red/texVoidSurvivorFleshDiffuseIMP.png");
             Texture2D texVoidSurvivorFleshEmissionIMP = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Red/texVoidSurvivorFleshEmissionIMP.png");
@@ -92,22 +133,16 @@ namespace WolfoSkinsMod.DLC1
             newRenderInfos[1].defaultMaterial = matVoidSurvivorHeadIMP;
             newRenderInfos[2].defaultMaterial = matVoidSurvivorMetalIMP;
             newRenderInfos[3].defaultMaterial = matVoidSurvivorFleshIMP;
-            
+
         }
 
-        internal static void VoidSkinsINV(SkinDef skinVoidSurvivorDefault)
+        internal static void Default_InvertedShrimpFried(SkinDefMakeOnApply newSkinDef)
         {
-            CharacterModel.RendererInfo[] newRenderInfos = H.CreateNewSkinR(new SkinInfo
-            {
-                name = "skinVoidSurvivor_Inv_1",
-                nameToken = "SIMU_SKIN_VOIDSURVIVOR_INV",
-                icon = H.GetIcon("dlc1/voidfiend_orange"),
-                original = skinVoidSurvivorDefault,
-            });
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matVoidSurvivorFlesh = CloneMat(newRenderInfos, 0);
-            Material matVoidSurvivorHead = CloneMat(newRenderInfos, 1);
-            Material matVoidSurvivorMetal = CloneMat(newRenderInfos, 2);
+            Material matVoidSurvivorFlesh = CloneMat(ref newRenderInfos, 0);
+            Material matVoidSurvivorHead = CloneMat(ref newRenderInfos, 1);
+            Material matVoidSurvivorMetal = CloneMat(ref newRenderInfos, 2);
 
             Texture2D texVoidSurvivorFleshDiffuse = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Yellow/texVoidSurvivorFleshDiffuseINV.png");
             Texture2D texVoidSurvivorFleshEmission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/VoidSurvivor/Yellow/texVoidSurvivorFleshEmissionINV.png");
@@ -130,10 +165,10 @@ namespace WolfoSkinsMod.DLC1
             newRenderInfos[1].defaultMaterial = matVoidSurvivorHead;
             newRenderInfos[2].defaultMaterial = matVoidSurvivorMetal;
             newRenderInfos[3].defaultMaterial = matVoidSurvivorFlesh;
- 
+
         }
 
-        [RegisterAchievement("CLEAR_ANY_VOIDSURVIVOR", "Skins.VoidSurvivor.Wolfo.First", "CompleteVoidEnding", 5, null)]
+        [RegisterAchievement("CLEAR_ANY_VOIDSURVIVOR", "Skins.VoidSurvivor.Wolfo.First", "CompleteVoidEnding", 3, null)]
         public class ClearSimulacrumVoidSurvivorBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()

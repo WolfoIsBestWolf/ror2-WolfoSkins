@@ -1,12 +1,10 @@
 ﻿using BepInEx;
-using EntityStates.AffixVoid;
 using R2API.Utils;
 using RoR2;
 using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
-using UnityEngine.XR;
 using WolfoSkinsMod.Base;
 using WolfoSkinsMod.DLC1;
 using WolfoSkinsMod.DLC2;
@@ -24,20 +22,18 @@ namespace WolfoSkinsMod
 
     public class WolfoSkins : BaseUnityPlugin
     {
-
         public void Awake()
         {
             WConfig.InitConfig();
- 
-            if (WConfig.cfgTest.Value)
-            {
-                WConfig.cfgTest.Value = false;
-                Destroy(this);
-                return;
-            }
+
             Assets.Init(Info);
             Unlocks.Hooks();
 
+            RoR2Application.onLoadFinished += Make;
+
+        }
+        public void Make()
+        {
 
             //BASE
             SkinsCommando.Start();
@@ -68,22 +64,21 @@ namespace WolfoSkinsMod
             On.RoR2.SkinDef.ApplyAsync += SkinDef_ApplyAsync;
 
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
- 
+
             //On.RoR2.SkinDef.BakeAsync += SkinDef_BakeAsync; //Idk why this just doesnt fucking work anymore
 
             BodyCatalog.availability.CallWhenAvailable(ModSupport);
 
-            GameModeCatalog.availability.CallWhenAvailable(SortSkinsLate);
         }
 
-       
+
 
         private System.Collections.IEnumerator SkinDef_ApplyAsync(On.RoR2.SkinDef.orig_ApplyAsync orig, SkinDef self, GameObject modelObject, List<UnityEngine.AddressableAssets.AssetReferenceT<Material>> loadedMaterials, List<UnityEngine.AddressableAssets.AssetReferenceT<Mesh>> loadedMeshes, RoR2.ContentManagement.AsyncReferenceHandleUnloadType unloadType)
         {
             //Debug.Log(self);
-            if (self is SkinDefPrioritizeDirect)
+            if (self is SkinDefMakeOnApply)
             {
-                (self as SkinDefPrioritizeDirect).Override();
+                (self as SkinDefMakeOnApply).Override();
             }
 
             var temp = orig(self, modelObject, loadedMaterials, loadedMeshes, unloadType);
@@ -98,9 +93,9 @@ namespace WolfoSkinsMod
             {
                 modelObject.GetComponent<SkinDefAltColorTracker>().UndoWolfoSkin();
             }
-            if (self is SkinDefAltColor)
+            if (self is SkinDefEnhanced)
             {
-                (self as SkinDefAltColor).ApplyExtras(modelObject);
+                (self as SkinDefEnhanced).ApplyExtras(modelObject);
             }
             yield break;
         }
@@ -110,88 +105,8 @@ namespace WolfoSkinsMod
             //Somehow does not catch a lot of skins anymore
             //When first being baked
             //Something about R2API update
-         
+
             return orig(self);
-        }
- 
-        internal static void SortSkinsLate()
-        {
-            /*for (int i = 0; i < SkinCatalog.skinCount; i++)
-            {
-                if (SkinCatalog.allSkinDefs[i] is SkinDefPrioritizeDirect)
-                {
-                    for (int R = 0; SkinCatalog.allSkinDefs[i].skinDefParams.rendererInfos.Length > R; R++)
-                    {
-                        if (SkinCatalog.allSkinDefs[i].skinDefParams.rendererInfos[R].defaultMaterial != null)
-                        {
-                            SkinCatalog.allSkinDefs[i].skinDefParams.rendererInfos[R].defaultMaterialAddress = null;
-                        }
-                    }
-                    SkinCatalog.allSkinDefs[i]._runtimeSkin = null;
-                }
-            }¨*/
-
-
-            //What is this again?
-            if (!WConfig.cfgSort.Value)
-            {
-                return;
-            }
-
-
-            //Manually sorting these 
-            List<string> blacklistedSorting = new List<string>()
-            {
-                "Enforcer",
-                "HANDOverclocked",
-                "Miner",
-                "GnomeChefBody",
-                "RobPaladin"
-            };
-
-
-            for (int i = 0; i < SurvivorCatalog.survivorDefs.Length; i++)
-            {
-                if (blacklistedSorting.Contains(SurvivorCatalog.survivorDefs[i].cachedName))
-                {
-                    continue; //?
-                }
-
-                //Debug.LogWarning(SurvivorCatalog.survivorDefs[i]);
-                GameObject Body = SurvivorCatalog.survivorDefs[i].bodyPrefab;
-                ModelSkinController modelSkinController = Body.GetComponentInChildren<ModelSkinController>();
-                if (!modelSkinController)
-                {
-                    Debug.LogWarning(SurvivorCatalog.survivorDefs[i] + " has no ModelSkinController");
-                }
-                else if (modelSkinController.skins.Length > 4)
-                {
-                    BodyIndex Index = Body.GetComponent<CharacterBody>().bodyIndex;
-
-                    List<SkinDef> oldList = new List<SkinDef>();
-                    List<SkinDef> wolfList = new List<SkinDef>();
-                    for (int ii = 0; ii < modelSkinController.skins.Length; ii++)
-                    {
-                        //Debug.LogWarning(modelSkinController.skins[ii]);
-                        if (modelSkinController.skins[ii] is SkinDefPrioritizeDirect)
-                        {
-                            wolfList.Add(modelSkinController.skins[ii]);
-                        }
-                        else
-                        {
-                            oldList.Add(modelSkinController.skins[ii]);
-                        }
-                    }
-                    if (wolfList.Count > 0)
-                    {
-                        oldList.AddRange(wolfList);
-                        SkinDef[] skinsNew = oldList.ToArray();
-                        modelSkinController.skins = skinsNew;
-                        SkinCatalog.skinsByBody[(int)Index] = skinsNew;
-                    }
-                }
-            }
-            System.GC.Collect(); //?
         }
 
         internal static void ModSupport()
@@ -218,18 +133,18 @@ namespace WolfoSkinsMod
                     SkinsEnforcer.ModdedSkin(ModdedBody);
                 }
             }
-           /* //Executioner2Body
-            ModdedBody = BodyCatalog.FindBodyPrefab("Executioner2Body");
-            if (ModdedBody != null)
-            {
-                SkinsExecutioner.ModdedSkin(ModdedBody);
-            }
+            /* //Executioner2Body
+             ModdedBody = BodyCatalog.FindBodyPrefab("Executioner2Body");
+             if (ModdedBody != null)
+             {
+                 SkinsExecutioner.ModdedSkin(ModdedBody);
+             }*/
             //ChirrBody
             ModdedBody = BodyCatalog.FindBodyPrefab("ChirrBody");
             if (ModdedBody != null)
             {
                 SkinsChirr.ModdedSkin(ModdedBody);
-            }*/
+            }
 
             //SniperClassicBody
             ModdedBody = BodyCatalog.FindBodyPrefab("SniperClassicBody");
@@ -250,18 +165,18 @@ namespace WolfoSkinsMod
                 SkinsRocket.ModdedSkin(ModdedBody);
             }
             //MoffeinPilotBody
-            ModdedBody = BodyCatalog.FindBodyPrefab("MoffeinPilotBody");
+            /*ModdedBody = BodyCatalog.FindBodyPrefab("MoffeinPilotBody");
             if (ModdedBody != null)
             {
                 SkinsPilot.ModdedSkin(ModdedBody);
-            }
+            }*/
             //MinerBody
             ModdedBody = BodyCatalog.FindBodyPrefab("MinerBody");
             if (ModdedBody != null)
             {
                 SkinsMiner.ModdedSkin(ModdedBody);
             }
-        
+
             //
             //ArsonistBody
             ModdedBody = BodyCatalog.FindBodyPrefab("ArsonistBody");
@@ -294,12 +209,12 @@ namespace WolfoSkinsMod
 
             //Nemesis-es
             //Nem-Enforcer
-            ModdedBody = BodyCatalog.FindBodyPrefab("NemesisEnforcerBody");
+            /*ModdedBody = BodyCatalog.FindBodyPrefab("NemesisEnforcerBody");
             if (ModdedBody != null)
             {
                 SkinsNemEnforcer.ModdedSkin(ModdedBody);
-            }
- 
+            }*/
+
         }
 
         private void ReplaceTemporaryOverlayMaterial(On.RoR2.TemporaryOverlay.orig_AddToCharacerModel orig, TemporaryOverlay self, CharacterModel characterModel)
@@ -321,13 +236,12 @@ namespace WolfoSkinsMod
 
 
     }
-
+    /*
     public class SkinDefPrioritizeDirect : SkinDef
     {
         public bool done = false;
         public void Override()
-        {
-            
+        {         
             //Debug.Log(this);
             if (!this.done)
             {
@@ -343,8 +257,8 @@ namespace WolfoSkinsMod
             }
         }
     }
-
-    public class SkinDefAltColor : SkinDefPrioritizeDirect
+    */
+    public class SkinDefEnhanced : SkinDefMakeOnApply
     {
 
         //Some sort of Undo thing
@@ -447,6 +361,15 @@ namespace WolfoSkinsMod
         public void EngiDisplay(GameObject modelObject, SkinDefAltColorTracker tracker)
         {
             Transform mineHolder = modelObject.transform.parent.Find("mdlEngi/EngiArmature/ROOT/base/stomach/chest/upper_arm.l/lower_arm.l/hand.l/IKBoneStart/IKBoneMid/MineHolder");
+            for (int i = 0; i < mineHolder.childCount; i++)
+            {
+                for (int m = 0; m < mineHolder.GetChild(i).childCount; m++)
+                {
+                    mineHolder.GetChild(i).GetChild(m).gameObject.SetActive(false);
+                }
+            }
+
+
             Material newMaterial = this.skinDefParams.minionSkinReplacements[0].minionSkin.skinDefParams.rendererInfos[0].defaultMaterial;
 
             GameObject Mine1 = Instantiate(this.skinDefParams.projectileGhostReplacements[1].projectileGhostReplacementPrefab, mineHolder.GetChild(0));
@@ -459,10 +382,14 @@ namespace WolfoSkinsMod
                 Mine2
             };
 
-            mineHolder.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            /*mineHolder.GetChild(0).GetChild(1).gameObject.SetActive(false);
             mineHolder.GetChild(0).GetChild(2).gameObject.SetActive(false);
-            mineHolder.GetChild(1).GetChild(1).gameObject.SetActive(false);
+            mineHolder.GetChild(0).GetChild(3).gameObject.SetActive(false);
+            mineHolder.GetChild(0).GetChild(4).gameObject.SetActive(false);
             mineHolder.GetChild(1).GetChild(0).gameObject.SetActive(false);
+            mineHolder.GetChild(1).GetChild(1).gameObject.SetActive(false);
+            mineHolder.GetChild(1).GetChild(2).gameObject.SetActive(false);
+            mineHolder.GetChild(1).GetChild(3).gameObject.SetActive(false);*/
 
             modelObject.transform.parent.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material = newMaterial;
         }
@@ -544,7 +471,7 @@ namespace WolfoSkinsMod
             DestroyImmediate(this);
         }
     }
- 
+
     public class OverlayMaterialReplacer : MonoBehaviour
     {
         public Material targetMaterial;
@@ -553,6 +480,39 @@ namespace WolfoSkinsMod
 
     public class SkinDefMakeOnApply : SkinDef
     {
-        public System.Action creationMethod;
+        public SkinDef baseSkin;
+        public SkinDef[] minionSkins;
+
+        public System.Action<SkinDefMakeOnApply> creationMethod;
+
+        public int extraRenders;
+        public bool cloneMesh;
+
+        public bool created = false;
+        public void Override()
+        {
+            if (!created)
+            {
+                if (creationMethod != null)
+                {
+                    Destroy(this.skinDefParams);
+                    H.CloneSkinDefReal(this, baseSkin, cloneMesh, extraRenders);
+
+                    creationMethod.Invoke(this);
+                    creationMethod = null;
+                }
+
+                _runtimeSkin = null;
+                for (int i = 0; skinDefParams.rendererInfos.Length > i; i++)
+                {
+                    if (skinDefParams.rendererInfos[i].defaultMaterial != null)
+                    {
+                        skinDefParams.rendererInfos[i].defaultMaterialAddress = null;
+                    }
+                }
+                created = true;
+            }
+        }
+
     }
 }

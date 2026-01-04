@@ -1,3 +1,4 @@
+/*
 using RoR2;
 using UnityEngine;
 using static WolfoSkinsMod.H;
@@ -8,6 +9,7 @@ namespace WolfoSkinsMod.Mod
     {
         internal static void ModdedSkin(GameObject PilotBody)
         {
+
             Debug.Log("Pilot Skins");
             BodyIndex CharacterIndex = PilotBody.GetComponent<CharacterBody>().bodyIndex;
             ModelSkinController modelSkinController = PilotBody.GetComponentInChildren<ModelSkinController>();
@@ -46,10 +48,10 @@ namespace WolfoSkinsMod.Mod
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matPilotDefaultWeapon = CloneMat(newRenderInfos, 0);
-            Material matPilotDefault1 = CloneMat(newRenderInfos, 2);
-            Material matPilotDefault2 = CloneMat(newRenderInfos, 4);
-            Material Parachute = CloneMat(newRenderInfos, 10);
+            Material matPilotDefaultWeapon = CloneMat(ref newRenderInfos, 0);
+            Material matPilotDefault1 = CloneMat(ref newRenderInfos, 2);
+            Material matPilotDefault2 = CloneMat(ref newRenderInfos, 4);
+            Material Parachute = CloneMat(ref newRenderInfos, 10);
 
             matPilotDefaultWeapon.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/PIlotWeapon_diffuseWHITE.png");
             //matPilotDefaultWeapon.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/White/PIlotWeapon_emissionWHITE.png"));
@@ -92,10 +94,10 @@ namespace WolfoSkinsMod.Mod
                 original = skinPilotDefault,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
-            Material matPilotDefaultWeapon = CloneMat(newRenderInfos, 0);
-            Material matPilotDefault1 = CloneMat(newRenderInfos, 2);
-            Material matPilotDefault2 = CloneMat(newRenderInfos, 4);
-            Material Parachute = CloneMat(newRenderInfos, 10);
+            Material matPilotDefaultWeapon = CloneMat(ref newRenderInfos, 0);
+            Material matPilotDefault1 = CloneMat(ref newRenderInfos, 2);
+            Material matPilotDefault2 = CloneMat(ref newRenderInfos, 4);
+            Material Parachute = CloneMat(ref newRenderInfos, 10);
 
             //Texture2D PIlotWeapon_emission = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Red/PIlotWeapon_emissionRED.png");
 
@@ -142,10 +144,10 @@ namespace WolfoSkinsMod.Mod
                 original = skinPilotDefault,
             });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
-            Material matPilotDefaultWeapon = CloneMat(newRenderInfos, 0);
-            Material matPilotDefault1 = CloneMat(newRenderInfos, 2);
-            Material matPilotDefault2 = CloneMat(newRenderInfos, 4);
-            Material Parachute = CloneMat(newRenderInfos, 10);
+            Material matPilotDefaultWeapon = CloneMat(ref newRenderInfos, 0);
+            Material matPilotDefault1 = CloneMat(ref newRenderInfos, 2);
+            Material matPilotDefault2 = CloneMat(ref newRenderInfos, 4);
+            Material Parachute = CloneMat(ref newRenderInfos, 10);
 
             matPilotDefaultWeapon.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/PIlotWeapon_diffuse.png");
             matPilotDefaultWeapon.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/mod/Pilot/Blue/PIlotWeapon_emission.png"));
@@ -179,7 +181,7 @@ namespace WolfoSkinsMod.Mod
             return newSkinDef;
         }
 
-        [RegisterAchievement("CLEAR_ANY_MOFFEINPILOT", "Skins.MoffeinPilot.Wolfo.First", null, 5, null)]
+        [RegisterAchievement("CLEAR_ANY_MOFFEINPILOT", "Skins.MoffeinPilot.Wolfo.First", null, 3, null)]
         public class ClearSimulacrumPilot : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -190,3 +192,4 @@ namespace WolfoSkinsMod.Mod
 
     }
 }
+*/

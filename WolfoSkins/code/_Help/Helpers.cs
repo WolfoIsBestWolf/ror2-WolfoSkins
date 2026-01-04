@@ -2,7 +2,6 @@ using RoR2;
 using RoR2.ContentManagement;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -11,12 +10,13 @@ namespace WolfoSkinsMod
     public struct SkinInfo
     {
         public SkinDef original;
+        public SkinDef[] minionSkins;
         public Sprite icon;
         public string nameToken;
         public string name;
+        public bool enhancedSkin;
         public bool cloneMesh;
-        public bool unsetMat;
-        public bool w;
+
         public int extraRenders;
         //public Action method;
     }
@@ -24,26 +24,61 @@ namespace WolfoSkinsMod
     internal static class H
     {
         public static AsyncReferenceHandleUnloadType unloadType = AsyncReferenceHandleUnloadType.OnSceneUnload;
-        public static SkinDefPrioritizeDirect CreateNewSkin(SkinInfo skinInfo)
+
+        public static SkinDefMakeOnApply CreateEmptySkinForLaterCreation(SkinInfo skinInfo, Action<SkinDefMakeOnApply> method)
+        {
+            SkinDefMakeOnApply newSkinDef = null;
+            if (skinInfo.enhancedSkin)
+            {
+                // Debug.LogWarning("NOT SUPPORTED YET");
+                newSkinDef = ScriptableObject.CreateInstance<SkinDefEnhanced>();
+            }
+            else
+            {
+                newSkinDef = ScriptableObject.CreateInstance<SkinDefMakeOnApply>();
+            }
+            newSkinDef.name = skinInfo.name;
+            newSkinDef.nameToken = skinInfo.nameToken;
+            newSkinDef.icon = skinInfo.icon;
+            newSkinDef.cloneMesh = skinInfo.cloneMesh;
+            newSkinDef.extraRenders = skinInfo.extraRenders;
+            newSkinDef.creationMethod = method;
+            newSkinDef.baseSkin = skinInfo.original;
+            newSkinDef.minionSkins = skinInfo.minionSkins;
+            newSkinDef.rootObject = skinInfo.original.rootObject;
+            newSkinDef.skinDefParams = ScriptableObject.CreateInstance<SkinDefParams>();
+            AddSkinToCharacter(newSkinDef);
+            return newSkinDef;
+        }
+
+        public static SkinDef CreateNewSkin(SkinInfo skinInfo)
         {
             if (!skinInfo.original)
             {
                 Debug.LogWarning("Forgot to set original SkinDef for " + skinInfo.name);
             }
-            SkinDefPrioritizeDirect skin = CloneSkinDefReal(skinInfo.original, skinInfo.w, skinInfo.cloneMesh, skinInfo.extraRenders);
-            skin.name = skinInfo.name;
-            skin.nameToken = skinInfo.nameToken;
-            skin.icon = skinInfo.icon;
-            if (skinInfo.unsetMat)
+            SkinDef newSkinDef = null;
+            if (skinInfo.enhancedSkin)
             {
-                //UnsetAllMat(skin.skinDefParams.rendererInfos);
+                //newSkinDef = ScriptableObject.CreateInstance<SkinDefAltColor>();
+                newSkinDef = ScriptableObject.CreateInstance<SkinDefEnhanced>();
             }
-            return skin;
+            else
+            {
+                newSkinDef = ScriptableObject.CreateInstance<SkinDefMakeOnApply>();
+            }
+
+            CloneSkinDefReal(newSkinDef, skinInfo.original, skinInfo.cloneMesh, skinInfo.extraRenders);
+            AddSkinToCharacter(newSkinDef);
+            newSkinDef.name = skinInfo.name;
+            newSkinDef.nameToken = skinInfo.nameToken;
+            newSkinDef.icon = skinInfo.icon;
+            return newSkinDef;
         }
-        public static SkinDefAltColor CreateNewSkinW(SkinInfo skinInfo)
+        public static SkinDefEnhanced CreateNewSkinW(SkinInfo skinInfo)
         {
-            skinInfo.w = true;
-            return CreateNewSkin(skinInfo) as SkinDefAltColor;
+            skinInfo.enhancedSkin = true;
+            return CreateNewSkin(skinInfo) as SkinDefEnhanced;
         }
         public static CharacterModel.RendererInfo[] CreateNewSkinR(SkinInfo skinInfo)
         {
@@ -70,33 +105,8 @@ namespace WolfoSkinsMod
         }
 
 
-        public static void UnsetAllMat(CharacterModel.RendererInfo[] rendererInfos)
-        {
-            for (int i = 0; i < rendererInfos.Length; i++)
-            {
-                //rendererInfos[i].defaultMaterialAddress = null;
-            }
-        }
-        public static Material CloneMat(CharacterModel.RendererInfo[] rendererInfos, int num, bool checkDuplicates)
-        {
-            Material newmat = null;
-            var address = rendererInfos[num].defaultMaterialAddress;
-            if (address != null)
-            {
-                newmat = GameObject.Instantiate(AssetAsyncReferenceManager<Material>.LoadAsset(address, unloadType).WaitForCompletion());
-                for (int i = 0; i < rendererInfos.Length; i++)
-                {
-                    if (rendererInfos[i].defaultMaterialAddress == address)
-                    {
-                        rendererInfos[i].defaultMaterialAddress = null;
-                    }
-                }
-            }
-            return null;
-        }
 
-
-        public static Material CloneMat(CharacterModel.RendererInfo[] rendererInfos, int num)
+        public static Material CloneMat(ref CharacterModel.RendererInfo[] rendererInfos, int num, bool unset = false)
         {
             Material newmat = null;
             var address = rendererInfos[num].defaultMaterialAddress;
@@ -107,6 +117,10 @@ namespace WolfoSkinsMod
             else if (rendererInfos[num].defaultMaterial != null)
             {
                 newmat = GameObject.Instantiate(rendererInfos[num].defaultMaterial);
+            }
+            if (unset)
+            {
+                rendererInfos[num].defaultMaterialAddress = null;
             }
             rendererInfos[num].defaultMaterial = newmat;
             if (newmat == null)
@@ -193,7 +207,7 @@ namespace WolfoSkinsMod
             return (SkinDefWolfo)CloneSkinDefReal(original, true, mesh, 0);
         }*/
 
-        public static SkinDefPrioritizeDirect CloneSkinDefReal(SkinDef original, bool W, bool newMesh, int extraRenderers)
+        public static SkinDef CloneSkinDefReal(SkinDef newSkinDef, SkinDef original, bool newMesh, int extraRenderers)
         {
             SkinDefParams originalParams = null;
             if (original.skinDefParamsAddress.RuntimeKeyIsValid())
@@ -213,15 +227,7 @@ namespace WolfoSkinsMod
             {
                 Debug.LogWarning("Cannot find SkinDefParams for " + original);
             }
-            SkinDefPrioritizeDirect newSkinDef = null;
-            if (W)
-            {
-                newSkinDef = ScriptableObject.CreateInstance<SkinDefAltColor>();
-            }
-            else
-            {
-                newSkinDef = ScriptableObject.CreateInstance<SkinDefPrioritizeDirect>();
-            }
+
             SkinDefParams newParams = GameObject.Instantiate(originalParams);
             newSkinDef.skinDefParams = newParams;
             newSkinDef.skinDefParamsAddress = new AssetReferenceT<SkinDefParams>(""); //CANNOT BE NULL
@@ -239,8 +245,6 @@ namespace WolfoSkinsMod
                 newSkinDef.baseSkins = new SkinDef[] { original };
             }
             newSkinDef.rootObject = original.rootObject;
-
-            H.AddSkinToCharacter(newSkinDef);
 
             newParams.rendererInfos = HG.ArrayUtils.Clone(originalParams.rendererInfos);
             if (extraRenderers != 0)
@@ -295,6 +299,26 @@ namespace WolfoSkinsMod
                             materialInfo += "\n";
                         }
                     }
+                    var skinDefParams = skinDef.ReturnParams();
+                    for (int r = 0; r < skinDefParams.rendererInfos.Length; r++)
+                    {
+                        Material mat = skinDefParams.rendererInfos[r].ReturnMaterial();
+                        if (mat == null)
+                        {
+                            continue;
+                        }
+                        renderInfo += "\n[" + r + "] " + mat.name + " | " + skinDefParams.rendererInfos[r].renderer.name;
+                        if (!materials.Contains(mat))
+                        {
+
+                            materials.Add(mat);
+                            if (mat.mainTexture != null)
+                            {
+                                materialInfo += mat.mainTexture.name + " | " + mat.mainTexture.wrapMode;
+                            }
+                            materialInfo += "\n";
+                        }
+                    }
 
                     Debug.Log(renderInfo);
                     Debug.Log(materialInfo);
@@ -321,7 +345,14 @@ namespace WolfoSkinsMod
             }
             return AssetAsyncReferenceManager<SkinDefParams>.LoadAsset(skinDef.skinDefParamsAddress, unloadType).WaitForCompletion();
         }
-
+        public static Material ReturnMaterial(this CharacterModel.RendererInfo render)
+        {
+            if (render.defaultMaterial)
+            {
+                return render.defaultMaterial;
+            }
+            return AssetAsyncReferenceManager<Material>.LoadAsset(render.defaultMaterialAddress, unloadType).WaitForCompletion();
+        }
     }
 
 }

@@ -16,48 +16,65 @@ namespace WolfoSkinsMod.Base
             SkinDef skinMercAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Merc/skinMercAlt.asset").WaitForCompletion();
             SkinDef skinMercAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Merc/skinMercAltColossus.asset").WaitForCompletion();
 
-            Merc_Alt(skinMercDefault);
-            Merc_MasteryAlt(skinMercAlt);
-            Merc_AltColossus(skinMercAltColossus);
-        }
+            CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinMerc_1",
+                nameToken = "SIMU_SKIN_MERC",
+                icon = H.GetIcon("base/merc_blue"),
+                original = skinMercDefault,
+                enhancedSkin = true,
+            }, new System.Action<SkinDefMakeOnApply>(Default_GrayBlue));
 
-        internal static void Merc_MasteryAlt(SkinDef skinMercAlt)
-        {
-            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
+            red_SKIN = CreateEmptySkinForLaterCreation(new SkinInfo
             {
                 name = "skinMerc_Simu_Red",
                 nameToken = "SIMU_SKIN_MERC2",
-                icon = H.GetIcon("merc_red"),
+                icon = H.GetIcon("base/merc_red"),
                 original = skinMercAlt,
-            });
+                enhancedSkin = true,
+            }, new System.Action<SkinDefMakeOnApply>(Mastery_GrayRed));
+
+            green_SKIN = CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinMerc_DLC2_Green",
+                nameToken = "SIMU_SKIN_MERC_GREEN",
+                icon = H.GetIcon("base/merc_green"),
+                original = skinMercAltColossus,
+                enhancedSkin = true,
+            }, new System.Action<SkinDefMakeOnApply>(Colossus_BlackGreen));
+
+        }
+
+        internal static void Mastery_GrayRed(SkinDefMakeOnApply newSkinDef)
+        {
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matMerc = CloneMat(newRenderInfos, 0);
-            Material matMercSword = CloneMat(newRenderInfos, 1);
+            Material matMerc = CloneMat(ref newRenderInfos, 0);
+            Material matMercSword = CloneMat(ref newRenderInfos, 1);
 
-            matMerc.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texMercDiffuseRed.png");
-            matMerc.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texMercEmissionRED.png"));
+            matMerc.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texMercDiffuse.png");
+            matMerc.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texMercEmission.png"));
             matMerc.SetColor("_EmColor", new Color(1, 0, 0));
 
-            matMercSword.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texMercSwordDiffuseRed.png");
+            matMercSword.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texMercSwordDiffuse.png");
             matMercSword.SetColor("_EmColor", new Color(1f, -1f, -1f));
             matMercSword.SetTexture("_FlowHeightRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texRampFallbootsRed.png"));
             matMercSword.SetTexture("_FresnelRamp", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Red/texRampHuntressRed.png"));
 
 
-            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
+            (newSkinDef as SkinDefEnhanced).lightColorsChanges = new SkinDefEnhanced.LightColorChanges[]
             {
-                new SkinDefAltColor.LightColorChanges
+                new SkinDefEnhanced.LightColorChanges
                 {
                     color = new Color(1,0,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/Point Light (1)",
                 },
-                new SkinDefAltColor.LightColorChanges
+                new SkinDefEnhanced.LightColorChanges
                 {
                     color = new Color(1,0,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/Point Light",
                 },
-                new SkinDefAltColor.LightColorChanges
+                new SkinDefEnhanced.LightColorChanges
                 {
                     color = new Color(1,0,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/SwingCenter/SwordBase/Point Light",
@@ -66,20 +83,13 @@ namespace WolfoSkinsMod.Base
             red_SKIN = newSkinDef;
         }
 
-
-        internal static void Merc_Alt(SkinDef skinMercDefault)
+        internal static void Default_GrayBlue(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
-            {
-                name = "skinMerc_1",
-                nameToken = "SIMU_SKIN_MERC",
-                icon = H.GetIcon("merc_blue"),
-                original = skinMercDefault,
-            });
+
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matMerc = CloneMat(newRenderInfos, 0);
-            Material matMercSword = CloneMat(newRenderInfos, 1);
+            Material matMerc = CloneMat(ref newRenderInfos, 0);
+            Material matMercSword = CloneMat(ref newRenderInfos, 1);
 
             matMerc.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Blue/texMercDiffuse.png");
             matMerc.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Blue/texMercEmission.png"));
@@ -89,19 +99,12 @@ namespace WolfoSkinsMod.Base
             matMercSword.SetColor("_EmColor", new Color(0f, 0.3f, 1));
         }
 
-        internal static void Merc_AltColossus(SkinDef skinMercAltColossus)
+        internal static void Colossus_BlackGreen(SkinDefMakeOnApply newSkinDef)
         {
-            SkinDefAltColor newSkinDef = H.CreateNewSkinW(new SkinInfo
-            {
-                name = "skinMerc_DLC2_Green",
-                nameToken = "SIMU_SKIN_MERC_GREEN",
-                icon = H.GetIcon("merc_green"),
-                original = skinMercAltColossus,
-            });
             CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
 
-            Material matMercAltColossus = CloneMat(newRenderInfos, 0);
-            Material matMercSword = CloneMat(newRenderInfos, 1);
+            Material matMercAltColossus = CloneMat(ref newRenderInfos, 0);
+            Material matMercSword = CloneMat(ref newRenderInfos, 1);
 
             matMercAltColossus.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Merc/Colossus/texMercAltColossusDiffuse.png");
             //matMercAltColossus.color = new Color(0.9f,0.9f,0.9f, 1);
@@ -122,29 +125,29 @@ namespace WolfoSkinsMod.Base
             matMercSword.SetFloat("_EmPower", 1);
             matMercSword.SetColor("_EmColor", new Color(0.2f, 3f, 0.2f));
 
-            newSkinDef.lightColorsChanges = new SkinDefAltColor.LightColorChanges[]
+            (newSkinDef as SkinDefEnhanced).lightColorsChanges = new SkinDefEnhanced.LightColorChanges[]
             {
-                new SkinDefAltColor.LightColorChanges
+                new SkinDefEnhanced.LightColorChanges
                 {
                     color = new Color(0,1f,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/Point Light (1)",
                 },
-                new SkinDefAltColor.LightColorChanges
+                new SkinDefEnhanced.LightColorChanges
                 {
                     color = new Color(0,0.5f,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/Point Light",
                 },
-                new SkinDefAltColor.LightColorChanges
+                new SkinDefEnhanced.LightColorChanges
                 {
                     color = new Color(0,0.5f,0),
                     lightPath = "MercArmature/ROOT/base/stomach/chest/SwingCenter/SwordBase/Point Light",
                 }
             };
-            green_SKIN = newSkinDef;
+
         }
 
 
-        [RegisterAchievement("CLEAR_ANY_MERC", "Skins.Merc.Wolfo.First", "CompleteUnknownEnding", 5, null)]
+        [RegisterAchievement("CLEAR_ANY_MERC", "Skins.Merc.Wolfo.First", "CompleteUnknownEnding", 3, null)]
         public class ClearSimulacrumMercBody : Achievement_ONE_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
@@ -153,7 +156,7 @@ namespace WolfoSkinsMod.Base
             }
         }
 
-        [RegisterAchievement("CLEAR_BOTH_MERC", "Skins.Merc.Wolfo.Both", "CompleteUnknownEnding", 5, null)]
+        [RegisterAchievement("CLEAR_BOTH_MERC", "Skins.Merc.Wolfo.Both", "CompleteUnknownEnding", 3, null)]
         public class ClearSimulacrumMercBody2 : Achievement_TWO_THINGS
         {
             public override BodyIndex LookUpRequiredBodyIndex()
