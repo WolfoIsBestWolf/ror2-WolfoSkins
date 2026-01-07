@@ -564,7 +564,6 @@ namespace WolfoSkinsMod
             bool noUnlocks = WConfig.cfgUnlockAll.Value;
             for (int i = 0; i < SurvivorCatalog.survivorDefs.Length; i++)
             {
-                Debug.Log(SurvivorCatalog.survivorDefs[i]);
                 BodyIndex bodyIndex = SurvivorCatalog.GetBodyIndexFromSurvivorIndex(SurvivorCatalog.survivorDefs[i].survivorIndex);
                 if (bodyIndex != BodyIndex.None)
                 {

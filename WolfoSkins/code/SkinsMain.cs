@@ -29,8 +29,23 @@ namespace WolfoSkinsMod
             Assets.Init(Info);
             Unlocks.Hooks();
 
-            RoR2Application.onLoadFinished += Make;
+            if (!WConfig.cfgSortLate.Value)
+            {
+                Make();
+                BodyCatalog.availability.CallWhenAvailable(ModSupport);
+            }
+        }
+        public void Start()
+        {
+            if (WConfig.cfgSortLate.Value)
+            {
+                BodyCatalog.availability.CallWhenAvailable(Make);
+                BodyCatalog.availability.CallWhenAvailable(ModSupport);
+            }
 
+            On.RoR2.SkinDef.ApplyAsync += SkinDef_ApplyAsync;
+            //On.RoR2.SkinDef.BakeAsync += DoNotBakeUntilCreated;
+            //On.RoR2.SkinCatalog.ValidateParams += SkinCatalog_ValidateParams;
         }
         public void Make()
         {
@@ -61,17 +76,32 @@ namespace WolfoSkinsMod
 
 
 
-            On.RoR2.SkinDef.ApplyAsync += SkinDef_ApplyAsync;
+ 
 
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
-
-            //On.RoR2.SkinDef.BakeAsync += SkinDef_BakeAsync; //Idk why this just doesnt fucking work anymore
-
-            BodyCatalog.availability.CallWhenAvailable(ModSupport);
-
+ 
         }
 
+        private void SkinCatalog_ValidateParams(On.RoR2.SkinCatalog.orig_ValidateParams orig, SkinDef skinDef)
+        {
+            if (skinDef is SkinDefMakeOnApply)
+            {
+               return;
+            }
+            orig(skinDef);
+        }
 
+        private System.Collections.IEnumerator DoNotBakeUntilCreated(On.RoR2.SkinDef.orig_BakeAsync orig, SkinDef self)
+        {
+            if (self is SkinDefMakeOnApply && (self as SkinDefMakeOnApply).created == false)
+            {
+                yield break;
+            }
+            else
+            {
+                yield return orig(self);
+            }        
+        }
 
         private System.Collections.IEnumerator SkinDef_ApplyAsync(On.RoR2.SkinDef.orig_ApplyAsync orig, SkinDef self, GameObject modelObject, List<UnityEngine.AddressableAssets.AssetReferenceT<Material>> loadedMaterials, List<UnityEngine.AddressableAssets.AssetReferenceT<Mesh>> loadedMeshes, RoR2.ContentManagement.AsyncReferenceHandleUnloadType unloadType)
         {
@@ -99,16 +129,7 @@ namespace WolfoSkinsMod
             }
             yield break;
         }
-
-        public System.Collections.IEnumerator SkinDef_BakeAsync(On.RoR2.SkinDef.orig_BakeAsync orig, SkinDef self)
-        {
-            //Somehow does not catch a lot of skins anymore
-            //When first being baked
-            //Something about R2API update
-
-            return orig(self);
-        }
-
+ 
         internal static void ModSupport()
         {
             WConfig.RiskConfig();
@@ -351,10 +372,15 @@ namespace WolfoSkinsMod
             {
                 this.EngiDisplay(modelObject, skinDefWolfoTracker);
             }
-            if (disableThis)
+            if (disableThis != null)
             {
-                disableThis.gameObject.SetActive(false);
-                skinDefWolfoTracker.disabledTransform = disableThis;
+                Transform disable = modelObject.transform.Find(disableThis);
+                if (disable)
+                {
+                    disable.gameObject.SetActive(false);
+                    skinDefWolfoTracker.disabledTransform = disable;
+                }
+     
             }
         }
 
@@ -397,8 +423,10 @@ namespace WolfoSkinsMod
         public LightColorChanges[] lightColorsChanges = System.Array.Empty<LightColorChanges>();
         public ItemDisplayRule[] addGameObjects = System.Array.Empty<ItemDisplayRule>();
         public MaterialChanger changeMaterial;
-        public Transform disableThis;
-
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+        public string? disableThis = null;
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+ 
 
         [System.Serializable]
         public struct MaterialChanger

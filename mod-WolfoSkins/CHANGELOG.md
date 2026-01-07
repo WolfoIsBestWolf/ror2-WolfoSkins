@@ -1,5 +1,15 @@
 ## Changelog
 ```
+v3.0.1
+Skins now sorted after after DotFlare/SurvivorReturns skins.
+Removed uneeded debug logging.
+Adjusted Bandit Black/Purple/Yellow to better match RoRR colors.
+Adjusted CHEF Green/Orange to be less green.
+Fixed a MulT skin name being wrong.
+Fixed Lem Acrid spines not disappearing in lobby.
+Readded sort config just in case.
+```
+```
 V3.0.0
 Added 3 Operator Skins
 Added 4 Drifter Skins
@@ -15,8 +25,7 @@ Desaturated Void Fiend Blue.
 
 
 Skins are now created when you select them for the first time, which should speed up load times for lower end machines.
- 
-Skins now sorted after after SS2 skins (and presumably most skin mods) naturally.
+Skins now sorted after after SS2 skins naturally.
 Removed sort config.
 
 
@@ -26,6 +35,7 @@ Fixed False Son Gold flickering in the lobby.
 Fixed Void Fiend Orange hand looking improper.
 Fixed modded skin glows misaligning at lower texture scales.
 Fixed some skins being less shiny than inteded.
+Removed Pilot skins.
 ```
 ```
 v2.2.10

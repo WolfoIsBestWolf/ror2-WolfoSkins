@@ -170,7 +170,7 @@ namespace WolfoSkinsMod.Base
             newRenderInfos[1].defaultMaterial = null;
             newRenderInfos[2].defaultMaterial = null;
 
-            (newSkinDef as SkinDefEnhanced).disableThis = newSkinDef.rootObject.transform.GetChild(7);
+            (newSkinDef as SkinDefEnhanced).disableThis = "CrocoSpineMesh";
         }
 
 

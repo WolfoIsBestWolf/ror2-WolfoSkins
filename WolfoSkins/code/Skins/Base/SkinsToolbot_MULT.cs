@@ -17,7 +17,7 @@ namespace WolfoSkinsMod.Base
             CreateEmptySkinForLaterCreation(new SkinInfo
             {
                 name = "skinToolbotDefault_1",
-                nameToken = "SIMU_SKIN_TOOLBOT1",
+                nameToken = "SIMU_SKIN_TOOLBOT",
                 icon = H.GetIcon("base/mult_damage"),
                 original = skinToolbotDefault,
                 cloneMesh = false,

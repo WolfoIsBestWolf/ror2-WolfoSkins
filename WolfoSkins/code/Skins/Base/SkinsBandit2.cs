@@ -126,6 +126,7 @@ namespace WolfoSkinsMod.Base
             matBanditRed1.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Red/texBandit2Emission.png"));
             matBanditRed1.SetColor("_EmColor", new Color(1.1f, 0.88f, 1.1f)); //0 0.3491 0.327 1
             matBandit2Shotgun.SetColor("_EmColor", new Color(0.5f, 0.15f, 0.25f)); //100 30 50
+            matBandit2Shotgun.color = Color.white*1.2f;
             matBandit2Coat.color = new Color(0.95f, 0.95f, 0.87f);
 
             BanditRedRenderInfos[0].defaultMaterial = matBanditRed1;
@@ -151,7 +152,7 @@ namespace WolfoSkinsMod.Base
 
             Material matBanditRed1 = H.CloneMat(ref BanditRedRenderInfos, 0);
             Material matBandit2Coat = H.CloneMat(ref BanditRedRenderInfos, 3);
-            Material matBandit2CoatHat = H.CloneMat(ref BanditRedRenderInfos, 3);
+            //Material matBandit2CoatHat = H.CloneMat(ref BanditRedRenderInfos, 3);
             Material matBandit2Shotgun = H.CloneMat(ref BanditRedRenderInfos, 4);
             Material matBandit2Knife = H.CloneMat(ref BanditRedRenderInfos, 5);
             Material matBandit2Revolver = H.CloneMat(ref BanditRedRenderInfos, 7);
@@ -162,14 +163,15 @@ namespace WolfoSkinsMod.Base
 
             matBanditRed1.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBandit2Diffuse.png");
             matBandit2Coat.mainTexture = texBanditRedCoatDiffuse;
-            matBandit2CoatHat.mainTexture = texBanditRedCoatDiffuse;
+            //matBandit2CoatHat.mainTexture = texBanditRedCoatDiffuse;
             matBandit2Shotgun.mainTexture = texBanditShotgunDiffuse;
             matBandit2Knife.mainTexture = texBanditShotgunDiffuse;
             matBandit2Revolver.mainTexture = texBanditShotgunDiffuse;
 
             matBanditRed1.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Bandit2/Purple/texBandit2Emission.png"));
-            matBanditRed1.SetColor("_EmColor", new Color(1.2f, 1.2f, 0.5f)); //0 0.3491 0.327 1
-            matBandit2Shotgun.SetColor("_EmColor", new Color(0.8f, 0.7f, 0f)); //100 30 50
+            matBanditRed1.SetColor("_EmColor", new Color(0.9f,1.1f,1.1f)); //0 0.3491 0.327 1
+            matBandit2Shotgun.SetColor("_EmColor", new Color(0.8f, 0.96f, 0.96f)); //100 30 50
+            matBandit2Shotgun.color = Color.white;
 
             BanditRedRenderInfos[0].defaultMaterial = matBanditRed1;     //matBandit2         //Bandit2AccessoriesMesh //texBandit2Diffuse
             BanditRedRenderInfos[1].defaultMaterial = matBanditRed1;     //matBandit2         //Bandit2ArmsMesh
@@ -177,7 +179,7 @@ namespace WolfoSkinsMod.Base
             BanditRedRenderInfos[3].defaultMaterial = matBandit2Coat;     //matBandit2Coat     //Bandit2CoatMesh        //texBandit2CoatDiffuse
             BanditRedRenderInfos[4].defaultMaterial = matBandit2Shotgun;     //matBandit2Shotgun  //BanditShotgunMesh      //texBanditShotgunDiffuse
             BanditRedRenderInfos[5].defaultMaterial = matBandit2Knife;     //matBandit2Knife    //BladeMesh              //texBanditShotgunDiffuse
-            BanditRedRenderInfos[6].defaultMaterial = matBandit2CoatHat;     //matBandit2Coat     //Bandit2HatMesh
+            BanditRedRenderInfos[6].defaultMaterial = matBandit2Coat;     //matBandit2Coat     //Bandit2HatMesh
             BanditRedRenderInfos[7].defaultMaterial = matBandit2Revolver;     //matBandit2Revolver //BanditPistolMesh       //texBanditShotgunDiffuse
 
         }

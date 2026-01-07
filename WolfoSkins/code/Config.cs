@@ -20,6 +20,7 @@ namespace WolfoSkinsMod
         public static ConfigEntry<bool> cfgSilentRelockReunlock;
         public static ConfigEntry<bool> cfgClearAchievementView;
         public static ConfigEntry<bool> cfgDump;
+        public static ConfigEntry<bool> cfgSortLate;
 
 
         public static ConfigEntry<bool> RemoveAllTrackers;
@@ -38,6 +39,12 @@ namespace WolfoSkinsMod
                 "Unlock all skins",
                 false,
                 "Makes skins not require unlocks.\n\nUnlocks and Achievements remain to be collected."
+            );
+            cfgSortLate = ConfigFileUNSORTED.Bind(
+                "Main",
+                "Sort Skins to end of list",
+                true,
+                "Whether or not skins added by this mod should be after vanilla skins, or after all modded skins.\n\nThis is done by 'making' the mod sooner or later."
             );
 
             cfgRunAutoUnlocker = ConfigFileUNSORTED.Bind(

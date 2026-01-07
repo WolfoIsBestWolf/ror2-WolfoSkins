@@ -2,15 +2,19 @@ Many many recolor skins.
 
 A lot of colors are inspired by RoRR palettes.
 
-Unlocked by beating one of : Simulacrum Wave 50, Eclipse 4, Twisted Scavs or Voidling.\
+Unlocked by beating one of : 
+- Simulacrum Wave 50
+- Eclipse 4 or higher
+- Twisted Scavenger ending
+- Voidling ending
+
 Meridian recolors will require two of those.
 
 Complete them however you like.\
 Or just unlock all of them with the config.
 
 
- 
-This mod adds Projectils so it isn't compatible with players who don't have it.
+  
 
 Skin List:
 ```
@@ -109,6 +113,8 @@ Tesla Trooper Colors : White, Strong Blue, Neon Blue, Neon Cyan, Hot Pink, Neon 
 Desolator Colors : Gray, Strong Green, Neon Green, Safety Yellow, Neon Yellow, Neon Orange
 ```
 
+(Skins may appear rather differently depending on the stage)
+
 <details>
   <summary>All skins ingame (Vanilla Characters)</summary>
   
@@ -126,6 +132,8 @@ Desolator Colors : Gray, Strong Green, Neon Green, Safety Yellow, Neon Yellow, N
 This mod was intended to be used along side, but can be used on it's own just fine:\
 [WolfoQualityOfLife](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/) colored vines for REX, Red effects for Red Mercs.\
 [SimulacrumAdditions](https://thunderstore.io/package/Wolfo/SimulacrumAdditions) a more interesting Simulacrum.
+
+WolfoFixes/WolfoLib (for now they are in the same mod), needed a shared mod to have Operator Drones matching in the lobby functionality.
 
 
 ### Translations
