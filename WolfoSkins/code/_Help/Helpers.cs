@@ -86,18 +86,11 @@ namespace WolfoSkinsMod
         }
 
 
-        private static void AddSkinToCharacter(SkinDef skin)
+        public static void AddSkinToCharacter(SkinDef skin)
         {
             ModelSkinController model = skin.rootObject.GetComponent<ModelSkinController>();
             HG.ArrayUtils.ArrayAppend(ref model.skins, skin);
         }
-
-        public static void AddSkinToCharacterPublic(SkinDef skin)
-        {
-            ModelSkinController model = skin.rootObject.GetComponent<ModelSkinController>();
-            HG.ArrayUtils.ArrayAppend(ref model.skins, skin);
-        }
-
 
 
         public static Material CloneMat(ref CharacterModel.RendererInfo[] rendererInfos, int num, bool unset = false)

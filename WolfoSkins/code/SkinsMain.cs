@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using R2API.Utils;
 using RoR2;
+using RoR2.UI.MainMenu;
 using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
@@ -17,7 +18,7 @@ namespace WolfoSkinsMod
 {
     [BepInDependency("com.bepis.r2api")]
     [BepInDependency("com.TheTimeSweeper.RedAlert", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "2.3.0")]
+    [BepInPlugin("Wolfo.WolfoSkins", "WolfoSkins", "3.0.4")]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync, VersionStrictness.DifferentModVersionsAreOk)]
 
     public class WolfoSkins : BaseUnityPlugin
@@ -41,9 +42,9 @@ namespace WolfoSkinsMod
             {
                 BodyCatalog.availability.CallWhenAvailable(Make);
                 BodyCatalog.availability.CallWhenAvailable(ModSupport);
-                SurvivorCatalog.availability.CallWhenAvailable(EarlyFix);
-            }
 
+            }
+            MainMenuController.OnMainMenuInitialised += FixSkinAPI;
             On.RoR2.SkinDef.ApplyAsync += SkinDef_ApplyAsync;
             //On.RoR2.SkinDef.BakeAsync += DoNotBakeUntilCreated;
             //On.RoR2.SkinCatalog.ValidateParams += SkinCatalog_ValidateParams;
@@ -73,13 +74,17 @@ namespace WolfoSkinsMod
             //DLC3
             SkinsOperator.Start();
             SkinsDrifter.Start();
+            //DLC4
+            SkinsEnforcer.Start();
+            SkinsAcolyte.Start();
 
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
  
         }
 
-        private void EarlyFix()
+        private void FixSkinAPI()
         {
+            MainMenuController.OnMainMenuInitialised -= FixSkinAPI;
             foreach (SurvivorDef survivor in SurvivorCatalog.survivorDefs)
             {
                 if (!survivor)
@@ -90,7 +95,7 @@ namespace WolfoSkinsMod
 
                 if (!(display && body))
                 {
-                   continue;
+                    continue;
                 }
 
                 var bodySkins = body.GetComponentInChildren<ModelSkinController>();
@@ -99,12 +104,20 @@ namespace WolfoSkinsMod
                 {
                     continue;
                 }
-
-                if (displaySkins.skins.Length != bodySkins.skins.Length)
+                for (int i = 0; i < bodySkins.skins.Length; i++)
                 {
-                    System.Array.Resize(ref displaySkins.skins, bodySkins.skins.Length);
-                    bodySkins.skins.CopyTo(displaySkins.skins, 0);
+                    if (bodySkins.skins[i] is SkinDefMakeOnApply)
+                    {
+                        //Some sort of solution would still be best for the Acolyte Situation
+                        //We can make just always make her skins to get around this bullshit
+                        //Object.Destroy(displaySkins.skins[i]);
+                        displaySkins.skins[i] = bodySkins.skins[i];
+
+                        //Alternatively
+                        //displaySkins.skins[i].creationMethod = bodySkins.skins[i].creationMethod
+                    }
                 }
+
             }
         }
 
@@ -177,7 +190,7 @@ namespace WolfoSkinsMod
                 ModdedBody = BodyCatalog.FindBodyPrefab("EnforcerBody");
                 if (ModdedBody != null)
                 {
-                    SkinsEnforcer.ModdedSkin(ModdedBody);
+                    SkinsEnforcerMOD.ModdedSkin(ModdedBody);
                 }
             }
             //Executioner2Body

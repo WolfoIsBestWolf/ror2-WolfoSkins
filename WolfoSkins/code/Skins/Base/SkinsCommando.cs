@@ -15,9 +15,7 @@ namespace WolfoSkinsMod.Base
             SkinDef skinCommandoAlt = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Commando/skinCommandoAlt.asset").WaitForCompletion();
             SkinDef skinCommandoAltColossus = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/Base/Commando/skinCommandoAltColossus.asset").WaitForCompletion();
 
-            Unused_SotVSkin();
-
-            
+            //Unused_SotVSkin();
             CreateEmptySkinForLaterCreation(new SkinInfo
             {
                 name = "skinCommandoWolfoProvi_1",
@@ -137,7 +135,7 @@ namespace WolfoSkinsMod.Base
         internal static void Unused_SotVSkin()
         {
             SkinDef UnusedCommandoSkin = Addressables.LoadAssetAsync<SkinDef>(key: "RoR2/DLC1/skinCommandoMarine.asset").WaitForCompletion();
-            H.AddSkinToCharacterPublic(UnusedCommandoSkin);
+            H.AddSkinToCharacter(UnusedCommandoSkin);
 
             //This removes Limb removal, not good but better than bugged ones I guess
             //I have no idea how to actually fix his Right Calf being both Calfs

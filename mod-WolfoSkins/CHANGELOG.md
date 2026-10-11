@@ -1,15 +1,15 @@
 ## Changelog
 ```
+v3.0.5
+Disabling not finished Executioner skins that prevented launching the game with SS2.
+
+v3.0.4
+Less intrusive fix for the SkinAPI interaction.
+
 v3.0.3
 Fixed Skins in lobby myself due to R2API.Skins not working with what I do.
 Fixed Huntress Black skin failing to be made.
 Fixed Engi in lobby producing a null ref.h
-```
-```
-v3.0.2
-Remade Executioner Skins for updated model.
-Adjusted Green Loader slightly.
-Brightened Black Acrid.
 ```
 ```
 v3.0.1
