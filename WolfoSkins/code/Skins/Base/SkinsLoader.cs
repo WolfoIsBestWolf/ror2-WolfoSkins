@@ -64,9 +64,9 @@ namespace WolfoSkinsMod.Base
             Texture2D texTrimSheetConstructionLoaderAlt = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Loader/Green/texTrimSheetConstructionLoaderAlt.png");
             texTrimSheetConstructionLoaderAlt.wrapModeV = TextureWrapMode.Clamp;
             texTrimSheetConstructionLoaderAlt.wrapModeW = TextureWrapMode.Clamp;
-
-
+       
             matTrimsheetConstructionLoaderAlt.mainTexture = texTrimSheetConstructionLoaderAlt;
+            matTrimsheetConstructionLoaderAlt.color = Color.white;
             matLoaderPilotDiffuseAlt.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/base/Loader/Green/texLoaderPilotDiffuse.png");
             matLoaderPilotDiffuseAlt.SetColor("_EmColor", new Color(1f, 0.8f, 0f, 1));
 

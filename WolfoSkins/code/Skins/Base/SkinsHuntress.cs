@@ -151,7 +151,7 @@ namespace WolfoSkinsMod.Base
             //
             //
 
-            GameObject DisplayEliteRabbitEars = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/DLC1/DisplayEliteRabbitEars.prefab").WaitForCompletion();
+            GameObject DisplayEliteRabbitEars = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Junk_DLC1/DisplayEliteRabbitEars.prefab").WaitForCompletion();
             GameObject DisplayEliteRabbitEarsNew = R2API.PrefabAPI.InstantiateClone(DisplayEliteRabbitEars, "HuntressRabbitEars", false);
             SkinnedMeshRenderer RabbitMesh = DisplayEliteRabbitEarsNew.transform.GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
 

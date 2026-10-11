@@ -17,6 +17,7 @@ namespace WolfoSkinsMod.Base
 
             Unused_SotVSkin();
 
+            
             CreateEmptySkinForLaterCreation(new SkinInfo
             {
                 name = "skinCommandoWolfoProvi_1",

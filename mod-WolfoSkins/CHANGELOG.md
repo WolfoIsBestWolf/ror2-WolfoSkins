@@ -1,5 +1,17 @@
 ## Changelog
 ```
+v3.0.3
+Fixed Skins in lobby myself due to R2API.Skins not working with what I do.
+Fixed Huntress Black skin failing to be made.
+Fixed Engi in lobby producing a null ref.h
+```
+```
+v3.0.2
+Remade Executioner Skins for updated model.
+Adjusted Green Loader slightly.
+Brightened Black Acrid.
+```
+```
 v3.0.1
 Skins now sorted after after DotFlare/SurvivorReturns skins.
 Removed uneeded debug logging.

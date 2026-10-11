@@ -445,43 +445,6 @@ namespace WolfoSkinsMod.Mod
 
         internal static void AddVFXLate()
         {
-            /*
-            GameObject TracerIonBullet = null;
-            GameObject TracerIonBulletRED = null;
-            GameObject TracerIonBulletYELLOW = null;
-
-            GameObject exeChargeGun = null;
-            GameObject exeChargeGunRED = null;
-            GameObject exeChargeGunYELLOW = null;
-
-            GameObject exePlume = null;
-            GameObject exePlumeRED = null;
-            GameObject exePlumeYELLOW = null;
-
-            GameObject exePlumeBig = null;
-            GameObject exePlumeBigRED = null;
-            GameObject exePlumeBigYELLOW = null;*/
-
-            //GameObject exeExhaust = null;
-            /* GameObject exeExhaustRED = null;
-             GameObject exeExhaustYELLOW = null;
-             GameObject exeExhaustBLUE = null;*/
-
-            /*GameObject ExecutionerAxeSlamEffect = null;
-            GameObject ExecutionerAxeSlamEffectRED = null;
-            GameObject ExecutionerAxeSlamEffectYELLOW = null;
-            GameObject ExecutionerAxeSlamEffectBLUE = null;*/
-
-            /*GameObject LightningFlash = null;
-            GameObject LightningFlashRED = null;
-            GameObject LightningFlashYELLOW = null;
-
-            GameObject MuzzleflashFMJ = null;
-            GameObject MuzzleflashFMJRED = null;
-            GameObject MuzzleflashFMJYELLOW = null;*/
-
-
-
             Debug.Log("Executioner Skin VFX");
 
             GameObject exeExhaust = ExecutionerBodyS.GetComponent<SkillLocator>().utility.skillFamily.defaultSkillDef.activationState.stateType.GetFieldValue<GameObject>("dashEffect");

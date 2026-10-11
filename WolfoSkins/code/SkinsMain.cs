@@ -41,6 +41,7 @@ namespace WolfoSkinsMod
             {
                 BodyCatalog.availability.CallWhenAvailable(Make);
                 BodyCatalog.availability.CallWhenAvailable(ModSupport);
+                SurvivorCatalog.availability.CallWhenAvailable(EarlyFix);
             }
 
             On.RoR2.SkinDef.ApplyAsync += SkinDef_ApplyAsync;
@@ -73,13 +74,38 @@ namespace WolfoSkinsMod
             SkinsOperator.Start();
             SkinsDrifter.Start();
 
-
-
-
- 
-
             On.RoR2.TemporaryOverlay.AddToCharacerModel += ReplaceTemporaryOverlayMaterial;
  
+        }
+
+        private void EarlyFix()
+        {
+            foreach (SurvivorDef survivor in SurvivorCatalog.survivorDefs)
+            {
+                if (!survivor)
+                    continue;
+
+                var display = survivor.displayPrefab;
+                var body = survivor.bodyPrefab;
+
+                if (!(display && body))
+                {
+                   continue;
+                }
+
+                var bodySkins = body.GetComponentInChildren<ModelSkinController>();
+                var displaySkins = display.GetComponentInChildren<ModelSkinController>();
+                if (!(bodySkins && displaySkins))
+                {
+                    continue;
+                }
+
+                if (displaySkins.skins.Length != bodySkins.skins.Length)
+                {
+                    System.Array.Resize(ref displaySkins.skins, bodySkins.skins.Length);
+                    bodySkins.skins.CopyTo(displaySkins.skins, 0);
+                }
+            }
         }
 
         private void SkinCatalog_ValidateParams(On.RoR2.SkinCatalog.orig_ValidateParams orig, SkinDef skinDef)
@@ -154,12 +180,12 @@ namespace WolfoSkinsMod
                     SkinsEnforcer.ModdedSkin(ModdedBody);
                 }
             }
-            /* //Executioner2Body
+            //Executioner2Body
              ModdedBody = BodyCatalog.FindBodyPrefab("Executioner2Body");
              if (ModdedBody != null)
              {
                  SkinsExecutioner.ModdedSkin(ModdedBody);
-             }*/
+             } 
             //ChirrBody
             ModdedBody = BodyCatalog.FindBodyPrefab("ChirrBody");
             if (ModdedBody != null)
@@ -395,7 +421,6 @@ namespace WolfoSkinsMod
                 }
             }
 
-
             Material newMaterial = this.skinDefParams.minionSkinReplacements[0].minionSkin.skinDefParams.rendererInfos[0].defaultMaterial;
 
             GameObject Mine1 = Instantiate(this.skinDefParams.projectileGhostReplacements[1].projectileGhostReplacementPrefab, mineHolder.GetChild(0));
@@ -408,16 +433,12 @@ namespace WolfoSkinsMod
                 Mine2
             };
 
-            /*mineHolder.GetChild(0).GetChild(1).gameObject.SetActive(false);
-            mineHolder.GetChild(0).GetChild(2).gameObject.SetActive(false);
-            mineHolder.GetChild(0).GetChild(3).gameObject.SetActive(false);
-            mineHolder.GetChild(0).GetChild(4).gameObject.SetActive(false);
-            mineHolder.GetChild(1).GetChild(0).gameObject.SetActive(false);
-            mineHolder.GetChild(1).GetChild(1).gameObject.SetActive(false);
-            mineHolder.GetChild(1).GetChild(2).gameObject.SetActive(false);
-            mineHolder.GetChild(1).GetChild(3).gameObject.SetActive(false);*/
+            Transform TurretHolder = modelObject.transform.parent.GetChild(0);
 
-            modelObject.transform.parent.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material = newMaterial;
+            TurretHolder.GetChild(0).gameObject.SetActive(true);
+            TurretHolder.GetChild(1).gameObject.SetActive(false);
+
+            TurretHolder.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material = newMaterial;
         }
 
         public LightColorChanges[] lightColorsChanges = System.Array.Empty<LightColorChanges>();

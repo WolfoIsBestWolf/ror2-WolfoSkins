@@ -92,12 +92,6 @@ namespace WolfoSkinsMod
             HG.ArrayUtils.ArrayAppend(ref model.skins, skin);
         }
 
-        public static void AddSkinToObject(GameObject body, SkinDef skin)
-        {
-            ModelSkinController model = body.transform.GetChild(0).GetChild(0).GetComponent<ModelSkinController>();
-            HG.ArrayUtils.ArrayAppend(ref model.skins, skin);
-        }
-
         public static void AddSkinToCharacterPublic(SkinDef skin)
         {
             ModelSkinController model = skin.rootObject.GetComponent<ModelSkinController>();

@@ -21,6 +21,14 @@ namespace WolfoSkinsMod.DLC1
                 original = skinRailGunnerDefault,
                 cloneMesh = true,
             }, new System.Action<SkinDefMakeOnApply>(Mixed_White));
+            /*CreateEmptySkinForLaterCreation(new SkinInfo
+            {
+                name = "skinRailGunnerMastery_1",
+                nameToken = "SIMU_SKIN_RAILGUNNER_SNIPER",
+                icon = H.GetIcon("dlc1/railgunner_sniper"),
+                original = skinRailGunnerAlt,
+                cloneMesh = true,
+            }, new System.Action<SkinDefMakeOnApply>(Mastery_Sniper));*/
             CreateEmptySkinForLaterCreation(new SkinInfo
             {
                 name = "skinRailGunnerAltColossus_DLC2",
@@ -40,10 +48,10 @@ namespace WolfoSkinsMod.DLC1
 
             //RailGunnerSkinsSniper();
 
-            //0 matRailGun
-            //1 matRailGun
-            //2 matRailGunnerBase
-            //3 matRailgunnerTrim
+            //0 matRailGun | Backpack
+            //1 matRailGun | BackpackScreen
+            //2 matRailGunnerBase | Base
+            //3 matRailGunnerMetal
             //4 matRailGun
             //5 matRailgunnerLED
             //6 matRailgunnerLED
@@ -129,6 +137,44 @@ namespace WolfoSkinsMod.DLC1
 
 
         }
+        
+        internal static void Mastery_Sniper(SkinDefMakeOnApply newSkinDef)
+        {
+            Color SniperColorHead = new Color32(238, 222, 248, 255);
+            Color SniperColorBag = new Color32(189, 156, 251, 255);
+            Color SniperColorGun = new Color32(248, 73, 155, 255);
+            CharacterModel.RendererInfo[] newRenderInfos = newSkinDef.skinDefParams.rendererInfos;
+ 
+            Material matRailGun = CloneMat(ref newRenderInfos, 0);
+            Material matRailBag = CloneMat(ref newRenderInfos, 0);
+            Material matRailGunnerBase = CloneMat(ref newRenderInfos, 2);
+            Material matRailGunnerMetal = CloneMat(ref newRenderInfos, 3);
+            Material matRailgunnerPistolLaser = CloneMat(ref newRenderInfos, 5, true);
+
+           
+            matRailGun.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/Sniper/texTrimSheetMilitaryRailGunnerAlt_Gun.png");
+            matRailGun.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/Sniper/texRailgunEmission.png"));
+            matRailGun.SetColor("_EmColor", SniperColorGun);
+            matRailBag.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/Sniper/texTrimSheetMilitaryRailGunnerAlt_Bag.png");
+            matRailBag.SetTexture("_EmTex", Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/Sniper/texRailgunEmission.png"));
+            matRailBag.SetColor("_EmColor", SniperColorBag);
+
+            matRailGunnerBase.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/Sniper/texRailGunnerAltPaletteDiffuse_Body.png");
+
+            matRailGunnerMetal.mainTexture = Assets.Bundle.LoadAsset<Texture2D>("Assets/Skins/dlc1/Railgunner/Sniper/texRailGunnerAltPaletteDiffuse_Metal.png"); ;
+            matRailGunnerMetal.SetColor("_EmColor", SniperColorHead);
+            matRailGunnerMetal.SetFloat("_EmPower", 1f);
+
+            matRailgunnerPistolLaser.SetColor("_TintColor", SniperColorBag);
+
+            newRenderInfos[0].defaultMaterial = matRailBag;
+            newRenderInfos[1].defaultMaterial = matRailBag;
+            newRenderInfos[2].defaultMaterial = matRailGunnerBase;
+            newRenderInfos[3].defaultMaterial = matRailGunnerMetal;
+            newRenderInfos[4].defaultMaterial = matRailGun;
+            //newRenderInfos[8].defaultMaterial = matRailgunnerPistolLaser;
+
+        }
 
         internal static void Default_Camper(SkinDefMakeOnApply newSkinDef)
         {
@@ -186,14 +232,6 @@ namespace WolfoSkinsMod.DLC1
             newRenderInfos[2].defaultMaterial = matRailGunnerBase;
             newRenderInfos[3].defaultMaterial = matRailgunnerTrim;
             newRenderInfos[4].defaultMaterial = matRailGun;
-            //newRenderInfos[5].defaultMaterial = matRailgunnerLED;
-            //newRenderInfos[6].defaultMaterial = matRailgunnerLED;
-            //newRenderInfos[7].defaultMaterial = matRailgunnerLED;
-            //newRenderInfos[8].defaultMaterial = matRailgunnerPistolLaser;
-            //newRenderInfos[9].defaultMaterial = matRailgunnerLED;
-            //newRenderInfos[10].defaultMaterial = matRailgunnerLED;
-            //newRenderInfos[11].defaultMaterial = matRailgunBackpackIdle;
-
         }
 
         #region Idk Sniper

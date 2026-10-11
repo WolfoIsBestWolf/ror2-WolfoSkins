@@ -14,9 +14,11 @@ Complete them however you like.\
 Or just unlock all of them with the config.
 
 
-  
+With this mod :
+- False Sons Spikes match the skins spikes.
 
-Skin List:
+<details>
+  <summary>Skin List</summary>
 ```
 Commando : Marine : (Unused SotV skin)
 Commando : Mastery : Red/Cyan (RoRR Provi Trial Palette)
@@ -28,8 +30,8 @@ Bandit : Default : Red Hat/Orange (RoRR Palette)
 Bandit : Meridian : Orange / Black
 Bandit : Default : Yellow Hat/Lime (RoRR Palette)
 Bandit : Default : Black Hat/Purple (RoRR Palette)
-Mul-T : Default : Rusted/Black (RoRR HAN-D Palette)
-Mul-T : Mastery : Oxizied/Yellow (RoRR HAN-D Palette)
+Mul-T : Default : Damage (Chest)
+Mul-T : Mastery : Healing (Chest)
 Mul-T : Meridian : Utility (Chest)
 Engineer : Default : Red/Yellow (RoRR Palette)
 Engineer : Mastery : Blue/Pink (RoRR Palette)
@@ -76,7 +78,7 @@ Operator : Default : Red/Yellow/Black
 Operator : Default : Blue/Cyan/Yellow 
 Operator : Mastery : Orange
 Drifter : Default : Red/Orange/Brown (RoRR Palette)
-Drifter : Default : Pink/Purple (RoRR Palette)
+Drifter : Default : Pink/Purple (RoRR Inspired)
 Drifter : Default : Green/Orange (RoRR Palette)
 Drifter : Mastery : Green/Blues
 ```
@@ -112,12 +114,11 @@ Arsonist : Grand Master : Blue
 Tesla Trooper Colors : White, Strong Blue, Neon Blue, Neon Cyan, Hot Pink, Neon Red
 Desolator Colors : Gray, Strong Green, Neon Green, Safety Yellow, Neon Yellow, Neon Orange
 ```
-
-(Skins may appear rather differently depending on the stage)
+</details>
 
 <details>
   <summary>All skins ingame (Vanilla Characters)</summary>
-  
+  (Shading of stages or in the lobby may differ quite heavily.)
 ![](https://github.com/WolfoIsBestWolf/ror2-WolfoSkins/blob/main/modPageImages/allSkins.png?raw=true)
 </details>
 
@@ -133,7 +134,7 @@ This mod was intended to be used along side, but can be used on it's own just fi
 [WolfoQualityOfLife](https://thunderstore.io/package/Wolfo/WolfoQualityOfLife/) colored vines for REX, Red effects for Red Mercs.\
 [SimulacrumAdditions](https://thunderstore.io/package/Wolfo/SimulacrumAdditions) a more interesting Simulacrum.
 
-WolfoFixes/WolfoLib (for now they are in the same mod), needed a shared mod to have Operator Drones matching in the lobby functionality.
+WolfFixes/WolfoLib (for now they are in the same mod), needed a shared mod to have Operator Drones matching in the lobby functionality.
 
 
 ### Translations
